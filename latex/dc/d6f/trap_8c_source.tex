@@ -1,0 +1,117 @@
+\hypertarget{trap_8c_source}{}\doxysection{trap.\+c}
+\mbox{\hyperlink{trap_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00001}00001 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00002}00002 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{defs_8h}{defs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00003}00003 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{param_8h}{param.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00004}00004 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{memlayout_8h}{memlayout.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00005}00005 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{mmu_8h}{mmu.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00006}00006 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{proc_8h}{proc.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00007}00007 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{x86_8h}{x86.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00008}00008 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{traps_8h}{traps.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00009}00009 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{spinlock_8h}{spinlock.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00011}00011 \textcolor{comment}{// Interrupt descriptor table (shared by all CPUs).}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00012}\mbox{\hyperlink{trap_8c_a3facbc1e1e6618fb238fc124bd9aa827}{00012}} \textcolor{keyword}{struct }\mbox{\hyperlink{structgatedesc}{gatedesc}} \mbox{\hyperlink{trap_8c_a3facbc1e1e6618fb238fc124bd9aa827}{idt}}[256];}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00013}00013 \textcolor{keyword}{extern} \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{trap_8c_a3e6e0e8b5ba8014e09de2d9aa3740486}{vectors}}[];  \textcolor{comment}{// in vectors.S: array of 256 entry pointers}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00014}\mbox{\hyperlink{defs_8h_a094a4703b62095e2fa469fab3ffea5c7}{00014}} \textcolor{keyword}{struct }\mbox{\hyperlink{structspinlock}{spinlock}} \mbox{\hyperlink{trap_8c_a094a4703b62095e2fa469fab3ffea5c7}{tickslock}};}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00015}\mbox{\hyperlink{defs_8h_a7fcd6915876e066781399d7b00f1b1f0}{00015}} \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{trap_8c_a7fcd6915876e066781399d7b00f1b1f0}{ticks}};}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00017}00017 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00018}\mbox{\hyperlink{defs_8h_a9e7167b8e20e217c4af4e757f612ba6a}{00018}} \mbox{\hyperlink{trap_8c_a9e7167b8e20e217c4af4e757f612ba6a}{tvinit}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00019}00019 \{}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00020}00020   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00022}00022   \textcolor{keywordflow}{for}(i = 0; i < 256; i++)}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00023}00023     \mbox{\hyperlink{mmu_8h_a23e7ddf0a414b66cf9badd182edf1eca}{SETGATE}}(\mbox{\hyperlink{trap_8c_a3facbc1e1e6618fb238fc124bd9aa827}{idt}}[i], 0, \mbox{\hyperlink{mmu_8h_a0d4e0c4c738af60d6092941469642429}{SEG\_KCODE}}<<3, \mbox{\hyperlink{trap_8c_a3e6e0e8b5ba8014e09de2d9aa3740486}{vectors}}[i], 0);}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00024}00024   \mbox{\hyperlink{mmu_8h_a23e7ddf0a414b66cf9badd182edf1eca}{SETGATE}}(\mbox{\hyperlink{trap_8c_a3facbc1e1e6618fb238fc124bd9aa827}{idt}}[\mbox{\hyperlink{traps_8h_a6914c7173b6fe6d04e78d0876e39d95e}{T\_SYSCALL}}], 1, \mbox{\hyperlink{mmu_8h_a0d4e0c4c738af60d6092941469642429}{SEG\_KCODE}}<<3, \mbox{\hyperlink{trap_8c_a3e6e0e8b5ba8014e09de2d9aa3740486}{vectors}}[\mbox{\hyperlink{traps_8h_a6914c7173b6fe6d04e78d0876e39d95e}{T\_SYSCALL}}], \mbox{\hyperlink{mmu_8h_a060d4d4e32af81cab881fe77e58d7b78}{DPL\_USER}});}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00026}00026   \mbox{\hyperlink{defs_8h_ab56d728e6966819a0260c358d3ac3419}{initlock}}(\&\mbox{\hyperlink{trap_8c_a094a4703b62095e2fa469fab3ffea5c7}{tickslock}}, \textcolor{stringliteral}{"{}time"{}});}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00027}00027 \}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00029}00029 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00030}\mbox{\hyperlink{defs_8h_a9b6e7f6c302700cb54216ad22cbc1591}{00030}} \mbox{\hyperlink{trap_8c_a9b6e7f6c302700cb54216ad22cbc1591}{idtinit}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00031}00031 \{}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00032}00032   lidt(\mbox{\hyperlink{trap_8c_a3facbc1e1e6618fb238fc124bd9aa827}{idt}}, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{trap_8c_a3facbc1e1e6618fb238fc124bd9aa827}{idt}}));}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00033}00033 \}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00035}00035 \textcolor{comment}{//PAGEBREAK: 41}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00036}00036 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00037}\mbox{\hyperlink{trap_8c_a372d166e36c086c91e5f5d81e5fead3a}{00037}} \mbox{\hyperlink{trap_8c_a372d166e36c086c91e5f5d81e5fead3a}{trap}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structtrapframe}{trapframe}} *tf)}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00038}00038 \{}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00039}00039   \textcolor{keywordflow}{if}(tf-\/>\mbox{\hyperlink{structtrapframe_abc7f81b0a6a91d13e9fefe171b0a7d12}{trapno}} == \mbox{\hyperlink{traps_8h_a6914c7173b6fe6d04e78d0876e39d95e}{T\_SYSCALL}})\{}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00040}00040     \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}()-\/>killed)}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00041}00041       \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00042}00042     \mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}()-\/>\mbox{\hyperlink{structproc_a56ec07ac1e10ce42adfc8dd2a366071f}{tf}} = tf;}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00043}00043     \mbox{\hyperlink{defs_8h_acd6bcafe6626fe8e7d00cacdbc3cc4f1}{syscall}}();}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00044}00044     \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}()-\/>killed)}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00045}00045       \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00046}00046     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00047}00047   \}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00049}00049   \textcolor{keywordflow}{switch}(tf-\/>\mbox{\hyperlink{structtrapframe_abc7f81b0a6a91d13e9fefe171b0a7d12}{trapno}})\{}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00050}00050   \textcolor{keywordflow}{case} \mbox{\hyperlink{traps_8h_a17129100154901eb81be6e438843a0e1}{T\_IRQ0}} + \mbox{\hyperlink{traps_8h_a85fc66e3edd4ed6a4db6e455feaba8ca}{IRQ\_TIMER}}:}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00051}00051     \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_a1444de2903d3d2624a50de058d19c635}{cpuid}}() == 0)\{}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00052}00052       \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{trap_8c_a094a4703b62095e2fa469fab3ffea5c7}{tickslock}});}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00053}00053       \mbox{\hyperlink{trap_8c_a7fcd6915876e066781399d7b00f1b1f0}{ticks}}++;}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00054}00054       \mbox{\hyperlink{defs_8h_a245b56417239f499389b2e806bd99254}{wakeup}}(\&\mbox{\hyperlink{trap_8c_a7fcd6915876e066781399d7b00f1b1f0}{ticks}});}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00055}00055       \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{trap_8c_a094a4703b62095e2fa469fab3ffea5c7}{tickslock}});}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00056}00056     \}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00057}00057     \mbox{\hyperlink{defs_8h_a42fdd0783bbeb7cdc646d360191cdcac}{lapiceoi}}();}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00058}00058     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00059}00059   \textcolor{keywordflow}{case} \mbox{\hyperlink{traps_8h_a17129100154901eb81be6e438843a0e1}{T\_IRQ0}} + \mbox{\hyperlink{traps_8h_ae17548e9192fbdecfb02247721aaf2df}{IRQ\_IDE}}:}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00060}00060     \mbox{\hyperlink{defs_8h_a709693afdb9b89d848e684e7acde1f8f}{ideintr}}();}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00061}00061     \mbox{\hyperlink{defs_8h_a42fdd0783bbeb7cdc646d360191cdcac}{lapiceoi}}();}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00062}00062     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00063}00063   \textcolor{keywordflow}{case} \mbox{\hyperlink{traps_8h_a17129100154901eb81be6e438843a0e1}{T\_IRQ0}} + \mbox{\hyperlink{traps_8h_ae17548e9192fbdecfb02247721aaf2df}{IRQ\_IDE}}+1:}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00064}00064     \textcolor{comment}{// Bochs generates spurious IDE1 interrupts.}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00065}00065     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00066}00066   \textcolor{keywordflow}{case} \mbox{\hyperlink{traps_8h_a17129100154901eb81be6e438843a0e1}{T\_IRQ0}} + \mbox{\hyperlink{traps_8h_a0b7569cda71298859ffb6ea55c03a36a}{IRQ\_KBD}}:}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00067}00067     \mbox{\hyperlink{defs_8h_af3d6113fa152781400e1e0e728c55e54}{kbdintr}}();}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00068}00068     \mbox{\hyperlink{defs_8h_a42fdd0783bbeb7cdc646d360191cdcac}{lapiceoi}}();}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00069}00069     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00070}00070   \textcolor{keywordflow}{case} \mbox{\hyperlink{traps_8h_a17129100154901eb81be6e438843a0e1}{T\_IRQ0}} + \mbox{\hyperlink{traps_8h_a603b478f70a928f442e33fefba73494a}{IRQ\_COM1}}:}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00071}00071     \mbox{\hyperlink{defs_8h_aa64047002b0e84e2611ebf7dc46b7c99}{uartintr}}();}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00072}00072     \mbox{\hyperlink{defs_8h_a42fdd0783bbeb7cdc646d360191cdcac}{lapiceoi}}();}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00073}00073     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00074}00074   \textcolor{keywordflow}{case} \mbox{\hyperlink{traps_8h_a17129100154901eb81be6e438843a0e1}{T\_IRQ0}} + 7:}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00075}00075   \textcolor{keywordflow}{case} \mbox{\hyperlink{traps_8h_a17129100154901eb81be6e438843a0e1}{T\_IRQ0}} + \mbox{\hyperlink{traps_8h_a0e95f09d5e5653670eede10844d73875}{IRQ\_SPURIOUS}}:}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00076}00076     \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{}cpu\%d: spurious interrupt at \%x:\%x\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00077}00077             \mbox{\hyperlink{defs_8h_a1444de2903d3d2624a50de058d19c635}{cpuid}}(), tf-\/>\mbox{\hyperlink{structtrapframe_a61261f63223a73e25be79fcc8c625265}{cs}}, tf-\/>\mbox{\hyperlink{structtrapframe_a886a5973a537894e3a95435f38767d5c}{eip}});}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00078}00078     \mbox{\hyperlink{defs_8h_a42fdd0783bbeb7cdc646d360191cdcac}{lapiceoi}}();}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00079}00079     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00080}00080 }
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00081}00081   \textcolor{comment}{//PAGEBREAK: 13}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00082}00082   \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00083}00083     \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}() == 0 || (tf-\/>\mbox{\hyperlink{structtrapframe_a61261f63223a73e25be79fcc8c625265}{cs}}\&3) == 0)\{}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00084}00084       \textcolor{comment}{// In kernel, it must be our mistake.}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00085}00085       \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{}unexpected trap \%d from cpu \%d eip \%x (cr2=0x\%x)\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00086}00086               tf-\/>\mbox{\hyperlink{structtrapframe_abc7f81b0a6a91d13e9fefe171b0a7d12}{trapno}}, \mbox{\hyperlink{defs_8h_a1444de2903d3d2624a50de058d19c635}{cpuid}}(), tf-\/>\mbox{\hyperlink{structtrapframe_a886a5973a537894e3a95435f38767d5c}{eip}}, rcr2());}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00087}00087       \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}trap"{}});}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00088}00088     \}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00089}00089     \textcolor{comment}{// In user space, assume process misbehaved.}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00090}00090     \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{}pid \%d \%s: trap \%d err \%d on cpu \%d "{}}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00091}00091             \textcolor{stringliteral}{"{}eip 0x\%x addr 0x\%x-\/-\/kill proc\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00092}00092             \mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}()-\/>pid, \mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}()-\/>\mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}}, tf-\/>\mbox{\hyperlink{structtrapframe_abc7f81b0a6a91d13e9fefe171b0a7d12}{trapno}},}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00093}00093             tf-\/>\mbox{\hyperlink{structtrapframe_acfb2346e6184b0d2438960b4f2a67e4f}{err}}, \mbox{\hyperlink{defs_8h_a1444de2903d3d2624a50de058d19c635}{cpuid}}(), tf-\/>\mbox{\hyperlink{structtrapframe_a886a5973a537894e3a95435f38767d5c}{eip}}, rcr2());}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00094}00094     \mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}()-\/>\mbox{\hyperlink{structproc_afb4f94a3f4df9a835dbb41b0c26660a4}{killed}} = 1;}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00095}00095   \}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00096}00096 }
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00097}00097   \textcolor{comment}{// Force process exit if it has been killed and is in user space.}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00098}00098   \textcolor{comment}{// (If it is still executing in the kernel, let it keep running}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00099}00099   \textcolor{comment}{// until it gets to the regular system call return.)}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00100}00100   \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}() \&\& \mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}()-\/>killed \&\& (tf-\/>\mbox{\hyperlink{structtrapframe_a61261f63223a73e25be79fcc8c625265}{cs}}\&3) == \mbox{\hyperlink{mmu_8h_a060d4d4e32af81cab881fe77e58d7b78}{DPL\_USER}})}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00101}00101     \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00102}00102 }
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00103}00103   \textcolor{comment}{// Force process to give up CPU on clock tick.}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00104}00104   \textcolor{comment}{// If interrupts were on while locks held, would need to check nlock.}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00105}00105   \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}() \&\& \mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}()-\/>state == \mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7a1061be6c3fb88d32829cba6f6b2be304}{RUNNING}} \&\&}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00106}00106      tf-\/>\mbox{\hyperlink{structtrapframe_abc7f81b0a6a91d13e9fefe171b0a7d12}{trapno}} == \mbox{\hyperlink{traps_8h_a17129100154901eb81be6e438843a0e1}{T\_IRQ0}}+\mbox{\hyperlink{traps_8h_a85fc66e3edd4ed6a4db6e455feaba8ca}{IRQ\_TIMER}})}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00107}00107     \mbox{\hyperlink{defs_8h_a7cb51f5c2b5cad3766f19eb69c92793b}{yield}}();}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00108}00108 }
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00109}00109   \textcolor{comment}{// Check if the process has been killed since we yielded}}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00110}00110   \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}() \&\& \mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}()-\/>killed \&\& (tf-\/>\mbox{\hyperlink{structtrapframe_a61261f63223a73e25be79fcc8c625265}{cs}}\&3) == \mbox{\hyperlink{mmu_8h_a060d4d4e32af81cab881fe77e58d7b78}{DPL\_USER}})}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00111}00111     \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{\Hypertarget{trap_8c_source_l00112}00112 \}}
+
+\end{DoxyCode}

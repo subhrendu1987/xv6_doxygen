@@ -1,0 +1,22 @@
+\hypertarget{md_README_autotoc_md1}{}\doxysection{LINUX}\label{md_README_autotoc_md1}
+
+\begin{DoxyEnumerate}
+\item {\ttfamily sudo apt-\/get install git wget qemu aqemu}
+\item {\ttfamily sudo apt-\/get install libc6-\/dev\+:i386 gcc}
+\item {\ttfamily sudo apt-\/get install gdb}
+\item {\ttfamily git clone \href{https://github.com/subhrendu1987/xv6-public/}{\texttt{ https\+://github.\+com/subhrendu1987/xv6-\/public/}}}
+\item {\ttfamily cd xv6-\/public \&\& make qemu}
+\item If you have 64 bit OS there is a chance Makefile will not be able to find qemu. Check using the command {\ttfamily make qemu-\/nox} and see the output. In that case you should edit the Makefile at line 54 and add the following code\+: {\ttfamily QEMU = qemu-\/system-\/x86\+\_\+64}
+\end{DoxyEnumerate}
+\begin{DoxyEnumerate}
+\item {\ttfamily make qemu-\/gdb}
+\end{DoxyEnumerate}
+\begin{DoxyEnumerate}
+\item Open new terminal {\ttfamily cd xv6-\/public \&\& gdb ./kernel}
+\end{DoxyEnumerate}\hypertarget{md_README_autotoc_md2}{}\doxysection{BUILDING AND RUNNING XV6}\label{md_README_autotoc_md2}
+
+\begin{DoxyItemize}
+\item To build xv6 on an x86 ELF machine (like Linux or Free\+BSD), run \char`\"{}make\char`\"{}.
+\item On non-\/x86 or non-\/\+ELF machines (like OS X, even on x86), you may need to install a cross-\/compiler gcc suite capable of producing x86 ELF binaries (see \href{https://pdos.csail.mit.edu/6.828/}{\texttt{ https\+://pdos.\+csail.\+mit.\+edu/6.\+828/}}).
+\item Then run \char`\"{}make TOOLPREFIX=i386-\/jos-\/elf-\/\char`\"{}. Now install the QEMU PC simulator and run \char`\"{}make qemu\char`\"{}. 
+\end{DoxyItemize}

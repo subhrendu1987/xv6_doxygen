@@ -1,0 +1,216 @@
+\hypertarget{bootmain_8c}{}\doxysection{bootmain.\+c File Reference}
+\label{bootmain_8c}\index{bootmain.c@{bootmain.c}}
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}elf.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}x86.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}memlayout.\+h\char`\"{}}\newline
+Include dependency graph for bootmain.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=332pt]{de/d8f/bootmain_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{bootmain_8c_af69dd8b281718a66b3e7a65250d24419}{SECTSIZE}}~512
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{bootmain_8c_af8097ce47ae21ccad1b0afd6f48ef62c}{readseg}} (\mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} $\ast$, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}})
+\item 
+void \mbox{\hyperlink{bootmain_8c_a0d198d492591e1b70a8a12109408a7e4}{bootmain}} (void)
+\item 
+void \mbox{\hyperlink{bootmain_8c_a63222d4a07c38c198de5bd116a001935}{waitdisk}} (void)
+\item 
+void \mbox{\hyperlink{bootmain_8c_ae7ef59ffa082283b72c54e43b7a16351}{readsect}} (void $\ast$dst, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} offset)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{bootmain_8c_af69dd8b281718a66b3e7a65250d24419}\label{bootmain_8c_af69dd8b281718a66b3e7a65250d24419}} 
+\index{bootmain.c@{bootmain.c}!SECTSIZE@{SECTSIZE}}
+\index{SECTSIZE@{SECTSIZE}!bootmain.c@{bootmain.c}}
+\doxysubsubsection{\texorpdfstring{SECTSIZE}{SECTSIZE}}
+{\footnotesize\ttfamily \#define SECTSIZE~512}
+
+
+
+Definition at line \mbox{\hyperlink{bootmain_8c_source_l00013}{13}} of file \mbox{\hyperlink{bootmain_8c_source}{bootmain.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{bootmain_8c_a0d198d492591e1b70a8a12109408a7e4}\label{bootmain_8c_a0d198d492591e1b70a8a12109408a7e4}} 
+\index{bootmain.c@{bootmain.c}!bootmain@{bootmain}}
+\index{bootmain@{bootmain}!bootmain.c@{bootmain.c}}
+\doxysubsubsection{\texorpdfstring{bootmain()}{bootmain()}}
+{\footnotesize\ttfamily void bootmain (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{bootmain_8c_source_l00018}{18}} of file \mbox{\hyperlink{bootmain_8c_source}{bootmain.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00019 \{}
+\DoxyCodeLine{00020   \textcolor{keyword}{struct }\mbox{\hyperlink{structelfhdr}{elfhdr}} *\mbox{\hyperlink{structelfhdr_a22ec6f2383f0488ee18a18673398f201}{elf}};}
+\DoxyCodeLine{00021   \textcolor{keyword}{struct }\mbox{\hyperlink{structproghdr}{proghdr}} *ph, *eph;}
+\DoxyCodeLine{00022   void (*entry)(void);}
+\DoxyCodeLine{00023   \mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}}* pa;}
+\DoxyCodeLine{00024 }
+\DoxyCodeLine{00025   elf = (\textcolor{keyword}{struct }\mbox{\hyperlink{structelfhdr}{elfhdr}}*)0x10000;  \textcolor{comment}{// scratch space}}
+\DoxyCodeLine{00026 }
+\DoxyCodeLine{00027   \textcolor{comment}{// Read 1st page off disk}}
+\DoxyCodeLine{00028   \mbox{\hyperlink{bootmain_8c_af8097ce47ae21ccad1b0afd6f48ef62c}{readseg}}((\mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}}*)\mbox{\hyperlink{structelfhdr_a22ec6f2383f0488ee18a18673398f201}{elf}}, 4096, 0);}
+\DoxyCodeLine{00029 }
+\DoxyCodeLine{00030   \textcolor{comment}{// Is this an ELF executable?}}
+\DoxyCodeLine{00031   \textcolor{keywordflow}{if}(\mbox{\hyperlink{structelfhdr_a22ec6f2383f0488ee18a18673398f201}{elf}}-\/>magic != \mbox{\hyperlink{elf_8h_abb1c2e5626667aacc7b3efd269a6c0eb}{ELF\_MAGIC}})}
+\DoxyCodeLine{00032     \textcolor{keywordflow}{return};  \textcolor{comment}{// let bootasm.S handle error}}
+\DoxyCodeLine{00033 }
+\DoxyCodeLine{00034   \textcolor{comment}{// Load each program segment (ignores ph flags).}}
+\DoxyCodeLine{00035   ph = (\textcolor{keyword}{struct }\mbox{\hyperlink{structproghdr}{proghdr}}*)((\mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}}*)elf + elf-\/>\mbox{\hyperlink{structelfhdr_a1d463f67fcf951c06cfaa37850004c51}{phoff}});}
+\DoxyCodeLine{00036   eph = ph + elf-\/>\mbox{\hyperlink{structelfhdr_a3eff58d58a3ee83aa53d7ffdebdb6b5b}{phnum}};}
+\DoxyCodeLine{00037   \textcolor{keywordflow}{for}(; ph < eph; ph++)\{}
+\DoxyCodeLine{00038     pa = (\mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}}*)ph-\/>\mbox{\hyperlink{structproghdr_af65905aa5c4ccb33aac7dad5783e14d9}{paddr}};}
+\DoxyCodeLine{00039     \mbox{\hyperlink{bootmain_8c_af8097ce47ae21ccad1b0afd6f48ef62c}{readseg}}(pa, ph-\/>\mbox{\hyperlink{structproghdr_a95dee0f1864ec1602f1ff6998ac00df0}{filesz}}, ph-\/>\mbox{\hyperlink{structproghdr_a979532386fd448596cc5046339a2cd2d}{off}});}
+\DoxyCodeLine{00040     \textcolor{keywordflow}{if}(ph-\/>\mbox{\hyperlink{structproghdr_a9f703ade191af1054b3de797d8167d89}{memsz}} > ph-\/>\mbox{\hyperlink{structproghdr_a95dee0f1864ec1602f1ff6998ac00df0}{filesz}})}
+\DoxyCodeLine{00041       stosb(pa + ph-\/>\mbox{\hyperlink{structproghdr_a95dee0f1864ec1602f1ff6998ac00df0}{filesz}}, 0, ph-\/>\mbox{\hyperlink{structproghdr_a9f703ade191af1054b3de797d8167d89}{memsz}} -\/ ph-\/>\mbox{\hyperlink{structproghdr_a95dee0f1864ec1602f1ff6998ac00df0}{filesz}});}
+\DoxyCodeLine{00042   \}}
+\DoxyCodeLine{00043 }
+\DoxyCodeLine{00044   \textcolor{comment}{// Call the entry point from the ELF header.}}
+\DoxyCodeLine{00045   \textcolor{comment}{// Does not return!}}
+\DoxyCodeLine{00046   entry = (void(*)(void))(elf-\/>\mbox{\hyperlink{structelfhdr_ad40755e1b2c6efc3ec0ad95889f743a5}{entry}});}
+\DoxyCodeLine{00047   entry();}
+\DoxyCodeLine{00048 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d5/dfc/bootmain_8c_a0d198d492591e1b70a8a12109408a7e4_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{bootmain_8c_ae7ef59ffa082283b72c54e43b7a16351}\label{bootmain_8c_ae7ef59ffa082283b72c54e43b7a16351}} 
+\index{bootmain.c@{bootmain.c}!readsect@{readsect}}
+\index{readsect@{readsect}!bootmain.c@{bootmain.c}}
+\doxysubsubsection{\texorpdfstring{readsect()}{readsect()}}
+{\footnotesize\ttfamily void readsect (\begin{DoxyParamCaption}\item[{void $\ast$}]{dst,  }\item[{\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}}]{offset }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{bootmain_8c_source_l00060}{60}} of file \mbox{\hyperlink{bootmain_8c_source}{bootmain.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00061 \{}
+\DoxyCodeLine{00062   \textcolor{comment}{// Issue command.}}
+\DoxyCodeLine{00063   \mbox{\hyperlink{bootmain_8c_a63222d4a07c38c198de5bd116a001935}{waitdisk}}();}
+\DoxyCodeLine{00064   outb(0x1F2, 1);   \textcolor{comment}{// count = 1}}
+\DoxyCodeLine{00065   outb(0x1F3, offset);}
+\DoxyCodeLine{00066   outb(0x1F4, offset >> 8);}
+\DoxyCodeLine{00067   outb(0x1F5, offset >> 16);}
+\DoxyCodeLine{00068   outb(0x1F6, (offset >> 24) | 0xE0);}
+\DoxyCodeLine{00069   outb(0x1F7, 0x20);  \textcolor{comment}{// cmd 0x20 -\/ read sectors}}
+\DoxyCodeLine{00070 }
+\DoxyCodeLine{00071   \textcolor{comment}{// Read data.}}
+\DoxyCodeLine{00072   \mbox{\hyperlink{bootmain_8c_a63222d4a07c38c198de5bd116a001935}{waitdisk}}();}
+\DoxyCodeLine{00073   insl(0x1F0, dst, \mbox{\hyperlink{bootmain_8c_af69dd8b281718a66b3e7a65250d24419}{SECTSIZE}}/4);}
+\DoxyCodeLine{00074 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=223pt]{d5/dfc/bootmain_8c_ae7ef59ffa082283b72c54e43b7a16351_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=313pt]{d5/dfc/bootmain_8c_ae7ef59ffa082283b72c54e43b7a16351_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{bootmain_8c_af8097ce47ae21ccad1b0afd6f48ef62c}\label{bootmain_8c_af8097ce47ae21ccad1b0afd6f48ef62c}} 
+\index{bootmain.c@{bootmain.c}!readseg@{readseg}}
+\index{readseg@{readseg}!bootmain.c@{bootmain.c}}
+\doxysubsubsection{\texorpdfstring{readseg()}{readseg()}}
+{\footnotesize\ttfamily void readseg (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} $\ast$}]{pa,  }\item[{\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}}]{count,  }\item[{\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}}]{offset }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{bootmain_8c_source_l00079}{79}} of file \mbox{\hyperlink{bootmain_8c_source}{bootmain.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00080 \{}
+\DoxyCodeLine{00081   \mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}}* epa;}
+\DoxyCodeLine{00082 }
+\DoxyCodeLine{00083   epa = pa + count;}
+\DoxyCodeLine{00084 }
+\DoxyCodeLine{00085   \textcolor{comment}{// Round down to sector boundary.}}
+\DoxyCodeLine{00086   pa -\/= offset \% \mbox{\hyperlink{bootmain_8c_af69dd8b281718a66b3e7a65250d24419}{SECTSIZE}};}
+\DoxyCodeLine{00087 }
+\DoxyCodeLine{00088   \textcolor{comment}{// Translate from bytes to sectors; kernel starts at sector 1.}}
+\DoxyCodeLine{00089   offset = (offset / \mbox{\hyperlink{bootmain_8c_af69dd8b281718a66b3e7a65250d24419}{SECTSIZE}}) + 1;}
+\DoxyCodeLine{00090 }
+\DoxyCodeLine{00091   \textcolor{comment}{// If this is too slow, we could read lots of sectors at a time.}}
+\DoxyCodeLine{00092   \textcolor{comment}{// We'd write more to memory than asked, but it doesn't matter -\/-\/}}
+\DoxyCodeLine{00093   \textcolor{comment}{// we load in increasing order.}}
+\DoxyCodeLine{00094   \textcolor{keywordflow}{for}(; pa < epa; pa += \mbox{\hyperlink{bootmain_8c_af69dd8b281718a66b3e7a65250d24419}{SECTSIZE}}, offset++)}
+\DoxyCodeLine{00095     \mbox{\hyperlink{bootmain_8c_ae7ef59ffa082283b72c54e43b7a16351}{readsect}}(pa, offset);}
+\DoxyCodeLine{00096 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=310pt]{d5/dfc/bootmain_8c_af8097ce47ae21ccad1b0afd6f48ef62c_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=223pt]{d5/dfc/bootmain_8c_af8097ce47ae21ccad1b0afd6f48ef62c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{bootmain_8c_a63222d4a07c38c198de5bd116a001935}\label{bootmain_8c_a63222d4a07c38c198de5bd116a001935}} 
+\index{bootmain.c@{bootmain.c}!waitdisk@{waitdisk}}
+\index{waitdisk@{waitdisk}!bootmain.c@{bootmain.c}}
+\doxysubsubsection{\texorpdfstring{waitdisk()}{waitdisk()}}
+{\footnotesize\ttfamily void waitdisk (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{bootmain_8c_source_l00051}{51}} of file \mbox{\hyperlink{bootmain_8c_source}{bootmain.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00052 \{}
+\DoxyCodeLine{00053   \textcolor{comment}{// Wait for disk ready.}}
+\DoxyCodeLine{00054   \textcolor{keywordflow}{while}((inb(0x1F7) \& 0xC0) != 0x40)}
+\DoxyCodeLine{00055     ;}
+\DoxyCodeLine{00056 \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d5/dfc/bootmain_8c_a63222d4a07c38c198de5bd116a001935_icgraph}
+\end{center}
+\end{figure}

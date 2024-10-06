@@ -1,0 +1,675 @@
+\hypertarget{fs_8c_source}{}\doxysection{fs.\+c}
+\mbox{\hyperlink{fs_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00001}00001 \textcolor{comment}{// File system implementation.  Five layers:}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00002}00002 \textcolor{comment}{//   + Blocks: allocator for raw disk blocks.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00003}00003 \textcolor{comment}{//   + Log: crash recovery for multi-\/step updates.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00004}00004 \textcolor{comment}{//   + Files: inode allocator, reading, writing, metadata.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00005}00005 \textcolor{comment}{//   + Directories: inode with special contents (list of other inodes!)}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00006}00006 \textcolor{comment}{//   + Names: paths like /usr/rtm/xv6/fs.c for convenient naming.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00007}00007 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00008}00008 \textcolor{comment}{// This file contains the low-\/level file system manipulation}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00009}00009 \textcolor{comment}{// routines.  The (higher-\/level) system call implementations}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00010}00010 \textcolor{comment}{// are in sysfile.c.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00012}00012 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00013}00013 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{defs_8h}{defs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00014}00014 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{param_8h}{param.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00015}00015 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{stat_8h}{stat.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00016}00016 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{mmu_8h}{mmu.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00017}00017 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{proc_8h}{proc.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00018}00018 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{spinlock_8h}{spinlock.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00019}00019 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{sleeplock_8h}{sleeplock.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00020}00020 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{fs_8h}{fs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00021}00021 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{buf_8h}{buf.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00022}00022 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{file_8h}{file.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00024}\mbox{\hyperlink{fs_8c_ac6afabdc09a49a433ee19d8a9486056d}{00024}} \textcolor{preprocessor}{\#define min(a, b) ((a) < (b) ? (a) : (b))}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00025}00025 \textcolor{keyword}{static} \textcolor{keywordtype}{void} itrunc(\textcolor{keyword}{struct} \mbox{\hyperlink{structinode}{inode}}*);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00026}00026 \textcolor{comment}{// there should be one superblock per disk device, but we run with}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00027}00027 \textcolor{comment}{// only one device}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00028}\mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{00028}} \textcolor{keyword}{struct }\mbox{\hyperlink{structsuperblock}{superblock}} \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}; }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00030}00030 \textcolor{comment}{// Read the super block.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00031}00031 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00032}\mbox{\hyperlink{defs_8h_aff0080b2133027be2e525ca088b40e78}{00032}} \mbox{\hyperlink{fs_8c_aff0080b2133027be2e525ca088b40e78}{readsb}}(\textcolor{keywordtype}{int} dev, \textcolor{keyword}{struct} \mbox{\hyperlink{structsuperblock}{superblock}} *\mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}})}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00033}00033 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00034}00034   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} *bp;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00036}00036   bp = \mbox{\hyperlink{bio_8c_a30b8d2ef2300ed8e3d879a428fe39898}{bread}}(\mbox{\hyperlink{structbuf_ac96082c2b5f22133ac7092ef81487227}{dev}}, 1);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00037}00037   \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(\mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}, bp-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}}, \textcolor{keyword}{sizeof}(*\mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}));}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00038}00038   \mbox{\hyperlink{bio_8c_ab5335aeb503731104314321a78a6d727}{brelse}}(bp);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00039}00039 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00041}00041 \textcolor{comment}{// Zero a block.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00042}00042 \textcolor{keyword}{static} \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00043}00043 bzero(\textcolor{keywordtype}{int} \mbox{\hyperlink{structbuf_ac96082c2b5f22133ac7092ef81487227}{dev}}, \textcolor{keywordtype}{int} bno)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00044}00044 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00045}00045   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} *bp;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00047}00047   bp = \mbox{\hyperlink{bio_8c_a30b8d2ef2300ed8e3d879a428fe39898}{bread}}(\mbox{\hyperlink{structbuf_ac96082c2b5f22133ac7092ef81487227}{dev}}, bno);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00048}00048   \mbox{\hyperlink{defs_8h_a0098886a849eef10803e9f35ceec61b9}{memset}}(bp-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}}, 0, \mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00049}00049   \mbox{\hyperlink{defs_8h_a270d0050dc50965f4f851717841ad33c}{log\_write}}(bp);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00050}00050   \mbox{\hyperlink{bio_8c_ab5335aeb503731104314321a78a6d727}{brelse}}(bp);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00051}00051 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00053}00053 \textcolor{comment}{// Blocks.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00055}00055 \textcolor{comment}{// Allocate a zeroed disk block.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00056}00056 \textcolor{keyword}{static} \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00057}00057 balloc(\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structbuf_ac96082c2b5f22133ac7092ef81487227}{dev}})}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00058}00058 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00059}00059   \textcolor{keywordtype}{int} b, bi, m;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00060}00060   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} *bp;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00062}00062   bp = 0;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00063}00063   \textcolor{keywordflow}{for}(b = 0; b < \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}.\mbox{\hyperlink{structsuperblock_a7c6e4d6da139ecee74eb7816d5d44fa6}{size}}; b += \mbox{\hyperlink{fs_8h_a3c88fd21abb83ef11461ce750c466828}{BPB}})\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00064}00064     bp = \mbox{\hyperlink{bio_8c_a30b8d2ef2300ed8e3d879a428fe39898}{bread}}(\mbox{\hyperlink{structbuf_ac96082c2b5f22133ac7092ef81487227}{dev}}, \mbox{\hyperlink{fs_8h_a080eb729016328ec6da85bfe125fc04c}{BBLOCK}}(b, \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}));}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00065}00065     \textcolor{keywordflow}{for}(bi = 0; bi < \mbox{\hyperlink{fs_8h_a3c88fd21abb83ef11461ce750c466828}{BPB}} \&\& b + bi < \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}.\mbox{\hyperlink{structsuperblock_a7c6e4d6da139ecee74eb7816d5d44fa6}{size}}; bi++)\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00066}00066       m = 1 << (bi \% 8);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00067}00067       \textcolor{keywordflow}{if}((bp-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}}[bi/8] \& m) == 0)\{  \textcolor{comment}{// Is block free?}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00068}00068         bp-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}}[bi/8] |= m;  \textcolor{comment}{// Mark block in use.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00069}00069         \mbox{\hyperlink{defs_8h_a270d0050dc50965f4f851717841ad33c}{log\_write}}(bp);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00070}00070         \mbox{\hyperlink{bio_8c_ab5335aeb503731104314321a78a6d727}{brelse}}(bp);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00071}00071         bzero(\mbox{\hyperlink{structbuf_ac96082c2b5f22133ac7092ef81487227}{dev}}, b + bi);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00072}00072         \textcolor{keywordflow}{return} b + bi;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00073}00073       \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00074}00074     \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00075}00075     \mbox{\hyperlink{bio_8c_ab5335aeb503731104314321a78a6d727}{brelse}}(bp);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00076}00076   \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00077}00077   \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}balloc: out of blocks"{}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00078}00078 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00079}00079 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00080}00080 \textcolor{comment}{// Free a disk block.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00081}00081 \textcolor{keyword}{static} \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00082}00082 bfree(\textcolor{keywordtype}{int} \mbox{\hyperlink{structbuf_ac96082c2b5f22133ac7092ef81487227}{dev}}, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} b)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00083}00083 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00084}00084   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} *bp;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00085}00085   \textcolor{keywordtype}{int} bi, m;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00086}00086 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00087}00087   bp = \mbox{\hyperlink{bio_8c_a30b8d2ef2300ed8e3d879a428fe39898}{bread}}(\mbox{\hyperlink{structbuf_ac96082c2b5f22133ac7092ef81487227}{dev}}, \mbox{\hyperlink{fs_8h_a080eb729016328ec6da85bfe125fc04c}{BBLOCK}}(b, \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}));}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00088}00088   bi = b \% \mbox{\hyperlink{fs_8h_a3c88fd21abb83ef11461ce750c466828}{BPB}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00089}00089   m = 1 << (bi \% 8);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00090}00090   \textcolor{keywordflow}{if}((bp-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}}[bi/8] \& m) == 0)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00091}00091     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}freeing free block"{}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00092}00092   bp-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}}[bi/8] \&= \string~m;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00093}00093   \mbox{\hyperlink{defs_8h_a270d0050dc50965f4f851717841ad33c}{log\_write}}(bp);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00094}00094   \mbox{\hyperlink{bio_8c_ab5335aeb503731104314321a78a6d727}{brelse}}(bp);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00095}00095 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00096}00096 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00097}00097 \textcolor{comment}{// Inodes.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00098}00098 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00099}00099 \textcolor{comment}{// An inode describes a single unnamed file.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00100}00100 \textcolor{comment}{// The inode disk structure holds metadata: the file's type,}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00101}00101 \textcolor{comment}{// its size, the number of links referring to it, and the}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00102}00102 \textcolor{comment}{// list of blocks holding the file's content.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00103}00103 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00104}00104 \textcolor{comment}{// The inodes are laid out sequentially on disk at}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00105}00105 \textcolor{comment}{// sb.startinode. Each inode has a number, indicating its}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00106}00106 \textcolor{comment}{// position on the disk.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00107}00107 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00108}00108 \textcolor{comment}{// The kernel keeps a cache of in-\/use inodes in memory}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00109}00109 \textcolor{comment}{// to provide a place for synchronizing access}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00110}00110 \textcolor{comment}{// to inodes used by multiple processes. The cached}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00111}00111 \textcolor{comment}{// inodes include book-\/keeping information that is}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00112}00112 \textcolor{comment}{// not stored on disk: ip-\/>ref and ip-\/>valid.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00113}00113 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00114}00114 \textcolor{comment}{// An inode and its in-\/memory representation go through a}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00115}00115 \textcolor{comment}{// sequence of states before they can be used by the}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00116}00116 \textcolor{comment}{// rest of the file system code.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00117}00117 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00118}00118 \textcolor{comment}{// * Allocation: an inode is allocated if its type (on disk)}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00119}00119 \textcolor{comment}{//   is non-\/zero. ialloc() allocates, and iput() frees if}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00120}00120 \textcolor{comment}{//   the reference and link counts have fallen to zero.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00121}00121 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00122}00122 \textcolor{comment}{// * Referencing in cache: an entry in the inode cache}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00123}00123 \textcolor{comment}{//   is free if ip-\/>ref is zero. Otherwise ip-\/>ref tracks}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00124}00124 \textcolor{comment}{//   the number of in-\/memory pointers to the entry (open}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00125}00125 \textcolor{comment}{//   files and current directories). iget() finds or}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00126}00126 \textcolor{comment}{//   creates a cache entry and increments its ref; iput()}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00127}00127 \textcolor{comment}{//   decrements ref.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00128}00128 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00129}00129 \textcolor{comment}{// * Valid: the information (type, size, \&c) in an inode}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00130}00130 \textcolor{comment}{//   cache entry is only correct when ip-\/>valid is 1.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00131}00131 \textcolor{comment}{//   ilock() reads the inode from}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00132}00132 \textcolor{comment}{//   the disk and sets ip-\/>valid, while iput() clears}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00133}00133 \textcolor{comment}{//   ip-\/>valid if ip-\/>ref has fallen to zero.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00134}00134 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00135}00135 \textcolor{comment}{// * Locked: file system code may only examine and modify}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00136}00136 \textcolor{comment}{//   the information in an inode and its content if it}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00137}00137 \textcolor{comment}{//   has first locked the inode.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00138}00138 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00139}00139 \textcolor{comment}{// Thus a typical sequence is:}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00140}00140 \textcolor{comment}{//   ip = iget(dev, inum)}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00141}00141 \textcolor{comment}{//   ilock(ip)}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00142}00142 \textcolor{comment}{//   ... examine and modify ip-\/>xxx ...}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00143}00143 \textcolor{comment}{//   iunlock(ip)}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00144}00144 \textcolor{comment}{//   iput(ip)}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00145}00145 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00146}00146 \textcolor{comment}{// ilock() is separate from iget() so that system calls can}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00147}00147 \textcolor{comment}{// get a long-\/term reference to an inode (as for an open file)}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00148}00148 \textcolor{comment}{// and only lock it for short periods (e.g., in read()).}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00149}00149 \textcolor{comment}{// The separation also helps avoid deadlock and races during}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00150}00150 \textcolor{comment}{// pathname lookup. iget() increments ip-\/>ref so that the inode}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00151}00151 \textcolor{comment}{// stays cached and pointers to it remain valid.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00152}00152 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00153}00153 \textcolor{comment}{// Many internal file system functions expect the caller to}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00154}00154 \textcolor{comment}{// have locked the inodes involved; this lets callers create}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00155}00155 \textcolor{comment}{// multi-\/step atomic operations.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00156}00156 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00157}00157 \textcolor{comment}{// The icache.lock spin-\/lock protects the allocation of icache}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00158}00158 \textcolor{comment}{// entries. Since ip-\/>ref indicates whether an entry is free,}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00159}00159 \textcolor{comment}{// and ip-\/>dev and ip-\/>inum indicate which i-\/node an entry}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00160}00160 \textcolor{comment}{// holds, one must hold icache.lock while using any of those fields.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00161}00161 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00162}00162 \textcolor{comment}{// An ip-\/>lock sleep-\/lock protects all ip-\/> fields other than ref,}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00163}00163 \textcolor{comment}{// dev, and inum.  One must hold ip-\/>lock in order to}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00164}00164 \textcolor{comment}{// read or write that inode's ip-\/>valid, ip-\/>size, ip-\/>type, \&c.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00165}00165 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00166}00166 \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00167}\mbox{\hyperlink{fs_8c_ab28e82cd5dda7d960095706a3ea20572}{00167}}   \textcolor{keyword}{struct }\mbox{\hyperlink{structspinlock}{spinlock}} \mbox{\hyperlink{structbuf_a626ad748d91d4bd7f4e65b74c73f2644}{lock}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00168}\mbox{\hyperlink{fs_8c_a6baaf26dd83b71b8d684c5d54a709e31}{00168}}   \textcolor{keyword}{struct }\mbox{\hyperlink{structinode}{inode}} \mbox{\hyperlink{structinode}{inode}}[\mbox{\hyperlink{param_8h_adabafa10c7951be7c875cd2ee212be85}{NINODE}}];}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00169}\mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{00169}} \} \mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00170}00170 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00171}00171 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00172}\mbox{\hyperlink{defs_8h_a301761a27cf266e0bad483272fb31a3c}{00172}} \mbox{\hyperlink{fs_8c_a301761a27cf266e0bad483272fb31a3c}{iinit}}(\textcolor{keywordtype}{int} \mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}})}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00173}00173 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00174}00174   \textcolor{keywordtype}{int} i = 0;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00175}00175   }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00176}00176   \mbox{\hyperlink{defs_8h_ab56d728e6966819a0260c358d3ac3419}{initlock}}(\&\mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}}.lock, \textcolor{stringliteral}{"{}icache"{}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00177}00177   \textcolor{keywordflow}{for}(i = 0; i < \mbox{\hyperlink{param_8h_adabafa10c7951be7c875cd2ee212be85}{NINODE}}; i++) \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00178}00178     \mbox{\hyperlink{defs_8h_af5ca8072e3877a883fb34ce59eff88cb}{initsleeplock}}(\&\mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}}.inode[i].lock, \textcolor{stringliteral}{"{}inode"{}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00179}00179   \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00180}00180 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00181}00181   \mbox{\hyperlink{fs_8c_aff0080b2133027be2e525ca088b40e78}{readsb}}(\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}}, \&\mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00182}00182   \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{}sb: size \%d nblocks \%d ninodes \%d nlog \%d logstart \%d\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00183}00183 \textcolor{stringliteral}{ inodestart \%d bmap start \%d\(\backslash\)n"{}}, \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}.\mbox{\hyperlink{structsuperblock_a7c6e4d6da139ecee74eb7816d5d44fa6}{size}}, \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}.\mbox{\hyperlink{structsuperblock_a2a27a7cfb54689f0e1dcd1788d049218}{nblocks}},}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00184}00184           \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}.\mbox{\hyperlink{structsuperblock_a355d2a1ebdc51f80820c23e69363cf42}{ninodes}}, \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}.\mbox{\hyperlink{structsuperblock_aea92ae872785fd4fb39b903d9157aac5}{nlog}}, \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}.\mbox{\hyperlink{structsuperblock_a460268b28aced19797e8d7b84aa60ebf}{logstart}}, \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}.\mbox{\hyperlink{structsuperblock_adde361528f3905445974301b424611c1}{inodestart}},}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00185}00185           \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}.\mbox{\hyperlink{structsuperblock_a3c815dda5be6bda609389e76434171cc}{bmapstart}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00186}00186 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00187}00187 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00188}00188 \textcolor{keyword}{static} \textcolor{keyword}{struct }\mbox{\hyperlink{structinode}{inode}}* iget(\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}}, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structinode_a8acc2b9df0bfc6856da62925763db7fe}{inum}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00189}00189 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00190}00190 \textcolor{comment}{//PAGEBREAK!}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00191}00191 \textcolor{comment}{// Allocate an inode on device dev.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00192}00192 \textcolor{comment}{// Mark it as allocated by  giving it type type.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00193}00193 \textcolor{comment}{// Returns an unlocked but allocated and referenced inode.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00194}00194 \textcolor{keyword}{struct }\mbox{\hyperlink{structinode}{inode}}*}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00195}\mbox{\hyperlink{defs_8h_af71d7632e6d48638682e78de0ad269af}{00195}} \mbox{\hyperlink{fs_8c_af95049367381647bc9487af49724b869}{ialloc}}(\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}}, \textcolor{keywordtype}{short} \mbox{\hyperlink{structinode_a8d74bec2898785c057111c328d23fda2}{type}})}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00196}00196 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00197}00197   \textcolor{keywordtype}{int} \mbox{\hyperlink{structinode_a8acc2b9df0bfc6856da62925763db7fe}{inum}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00198}00198   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} *bp;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00199}00199   \textcolor{keyword}{struct }\mbox{\hyperlink{structdinode}{dinode}} *dip;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00200}00200 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00201}00201   \textcolor{keywordflow}{for}(inum = 1; inum < \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}.\mbox{\hyperlink{structsuperblock_a355d2a1ebdc51f80820c23e69363cf42}{ninodes}}; inum++)\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00202}00202     bp = \mbox{\hyperlink{bio_8c_a30b8d2ef2300ed8e3d879a428fe39898}{bread}}(dev, \mbox{\hyperlink{fs_8h_ac9a5b990015f0f86e5d4c6b21d38ffa0}{IBLOCK}}(inum, \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}));}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00203}00203     dip = (\textcolor{keyword}{struct }\mbox{\hyperlink{structdinode}{dinode}}*)bp-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}} + inum\%\mbox{\hyperlink{fs_8h_aadb6c866a6d0a173f5f0a6ed9c7e0228}{IPB}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00204}00204     \textcolor{keywordflow}{if}(dip-\/>\mbox{\hyperlink{structdinode_abf6b2a8476a803284f1c927fb3b82259}{type}} == 0)\{  \textcolor{comment}{// a free inode}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00205}00205       \mbox{\hyperlink{defs_8h_a0098886a849eef10803e9f35ceec61b9}{memset}}(dip, 0, \textcolor{keyword}{sizeof}(*dip));}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00206}00206       dip-\/>\mbox{\hyperlink{structdinode_abf6b2a8476a803284f1c927fb3b82259}{type}} = \mbox{\hyperlink{structdinode_abf6b2a8476a803284f1c927fb3b82259}{type}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00207}00207       \mbox{\hyperlink{defs_8h_a270d0050dc50965f4f851717841ad33c}{log\_write}}(bp);   \textcolor{comment}{// mark it allocated on the disk}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00208}00208       \mbox{\hyperlink{bio_8c_ab5335aeb503731104314321a78a6d727}{brelse}}(bp);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00209}00209       \textcolor{keywordflow}{return} iget(dev, inum);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00210}00210     \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00211}00211     \mbox{\hyperlink{bio_8c_ab5335aeb503731104314321a78a6d727}{brelse}}(bp);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00212}00212   \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00213}00213   \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}ialloc: no inodes"{}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00214}00214 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00215}00215 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00216}00216 \textcolor{comment}{// Copy a modified in-\/memory inode to disk.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00217}00217 \textcolor{comment}{// Must be called after every change to an ip-\/>xxx field}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00218}00218 \textcolor{comment}{// that lives on disk, since i-\/node cache is write-\/through.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00219}00219 \textcolor{comment}{// Caller must hold ip-\/>lock.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00220}00220 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00221}\mbox{\hyperlink{defs_8h_a2ee6784c123b2a2656d88b5b357f2253}{00221}} \mbox{\hyperlink{fs_8c_a7220afa8e5f4bea540eb95879ea7df6e}{iupdate}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structinode}{inode}} *ip)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00222}00222 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00223}00223   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} *bp;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00224}00224   \textcolor{keyword}{struct }\mbox{\hyperlink{structdinode}{dinode}} *dip;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00225}00225 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00226}00226   bp = \mbox{\hyperlink{bio_8c_a30b8d2ef2300ed8e3d879a428fe39898}{bread}}(ip-\/>\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}}, \mbox{\hyperlink{fs_8h_ac9a5b990015f0f86e5d4c6b21d38ffa0}{IBLOCK}}(ip-\/>\mbox{\hyperlink{structinode_a8acc2b9df0bfc6856da62925763db7fe}{inum}}, \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}));}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00227}00227   dip = (\textcolor{keyword}{struct }\mbox{\hyperlink{structdinode}{dinode}}*)bp-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}} + ip-\/>\mbox{\hyperlink{structinode_a8acc2b9df0bfc6856da62925763db7fe}{inum}}\%\mbox{\hyperlink{fs_8h_aadb6c866a6d0a173f5f0a6ed9c7e0228}{IPB}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00228}00228   dip-\/>\mbox{\hyperlink{structdinode_abf6b2a8476a803284f1c927fb3b82259}{type}} = ip-\/>\mbox{\hyperlink{structinode_a8d74bec2898785c057111c328d23fda2}{type}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00229}00229   dip-\/>\mbox{\hyperlink{structdinode_aca8272002020f48219df175c986db257}{major}} = ip-\/>\mbox{\hyperlink{structinode_a34af7242018a977dace5730683850875}{major}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00230}00230   dip-\/>\mbox{\hyperlink{structdinode_ae97965f85e7353313f85035e8fc63495}{minor}} = ip-\/>\mbox{\hyperlink{structinode_a37878866e7905b666db2aa33076076a2}{minor}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00231}00231   dip-\/>\mbox{\hyperlink{structdinode_a105562253b461c11413c9a229ef15358}{nlink}} = ip-\/>\mbox{\hyperlink{structinode_af8b88b409bea7ef99c49a55f387538b2}{nlink}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00232}00232   dip-\/>\mbox{\hyperlink{structdinode_a990ad8ddf5f8c051fbbe95cf550d2164}{size}} = ip-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00233}00233   \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(dip-\/>\mbox{\hyperlink{structdinode_a705729b3a39c10c0ba6927fc5e4e0563}{addrs}}, ip-\/>\mbox{\hyperlink{structinode_a7ba4ab7e52404b80d6d854678715ae30}{addrs}}, \textcolor{keyword}{sizeof}(ip-\/>\mbox{\hyperlink{structinode_a7ba4ab7e52404b80d6d854678715ae30}{addrs}}));}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00234}00234   \mbox{\hyperlink{defs_8h_a270d0050dc50965f4f851717841ad33c}{log\_write}}(bp);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00235}00235   \mbox{\hyperlink{bio_8c_ab5335aeb503731104314321a78a6d727}{brelse}}(bp);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00236}00236 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00237}00237 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00238}00238 \textcolor{comment}{// Find the inode with number inum on device dev}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00239}00239 \textcolor{comment}{// and return the in-\/memory copy. Does not lock}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00240}00240 \textcolor{comment}{// the inode and does not read it from disk.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00241}00241 \textcolor{keyword}{static} \textcolor{keyword}{struct }\mbox{\hyperlink{structinode}{inode}}*}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00242}00242 iget(\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}}, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structinode_a8acc2b9df0bfc6856da62925763db7fe}{inum}})}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00243}00243 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00244}00244   \textcolor{keyword}{struct }\mbox{\hyperlink{structinode}{inode}} *ip, *empty;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00245}00245 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00246}00246   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}}.lock);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00247}00247 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00248}00248   \textcolor{comment}{// Is the inode already cached?}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00249}00249   empty = 0;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00250}00250   \textcolor{keywordflow}{for}(ip = \&\mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}}.inode[0]; ip < \&\mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}}.inode[\mbox{\hyperlink{param_8h_adabafa10c7951be7c875cd2ee212be85}{NINODE}}]; ip++)\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00251}00251     \textcolor{keywordflow}{if}(ip-\/>\mbox{\hyperlink{structinode_a6a519028ee67f805482b3e1725bf09c5}{ref}} > 0 \&\& ip-\/>\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}} == \mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}} \&\& ip-\/>\mbox{\hyperlink{structinode_a8acc2b9df0bfc6856da62925763db7fe}{inum}} == \mbox{\hyperlink{structinode_a8acc2b9df0bfc6856da62925763db7fe}{inum}})\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00252}00252       ip-\/>\mbox{\hyperlink{structinode_a6a519028ee67f805482b3e1725bf09c5}{ref}}++;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00253}00253       \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}}.lock);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00254}00254       \textcolor{keywordflow}{return} ip;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00255}00255     \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00256}00256     \textcolor{keywordflow}{if}(empty == 0 \&\& ip-\/>\mbox{\hyperlink{structinode_a6a519028ee67f805482b3e1725bf09c5}{ref}} == 0)    \textcolor{comment}{// Remember empty slot.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00257}00257       empty = ip;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00258}00258   \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00259}00259 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00260}00260   \textcolor{comment}{// Recycle an inode cache entry.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00261}00261   \textcolor{keywordflow}{if}(empty == 0)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00262}00262     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}iget: no inodes"{}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00263}00263 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00264}00264   ip = empty;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00265}00265   ip-\/>\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}} = \mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00266}00266   ip-\/>\mbox{\hyperlink{structinode_a8acc2b9df0bfc6856da62925763db7fe}{inum}} = \mbox{\hyperlink{structinode_a8acc2b9df0bfc6856da62925763db7fe}{inum}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00267}00267   ip-\/>\mbox{\hyperlink{structinode_a6a519028ee67f805482b3e1725bf09c5}{ref}} = 1;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00268}00268   ip-\/>\mbox{\hyperlink{structinode_aad324382ba30eb83daa5304fce7dca08}{valid}} = 0;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00269}00269   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}}.lock);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00270}00270 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00271}00271   \textcolor{keywordflow}{return} ip;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00272}00272 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00273}00273 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00274}00274 \textcolor{comment}{// Increment reference count for ip.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00275}00275 \textcolor{comment}{// Returns ip to enable ip = idup(ip1) idiom.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00276}00276 \textcolor{keyword}{struct }\mbox{\hyperlink{structinode}{inode}}*}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00277}\mbox{\hyperlink{defs_8h_a02a4eb876d45b936de1adc73bff02ebf}{00277}} \mbox{\hyperlink{fs_8c_a24a91383ab80b4b8a1ef1f4df896035c}{idup}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structinode}{inode}} *ip)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00278}00278 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00279}00279   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}}.lock);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00280}00280   ip-\/>\mbox{\hyperlink{structinode_a6a519028ee67f805482b3e1725bf09c5}{ref}}++;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00281}00281   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}}.lock);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00282}00282   \textcolor{keywordflow}{return} ip;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00283}00283 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00284}00284 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00285}00285 \textcolor{comment}{// Lock the given inode.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00286}00286 \textcolor{comment}{// Reads the inode from disk if necessary.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00287}00287 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00288}\mbox{\hyperlink{defs_8h_a29a4d743d41fe659f74b0a57fdc25012}{00288}} \mbox{\hyperlink{fs_8c_aed28187406d84a3aa71f10c6235a03ec}{ilock}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structinode}{inode}} *ip)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00289}00289 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00290}00290   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} *bp;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00291}00291   \textcolor{keyword}{struct }\mbox{\hyperlink{structdinode}{dinode}} *dip;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00292}00292 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00293}00293   \textcolor{keywordflow}{if}(ip == 0 || ip-\/>\mbox{\hyperlink{structinode_a6a519028ee67f805482b3e1725bf09c5}{ref}} < 1)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00294}00294     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}ilock"{}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00295}00295 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00296}00296   \mbox{\hyperlink{defs_8h_aecd4639fe2f9aaad8e8cee2b5e0688c3}{acquiresleep}}(\&ip-\/>\mbox{\hyperlink{structinode_a46bad0e938fbd348ac02bdef0c8d6215}{lock}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00297}00297 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00298}00298   \textcolor{keywordflow}{if}(ip-\/>\mbox{\hyperlink{structinode_aad324382ba30eb83daa5304fce7dca08}{valid}} == 0)\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00299}00299     bp = \mbox{\hyperlink{bio_8c_a30b8d2ef2300ed8e3d879a428fe39898}{bread}}(ip-\/>\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}}, \mbox{\hyperlink{fs_8h_ac9a5b990015f0f86e5d4c6b21d38ffa0}{IBLOCK}}(ip-\/>\mbox{\hyperlink{structinode_a8acc2b9df0bfc6856da62925763db7fe}{inum}}, \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}));}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00300}00300     dip = (\textcolor{keyword}{struct }\mbox{\hyperlink{structdinode}{dinode}}*)bp-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}} + ip-\/>\mbox{\hyperlink{structinode_a8acc2b9df0bfc6856da62925763db7fe}{inum}}\%\mbox{\hyperlink{fs_8h_aadb6c866a6d0a173f5f0a6ed9c7e0228}{IPB}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00301}00301     ip-\/>\mbox{\hyperlink{structinode_a8d74bec2898785c057111c328d23fda2}{type}} = dip-\/>\mbox{\hyperlink{structdinode_abf6b2a8476a803284f1c927fb3b82259}{type}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00302}00302     ip-\/>\mbox{\hyperlink{structinode_a34af7242018a977dace5730683850875}{major}} = dip-\/>\mbox{\hyperlink{structdinode_aca8272002020f48219df175c986db257}{major}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00303}00303     ip-\/>\mbox{\hyperlink{structinode_a37878866e7905b666db2aa33076076a2}{minor}} = dip-\/>\mbox{\hyperlink{structdinode_ae97965f85e7353313f85035e8fc63495}{minor}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00304}00304     ip-\/>\mbox{\hyperlink{structinode_af8b88b409bea7ef99c49a55f387538b2}{nlink}} = dip-\/>\mbox{\hyperlink{structdinode_a105562253b461c11413c9a229ef15358}{nlink}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00305}00305     ip-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}} = dip-\/>\mbox{\hyperlink{structdinode_a990ad8ddf5f8c051fbbe95cf550d2164}{size}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00306}00306     \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(ip-\/>\mbox{\hyperlink{structinode_a7ba4ab7e52404b80d6d854678715ae30}{addrs}}, dip-\/>\mbox{\hyperlink{structdinode_a705729b3a39c10c0ba6927fc5e4e0563}{addrs}}, \textcolor{keyword}{sizeof}(ip-\/>\mbox{\hyperlink{structinode_a7ba4ab7e52404b80d6d854678715ae30}{addrs}}));}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00307}00307     \mbox{\hyperlink{bio_8c_ab5335aeb503731104314321a78a6d727}{brelse}}(bp);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00308}00308     ip-\/>\mbox{\hyperlink{structinode_aad324382ba30eb83daa5304fce7dca08}{valid}} = 1;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00309}00309     \textcolor{keywordflow}{if}(ip-\/>\mbox{\hyperlink{structinode_a8d74bec2898785c057111c328d23fda2}{type}} == 0)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00310}00310       \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}ilock: no type"{}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00311}00311   \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00312}00312 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00313}00313 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00314}00314 \textcolor{comment}{// Unlock the given inode.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00315}00315 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00316}\mbox{\hyperlink{defs_8h_af301c10ad8ced77a5dfb2de3a64c666c}{00316}} \mbox{\hyperlink{fs_8c_ae4e29916219b9293b37f9c34220694fe}{iunlock}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structinode}{inode}} *ip)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00317}00317 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00318}00318   \textcolor{keywordflow}{if}(ip == 0 || !\mbox{\hyperlink{defs_8h_afa76133bc67c6026376d630da9b53b68}{holdingsleep}}(\&ip-\/>\mbox{\hyperlink{structinode_a46bad0e938fbd348ac02bdef0c8d6215}{lock}}) || ip-\/>\mbox{\hyperlink{structinode_a6a519028ee67f805482b3e1725bf09c5}{ref}} < 1)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00319}00319     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}iunlock"{}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00320}00320 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00321}00321   \mbox{\hyperlink{defs_8h_a840b479c87b1c047d7142f58e0ad0b27}{releasesleep}}(\&ip-\/>\mbox{\hyperlink{structinode_a46bad0e938fbd348ac02bdef0c8d6215}{lock}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00322}00322 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00323}00323 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00324}00324 \textcolor{comment}{// Drop a reference to an in-\/memory inode.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00325}00325 \textcolor{comment}{// If that was the last reference, the inode cache entry can}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00326}00326 \textcolor{comment}{// be recycled.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00327}00327 \textcolor{comment}{// If that was the last reference and the inode has no links}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00328}00328 \textcolor{comment}{// to it, free the inode (and its content) on disk.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00329}00329 \textcolor{comment}{// All calls to iput() must be inside a transaction in}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00330}00330 \textcolor{comment}{// case it has to free the inode.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00331}00331 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00332}\mbox{\hyperlink{defs_8h_a29530a0afdfe924818d8c70b6724528d}{00332}} \mbox{\hyperlink{fs_8c_ab3c447f135c68e4c3c1f8d5866f6e77b}{iput}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structinode}{inode}} *ip)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00333}00333 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00334}00334   \mbox{\hyperlink{defs_8h_aecd4639fe2f9aaad8e8cee2b5e0688c3}{acquiresleep}}(\&ip-\/>\mbox{\hyperlink{structinode_a46bad0e938fbd348ac02bdef0c8d6215}{lock}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00335}00335   \textcolor{keywordflow}{if}(ip-\/>\mbox{\hyperlink{structinode_aad324382ba30eb83daa5304fce7dca08}{valid}} \&\& ip-\/>\mbox{\hyperlink{structinode_af8b88b409bea7ef99c49a55f387538b2}{nlink}} == 0)\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00336}00336     \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}}.lock);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00337}00337     \textcolor{keywordtype}{int} \mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}} = ip-\/>\mbox{\hyperlink{structinode_a6a519028ee67f805482b3e1725bf09c5}{ref}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00338}00338     \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}}.lock);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00339}00339     \textcolor{keywordflow}{if}(\mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}} == 1)\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00340}00340       \textcolor{comment}{// inode has no links and no other references: truncate and free.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00341}00341       itrunc(ip);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00342}00342       ip-\/>\mbox{\hyperlink{structinode_a8d74bec2898785c057111c328d23fda2}{type}} = 0;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00343}00343       \mbox{\hyperlink{fs_8c_a7220afa8e5f4bea540eb95879ea7df6e}{iupdate}}(ip);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00344}00344       ip-\/>\mbox{\hyperlink{structinode_aad324382ba30eb83daa5304fce7dca08}{valid}} = 0;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00345}00345     \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00346}00346   \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00347}00347   \mbox{\hyperlink{defs_8h_a840b479c87b1c047d7142f58e0ad0b27}{releasesleep}}(\&ip-\/>\mbox{\hyperlink{structinode_a46bad0e938fbd348ac02bdef0c8d6215}{lock}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00348}00348 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00349}00349   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}}.lock);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00350}00350   ip-\/>\mbox{\hyperlink{structinode_a6a519028ee67f805482b3e1725bf09c5}{ref}}-\/-\/;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00351}00351   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}}.lock);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00352}00352 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00353}00353 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00354}00354 \textcolor{comment}{// Common idiom: unlock, then put.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00355}00355 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00356}\mbox{\hyperlink{defs_8h_adff5bb5a1eeaf921853ec06479f8c49b}{00356}} \mbox{\hyperlink{fs_8c_a207b3008bae35596c55ec7c4fc6875eb}{iunlockput}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structinode}{inode}} *ip)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00357}00357 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00358}00358   \mbox{\hyperlink{fs_8c_ae4e29916219b9293b37f9c34220694fe}{iunlock}}(ip);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00359}00359   \mbox{\hyperlink{fs_8c_ab3c447f135c68e4c3c1f8d5866f6e77b}{iput}}(ip);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00360}00360 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00361}00361 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00362}00362 \textcolor{comment}{//PAGEBREAK!}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00363}00363 \textcolor{comment}{// Inode content}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00364}00364 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00365}00365 \textcolor{comment}{// The content (data) associated with each inode is stored}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00366}00366 \textcolor{comment}{// in blocks on the disk. The first NDIRECT block numbers}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00367}00367 \textcolor{comment}{// are listed in ip-\/>addrs[].  The next NINDIRECT blocks are}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00368}00368 \textcolor{comment}{// listed in block ip-\/>addrs[NDIRECT].}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00369}00369 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00370}00370 \textcolor{comment}{// Return the disk block address of the nth block in inode ip.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00371}00371 \textcolor{comment}{// If there is no such block, bmap allocates one.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00372}00372 \textcolor{keyword}{static} \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00373}00373 bmap(\textcolor{keyword}{struct} \mbox{\hyperlink{structinode}{inode}} *ip, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} bn)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00374}00374 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00375}00375   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} addr, *a;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00376}00376   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} *bp;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00377}00377 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00378}00378   \textcolor{keywordflow}{if}(bn < \mbox{\hyperlink{fs_8h_acd38e9532d4b3623f844b93c012a8e06}{NDIRECT}})\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00379}00379     \textcolor{keywordflow}{if}((addr = ip-\/>\mbox{\hyperlink{structinode_a7ba4ab7e52404b80d6d854678715ae30}{addrs}}[bn]) == 0)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00380}00380       ip-\/>\mbox{\hyperlink{structinode_a7ba4ab7e52404b80d6d854678715ae30}{addrs}}[bn] = addr = balloc(ip-\/>\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00381}00381     \textcolor{keywordflow}{return} addr;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00382}00382   \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00383}00383   bn -\/= \mbox{\hyperlink{fs_8h_acd38e9532d4b3623f844b93c012a8e06}{NDIRECT}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00384}00384 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00385}00385   \textcolor{keywordflow}{if}(bn < \mbox{\hyperlink{fs_8h_a6d24f098ea2928d61ff80b123d761715}{NINDIRECT}})\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00386}00386     \textcolor{comment}{// Load indirect block, allocating if necessary.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00387}00387     \textcolor{keywordflow}{if}((addr = ip-\/>\mbox{\hyperlink{structinode_a7ba4ab7e52404b80d6d854678715ae30}{addrs}}[\mbox{\hyperlink{fs_8h_acd38e9532d4b3623f844b93c012a8e06}{NDIRECT}}]) == 0)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00388}00388       ip-\/>\mbox{\hyperlink{structinode_a7ba4ab7e52404b80d6d854678715ae30}{addrs}}[\mbox{\hyperlink{fs_8h_acd38e9532d4b3623f844b93c012a8e06}{NDIRECT}}] = addr = balloc(ip-\/>\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00389}00389     bp = \mbox{\hyperlink{bio_8c_a30b8d2ef2300ed8e3d879a428fe39898}{bread}}(ip-\/>\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}}, addr);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00390}00390     a = (\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}*)bp-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00391}00391     \textcolor{keywordflow}{if}((addr = a[bn]) == 0)\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00392}00392       a[bn] = addr = balloc(ip-\/>\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00393}00393       \mbox{\hyperlink{defs_8h_a270d0050dc50965f4f851717841ad33c}{log\_write}}(bp);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00394}00394     \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00395}00395     \mbox{\hyperlink{bio_8c_ab5335aeb503731104314321a78a6d727}{brelse}}(bp);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00396}00396     \textcolor{keywordflow}{return} addr;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00397}00397   \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00398}00398 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00399}00399   \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}bmap: out of range"{}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00400}00400 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00401}00401 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00402}00402 \textcolor{comment}{// Truncate inode (discard contents).}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00403}00403 \textcolor{comment}{// Only called when the inode has no links}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00404}00404 \textcolor{comment}{// to it (no directory entries referring to it)}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00405}00405 \textcolor{comment}{// and has no in-\/memory reference to it (is}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00406}00406 \textcolor{comment}{// not an open file or current directory).}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00407}00407 \textcolor{keyword}{static} \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00408}00408 itrunc(\textcolor{keyword}{struct} \mbox{\hyperlink{structinode}{inode}} *ip)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00409}00409 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00410}00410   \textcolor{keywordtype}{int} i, j;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00411}00411   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} *bp;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00412}00412   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} *a;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00413}00413 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00414}00414   \textcolor{keywordflow}{for}(i = 0; i < \mbox{\hyperlink{fs_8h_acd38e9532d4b3623f844b93c012a8e06}{NDIRECT}}; i++)\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00415}00415     \textcolor{keywordflow}{if}(ip-\/>\mbox{\hyperlink{structinode_a7ba4ab7e52404b80d6d854678715ae30}{addrs}}[i])\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00416}00416       bfree(ip-\/>\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}}, ip-\/>\mbox{\hyperlink{structinode_a7ba4ab7e52404b80d6d854678715ae30}{addrs}}[i]);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00417}00417       ip-\/>\mbox{\hyperlink{structinode_a7ba4ab7e52404b80d6d854678715ae30}{addrs}}[i] = 0;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00418}00418     \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00419}00419   \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00420}00420 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00421}00421   \textcolor{keywordflow}{if}(ip-\/>\mbox{\hyperlink{structinode_a7ba4ab7e52404b80d6d854678715ae30}{addrs}}[\mbox{\hyperlink{fs_8h_acd38e9532d4b3623f844b93c012a8e06}{NDIRECT}}])\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00422}00422     bp = \mbox{\hyperlink{bio_8c_a30b8d2ef2300ed8e3d879a428fe39898}{bread}}(ip-\/>\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}}, ip-\/>\mbox{\hyperlink{structinode_a7ba4ab7e52404b80d6d854678715ae30}{addrs}}[\mbox{\hyperlink{fs_8h_acd38e9532d4b3623f844b93c012a8e06}{NDIRECT}}]);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00423}00423     a = (\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}*)bp-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00424}00424     \textcolor{keywordflow}{for}(j = 0; j < \mbox{\hyperlink{fs_8h_a6d24f098ea2928d61ff80b123d761715}{NINDIRECT}}; j++)\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00425}00425       \textcolor{keywordflow}{if}(a[j])}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00426}00426         bfree(ip-\/>\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}}, a[j]);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00427}00427     \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00428}00428     \mbox{\hyperlink{bio_8c_ab5335aeb503731104314321a78a6d727}{brelse}}(bp);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00429}00429     bfree(ip-\/>\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}}, ip-\/>\mbox{\hyperlink{structinode_a7ba4ab7e52404b80d6d854678715ae30}{addrs}}[\mbox{\hyperlink{fs_8h_acd38e9532d4b3623f844b93c012a8e06}{NDIRECT}}]);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00430}00430     ip-\/>\mbox{\hyperlink{structinode_a7ba4ab7e52404b80d6d854678715ae30}{addrs}}[\mbox{\hyperlink{fs_8h_acd38e9532d4b3623f844b93c012a8e06}{NDIRECT}}] = 0;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00431}00431   \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00432}00432 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00433}00433   ip-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}} = 0;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00434}00434   \mbox{\hyperlink{fs_8c_a7220afa8e5f4bea540eb95879ea7df6e}{iupdate}}(ip);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00435}00435 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00436}00436 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00437}00437 \textcolor{comment}{// Copy stat information from inode.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00438}00438 \textcolor{comment}{// Caller must hold ip-\/>lock.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00439}00439 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00440}\mbox{\hyperlink{defs_8h_a528f45ea5530504abc7113acc2154348}{00440}} \mbox{\hyperlink{fs_8c_a4ccff0bd4d9802e709d0af8d71a59861}{stati}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structinode}{inode}} *ip, \textcolor{keyword}{struct} \mbox{\hyperlink{structstat}{stat}} *st)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00441}00441 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00442}00442   st-\/>\mbox{\hyperlink{structstat_a14ef4f85e6fb86bf296360361d0f393b}{dev}} = ip-\/>\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00443}00443   st-\/>\mbox{\hyperlink{structstat_abf15624517ed5d79d0fa2a5553a68e25}{ino}} = ip-\/>\mbox{\hyperlink{structinode_a8acc2b9df0bfc6856da62925763db7fe}{inum}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00444}00444   st-\/>\mbox{\hyperlink{structstat_a01f1b4cd7627d192a7875c9a188e0699}{type}} = ip-\/>\mbox{\hyperlink{structinode_a8d74bec2898785c057111c328d23fda2}{type}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00445}00445   st-\/>\mbox{\hyperlink{structstat_a99ca3487fd2f4799337eb4281f8871e4}{nlink}} = ip-\/>\mbox{\hyperlink{structinode_af8b88b409bea7ef99c49a55f387538b2}{nlink}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00446}00446   st-\/>\mbox{\hyperlink{structstat_a4ac15b64dd4d787c59a8a687d79adb35}{size}} = ip-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00447}00447 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00448}00448 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00449}00449 \textcolor{comment}{//PAGEBREAK!}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00450}00450 \textcolor{comment}{// Read data from inode.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00451}00451 \textcolor{comment}{// Caller must hold ip-\/>lock.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00452}00452 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00453}\mbox{\hyperlink{defs_8h_a2415273b06f31f0f2587b7325588a7e4}{00453}} \mbox{\hyperlink{fs_8c_a3aba1fa9f6789d09356aec5b96d91fa8}{readi}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structinode}{inode}} *ip, \textcolor{keywordtype}{char} *dst, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} off, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} n)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00454}00454 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00455}00455   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} tot, m;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00456}00456   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} *bp;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00457}00457 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00458}00458   \textcolor{keywordflow}{if}(ip-\/>\mbox{\hyperlink{structinode_a8d74bec2898785c057111c328d23fda2}{type}} == \mbox{\hyperlink{stat_8h_a62b045a3e4fdf204bdddda0f3fc3d8c4}{T\_DEV}})\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00459}00459     \textcolor{keywordflow}{if}(ip-\/>\mbox{\hyperlink{structinode_a34af7242018a977dace5730683850875}{major}} < 0 || ip-\/>\mbox{\hyperlink{structinode_a34af7242018a977dace5730683850875}{major}} >= \mbox{\hyperlink{param_8h_aa564a41c8409694da49b0badf2bb2853}{NDEV}} || !\mbox{\hyperlink{structdevsw}{devsw}}[ip-\/>\mbox{\hyperlink{structinode_a34af7242018a977dace5730683850875}{major}}].\mbox{\hyperlink{structdevsw_a4efbe00d0031a1c9005ef2186947ea37}{read}})}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00460}00460       \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00461}00461     \textcolor{keywordflow}{return} \mbox{\hyperlink{structdevsw}{devsw}}[ip-\/>\mbox{\hyperlink{structinode_a34af7242018a977dace5730683850875}{major}}].\mbox{\hyperlink{structdevsw_a4efbe00d0031a1c9005ef2186947ea37}{read}}(ip, dst, n);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00462}00462   \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00463}00463 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00464}00464   \textcolor{keywordflow}{if}(off > ip-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}} || off + n < off)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00465}00465     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00466}00466   \textcolor{keywordflow}{if}(off + n > ip-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}})}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00467}00467     n = ip-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}} -\/ off;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00468}00468 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00469}00469   \textcolor{keywordflow}{for}(tot=0; tot<n; tot+=m, off+=m, dst+=m)\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00470}00470     bp = \mbox{\hyperlink{bio_8c_a30b8d2ef2300ed8e3d879a428fe39898}{bread}}(ip-\/>\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}}, bmap(ip, off/\mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}}));}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00471}00471     m = \mbox{\hyperlink{fs_8c_ac6afabdc09a49a433ee19d8a9486056d}{min}}(n -\/ tot, \mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}} -\/ off\%\mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00472}00472     \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(dst, bp-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}} + off\%\mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}}, m);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00473}00473     \mbox{\hyperlink{bio_8c_ab5335aeb503731104314321a78a6d727}{brelse}}(bp);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00474}00474   \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00475}00475   \textcolor{keywordflow}{return} n;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00476}00476 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00477}00477 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00478}00478 \textcolor{comment}{// PAGEBREAK!}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00479}00479 \textcolor{comment}{// Write data to inode.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00480}00480 \textcolor{comment}{// Caller must hold ip-\/>lock.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00481}00481 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00482}\mbox{\hyperlink{defs_8h_a515876d4653cefef4732806ef7f2833f}{00482}} \mbox{\hyperlink{fs_8c_a15858f4d8a4cc1def3d84d03c312836b}{writei}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structinode}{inode}} *ip, \textcolor{keywordtype}{char} *src, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} off, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} n)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00483}00483 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00484}00484   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} tot, m;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00485}00485   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} *bp;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00486}00486 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00487}00487   \textcolor{keywordflow}{if}(ip-\/>\mbox{\hyperlink{structinode_a8d74bec2898785c057111c328d23fda2}{type}} == \mbox{\hyperlink{stat_8h_a62b045a3e4fdf204bdddda0f3fc3d8c4}{T\_DEV}})\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00488}00488     \textcolor{keywordflow}{if}(ip-\/>\mbox{\hyperlink{structinode_a34af7242018a977dace5730683850875}{major}} < 0 || ip-\/>\mbox{\hyperlink{structinode_a34af7242018a977dace5730683850875}{major}} >= \mbox{\hyperlink{param_8h_aa564a41c8409694da49b0badf2bb2853}{NDEV}} || !\mbox{\hyperlink{structdevsw}{devsw}}[ip-\/>\mbox{\hyperlink{structinode_a34af7242018a977dace5730683850875}{major}}].\mbox{\hyperlink{structdevsw_a87fd7af6c9a6fb8663fc206be7a233d4}{write}})}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00489}00489       \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00490}00490     \textcolor{keywordflow}{return} \mbox{\hyperlink{structdevsw}{devsw}}[ip-\/>\mbox{\hyperlink{structinode_a34af7242018a977dace5730683850875}{major}}].\mbox{\hyperlink{structdevsw_a87fd7af6c9a6fb8663fc206be7a233d4}{write}}(ip, src, n);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00491}00491   \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00492}00492 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00493}00493   \textcolor{keywordflow}{if}(off > ip-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}} || off + n < off)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00494}00494     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00495}00495   \textcolor{keywordflow}{if}(off + n > \mbox{\hyperlink{fs_8h_a714b2485a6dd312e37226e1f833728a9}{MAXFILE}}*\mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}})}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00496}00496     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00497}00497 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00498}00498   \textcolor{keywordflow}{for}(tot=0; tot<n; tot+=m, off+=m, src+=m)\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00499}00499     bp = \mbox{\hyperlink{bio_8c_a30b8d2ef2300ed8e3d879a428fe39898}{bread}}(ip-\/>\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}}, bmap(ip, off/\mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}}));}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00500}00500     m = \mbox{\hyperlink{fs_8c_ac6afabdc09a49a433ee19d8a9486056d}{min}}(n -\/ tot, \mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}} -\/ off\%\mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00501}00501     \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(bp-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}} + off\%\mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}}, src, m);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00502}00502     \mbox{\hyperlink{defs_8h_a270d0050dc50965f4f851717841ad33c}{log\_write}}(bp);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00503}00503     \mbox{\hyperlink{bio_8c_ab5335aeb503731104314321a78a6d727}{brelse}}(bp);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00504}00504   \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00505}00505 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00506}00506   \textcolor{keywordflow}{if}(n > 0 \&\& off > ip-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}})\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00507}00507     ip-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}} = off;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00508}00508     \mbox{\hyperlink{fs_8c_a7220afa8e5f4bea540eb95879ea7df6e}{iupdate}}(ip);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00509}00509   \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00510}00510   \textcolor{keywordflow}{return} n;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00511}00511 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00512}00512 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00513}00513 \textcolor{comment}{//PAGEBREAK!}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00514}00514 \textcolor{comment}{// Directories}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00515}00515 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00516}00516 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00517}\mbox{\hyperlink{defs_8h_a0206c4090dc4bdfd8481e38057d5b2af}{00517}} \mbox{\hyperlink{fs_8c_ae74f6e5b19a4e7f3e72807ee67141819}{namecmp}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *s, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *t)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00518}00518 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00519}00519   \textcolor{keywordflow}{return} \mbox{\hyperlink{defs_8h_a27e878168063a98eae64b4273dcf33cc}{strncmp}}(s, t, \mbox{\hyperlink{fs_8h_a48246fb9e5cb7f6a71ebc9ebc2f06562}{DIRSIZ}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00520}00520 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00521}00521 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00522}00522 \textcolor{comment}{// Look for a directory entry in a directory.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00523}00523 \textcolor{comment}{// If found, set *poff to byte offset of entry.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00524}00524 \textcolor{keyword}{struct }\mbox{\hyperlink{structinode}{inode}}*}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00525}\mbox{\hyperlink{defs_8h_aef19d16d1d20d8f7cdcd8ee0d98fc13f}{00525}} \mbox{\hyperlink{fs_8c_a5341068f021beac8cf0032b97d231e6f}{dirlookup}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structinode}{inode}} *dp, \textcolor{keywordtype}{char} *\mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}}, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} *poff)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00526}00526 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00527}00527   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} off, \mbox{\hyperlink{structinode_a8acc2b9df0bfc6856da62925763db7fe}{inum}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00528}00528   \textcolor{keyword}{struct }\mbox{\hyperlink{structdirent}{dirent}} de;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00529}00529 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00530}00530   \textcolor{keywordflow}{if}(dp-\/>\mbox{\hyperlink{structinode_a8d74bec2898785c057111c328d23fda2}{type}} != \mbox{\hyperlink{stat_8h_a91136bcd71a9f499304f5d7e7e9d6376}{T\_DIR}})}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00531}00531     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}dirlookup not DIR"{}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00532}00532 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00533}00533   \textcolor{keywordflow}{for}(off = 0; off < dp-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}}; off += \textcolor{keyword}{sizeof}(de))\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00534}00534     \textcolor{keywordflow}{if}(\mbox{\hyperlink{fs_8c_a3aba1fa9f6789d09356aec5b96d91fa8}{readi}}(dp, (\textcolor{keywordtype}{char}*)\&de, off, \textcolor{keyword}{sizeof}(de)) != \textcolor{keyword}{sizeof}(de))}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00535}00535       \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}dirlookup read"{}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00536}00536     \textcolor{keywordflow}{if}(de.inum == 0)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00537}00537       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00538}00538     \textcolor{keywordflow}{if}(\mbox{\hyperlink{fs_8c_ae74f6e5b19a4e7f3e72807ee67141819}{namecmp}}(\mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}}, de.name) == 0)\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00539}00539       \textcolor{comment}{// entry matches path element}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00540}00540       \textcolor{keywordflow}{if}(poff)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00541}00541         *poff = off;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00542}00542       \mbox{\hyperlink{structdirent_a68698c303a46d2a34232a2226629ac79}{inum}} = de.inum;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00543}00543       \textcolor{keywordflow}{return} iget(dp-\/>\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}}, \mbox{\hyperlink{structdirent_a68698c303a46d2a34232a2226629ac79}{inum}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00544}00544     \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00545}00545   \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00546}00546 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00547}00547   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00548}00548 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00549}00549 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00550}00550 \textcolor{comment}{// Write a new directory entry (name, inum) into the directory dp.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00551}00551 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00552}\mbox{\hyperlink{defs_8h_ae4ccea0aa02557162963e597737f665a}{00552}} \mbox{\hyperlink{fs_8c_a69a135a0e8a06d9f306d77ebc0c1f7a0}{dirlink}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structinode}{inode}} *dp, \textcolor{keywordtype}{char} *\mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}}, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structdirent_a68698c303a46d2a34232a2226629ac79}{inum}})}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00553}00553 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00554}00554   \textcolor{keywordtype}{int} off;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00555}00555   \textcolor{keyword}{struct }\mbox{\hyperlink{structdirent}{dirent}} de;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00556}00556   \textcolor{keyword}{struct }\mbox{\hyperlink{structinode}{inode}} *ip;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00557}00557 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00558}00558   \textcolor{comment}{// Check that name is not present.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00559}00559   \textcolor{keywordflow}{if}((ip = \mbox{\hyperlink{fs_8c_a5341068f021beac8cf0032b97d231e6f}{dirlookup}}(dp, \mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}}, 0)) != 0)\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00560}00560     \mbox{\hyperlink{fs_8c_ab3c447f135c68e4c3c1f8d5866f6e77b}{iput}}(ip);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00561}00561     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00562}00562   \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00563}00563 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00564}00564   \textcolor{comment}{// Look for an empty dirent.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00565}00565   \textcolor{keywordflow}{for}(off = 0; off < dp-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}}; off += \textcolor{keyword}{sizeof}(de))\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00566}00566     \textcolor{keywordflow}{if}(\mbox{\hyperlink{fs_8c_a3aba1fa9f6789d09356aec5b96d91fa8}{readi}}(dp, (\textcolor{keywordtype}{char}*)\&de, off, \textcolor{keyword}{sizeof}(de)) != \textcolor{keyword}{sizeof}(de))}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00567}00567       \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}dirlink read"{}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00568}00568     \textcolor{keywordflow}{if}(de.inum == 0)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00569}00569       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00570}00570   \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00571}00571 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00572}00572   \mbox{\hyperlink{defs_8h_a66107cd2364627727a36cef6c773b39c}{strncpy}}(de.\mbox{\hyperlink{structdirent_a4e08a84dbac9b9f6a3e006151855d14d}{name}}, \mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}}, \mbox{\hyperlink{fs_8h_a48246fb9e5cb7f6a71ebc9ebc2f06562}{DIRSIZ}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00573}00573   de.\mbox{\hyperlink{structdirent_a68698c303a46d2a34232a2226629ac79}{inum}} = \mbox{\hyperlink{structinode_a8acc2b9df0bfc6856da62925763db7fe}{inum}};}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00574}00574   \textcolor{keywordflow}{if}(\mbox{\hyperlink{fs_8c_a15858f4d8a4cc1def3d84d03c312836b}{writei}}(dp, (\textcolor{keywordtype}{char}*)\&de, off, \textcolor{keyword}{sizeof}(de)) != \textcolor{keyword}{sizeof}(de))}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00575}00575     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}dirlink"{}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00576}00576 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00577}00577   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00578}00578 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00579}00579 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00580}00580 \textcolor{comment}{//PAGEBREAK!}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00581}00581 \textcolor{comment}{// Paths}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00582}00582 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00583}00583 \textcolor{comment}{// Copy the next path element from path into name.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00584}00584 \textcolor{comment}{// Return a pointer to the element following the copied one.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00585}00585 \textcolor{comment}{// The returned path has no leading slashes,}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00586}00586 \textcolor{comment}{// so the caller can check *path=='\(\backslash\)0' to see if the name is the last one.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00587}00587 \textcolor{comment}{// If no name to remove, return 0.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00588}00588 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00589}00589 \textcolor{comment}{// Examples:}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00590}00590 \textcolor{comment}{//   skipelem("{}a/bb/c"{}, name) = "{}bb/c"{}, setting name = "{}a"{}}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00591}00591 \textcolor{comment}{//   skipelem("{}///a//bb"{}, name) = "{}bb"{}, setting name = "{}a"{}}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00592}00592 \textcolor{comment}{//   skipelem("{}a"{}, name) = "{}"{}, setting name = "{}a"{}}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00593}00593 \textcolor{comment}{//   skipelem("{}"{}, name) = skipelem("{}////"{}, name) = 0}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00594}00594 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00595}00595 \textcolor{keyword}{static} \textcolor{keywordtype}{char}*}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00596}00596 skipelem(\textcolor{keywordtype}{char} *path, \textcolor{keywordtype}{char} *\mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}})}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00597}00597 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00598}00598   \textcolor{keywordtype}{char} *s;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00599}00599   \textcolor{keywordtype}{int} len;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00600}00600 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00601}00601   \textcolor{keywordflow}{while}(*path == \textcolor{charliteral}{'/'})}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00602}00602     path++;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00603}00603   \textcolor{keywordflow}{if}(*path == 0)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00604}00604     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00605}00605   s = path;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00606}00606   \textcolor{keywordflow}{while}(*path != \textcolor{charliteral}{'/'} \&\& *path != 0)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00607}00607     path++;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00608}00608   len = path -\/ s;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00609}00609   \textcolor{keywordflow}{if}(len >= \mbox{\hyperlink{fs_8h_a48246fb9e5cb7f6a71ebc9ebc2f06562}{DIRSIZ}})}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00610}00610     \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(\mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}}, s, \mbox{\hyperlink{fs_8h_a48246fb9e5cb7f6a71ebc9ebc2f06562}{DIRSIZ}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00611}00611   \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00612}00612     \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(\mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}}, s, len);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00613}00613     \mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}}[len] = 0;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00614}00614   \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00615}00615   \textcolor{keywordflow}{while}(*path == \textcolor{charliteral}{'/'})}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00616}00616     path++;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00617}00617   \textcolor{keywordflow}{return} path;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00618}00618 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00619}00619 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00620}00620 \textcolor{comment}{// Look up and return the inode for a path name.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00621}00621 \textcolor{comment}{// If parent != 0, return the inode for the parent and copy the final}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00622}00622 \textcolor{comment}{// path element into name, which must have room for DIRSIZ bytes.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00623}00623 \textcolor{comment}{// Must be called inside a transaction since it calls iput().}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00624}00624 \textcolor{keyword}{static} \textcolor{keyword}{struct }\mbox{\hyperlink{structinode}{inode}}*}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00625}00625 namex(\textcolor{keywordtype}{char} *path, \textcolor{keywordtype}{int} \mbox{\hyperlink{fs_8c_ade44726f2aed2af27fa0df5f63f9e688}{nameiparent}}, \textcolor{keywordtype}{char} *\mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}})}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00626}00626 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00627}00627   \textcolor{keyword}{struct }\mbox{\hyperlink{structinode}{inode}} *ip, *next;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00628}00628 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00629}00629   \textcolor{keywordflow}{if}(*path == \textcolor{charliteral}{'/'})}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00630}00630     ip = iget(\mbox{\hyperlink{param_8h_ae9ce6b24fe2aae59ff60b469c35febbc}{ROOTDEV}}, \mbox{\hyperlink{fs_8h_a22c8ea96d09283ed6496347806cc72a0}{ROOTINO}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00631}00631   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00632}00632     ip = \mbox{\hyperlink{fs_8c_a24a91383ab80b4b8a1ef1f4df896035c}{idup}}(\mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}()-\/>cwd);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00633}00633 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00634}00634   \textcolor{keywordflow}{while}((path = skipelem(path, \mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}})) != 0)\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00635}00635     \mbox{\hyperlink{fs_8c_aed28187406d84a3aa71f10c6235a03ec}{ilock}}(ip);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00636}00636     \textcolor{keywordflow}{if}(ip-\/>\mbox{\hyperlink{structinode_a8d74bec2898785c057111c328d23fda2}{type}} != \mbox{\hyperlink{stat_8h_a91136bcd71a9f499304f5d7e7e9d6376}{T\_DIR}})\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00637}00637       \mbox{\hyperlink{fs_8c_a207b3008bae35596c55ec7c4fc6875eb}{iunlockput}}(ip);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00638}00638       \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00639}00639     \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00640}00640     \textcolor{keywordflow}{if}(\mbox{\hyperlink{fs_8c_ade44726f2aed2af27fa0df5f63f9e688}{nameiparent}} \&\& *path == \textcolor{charliteral}{'\(\backslash\)0'})\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00641}00641       \textcolor{comment}{// Stop one level early.}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00642}00642       \mbox{\hyperlink{fs_8c_ae4e29916219b9293b37f9c34220694fe}{iunlock}}(ip);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00643}00643       \textcolor{keywordflow}{return} ip;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00644}00644     \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00645}00645     \textcolor{keywordflow}{if}((next = \mbox{\hyperlink{fs_8c_a5341068f021beac8cf0032b97d231e6f}{dirlookup}}(ip, \mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}}, 0)) == 0)\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00646}00646       \mbox{\hyperlink{fs_8c_a207b3008bae35596c55ec7c4fc6875eb}{iunlockput}}(ip);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00647}00647       \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00648}00648     \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00649}00649     \mbox{\hyperlink{fs_8c_a207b3008bae35596c55ec7c4fc6875eb}{iunlockput}}(ip);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00650}00650     ip = next;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00651}00651   \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00652}00652   \textcolor{keywordflow}{if}(\mbox{\hyperlink{fs_8c_ade44726f2aed2af27fa0df5f63f9e688}{nameiparent}})\{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00653}00653     \mbox{\hyperlink{fs_8c_ab3c447f135c68e4c3c1f8d5866f6e77b}{iput}}(ip);}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00654}00654     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00655}00655   \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00656}00656   \textcolor{keywordflow}{return} ip;}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00657}00657 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00658}00658 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00659}00659 \textcolor{keyword}{struct }\mbox{\hyperlink{structinode}{inode}}*}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00660}\mbox{\hyperlink{defs_8h_acde7d3975db286253e584452ba03a54f}{00660}} \mbox{\hyperlink{fs_8c_a35c52ecf358097c17dcbbd5594acb41a}{namei}}(\textcolor{keywordtype}{char} *path)}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00661}00661 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00662}00662   \textcolor{keywordtype}{char} \mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}}[\mbox{\hyperlink{fs_8h_a48246fb9e5cb7f6a71ebc9ebc2f06562}{DIRSIZ}}];}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00663}00663   \textcolor{keywordflow}{return} namex(path, 0, \mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00664}00664 \}}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00665}00665 }
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00666}00666 \textcolor{keyword}{struct }\mbox{\hyperlink{structinode}{inode}}*}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00667}\mbox{\hyperlink{defs_8h_a699674601988291ebcc47d902f18bee8}{00667}} \mbox{\hyperlink{fs_8c_ade44726f2aed2af27fa0df5f63f9e688}{nameiparent}}(\textcolor{keywordtype}{char} *path, \textcolor{keywordtype}{char} *\mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}})}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00668}00668 \{}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00669}00669   \textcolor{keywordflow}{return} namex(path, 1, \mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}});}
+\DoxyCodeLine{\Hypertarget{fs_8c_source_l00670}00670 \}}
+
+\end{DoxyCode}

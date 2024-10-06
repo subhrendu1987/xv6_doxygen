@@ -1,0 +1,125 @@
+\hypertarget{cat_8c}{}\doxysection{cat.\+c File Reference}
+\label{cat_8c}\index{cat.c@{cat.c}}
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stat.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}user.\+h\char`\"{}}\newline
+Include dependency graph for cat.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=249pt]{d3/d8f/cat_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{cat_8c_a90a33618884bcf5e892297879bc016ff}{cat}} (int fd)
+\item 
+int \mbox{\hyperlink{cat_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$\mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+char \mbox{\hyperlink{cat_8c_a78a05cf530dddc61e7a26aefe187bd31}{buf}} \mbox{[}512\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{cat_8c_a90a33618884bcf5e892297879bc016ff}\label{cat_8c_a90a33618884bcf5e892297879bc016ff}} 
+\index{cat.c@{cat.c}!cat@{cat}}
+\index{cat@{cat}!cat.c@{cat.c}}
+\doxysubsubsection{\texorpdfstring{cat()}{cat()}}
+{\footnotesize\ttfamily void cat (\begin{DoxyParamCaption}\item[{int}]{fd }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{cat_8c_source_l00008}{8}} of file \mbox{\hyperlink{cat_8c_source}{cat.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00009 \{}
+\DoxyCodeLine{00010   \textcolor{keywordtype}{int} n;}
+\DoxyCodeLine{00011 }
+\DoxyCodeLine{00012   \textcolor{keywordflow}{while}((n = \mbox{\hyperlink{user_8h_a2d73522d6354b8a141ecfaa9585a0c77}{read}}(fd, \mbox{\hyperlink{structbuf}{buf}}, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structbuf}{buf}}))) > 0) \{}
+\DoxyCodeLine{00013     \textcolor{keywordflow}{if} (\mbox{\hyperlink{user_8h_ae57e95d717eb7386cd8b935a0c136abe}{write}}(1, \mbox{\hyperlink{structbuf}{buf}}, n) != n) \{}
+\DoxyCodeLine{00014       \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}cat: write error\(\backslash\)n"{}});}
+\DoxyCodeLine{00015       \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00016     \}}
+\DoxyCodeLine{00017   \}}
+\DoxyCodeLine{00018   \textcolor{keywordflow}{if}(n < 0)\{}
+\DoxyCodeLine{00019     \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}cat: read error\(\backslash\)n"{}});}
+\DoxyCodeLine{00020     \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00021   \}}
+\DoxyCodeLine{00022 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d1/d8f/cat_8c_a90a33618884bcf5e892297879bc016ff_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=184pt]{d1/d8f/cat_8c_a90a33618884bcf5e892297879bc016ff_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{cat_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{cat_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{cat.c@{cat.c}!main@{main}}
+\index{main@{main}!cat.c@{cat.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{cat_8c_source_l00025}{25}} of file \mbox{\hyperlink{cat_8c_source}{cat.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00026 \{}
+\DoxyCodeLine{00027   \textcolor{keywordtype}{int} fd, i;}
+\DoxyCodeLine{00028 }
+\DoxyCodeLine{00029   \textcolor{keywordflow}{if}(argc <= 1)\{}
+\DoxyCodeLine{00030     \mbox{\hyperlink{cat_8c_a90a33618884bcf5e892297879bc016ff}{cat}}(0);}
+\DoxyCodeLine{00031     \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00032   \}}
+\DoxyCodeLine{00033 }
+\DoxyCodeLine{00034   \textcolor{keywordflow}{for}(i = 1; i < argc; i++)\{}
+\DoxyCodeLine{00035     \textcolor{keywordflow}{if}((fd = \mbox{\hyperlink{user_8h_a2c4414339f388561554c2deab11a1a07}{open}}(\mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}[i], 0)) < 0)\{}
+\DoxyCodeLine{00036       \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}cat: cannot open \%s\(\backslash\)n"{}}, \mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}[i]);}
+\DoxyCodeLine{00037       \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00038     \}}
+\DoxyCodeLine{00039     \mbox{\hyperlink{cat_8c_a90a33618884bcf5e892297879bc016ff}{cat}}(fd);}
+\DoxyCodeLine{00040     \mbox{\hyperlink{user_8h_ae152484c890a24e4d9b4980e7b965be0}{close}}(fd);}
+\DoxyCodeLine{00041   \}}
+\DoxyCodeLine{00042   \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00043 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d1/d8f/cat_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{cat_8c_a78a05cf530dddc61e7a26aefe187bd31}\label{cat_8c_a78a05cf530dddc61e7a26aefe187bd31}} 
+\index{cat.c@{cat.c}!buf@{buf}}
+\index{buf@{buf}!cat.c@{cat.c}}
+\doxysubsubsection{\texorpdfstring{buf}{buf}}
+{\footnotesize\ttfamily char \mbox{\hyperlink{structbuf}{buf}}\mbox{[}512\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{cat_8c_source_l00005}{5}} of file \mbox{\hyperlink{cat_8c_source}{cat.\+c}}.
+

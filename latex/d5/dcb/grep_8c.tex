@@ -1,0 +1,266 @@
+\hypertarget{grep_8c}{}\doxysection{grep.\+c File Reference}
+\label{grep_8c}\index{grep.c@{grep.c}}
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stat.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}user.\+h\char`\"{}}\newline
+Include dependency graph for grep.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=249pt]{d2/d2a/grep_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{grep_8c_a21a26bd0e26e51f529e7fcc1f7ffbb0c}{match}} (char $\ast$, char $\ast$)
+\item 
+void \mbox{\hyperlink{grep_8c_aefb6587871b683544f860d4e2b518718}{grep}} (char $\ast$pattern, int fd)
+\item 
+int \mbox{\hyperlink{grep_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$\mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}\mbox{[}$\,$\mbox{]})
+\item 
+int \mbox{\hyperlink{grep_8c_a179fc8565cee7d1e5c9cf742e61f78e4}{matchhere}} (char $\ast$, char $\ast$)
+\item 
+int \mbox{\hyperlink{grep_8c_a1775658a8b4077f2284310c5cdab3ef1}{matchstar}} (int, char $\ast$, char $\ast$)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+char \mbox{\hyperlink{grep_8c_ac75fce8692fd1d41a8985f6aacc4a175}{buf}} \mbox{[}1024\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{grep_8c_aefb6587871b683544f860d4e2b518718}\label{grep_8c_aefb6587871b683544f860d4e2b518718}} 
+\index{grep.c@{grep.c}!grep@{grep}}
+\index{grep@{grep}!grep.c@{grep.c}}
+\doxysubsubsection{\texorpdfstring{grep()}{grep()}}
+{\footnotesize\ttfamily void grep (\begin{DoxyParamCaption}\item[{char $\ast$}]{pattern,  }\item[{int}]{fd }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{grep_8c_source_l00011}{11}} of file \mbox{\hyperlink{grep_8c_source}{grep.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00012 \{}
+\DoxyCodeLine{00013   \textcolor{keywordtype}{int} n, m;}
+\DoxyCodeLine{00014   \textcolor{keywordtype}{char} *p, *q;}
+\DoxyCodeLine{00015 }
+\DoxyCodeLine{00016   m = 0;}
+\DoxyCodeLine{00017   \textcolor{keywordflow}{while}((n = \mbox{\hyperlink{user_8h_a2d73522d6354b8a141ecfaa9585a0c77}{read}}(fd, \mbox{\hyperlink{structbuf}{buf}}+m, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structbuf}{buf}})-\/m-\/1)) > 0)\{}
+\DoxyCodeLine{00018     m += n;}
+\DoxyCodeLine{00019     \mbox{\hyperlink{structbuf}{buf}}[m] = \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{00020     p = \mbox{\hyperlink{grep_8c_ac75fce8692fd1d41a8985f6aacc4a175}{buf}};}
+\DoxyCodeLine{00021     \textcolor{keywordflow}{while}((q = \mbox{\hyperlink{ulib_8c_a34704df9bf598dd9b477bafe5642cfe7}{strchr}}(p, \textcolor{charliteral}{'\(\backslash\)n'})) != 0)\{}
+\DoxyCodeLine{00022       *q = 0;}
+\DoxyCodeLine{00023       \textcolor{keywordflow}{if}(\mbox{\hyperlink{grep_8c_a21a26bd0e26e51f529e7fcc1f7ffbb0c}{match}}(pattern, p))\{}
+\DoxyCodeLine{00024         *q = \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{00025         \mbox{\hyperlink{user_8h_ae57e95d717eb7386cd8b935a0c136abe}{write}}(1, p, q+1 -\/ p);}
+\DoxyCodeLine{00026       \}}
+\DoxyCodeLine{00027       p = q+1;}
+\DoxyCodeLine{00028     \}}
+\DoxyCodeLine{00029     \textcolor{keywordflow}{if}(p == \mbox{\hyperlink{structbuf}{buf}})}
+\DoxyCodeLine{00030       m = 0;}
+\DoxyCodeLine{00031     \textcolor{keywordflow}{if}(m > 0)\{}
+\DoxyCodeLine{00032       m -\/= p -\/ \mbox{\hyperlink{grep_8c_ac75fce8692fd1d41a8985f6aacc4a175}{buf}};}
+\DoxyCodeLine{00033       \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(\mbox{\hyperlink{structbuf}{buf}}, p, m);}
+\DoxyCodeLine{00034     \}}
+\DoxyCodeLine{00035   \}}
+\DoxyCodeLine{00036 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d5/dcb/grep_8c_aefb6587871b683544f860d4e2b518718_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=189pt]{d5/dcb/grep_8c_aefb6587871b683544f860d4e2b518718_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{grep_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{grep_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{grep.c@{grep.c}!main@{main}}
+\index{main@{main}!grep.c@{grep.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{grep_8c_source_l00039}{39}} of file \mbox{\hyperlink{grep_8c_source}{grep.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00040 \{}
+\DoxyCodeLine{00041   \textcolor{keywordtype}{int} fd, i;}
+\DoxyCodeLine{00042   \textcolor{keywordtype}{char} *pattern;}
+\DoxyCodeLine{00043 }
+\DoxyCodeLine{00044   \textcolor{keywordflow}{if}(argc <= 1)\{}
+\DoxyCodeLine{00045     \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(2, \textcolor{stringliteral}{"{}usage: grep pattern [file ...]\(\backslash\)n"{}});}
+\DoxyCodeLine{00046     \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00047   \}}
+\DoxyCodeLine{00048   pattern = \mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}[1];}
+\DoxyCodeLine{00049 }
+\DoxyCodeLine{00050   \textcolor{keywordflow}{if}(argc <= 2)\{}
+\DoxyCodeLine{00051     \mbox{\hyperlink{grep_8c_aefb6587871b683544f860d4e2b518718}{grep}}(pattern, 0);}
+\DoxyCodeLine{00052     \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00053   \}}
+\DoxyCodeLine{00054 }
+\DoxyCodeLine{00055   \textcolor{keywordflow}{for}(i = 2; i < argc; i++)\{}
+\DoxyCodeLine{00056     \textcolor{keywordflow}{if}((fd = \mbox{\hyperlink{user_8h_a2c4414339f388561554c2deab11a1a07}{open}}(\mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}[i], 0)) < 0)\{}
+\DoxyCodeLine{00057       \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}grep: cannot open \%s\(\backslash\)n"{}}, \mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}[i]);}
+\DoxyCodeLine{00058       \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00059     \}}
+\DoxyCodeLine{00060     \mbox{\hyperlink{grep_8c_aefb6587871b683544f860d4e2b518718}{grep}}(pattern, fd);}
+\DoxyCodeLine{00061     \mbox{\hyperlink{user_8h_ae152484c890a24e4d9b4980e7b965be0}{close}}(fd);}
+\DoxyCodeLine{00062   \}}
+\DoxyCodeLine{00063   \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00064 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d5/dcb/grep_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{grep_8c_a21a26bd0e26e51f529e7fcc1f7ffbb0c}\label{grep_8c_a21a26bd0e26e51f529e7fcc1f7ffbb0c}} 
+\index{grep.c@{grep.c}!match@{match}}
+\index{match@{match}!grep.c@{grep.c}}
+\doxysubsubsection{\texorpdfstring{match()}{match()}}
+{\footnotesize\ttfamily int match (\begin{DoxyParamCaption}\item[{char $\ast$}]{re,  }\item[{char $\ast$}]{text }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{grep_8c_source_l00073}{73}} of file \mbox{\hyperlink{grep_8c_source}{grep.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00074 \{}
+\DoxyCodeLine{00075   \textcolor{keywordflow}{if}(re[0] == \textcolor{charliteral}{'\string^'})}
+\DoxyCodeLine{00076     \textcolor{keywordflow}{return} \mbox{\hyperlink{grep_8c_a179fc8565cee7d1e5c9cf742e61f78e4}{matchhere}}(re+1, text);}
+\DoxyCodeLine{00077   \textcolor{keywordflow}{do}\{  \textcolor{comment}{// must look at empty string}}
+\DoxyCodeLine{00078     \textcolor{keywordflow}{if}(\mbox{\hyperlink{grep_8c_a179fc8565cee7d1e5c9cf742e61f78e4}{matchhere}}(re, text))}
+\DoxyCodeLine{00079       \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{00080   \}\textcolor{keywordflow}{while}(*text++ != \textcolor{charliteral}{'\(\backslash\)0'});}
+\DoxyCodeLine{00081   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00082 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=318pt]{d5/dcb/grep_8c_a21a26bd0e26e51f529e7fcc1f7ffbb0c_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=269pt]{d5/dcb/grep_8c_a21a26bd0e26e51f529e7fcc1f7ffbb0c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{grep_8c_a179fc8565cee7d1e5c9cf742e61f78e4}\label{grep_8c_a179fc8565cee7d1e5c9cf742e61f78e4}} 
+\index{grep.c@{grep.c}!matchhere@{matchhere}}
+\index{matchhere@{matchhere}!grep.c@{grep.c}}
+\doxysubsubsection{\texorpdfstring{matchhere()}{matchhere()}}
+{\footnotesize\ttfamily int matchhere (\begin{DoxyParamCaption}\item[{char $\ast$}]{re,  }\item[{char $\ast$}]{text }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{grep_8c_source_l00085}{85}} of file \mbox{\hyperlink{grep_8c_source}{grep.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00086 \{}
+\DoxyCodeLine{00087   \textcolor{keywordflow}{if}(re[0] == \textcolor{charliteral}{'\(\backslash\)0'})}
+\DoxyCodeLine{00088     \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{00089   \textcolor{keywordflow}{if}(re[1] == \textcolor{charliteral}{'*'})}
+\DoxyCodeLine{00090     \textcolor{keywordflow}{return} \mbox{\hyperlink{grep_8c_a1775658a8b4077f2284310c5cdab3ef1}{matchstar}}(re[0], re+2, text);}
+\DoxyCodeLine{00091   \textcolor{keywordflow}{if}(re[0] == \textcolor{charliteral}{'\$'} \&\& re[1] == \textcolor{charliteral}{'\(\backslash\)0'})}
+\DoxyCodeLine{00092     \textcolor{keywordflow}{return} *text == \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{00093   \textcolor{keywordflow}{if}(*text!=\textcolor{charliteral}{'\(\backslash\)0'} \&\& (re[0]==\textcolor{charliteral}{'.'} || re[0]==*text))}
+\DoxyCodeLine{00094     \textcolor{keywordflow}{return} \mbox{\hyperlink{grep_8c_a179fc8565cee7d1e5c9cf742e61f78e4}{matchhere}}(re+1, text+1);}
+\DoxyCodeLine{00095   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00096 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=238pt]{d5/dcb/grep_8c_a179fc8565cee7d1e5c9cf742e61f78e4_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d5/dcb/grep_8c_a179fc8565cee7d1e5c9cf742e61f78e4_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{grep_8c_a1775658a8b4077f2284310c5cdab3ef1}\label{grep_8c_a1775658a8b4077f2284310c5cdab3ef1}} 
+\index{grep.c@{grep.c}!matchstar@{matchstar}}
+\index{matchstar@{matchstar}!grep.c@{grep.c}}
+\doxysubsubsection{\texorpdfstring{matchstar()}{matchstar()}}
+{\footnotesize\ttfamily int matchstar (\begin{DoxyParamCaption}\item[{int}]{c,  }\item[{char $\ast$}]{re,  }\item[{char $\ast$}]{text }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{grep_8c_source_l00099}{99}} of file \mbox{\hyperlink{grep_8c_source}{grep.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00100 \{}
+\DoxyCodeLine{00101   \textcolor{keywordflow}{do}\{  \textcolor{comment}{// a * matches zero or more instances}}
+\DoxyCodeLine{00102     \textcolor{keywordflow}{if}(\mbox{\hyperlink{grep_8c_a179fc8565cee7d1e5c9cf742e61f78e4}{matchhere}}(re, text))}
+\DoxyCodeLine{00103       \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{00104   \}\textcolor{keywordflow}{while}(*text!=\textcolor{charliteral}{'\(\backslash\)0'} \&\& (*text++==c || c==\textcolor{charliteral}{'.'}));}
+\DoxyCodeLine{00105   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00106 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=238pt]{d5/dcb/grep_8c_a1775658a8b4077f2284310c5cdab3ef1_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d5/dcb/grep_8c_a1775658a8b4077f2284310c5cdab3ef1_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{grep_8c_ac75fce8692fd1d41a8985f6aacc4a175}\label{grep_8c_ac75fce8692fd1d41a8985f6aacc4a175}} 
+\index{grep.c@{grep.c}!buf@{buf}}
+\index{buf@{buf}!grep.c@{grep.c}}
+\doxysubsubsection{\texorpdfstring{buf}{buf}}
+{\footnotesize\ttfamily char \mbox{\hyperlink{structbuf}{buf}}\mbox{[}1024\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{grep_8c_source_l00007}{7}} of file \mbox{\hyperlink{grep_8c_source}{grep.\+c}}.
+

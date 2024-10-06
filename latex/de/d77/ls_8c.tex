@@ -1,0 +1,180 @@
+\hypertarget{ls_8c}{}\doxysection{ls.\+c File Reference}
+\label{ls_8c}\index{ls.c@{ls.c}}
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stat.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}user.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}fs.\+h\char`\"{}}\newline
+Include dependency graph for ls.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=300pt]{d4/d93/ls_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \mbox{\hyperlink{ls_8c_a15512ff8353c0ce78158e6c9cdf2a24c}{fmtname}} (char $\ast$path)
+\item 
+void \mbox{\hyperlink{ls_8c_a0dd2caa6531a27dcd755c46e814b63af}{ls}} (char $\ast$path)
+\item 
+int \mbox{\hyperlink{ls_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$\mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{ls_8c_a15512ff8353c0ce78158e6c9cdf2a24c}\label{ls_8c_a15512ff8353c0ce78158e6c9cdf2a24c}} 
+\index{ls.c@{ls.c}!fmtname@{fmtname}}
+\index{fmtname@{fmtname}!ls.c@{ls.c}}
+\doxysubsubsection{\texorpdfstring{fmtname()}{fmtname()}}
+{\footnotesize\ttfamily char $\ast$ fmtname (\begin{DoxyParamCaption}\item[{char $\ast$}]{path }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{ls_8c_source_l00007}{7}} of file \mbox{\hyperlink{ls_8c_source}{ls.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00008 \{}
+\DoxyCodeLine{00009   \textcolor{keyword}{static} \textcolor{keywordtype}{char} \mbox{\hyperlink{structbuf}{buf}}[\mbox{\hyperlink{fs_8h_a48246fb9e5cb7f6a71ebc9ebc2f06562}{DIRSIZ}}+1];}
+\DoxyCodeLine{00010   \textcolor{keywordtype}{char} *p;}
+\DoxyCodeLine{00011 }
+\DoxyCodeLine{00012   \textcolor{comment}{// Find first character after last slash.}}
+\DoxyCodeLine{00013   \textcolor{keywordflow}{for}(p=path+\mbox{\hyperlink{defs_8h_a5e5172aa1be36b8210c6dfd86800b44c}{strlen}}(path); p >= path \&\& *p != \textcolor{charliteral}{'/'}; p-\/-\/)}
+\DoxyCodeLine{00014     ;}
+\DoxyCodeLine{00015   p++;}
+\DoxyCodeLine{00016 }
+\DoxyCodeLine{00017   \textcolor{comment}{// Return blank-\/padded name.}}
+\DoxyCodeLine{00018   \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_a5e5172aa1be36b8210c6dfd86800b44c}{strlen}}(p) >= \mbox{\hyperlink{fs_8h_a48246fb9e5cb7f6a71ebc9ebc2f06562}{DIRSIZ}})}
+\DoxyCodeLine{00019     \textcolor{keywordflow}{return} p;}
+\DoxyCodeLine{00020   \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(\mbox{\hyperlink{structbuf}{buf}}, p, \mbox{\hyperlink{defs_8h_a5e5172aa1be36b8210c6dfd86800b44c}{strlen}}(p));}
+\DoxyCodeLine{00021   \mbox{\hyperlink{defs_8h_a0098886a849eef10803e9f35ceec61b9}{memset}}(\mbox{\hyperlink{structbuf}{buf}}+\mbox{\hyperlink{defs_8h_a5e5172aa1be36b8210c6dfd86800b44c}{strlen}}(p), \textcolor{charliteral}{' '}, \mbox{\hyperlink{fs_8h_a48246fb9e5cb7f6a71ebc9ebc2f06562}{DIRSIZ}}-\/\mbox{\hyperlink{defs_8h_a5e5172aa1be36b8210c6dfd86800b44c}{strlen}}(p));}
+\DoxyCodeLine{00022   \textcolor{keywordflow}{return} \mbox{\hyperlink{structbuf}{buf}};}
+\DoxyCodeLine{00023 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=233pt]{de/d77/ls_8c_a15512ff8353c0ce78158e6c9cdf2a24c_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{de/d77/ls_8c_a15512ff8353c0ce78158e6c9cdf2a24c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{ls_8c_a0dd2caa6531a27dcd755c46e814b63af}\label{ls_8c_a0dd2caa6531a27dcd755c46e814b63af}} 
+\index{ls.c@{ls.c}!ls@{ls}}
+\index{ls@{ls}!ls.c@{ls.c}}
+\doxysubsubsection{\texorpdfstring{ls()}{ls()}}
+{\footnotesize\ttfamily void ls (\begin{DoxyParamCaption}\item[{char $\ast$}]{path }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{ls_8c_source_l00026}{26}} of file \mbox{\hyperlink{ls_8c_source}{ls.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00027 \{}
+\DoxyCodeLine{00028   \textcolor{keywordtype}{char} \mbox{\hyperlink{structbuf}{buf}}[512], *p;}
+\DoxyCodeLine{00029   \textcolor{keywordtype}{int} fd;}
+\DoxyCodeLine{00030   \textcolor{keyword}{struct }\mbox{\hyperlink{structdirent}{dirent}} de;}
+\DoxyCodeLine{00031   \textcolor{keyword}{struct }\mbox{\hyperlink{structstat}{stat}} st;}
+\DoxyCodeLine{00032 }
+\DoxyCodeLine{00033   \textcolor{keywordflow}{if}((fd = \mbox{\hyperlink{user_8h_a2c4414339f388561554c2deab11a1a07}{open}}(path, 0)) < 0)\{}
+\DoxyCodeLine{00034     \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(2, \textcolor{stringliteral}{"{}ls: cannot open \%s\(\backslash\)n"{}}, path);}
+\DoxyCodeLine{00035     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00036   \}}
+\DoxyCodeLine{00037 }
+\DoxyCodeLine{00038   \textcolor{keywordflow}{if}(\mbox{\hyperlink{user_8h_a649aa32ddc94f9b64c3fa27dc9724459}{fstat}}(fd, \&st) < 0)\{}
+\DoxyCodeLine{00039     \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(2, \textcolor{stringliteral}{"{}ls: cannot stat \%s\(\backslash\)n"{}}, path);}
+\DoxyCodeLine{00040     \mbox{\hyperlink{user_8h_ae152484c890a24e4d9b4980e7b965be0}{close}}(fd);}
+\DoxyCodeLine{00041     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00042   \}}
+\DoxyCodeLine{00043 }
+\DoxyCodeLine{00044   \textcolor{keywordflow}{switch}(st.type)\{}
+\DoxyCodeLine{00045   \textcolor{keywordflow}{case} \mbox{\hyperlink{stat_8h_a0a8afbed81f5fb3930e9d153fbd51737}{T\_FILE}}:}
+\DoxyCodeLine{00046     \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}\%s \%d \%d \%d\(\backslash\)n"{}}, \mbox{\hyperlink{ls_8c_a15512ff8353c0ce78158e6c9cdf2a24c}{fmtname}}(path), st.type, st.ino, st.size);}
+\DoxyCodeLine{00047     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00048 }
+\DoxyCodeLine{00049   \textcolor{keywordflow}{case} \mbox{\hyperlink{stat_8h_a91136bcd71a9f499304f5d7e7e9d6376}{T\_DIR}}:}
+\DoxyCodeLine{00050     \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_a5e5172aa1be36b8210c6dfd86800b44c}{strlen}}(path) + 1 + \mbox{\hyperlink{fs_8h_a48246fb9e5cb7f6a71ebc9ebc2f06562}{DIRSIZ}} + 1 > \textcolor{keyword}{sizeof} \mbox{\hyperlink{structbuf}{buf}})\{}
+\DoxyCodeLine{00051       \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}ls: path too long\(\backslash\)n"{}});}
+\DoxyCodeLine{00052       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00053     \}}
+\DoxyCodeLine{00054     \mbox{\hyperlink{ulib_8c_a8047435e7597349a349589b1e264d1d8}{strcpy}}(\mbox{\hyperlink{structbuf}{buf}}, path);}
+\DoxyCodeLine{00055     p = \mbox{\hyperlink{structbuf}{buf}}+\mbox{\hyperlink{defs_8h_a5e5172aa1be36b8210c6dfd86800b44c}{strlen}}(\mbox{\hyperlink{structbuf}{buf}});}
+\DoxyCodeLine{00056     *p++ = \textcolor{charliteral}{'/'};}
+\DoxyCodeLine{00057     \textcolor{keywordflow}{while}(\mbox{\hyperlink{user_8h_a2d73522d6354b8a141ecfaa9585a0c77}{read}}(fd, \&de, \textcolor{keyword}{sizeof}(de)) == \textcolor{keyword}{sizeof}(de))\{}
+\DoxyCodeLine{00058       \textcolor{keywordflow}{if}(de.inum == 0)}
+\DoxyCodeLine{00059         \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00060       \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(p, de.name, \mbox{\hyperlink{fs_8h_a48246fb9e5cb7f6a71ebc9ebc2f06562}{DIRSIZ}});}
+\DoxyCodeLine{00061       p[\mbox{\hyperlink{fs_8h_a48246fb9e5cb7f6a71ebc9ebc2f06562}{DIRSIZ}}] = 0;}
+\DoxyCodeLine{00062       \textcolor{keywordflow}{if}(\mbox{\hyperlink{mkfs_8c_a149da0702b060478da4d59ffe807adac}{stat}}(\mbox{\hyperlink{structbuf}{buf}}, \&st) < 0)\{}
+\DoxyCodeLine{00063         \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}ls: cannot stat \%s\(\backslash\)n"{}}, \mbox{\hyperlink{structbuf}{buf}});}
+\DoxyCodeLine{00064         \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00065       \}}
+\DoxyCodeLine{00066       \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}\%s \%d \%d \%d\(\backslash\)n"{}}, \mbox{\hyperlink{ls_8c_a15512ff8353c0ce78158e6c9cdf2a24c}{fmtname}}(\mbox{\hyperlink{structbuf}{buf}}), st.type, st.ino, st.size);}
+\DoxyCodeLine{00067     \}}
+\DoxyCodeLine{00068     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00069   \}}
+\DoxyCodeLine{00070   \mbox{\hyperlink{user_8h_ae152484c890a24e4d9b4980e7b965be0}{close}}(fd);}
+\DoxyCodeLine{00071 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=298pt]{de/d77/ls_8c_a0dd2caa6531a27dcd755c46e814b63af_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=183pt]{de/d77/ls_8c_a0dd2caa6531a27dcd755c46e814b63af_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{ls_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{ls_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{ls.c@{ls.c}!main@{main}}
+\index{main@{main}!ls.c@{ls.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{ls_8c_source_l00074}{74}} of file \mbox{\hyperlink{ls_8c_source}{ls.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00075 \{}
+\DoxyCodeLine{00076   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00077 }
+\DoxyCodeLine{00078   \textcolor{keywordflow}{if}(argc < 2)\{}
+\DoxyCodeLine{00079     \mbox{\hyperlink{ls_8c_a0dd2caa6531a27dcd755c46e814b63af}{ls}}(\textcolor{stringliteral}{"{}."{}});}
+\DoxyCodeLine{00080     \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00081   \}}
+\DoxyCodeLine{00082   \textcolor{keywordflow}{for}(i=1; i<argc; i++)}
+\DoxyCodeLine{00083     \mbox{\hyperlink{ls_8c_a0dd2caa6531a27dcd755c46e814b63af}{ls}}(\mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}[i]);}
+\DoxyCodeLine{00084   \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00085 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{de/d77/ls_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph}
+\end{center}
+\end{figure}

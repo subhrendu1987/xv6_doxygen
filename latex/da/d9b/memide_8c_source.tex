@@ -1,0 +1,65 @@
+\hypertarget{memide_8c_source}{}\doxysection{memide.\+c}
+\mbox{\hyperlink{memide_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00001}00001 \textcolor{comment}{// Fake IDE disk; stores blocks in memory.}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00002}00002 \textcolor{comment}{// Useful for running kernel without scratch disk.}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00004}00004 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00005}00005 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{defs_8h}{defs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00006}00006 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{param_8h}{param.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00007}00007 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{mmu_8h}{mmu.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00008}00008 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{proc_8h}{proc.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00009}00009 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{x86_8h}{x86.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00010}00010 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{traps_8h}{traps.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00011}00011 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{spinlock_8h}{spinlock.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00012}00012 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{sleeplock_8h}{sleeplock.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00013}00013 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{fs_8h}{fs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00014}00014 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{buf_8h}{buf.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00016}\mbox{\hyperlink{memide_8c_a10b9652e23b65245bbc2126350c915d3}{00016}} \textcolor{keyword}{extern} \mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} \mbox{\hyperlink{memide_8c_af73b74f3a51ba441c3b68b1cf3e276c3}{\_binary\_fs\_img\_start}}[], \mbox{\hyperlink{memide_8c_a10b9652e23b65245bbc2126350c915d3}{\_binary\_fs\_img\_size}}[];}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00017}00017 }
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00018}00018 \textcolor{keyword}{static} \textcolor{keywordtype}{int} disksize;}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00019}00019 \textcolor{keyword}{static} \mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} *memdisk;}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00021}00021 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00022}\mbox{\hyperlink{memide_8c_aefb190a6104cb58c0bc1f8fec88d1307}{00022}} \mbox{\hyperlink{memide_8c_aefb190a6104cb58c0bc1f8fec88d1307}{ideinit}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00023}00023 \{}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00024}00024   memdisk = \mbox{\hyperlink{memide_8c_af73b74f3a51ba441c3b68b1cf3e276c3}{\_binary\_fs\_img\_start}};}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00025}00025   disksize = (\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}})\mbox{\hyperlink{memide_8c_a10b9652e23b65245bbc2126350c915d3}{\_binary\_fs\_img\_size}}/\mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}};}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00026}00026 \}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00028}00028 \textcolor{comment}{// Interrupt handler.}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00029}00029 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00030}\mbox{\hyperlink{memide_8c_a709693afdb9b89d848e684e7acde1f8f}{00030}} \mbox{\hyperlink{memide_8c_a709693afdb9b89d848e684e7acde1f8f}{ideintr}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00031}00031 \{}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00032}00032   \textcolor{comment}{// no-\/op}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00033}00033 \}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00035}00035 \textcolor{comment}{// Sync buf with disk.}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00036}00036 \textcolor{comment}{// If B\_DIRTY is set, write buf to disk, clear B\_DIRTY, set B\_VALID.}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00037}00037 \textcolor{comment}{// Else if B\_VALID is not set, read buf from disk, set B\_VALID.}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00038}00038 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00039}\mbox{\hyperlink{memide_8c_a7f36b008f02088c86f76e98e05b55af5}{00039}} \mbox{\hyperlink{memide_8c_a7f36b008f02088c86f76e98e05b55af5}{iderw}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structbuf}{buf}} *b)}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00040}00040 \{}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00041}00041   \mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} *p;}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00043}00043   \textcolor{keywordflow}{if}(!\mbox{\hyperlink{defs_8h_afa76133bc67c6026376d630da9b53b68}{holdingsleep}}(\&b-\/>\mbox{\hyperlink{structbuf_a626ad748d91d4bd7f4e65b74c73f2644}{lock}}))}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00044}00044     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}iderw: buf not locked"{}});}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00045}00045   \textcolor{keywordflow}{if}((b-\/>\mbox{\hyperlink{structbuf_ae7d6b6c34fdeadb38970efd0554aa1a9}{flags}} \& (\mbox{\hyperlink{buf_8h_afab4199c0d27da71061f1c0cd5b51520}{B\_VALID}}|\mbox{\hyperlink{buf_8h_adc32011df267adb9740bcd0abf0f0663}{B\_DIRTY}})) == \mbox{\hyperlink{buf_8h_afab4199c0d27da71061f1c0cd5b51520}{B\_VALID}})}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00046}00046     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}iderw: nothing to do"{}});}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00047}00047   \textcolor{keywordflow}{if}(b-\/>\mbox{\hyperlink{structbuf_ac96082c2b5f22133ac7092ef81487227}{dev}} != 1)}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00048}00048     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}iderw: request not for disk 1"{}});}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00049}00049   \textcolor{keywordflow}{if}(b-\/>\mbox{\hyperlink{structbuf_a756b2bcc88008bef7f21d688aa4a7a48}{blockno}} >= disksize)}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00050}00050     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}iderw: block out of range"{}});}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00052}00052   p = memdisk + b-\/>\mbox{\hyperlink{structbuf_a756b2bcc88008bef7f21d688aa4a7a48}{blockno}}*\mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}};}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00053}00053 }
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00054}00054   \textcolor{keywordflow}{if}(b-\/>\mbox{\hyperlink{structbuf_ae7d6b6c34fdeadb38970efd0554aa1a9}{flags}} \& \mbox{\hyperlink{buf_8h_adc32011df267adb9740bcd0abf0f0663}{B\_DIRTY}})\{}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00055}00055     b-\/>\mbox{\hyperlink{structbuf_ae7d6b6c34fdeadb38970efd0554aa1a9}{flags}} \&= \string~B\_DIRTY;}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00056}00056     \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(p, b-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}}, \mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}});}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00057}00057   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00058}00058     \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(b-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}}, p, \mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}});}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00059}00059   b-\/>\mbox{\hyperlink{structbuf_ae7d6b6c34fdeadb38970efd0554aa1a9}{flags}} |= \mbox{\hyperlink{buf_8h_afab4199c0d27da71061f1c0cd5b51520}{B\_VALID}};}
+\DoxyCodeLine{\Hypertarget{memide_8c_source_l00060}00060 \}}
+
+\end{DoxyCode}

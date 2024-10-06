@@ -1,0 +1,121 @@
+\hypertarget{main_8c_source}{}\doxysection{main.\+c}
+\mbox{\hyperlink{main_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00001}00001 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00002}00002 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{defs_8h}{defs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00003}00003 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{param_8h}{param.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00004}00004 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{memlayout_8h}{memlayout.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00005}00005 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{mmu_8h}{mmu.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00006}00006 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{proc_8h}{proc.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00007}00007 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{x86_8h}{x86.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00009}00009 \textcolor{keyword}{static} \textcolor{keywordtype}{void} startothers(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00010}00010 \textcolor{keyword}{static} \textcolor{keywordtype}{void} mpmain(\textcolor{keywordtype}{void})  \mbox{\hyperlink{main_8c_a08f0b7c20a38fda2383d4f70bb78dc3e}{\_\_attribute\_\_}}((noreturn));}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00011}00011 \textcolor{keyword}{extern} \mbox{\hyperlink{types_8h_ac131849542282b2c95dfeaf1f26dc010}{pde\_t}} *\mbox{\hyperlink{vm_8c_aff01f9f000432fd4171b7edee6c85855}{kpgdir}};}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00012}00012 \textcolor{keyword}{extern} \textcolor{keywordtype}{char} \mbox{\hyperlink{kalloc_8c_af4f810c521bcfd87215d3007005a8325}{end}}[]; \textcolor{comment}{// first address after kernel loaded from ELF file}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00014}00014 \textcolor{comment}{// Bootstrap processor starts running C code here.}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00015}00015 \textcolor{comment}{// Allocate a real stack and switch to it, first}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00016}00016 \textcolor{comment}{// doing some setup required for memory allocator to work.}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00017}00017 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00018}00018 \mbox{\hyperlink{forktest_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00019}00019 \{}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00020}00020   \mbox{\hyperlink{defs_8h_abc7a6a8cb3bcde83697a0c9a61d22d4d}{kinit1}}(\mbox{\hyperlink{kalloc_8c_af4f810c521bcfd87215d3007005a8325}{end}}, \mbox{\hyperlink{memlayout_8h_aefd5e8b62c49bba2cf20309c7dd174e2}{P2V}}(4*1024*1024)); \textcolor{comment}{// phys page allocator}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00021}00021   \mbox{\hyperlink{defs_8h_a893bf6891e427f310b43981bf8e737ea}{kvmalloc}}();      \textcolor{comment}{// kernel page table}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00022}00022   \mbox{\hyperlink{defs_8h_a2fd0b66a17c5347541448ef906b7b2a2}{mpinit}}();        \textcolor{comment}{// detect other processors}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00023}00023   \mbox{\hyperlink{defs_8h_a6b48a1e50acc73cb3e70a65774c87392}{lapicinit}}();     \textcolor{comment}{// interrupt controller}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00024}00024   \mbox{\hyperlink{defs_8h_aaf5b2814a1dbf3ef0803dff58e0a76dc}{seginit}}();       \textcolor{comment}{// segment descriptors}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00025}00025   \mbox{\hyperlink{defs_8h_a8f19f54755d7fdec01e537228b10fbf6}{picinit}}();       \textcolor{comment}{// disable pic}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00026}00026   \mbox{\hyperlink{defs_8h_abce023b98422f397abdb425b20c8ceec}{ioapicinit}}();    \textcolor{comment}{// another interrupt controller}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00027}00027   \mbox{\hyperlink{console_8c_ab508ff0f4db26fe35cd25fa648f9ee75}{consoleinit}}();   \textcolor{comment}{// console hardware}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00028}00028   \mbox{\hyperlink{defs_8h_a79fa7b73d0d61fdd15d30768a395437d}{uartinit}}();      \textcolor{comment}{// serial port}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00029}00029   \mbox{\hyperlink{defs_8h_a9d293f913985937ee7a266fe5ddbfc77}{pinit}}();         \textcolor{comment}{// process table}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00030}00030   \mbox{\hyperlink{defs_8h_a9e7167b8e20e217c4af4e757f612ba6a}{tvinit}}();        \textcolor{comment}{// trap vectors}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00031}00031   \mbox{\hyperlink{bio_8c_a53cca0ddc98c5f1de37124eca2575a59}{binit}}();         \textcolor{comment}{// buffer cache}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00032}00032   \mbox{\hyperlink{defs_8h_a66bb5a4b304ea0f851dd999fc8195fa4}{fileinit}}();      \textcolor{comment}{// file table}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00033}00033   \mbox{\hyperlink{defs_8h_aefb190a6104cb58c0bc1f8fec88d1307}{ideinit}}();       \textcolor{comment}{// disk }}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00034}00034   startothers();   \textcolor{comment}{// start other processors}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00035}00035   \mbox{\hyperlink{defs_8h_aeb265df0f4968b40d175d9e3030d737c}{kinit2}}(\mbox{\hyperlink{memlayout_8h_aefd5e8b62c49bba2cf20309c7dd174e2}{P2V}}(4*1024*1024), \mbox{\hyperlink{memlayout_8h_aefd5e8b62c49bba2cf20309c7dd174e2}{P2V}}(\mbox{\hyperlink{memlayout_8h_ad3c557a115f7d82d9ef849846779531c}{PHYSTOP}})); \textcolor{comment}{// must come after startothers()}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00036}00036   \mbox{\hyperlink{defs_8h_a81c8a6a0cae413bc81aa223f7f7b7205}{userinit}}();      \textcolor{comment}{// first user process}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00037}00037   mpmain();        \textcolor{comment}{// finish this processor's setup}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00038}00038 \}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00040}00040 \textcolor{comment}{// Other CPUs jump here from entryother.S.}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00041}00041 \textcolor{keyword}{static} \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00042}00042 mpenter(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00043}00043 \{}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00044}00044   \mbox{\hyperlink{defs_8h_a02ca0670bc1fe12e38453082631ff360}{switchkvm}}();}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00045}00045   \mbox{\hyperlink{defs_8h_aaf5b2814a1dbf3ef0803dff58e0a76dc}{seginit}}();}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00046}00046   \mbox{\hyperlink{defs_8h_a6b48a1e50acc73cb3e70a65774c87392}{lapicinit}}();}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00047}00047   mpmain();}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00048}00048 \}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00049}00049 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00050}00050 \textcolor{comment}{// Common CPU setup code.}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00051}00051 \textcolor{keyword}{static} \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00052}00052 mpmain(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00053}00053 \{}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00054}00054   \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{}cpu\%d: starting \%d\(\backslash\)n"{}}, \mbox{\hyperlink{defs_8h_a1444de2903d3d2624a50de058d19c635}{cpuid}}(), \mbox{\hyperlink{defs_8h_a1444de2903d3d2624a50de058d19c635}{cpuid}}());}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00055}00055   \mbox{\hyperlink{defs_8h_a9b6e7f6c302700cb54216ad22cbc1591}{idtinit}}();       \textcolor{comment}{// load idt register}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00056}00056   xchg(\&(\mbox{\hyperlink{defs_8h_ad427959ad025dabd8cd393b27ec39160}{mycpu}}()-\/>started), 1); \textcolor{comment}{// tell startothers() we're up}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00057}00057   \mbox{\hyperlink{defs_8h_a9596021487afc9231319f22b71e4cb42}{scheduler}}();     \textcolor{comment}{// start running processes}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00058}00058 \}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00060}\mbox{\hyperlink{main_8c_af70a0e2fc2c22139673a8bd47319d5ff}{00060}} \mbox{\hyperlink{types_8h_ac131849542282b2c95dfeaf1f26dc010}{pde\_t}} \mbox{\hyperlink{main_8c_af70a0e2fc2c22139673a8bd47319d5ff}{entrypgdir}}[];  \textcolor{comment}{// For entry.S}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00062}00062 \textcolor{comment}{// Start the non-\/boot (AP) processors.}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00063}00063 \textcolor{keyword}{static} \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00064}00064 startothers(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00065}00065 \{}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00066}00066   \textcolor{keyword}{extern} \mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} \_binary\_entryother\_start[], \_binary\_entryother\_size[];}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00067}00067   \mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} *code;}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00068}00068   \textcolor{keyword}{struct }\mbox{\hyperlink{structcpu}{cpu}} *c;}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00069}00069   \textcolor{keywordtype}{char} *stack;}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00070}00070 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00071}00071   \textcolor{comment}{// Write entry code to unused memory at 0x7000.}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00072}00072   \textcolor{comment}{// The linker has placed the image of entryother.S in}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00073}00073   \textcolor{comment}{// \_binary\_entryother\_start.}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00074}00074   code = \mbox{\hyperlink{memlayout_8h_aefd5e8b62c49bba2cf20309c7dd174e2}{P2V}}(0x7000);}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00075}00075   \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(code, \_binary\_entryother\_start, (\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}})\_binary\_entryother\_size);}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00076}00076 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00077}00077   \textcolor{keywordflow}{for}(c = \mbox{\hyperlink{mp_8c_a6d2633e73724907b582dfe6938ed7bb9}{cpus}}; c < \mbox{\hyperlink{mp_8c_a6d2633e73724907b582dfe6938ed7bb9}{cpus}}+\mbox{\hyperlink{mp_8c_a6201a0661c3d5b88df5f63529298eb48}{ncpu}}; c++)\{}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00078}00078     \textcolor{keywordflow}{if}(c == \mbox{\hyperlink{defs_8h_ad427959ad025dabd8cd393b27ec39160}{mycpu}}())  \textcolor{comment}{// We've started already.}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00079}00079       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00080}00080 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00081}00081     \textcolor{comment}{// Tell entryother.S what stack to use, where to enter, and what}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00082}00082     \textcolor{comment}{// pgdir to use. We cannot use kpgdir yet, because the AP processor}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00083}00083     \textcolor{comment}{// is running in low  memory, so we use entrypgdir for the APs too.}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00084}00084     stack = \mbox{\hyperlink{defs_8h_a5e965f6365c721b5b23c12d16d45c3dc}{kalloc}}();}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00085}00085     *(\textcolor{keywordtype}{void}**)(code-\/4) = stack + \mbox{\hyperlink{param_8h_a7735dc19a8cdc3fcafd4241184be4b41}{KSTACKSIZE}};}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00086}00086     *(void(**)(void))(code-\/8) = mpenter;}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00087}00087     *(\textcolor{keywordtype}{int}**)(code-\/12) = (\textcolor{keywordtype}{void} *) \mbox{\hyperlink{memlayout_8h_a5021188bc7da1304f27e913aee183407}{V2P}}(\mbox{\hyperlink{main_8c_af70a0e2fc2c22139673a8bd47319d5ff}{entrypgdir}});}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00088}00088 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00089}00089     \mbox{\hyperlink{defs_8h_ae46b07b96e4429fa85738ac2fe1768a0}{lapicstartap}}(c-\/>\mbox{\hyperlink{structcpu_ad08a3478ec15fc8bec1d9b6b5a0431db}{apicid}}, \mbox{\hyperlink{memlayout_8h_a5021188bc7da1304f27e913aee183407}{V2P}}(code));}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00090}00090 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00091}00091     \textcolor{comment}{// wait for cpu to finish mpmain()}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00092}00092     \textcolor{keywordflow}{while}(c-\/>\mbox{\hyperlink{structcpu_a869f6e0e1dbf69de0bdb3546f981847f}{started}} == 0)}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00093}00093       ;}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00094}00094   \}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00095}00095 \}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00096}00096 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00097}00097 \textcolor{comment}{// The boot page table used in entry.S and entryother.S.}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00098}00098 \textcolor{comment}{// Page directories (and page tables) must start on page boundaries,}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00099}00099 \textcolor{comment}{// hence the \_\_aligned\_\_ attribute.}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00100}00100 \textcolor{comment}{// PTE\_PS in a page directory entry enables 4Mbyte pages.}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00101}00101 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00102}\mbox{\hyperlink{main_8c_a08f0b7c20a38fda2383d4f70bb78dc3e}{00102}} \mbox{\hyperlink{main_8c_a08f0b7c20a38fda2383d4f70bb78dc3e}{\_\_attribute\_\_}}((\_\_aligned\_\_(\mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}})))}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00103}00103 \mbox{\hyperlink{types_8h_ac131849542282b2c95dfeaf1f26dc010}{pde\_t}} \mbox{\hyperlink{main_8c_af70a0e2fc2c22139673a8bd47319d5ff}{entrypgdir}}[\mbox{\hyperlink{mmu_8h_af60ee3ecbf249497d0378c97201edfe8}{NPDENTRIES}}] = \{}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00104}00104   \textcolor{comment}{// Map VA's [0, 4MB) to PA's [0, 4MB)}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00105}00105   [0] = (0) | \mbox{\hyperlink{mmu_8h_a89bd860de64c44cd8ebaca8dc311b5ac}{PTE\_P}} | \mbox{\hyperlink{mmu_8h_a058fcbcc3e1eab2c09c68b3e5221c545}{PTE\_W}} | \mbox{\hyperlink{mmu_8h_ab499d5acd1363559590a7cfdcfadab46}{PTE\_PS}},}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00106}00106   \textcolor{comment}{// Map VA's [KERNBASE, KERNBASE+4MB) to PA's [0, 4MB)}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00107}00107   [\mbox{\hyperlink{memlayout_8h_a20cbfc19992a40ab9ccf4aa8ab8283d0}{KERNBASE}}>>\mbox{\hyperlink{mmu_8h_a6d2227e0acbc6e206494b5e50f0c5297}{PDXSHIFT}}] = (0) | \mbox{\hyperlink{mmu_8h_a89bd860de64c44cd8ebaca8dc311b5ac}{PTE\_P}} | \mbox{\hyperlink{mmu_8h_a058fcbcc3e1eab2c09c68b3e5221c545}{PTE\_W}} | \mbox{\hyperlink{mmu_8h_ab499d5acd1363559590a7cfdcfadab46}{PTE\_PS}},}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00108}00108 \};}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00109}00109 }
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00110}00110 \textcolor{comment}{//PAGEBREAK!}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00111}00111 \textcolor{comment}{// Blank page.}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00112}00112 \textcolor{comment}{//PAGEBREAK!}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00113}00113 \textcolor{comment}{// Blank page.}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00114}00114 \textcolor{comment}{//PAGEBREAK!}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00115}00115 \textcolor{comment}{// Blank page.}}
+\DoxyCodeLine{\Hypertarget{main_8c_source_l00116}00116 }
+
+\end{DoxyCode}

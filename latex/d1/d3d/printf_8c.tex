@@ -1,0 +1,80 @@
+\hypertarget{printf_8c}{}\doxysection{printf.\+c File Reference}
+\label{printf_8c}\index{printf.c@{printf.c}}
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stat.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}user.\+h\char`\"{}}\newline
+Include dependency graph for printf.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=249pt]{d1/d22/printf_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{printf_8c_ab07b7ad521d2a232b3f161c25e12fbaa}{printf}} (int fd, const char $\ast$fmt,...)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{printf_8c_ab07b7ad521d2a232b3f161c25e12fbaa}\label{printf_8c_ab07b7ad521d2a232b3f161c25e12fbaa}} 
+\index{printf.c@{printf.c}!printf@{printf}}
+\index{printf@{printf}!printf.c@{printf.c}}
+\doxysubsubsection{\texorpdfstring{printf()}{printf()}}
+{\footnotesize\ttfamily void printf (\begin{DoxyParamCaption}\item[{int}]{fd,  }\item[{const char $\ast$}]{fmt,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{printf_8c_source_l00040}{40}} of file \mbox{\hyperlink{printf_8c_source}{printf.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00041 \{}
+\DoxyCodeLine{00042   \textcolor{keywordtype}{char} *s;}
+\DoxyCodeLine{00043   \textcolor{keywordtype}{int} c, i, state;}
+\DoxyCodeLine{00044   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} *ap;}
+\DoxyCodeLine{00045 }
+\DoxyCodeLine{00046   state = 0;}
+\DoxyCodeLine{00047   ap = (\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}*)(\textcolor{keywordtype}{void}*)\&fmt + 1;}
+\DoxyCodeLine{00048   \textcolor{keywordflow}{for}(i = 0; fmt[i]; i++)\{}
+\DoxyCodeLine{00049     c = fmt[i] \& 0xff;}
+\DoxyCodeLine{00050     \textcolor{keywordflow}{if}(state == 0)\{}
+\DoxyCodeLine{00051       \textcolor{keywordflow}{if}(c == \textcolor{charliteral}{'\%'})\{}
+\DoxyCodeLine{00052         state = \textcolor{charliteral}{'\%'};}
+\DoxyCodeLine{00053       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00054         putc(fd, c);}
+\DoxyCodeLine{00055       \}}
+\DoxyCodeLine{00056     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(state == \textcolor{charliteral}{'\%'})\{}
+\DoxyCodeLine{00057       \textcolor{keywordflow}{if}(c == \textcolor{charliteral}{'d'})\{}
+\DoxyCodeLine{00058         printint(fd, *ap, 10, 1);}
+\DoxyCodeLine{00059         ap++;}
+\DoxyCodeLine{00060       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(c == \textcolor{charliteral}{'x'} || c == \textcolor{charliteral}{'p'})\{}
+\DoxyCodeLine{00061         printint(fd, *ap, 16, 0);}
+\DoxyCodeLine{00062         ap++;}
+\DoxyCodeLine{00063       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(c == \textcolor{charliteral}{'s'})\{}
+\DoxyCodeLine{00064         s = (\textcolor{keywordtype}{char}*)*ap;}
+\DoxyCodeLine{00065         ap++;}
+\DoxyCodeLine{00066         \textcolor{keywordflow}{if}(s == 0)}
+\DoxyCodeLine{00067           s = \textcolor{stringliteral}{"{}(null)"{}};}
+\DoxyCodeLine{00068         \textcolor{keywordflow}{while}(*s != 0)\{}
+\DoxyCodeLine{00069           putc(fd, *s);}
+\DoxyCodeLine{00070           s++;}
+\DoxyCodeLine{00071         \}}
+\DoxyCodeLine{00072       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(c == \textcolor{charliteral}{'c'})\{}
+\DoxyCodeLine{00073         putc(fd, *ap);}
+\DoxyCodeLine{00074         ap++;}
+\DoxyCodeLine{00075       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(c == \textcolor{charliteral}{'\%'})\{}
+\DoxyCodeLine{00076         putc(fd, c);}
+\DoxyCodeLine{00077       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00078         \textcolor{comment}{// Unknown \% sequence.  Print it to draw attention.}}
+\DoxyCodeLine{00079         putc(fd, \textcolor{charliteral}{'\%'});}
+\DoxyCodeLine{00080         putc(fd, c);}
+\DoxyCodeLine{00081       \}}
+\DoxyCodeLine{00082       state = 0;}
+\DoxyCodeLine{00083     \}}
+\DoxyCodeLine{00084   \}}
+\DoxyCodeLine{00085 \}}
+
+\end{DoxyCode}

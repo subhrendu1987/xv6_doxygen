@@ -1,0 +1,1654 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\contentsline {chapter}{\numberline {1}ENVIRONMENT PREPARETION}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}LINUX}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}BUILDING AND RUNNING XV6}{1}{section.1.2}%
+\contentsline {chapter}{\numberline {2}Class Index}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Class List}{3}{section.2.1}%
+\contentsline {chapter}{\numberline {3}File Index}{5}{chapter.3}%
+\contentsline {section}{\numberline {3.1}File List}{5}{section.3.1}%
+\contentsline {chapter}{\numberline {4}Class Documentation}{9}{chapter.4}%
+\contentsline {section}{\numberline {4.1}backcmd}{9}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Detailed Description}{9}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Member Data Documentation}{9}{subsection.4.1.2}%
+\contentsline {subsubsection}{\numberline {4.1.2.1}cmd}{9}{subsubsection.4.1.2.1}%
+\contentsline {subsubsection}{\numberline {4.1.2.2}type}{9}{subsubsection.4.1.2.2}%
+\contentsline {section}{\numberline {4.2}buf}{10}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Detailed Description}{10}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Member Data Documentation}{10}{subsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.2.1}blockno}{10}{subsubsection.4.2.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2.2}data}{10}{subsubsection.4.2.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.2.3}dev}{11}{subsubsection.4.2.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.2.4}flags}{11}{subsubsection.4.2.2.4}%
+\contentsline {subsubsection}{\numberline {4.2.2.5}lock}{11}{subsubsection.4.2.2.5}%
+\contentsline {subsubsection}{\numberline {4.2.2.6}next}{11}{subsubsection.4.2.2.6}%
+\contentsline {subsubsection}{\numberline {4.2.2.7}prev}{11}{subsubsection.4.2.2.7}%
+\contentsline {subsubsection}{\numberline {4.2.2.8}qnext}{12}{subsubsection.4.2.2.8}%
+\contentsline {subsubsection}{\numberline {4.2.2.9}refcnt}{12}{subsubsection.4.2.2.9}%
+\contentsline {section}{\numberline {4.3}cmd}{12}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Detailed Description}{12}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Member Data Documentation}{12}{subsection.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.2.1}type}{12}{subsubsection.4.3.2.1}%
+\contentsline {section}{\numberline {4.4}context}{13}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Detailed Description}{13}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Member Data Documentation}{13}{subsection.4.4.2}%
+\contentsline {subsubsection}{\numberline {4.4.2.1}ebp}{13}{subsubsection.4.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.4.2.2}ebx}{13}{subsubsection.4.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.4.2.3}edi}{13}{subsubsection.4.4.2.3}%
+\contentsline {subsubsection}{\numberline {4.4.2.4}eip}{14}{subsubsection.4.4.2.4}%
+\contentsline {subsubsection}{\numberline {4.4.2.5}esi}{14}{subsubsection.4.4.2.5}%
+\contentsline {section}{\numberline {4.5}cpu}{14}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Detailed Description}{14}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Member Data Documentation}{14}{subsection.4.5.2}%
+\contentsline {subsubsection}{\numberline {4.5.2.1}apicid}{15}{subsubsection.4.5.2.1}%
+\contentsline {subsubsection}{\numberline {4.5.2.2}gdt}{15}{subsubsection.4.5.2.2}%
+\contentsline {subsubsection}{\numberline {4.5.2.3}intena}{15}{subsubsection.4.5.2.3}%
+\contentsline {subsubsection}{\numberline {4.5.2.4}ncli}{15}{subsubsection.4.5.2.4}%
+\contentsline {subsubsection}{\numberline {4.5.2.5}proc}{15}{subsubsection.4.5.2.5}%
+\contentsline {subsubsection}{\numberline {4.5.2.6}scheduler}{16}{subsubsection.4.5.2.6}%
+\contentsline {subsubsection}{\numberline {4.5.2.7}started}{16}{subsubsection.4.5.2.7}%
+\contentsline {subsubsection}{\numberline {4.5.2.8}ts}{16}{subsubsection.4.5.2.8}%
+\contentsline {section}{\numberline {4.6}devsw}{16}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Detailed Description}{16}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}Member Data Documentation}{17}{subsection.4.6.2}%
+\contentsline {subsubsection}{\numberline {4.6.2.1}read}{17}{subsubsection.4.6.2.1}%
+\contentsline {subsubsection}{\numberline {4.6.2.2}write}{17}{subsubsection.4.6.2.2}%
+\contentsline {section}{\numberline {4.7}dinode}{17}{section.4.7}%
+\contentsline {subsection}{\numberline {4.7.1}Detailed Description}{17}{subsection.4.7.1}%
+\contentsline {subsection}{\numberline {4.7.2}Member Data Documentation}{17}{subsection.4.7.2}%
+\contentsline {subsubsection}{\numberline {4.7.2.1}addrs}{18}{subsubsection.4.7.2.1}%
+\contentsline {subsubsection}{\numberline {4.7.2.2}major}{18}{subsubsection.4.7.2.2}%
+\contentsline {subsubsection}{\numberline {4.7.2.3}minor}{18}{subsubsection.4.7.2.3}%
+\contentsline {subsubsection}{\numberline {4.7.2.4}nlink}{18}{subsubsection.4.7.2.4}%
+\contentsline {subsubsection}{\numberline {4.7.2.5}size}{18}{subsubsection.4.7.2.5}%
+\contentsline {subsubsection}{\numberline {4.7.2.6}type}{19}{subsubsection.4.7.2.6}%
+\contentsline {section}{\numberline {4.8}dirent}{19}{section.4.8}%
+\contentsline {subsection}{\numberline {4.8.1}Detailed Description}{19}{subsection.4.8.1}%
+\contentsline {subsection}{\numberline {4.8.2}Member Data Documentation}{19}{subsection.4.8.2}%
+\contentsline {subsubsection}{\numberline {4.8.2.1}inum}{19}{subsubsection.4.8.2.1}%
+\contentsline {subsubsection}{\numberline {4.8.2.2}name}{19}{subsubsection.4.8.2.2}%
+\contentsline {section}{\numberline {4.9}elfhdr}{20}{section.4.9}%
+\contentsline {subsection}{\numberline {4.9.1}Detailed Description}{20}{subsection.4.9.1}%
+\contentsline {subsection}{\numberline {4.9.2}Member Data Documentation}{20}{subsection.4.9.2}%
+\contentsline {subsubsection}{\numberline {4.9.2.1}ehsize}{20}{subsubsection.4.9.2.1}%
+\contentsline {subsubsection}{\numberline {4.9.2.2}elf}{20}{subsubsection.4.9.2.2}%
+\contentsline {subsubsection}{\numberline {4.9.2.3}entry}{21}{subsubsection.4.9.2.3}%
+\contentsline {subsubsection}{\numberline {4.9.2.4}flags}{21}{subsubsection.4.9.2.4}%
+\contentsline {subsubsection}{\numberline {4.9.2.5}machine}{21}{subsubsection.4.9.2.5}%
+\contentsline {subsubsection}{\numberline {4.9.2.6}magic}{21}{subsubsection.4.9.2.6}%
+\contentsline {subsubsection}{\numberline {4.9.2.7}phentsize}{21}{subsubsection.4.9.2.7}%
+\contentsline {subsubsection}{\numberline {4.9.2.8}phnum}{21}{subsubsection.4.9.2.8}%
+\contentsline {subsubsection}{\numberline {4.9.2.9}phoff}{22}{subsubsection.4.9.2.9}%
+\contentsline {subsubsection}{\numberline {4.9.2.10}shentsize}{22}{subsubsection.4.9.2.10}%
+\contentsline {subsubsection}{\numberline {4.9.2.11}shnum}{22}{subsubsection.4.9.2.11}%
+\contentsline {subsubsection}{\numberline {4.9.2.12}shoff}{22}{subsubsection.4.9.2.12}%
+\contentsline {subsubsection}{\numberline {4.9.2.13}shstrndx}{22}{subsubsection.4.9.2.13}%
+\contentsline {subsubsection}{\numberline {4.9.2.14}type}{22}{subsubsection.4.9.2.14}%
+\contentsline {subsubsection}{\numberline {4.9.2.15}version}{23}{subsubsection.4.9.2.15}%
+\contentsline {section}{\numberline {4.10}execcmd}{23}{section.4.10}%
+\contentsline {subsection}{\numberline {4.10.1}Detailed Description}{23}{subsection.4.10.1}%
+\contentsline {subsection}{\numberline {4.10.2}Member Data Documentation}{23}{subsection.4.10.2}%
+\contentsline {subsubsection}{\numberline {4.10.2.1}argv}{23}{subsubsection.4.10.2.1}%
+\contentsline {subsubsection}{\numberline {4.10.2.2}eargv}{23}{subsubsection.4.10.2.2}%
+\contentsline {subsubsection}{\numberline {4.10.2.3}type}{24}{subsubsection.4.10.2.3}%
+\contentsline {section}{\numberline {4.11}file}{24}{section.4.11}%
+\contentsline {subsection}{\numberline {4.11.1}Detailed Description}{24}{subsection.4.11.1}%
+\contentsline {subsection}{\numberline {4.11.2}Member Enumeration Documentation}{24}{subsection.4.11.2}%
+\contentsline {subsubsection}{\numberline {4.11.2.1}anonymous enum}{24}{subsubsection.4.11.2.1}%
+\contentsline {subsection}{\numberline {4.11.3}Member Data Documentation}{25}{subsection.4.11.3}%
+\contentsline {subsubsection}{\numberline {4.11.3.1}ip}{25}{subsubsection.4.11.3.1}%
+\contentsline {subsubsection}{\numberline {4.11.3.2}off}{25}{subsubsection.4.11.3.2}%
+\contentsline {subsubsection}{\numberline {4.11.3.3}pipe}{25}{subsubsection.4.11.3.3}%
+\contentsline {subsubsection}{\numberline {4.11.3.4}readable}{25}{subsubsection.4.11.3.4}%
+\contentsline {subsubsection}{\numberline {4.11.3.5}ref}{26}{subsubsection.4.11.3.5}%
+\contentsline {subsubsection}{\numberline {4.11.3.6}}{26}{subsubsection.4.11.3.6}%
+\contentsline {subsubsection}{\numberline {4.11.3.7}writable}{26}{subsubsection.4.11.3.7}%
+\contentsline {section}{\numberline {4.12}gatedesc}{26}{section.4.12}%
+\contentsline {subsection}{\numberline {4.12.1}Detailed Description}{27}{subsection.4.12.1}%
+\contentsline {subsection}{\numberline {4.12.2}Member Data Documentation}{27}{subsection.4.12.2}%
+\contentsline {subsubsection}{\numberline {4.12.2.1}args}{27}{subsubsection.4.12.2.1}%
+\contentsline {subsubsection}{\numberline {4.12.2.2}cs}{27}{subsubsection.4.12.2.2}%
+\contentsline {subsubsection}{\numberline {4.12.2.3}dpl}{27}{subsubsection.4.12.2.3}%
+\contentsline {subsubsection}{\numberline {4.12.2.4}off\_15\_0}{27}{subsubsection.4.12.2.4}%
+\contentsline {subsubsection}{\numberline {4.12.2.5}off\_31\_16}{27}{subsubsection.4.12.2.5}%
+\contentsline {subsubsection}{\numberline {4.12.2.6}p}{28}{subsubsection.4.12.2.6}%
+\contentsline {subsubsection}{\numberline {4.12.2.7}rsv1}{28}{subsubsection.4.12.2.7}%
+\contentsline {subsubsection}{\numberline {4.12.2.8}s}{28}{subsubsection.4.12.2.8}%
+\contentsline {subsubsection}{\numberline {4.12.2.9}type}{28}{subsubsection.4.12.2.9}%
+\contentsline {section}{\numberline {4.13}header}{28}{section.4.13}%
+\contentsline {subsection}{\numberline {4.13.1}Detailed Description}{29}{subsection.4.13.1}%
+\contentsline {subsection}{\numberline {4.13.2}Member Data Documentation}{29}{subsection.4.13.2}%
+\contentsline {subsubsection}{\numberline {4.13.2.1}ptr}{29}{subsubsection.4.13.2.1}%
+\contentsline {subsubsection}{\numberline {4.13.2.2}}{29}{subsubsection.4.13.2.2}%
+\contentsline {subsubsection}{\numberline {4.13.2.3}size}{29}{subsubsection.4.13.2.3}%
+\contentsline {subsubsection}{\numberline {4.13.2.4}x}{29}{subsubsection.4.13.2.4}%
+\contentsline {section}{\numberline {4.14}inode}{30}{section.4.14}%
+\contentsline {subsection}{\numberline {4.14.1}Detailed Description}{30}{subsection.4.14.1}%
+\contentsline {subsection}{\numberline {4.14.2}Member Data Documentation}{30}{subsection.4.14.2}%
+\contentsline {subsubsection}{\numberline {4.14.2.1}addrs}{30}{subsubsection.4.14.2.1}%
+\contentsline {subsubsection}{\numberline {4.14.2.2}dev}{30}{subsubsection.4.14.2.2}%
+\contentsline {subsubsection}{\numberline {4.14.2.3}inum}{31}{subsubsection.4.14.2.3}%
+\contentsline {subsubsection}{\numberline {4.14.2.4}lock}{31}{subsubsection.4.14.2.4}%
+\contentsline {subsubsection}{\numberline {4.14.2.5}major}{31}{subsubsection.4.14.2.5}%
+\contentsline {subsubsection}{\numberline {4.14.2.6}minor}{31}{subsubsection.4.14.2.6}%
+\contentsline {subsubsection}{\numberline {4.14.2.7}nlink}{31}{subsubsection.4.14.2.7}%
+\contentsline {subsubsection}{\numberline {4.14.2.8}ref}{32}{subsubsection.4.14.2.8}%
+\contentsline {subsubsection}{\numberline {4.14.2.9}size}{32}{subsubsection.4.14.2.9}%
+\contentsline {subsubsection}{\numberline {4.14.2.10}type}{32}{subsubsection.4.14.2.10}%
+\contentsline {subsubsection}{\numberline {4.14.2.11}valid}{32}{subsubsection.4.14.2.11}%
+\contentsline {section}{\numberline {4.15}ioapic}{32}{section.4.15}%
+\contentsline {subsection}{\numberline {4.15.1}Detailed Description}{33}{subsection.4.15.1}%
+\contentsline {subsection}{\numberline {4.15.2}Member Data Documentation}{33}{subsection.4.15.2}%
+\contentsline {subsubsection}{\numberline {4.15.2.1}data}{33}{subsubsection.4.15.2.1}%
+\contentsline {subsubsection}{\numberline {4.15.2.2}pad}{33}{subsubsection.4.15.2.2}%
+\contentsline {subsubsection}{\numberline {4.15.2.3}reg}{33}{subsubsection.4.15.2.3}%
+\contentsline {section}{\numberline {4.16}kmap}{33}{section.4.16}%
+\contentsline {subsection}{\numberline {4.16.1}Detailed Description}{34}{subsection.4.16.1}%
+\contentsline {subsection}{\numberline {4.16.2}Member Data Documentation}{34}{subsection.4.16.2}%
+\contentsline {subsubsection}{\numberline {4.16.2.1}perm}{34}{subsubsection.4.16.2.1}%
+\contentsline {subsubsection}{\numberline {4.16.2.2}phys\_end}{34}{subsubsection.4.16.2.2}%
+\contentsline {subsubsection}{\numberline {4.16.2.3}phys\_start}{34}{subsubsection.4.16.2.3}%
+\contentsline {subsubsection}{\numberline {4.16.2.4}virt}{34}{subsubsection.4.16.2.4}%
+\contentsline {section}{\numberline {4.17}listcmd}{35}{section.4.17}%
+\contentsline {subsection}{\numberline {4.17.1}Detailed Description}{35}{subsection.4.17.1}%
+\contentsline {subsection}{\numberline {4.17.2}Member Data Documentation}{35}{subsection.4.17.2}%
+\contentsline {subsubsection}{\numberline {4.17.2.1}left}{35}{subsubsection.4.17.2.1}%
+\contentsline {subsubsection}{\numberline {4.17.2.2}right}{35}{subsubsection.4.17.2.2}%
+\contentsline {subsubsection}{\numberline {4.17.2.3}type}{35}{subsubsection.4.17.2.3}%
+\contentsline {section}{\numberline {4.18}log}{36}{section.4.18}%
+\contentsline {subsection}{\numberline {4.18.1}Detailed Description}{36}{subsection.4.18.1}%
+\contentsline {subsection}{\numberline {4.18.2}Member Data Documentation}{36}{subsection.4.18.2}%
+\contentsline {subsubsection}{\numberline {4.18.2.1}committing}{36}{subsubsection.4.18.2.1}%
+\contentsline {subsubsection}{\numberline {4.18.2.2}dev}{36}{subsubsection.4.18.2.2}%
+\contentsline {subsubsection}{\numberline {4.18.2.3}lh}{36}{subsubsection.4.18.2.3}%
+\contentsline {subsubsection}{\numberline {4.18.2.4}lock}{37}{subsubsection.4.18.2.4}%
+\contentsline {subsubsection}{\numberline {4.18.2.5}outstanding}{37}{subsubsection.4.18.2.5}%
+\contentsline {subsubsection}{\numberline {4.18.2.6}size}{37}{subsubsection.4.18.2.6}%
+\contentsline {subsubsection}{\numberline {4.18.2.7}start}{37}{subsubsection.4.18.2.7}%
+\contentsline {section}{\numberline {4.19}logheader}{37}{section.4.19}%
+\contentsline {subsection}{\numberline {4.19.1}Detailed Description}{38}{subsection.4.19.1}%
+\contentsline {subsection}{\numberline {4.19.2}Member Data Documentation}{38}{subsection.4.19.2}%
+\contentsline {subsubsection}{\numberline {4.19.2.1}block}{38}{subsubsection.4.19.2.1}%
+\contentsline {subsubsection}{\numberline {4.19.2.2}n}{38}{subsubsection.4.19.2.2}%
+\contentsline {section}{\numberline {4.20}mp}{38}{section.4.20}%
+\contentsline {subsection}{\numberline {4.20.1}Detailed Description}{39}{subsection.4.20.1}%
+\contentsline {subsection}{\numberline {4.20.2}Member Data Documentation}{39}{subsection.4.20.2}%
+\contentsline {subsubsection}{\numberline {4.20.2.1}checksum}{39}{subsubsection.4.20.2.1}%
+\contentsline {subsubsection}{\numberline {4.20.2.2}imcrp}{39}{subsubsection.4.20.2.2}%
+\contentsline {subsubsection}{\numberline {4.20.2.3}length}{39}{subsubsection.4.20.2.3}%
+\contentsline {subsubsection}{\numberline {4.20.2.4}physaddr}{39}{subsubsection.4.20.2.4}%
+\contentsline {subsubsection}{\numberline {4.20.2.5}reserved}{40}{subsubsection.4.20.2.5}%
+\contentsline {subsubsection}{\numberline {4.20.2.6}signature}{40}{subsubsection.4.20.2.6}%
+\contentsline {subsubsection}{\numberline {4.20.2.7}specrev}{40}{subsubsection.4.20.2.7}%
+\contentsline {subsubsection}{\numberline {4.20.2.8}type}{40}{subsubsection.4.20.2.8}%
+\contentsline {section}{\numberline {4.21}mpconf}{40}{section.4.21}%
+\contentsline {subsection}{\numberline {4.21.1}Detailed Description}{41}{subsection.4.21.1}%
+\contentsline {subsection}{\numberline {4.21.2}Member Data Documentation}{41}{subsection.4.21.2}%
+\contentsline {subsubsection}{\numberline {4.21.2.1}checksum}{41}{subsubsection.4.21.2.1}%
+\contentsline {subsubsection}{\numberline {4.21.2.2}entry}{41}{subsubsection.4.21.2.2}%
+\contentsline {subsubsection}{\numberline {4.21.2.3}lapicaddr}{41}{subsubsection.4.21.2.3}%
+\contentsline {subsubsection}{\numberline {4.21.2.4}length}{41}{subsubsection.4.21.2.4}%
+\contentsline {subsubsection}{\numberline {4.21.2.5}oemlength}{42}{subsubsection.4.21.2.5}%
+\contentsline {subsubsection}{\numberline {4.21.2.6}oemtable}{42}{subsubsection.4.21.2.6}%
+\contentsline {subsubsection}{\numberline {4.21.2.7}product}{42}{subsubsection.4.21.2.7}%
+\contentsline {subsubsection}{\numberline {4.21.2.8}reserved}{42}{subsubsection.4.21.2.8}%
+\contentsline {subsubsection}{\numberline {4.21.2.9}signature}{42}{subsubsection.4.21.2.9}%
+\contentsline {subsubsection}{\numberline {4.21.2.10}version}{42}{subsubsection.4.21.2.10}%
+\contentsline {subsubsection}{\numberline {4.21.2.11}xchecksum}{43}{subsubsection.4.21.2.11}%
+\contentsline {subsubsection}{\numberline {4.21.2.12}xlength}{43}{subsubsection.4.21.2.12}%
+\contentsline {section}{\numberline {4.22}mpioapic}{43}{section.4.22}%
+\contentsline {subsection}{\numberline {4.22.1}Detailed Description}{43}{subsection.4.22.1}%
+\contentsline {subsection}{\numberline {4.22.2}Member Data Documentation}{43}{subsection.4.22.2}%
+\contentsline {subsubsection}{\numberline {4.22.2.1}addr}{43}{subsubsection.4.22.2.1}%
+\contentsline {subsubsection}{\numberline {4.22.2.2}apicno}{44}{subsubsection.4.22.2.2}%
+\contentsline {subsubsection}{\numberline {4.22.2.3}flags}{44}{subsubsection.4.22.2.3}%
+\contentsline {subsubsection}{\numberline {4.22.2.4}type}{44}{subsubsection.4.22.2.4}%
+\contentsline {subsubsection}{\numberline {4.22.2.5}version}{44}{subsubsection.4.22.2.5}%
+\contentsline {section}{\numberline {4.23}mpproc}{44}{section.4.23}%
+\contentsline {subsection}{\numberline {4.23.1}Detailed Description}{45}{subsection.4.23.1}%
+\contentsline {subsection}{\numberline {4.23.2}Member Data Documentation}{45}{subsection.4.23.2}%
+\contentsline {subsubsection}{\numberline {4.23.2.1}apicid}{45}{subsubsection.4.23.2.1}%
+\contentsline {subsubsection}{\numberline {4.23.2.2}feature}{45}{subsubsection.4.23.2.2}%
+\contentsline {subsubsection}{\numberline {4.23.2.3}flags}{45}{subsubsection.4.23.2.3}%
+\contentsline {subsubsection}{\numberline {4.23.2.4}reserved}{45}{subsubsection.4.23.2.4}%
+\contentsline {subsubsection}{\numberline {4.23.2.5}signature}{45}{subsubsection.4.23.2.5}%
+\contentsline {subsubsection}{\numberline {4.23.2.6}type}{46}{subsubsection.4.23.2.6}%
+\contentsline {subsubsection}{\numberline {4.23.2.7}version}{46}{subsubsection.4.23.2.7}%
+\contentsline {section}{\numberline {4.24}pipe}{46}{section.4.24}%
+\contentsline {subsection}{\numberline {4.24.1}Detailed Description}{46}{subsection.4.24.1}%
+\contentsline {subsection}{\numberline {4.24.2}Member Data Documentation}{46}{subsection.4.24.2}%
+\contentsline {subsubsection}{\numberline {4.24.2.1}data}{46}{subsubsection.4.24.2.1}%
+\contentsline {subsubsection}{\numberline {4.24.2.2}lock}{47}{subsubsection.4.24.2.2}%
+\contentsline {subsubsection}{\numberline {4.24.2.3}nread}{47}{subsubsection.4.24.2.3}%
+\contentsline {subsubsection}{\numberline {4.24.2.4}nwrite}{47}{subsubsection.4.24.2.4}%
+\contentsline {subsubsection}{\numberline {4.24.2.5}readopen}{47}{subsubsection.4.24.2.5}%
+\contentsline {subsubsection}{\numberline {4.24.2.6}writeopen}{47}{subsubsection.4.24.2.6}%
+\contentsline {section}{\numberline {4.25}pipecmd}{48}{section.4.25}%
+\contentsline {subsection}{\numberline {4.25.1}Detailed Description}{48}{subsection.4.25.1}%
+\contentsline {subsection}{\numberline {4.25.2}Member Data Documentation}{48}{subsection.4.25.2}%
+\contentsline {subsubsection}{\numberline {4.25.2.1}left}{48}{subsubsection.4.25.2.1}%
+\contentsline {subsubsection}{\numberline {4.25.2.2}right}{48}{subsubsection.4.25.2.2}%
+\contentsline {subsubsection}{\numberline {4.25.2.3}type}{48}{subsubsection.4.25.2.3}%
+\contentsline {section}{\numberline {4.26}proc}{49}{section.4.26}%
+\contentsline {subsection}{\numberline {4.26.1}Detailed Description}{49}{subsection.4.26.1}%
+\contentsline {subsection}{\numberline {4.26.2}Member Data Documentation}{49}{subsection.4.26.2}%
+\contentsline {subsubsection}{\numberline {4.26.2.1}chan}{49}{subsubsection.4.26.2.1}%
+\contentsline {subsubsection}{\numberline {4.26.2.2}context}{49}{subsubsection.4.26.2.2}%
+\contentsline {subsubsection}{\numberline {4.26.2.3}cwd}{50}{subsubsection.4.26.2.3}%
+\contentsline {subsubsection}{\numberline {4.26.2.4}killed}{50}{subsubsection.4.26.2.4}%
+\contentsline {subsubsection}{\numberline {4.26.2.5}kstack}{50}{subsubsection.4.26.2.5}%
+\contentsline {subsubsection}{\numberline {4.26.2.6}name}{50}{subsubsection.4.26.2.6}%
+\contentsline {subsubsection}{\numberline {4.26.2.7}ofile}{50}{subsubsection.4.26.2.7}%
+\contentsline {subsubsection}{\numberline {4.26.2.8}parent}{51}{subsubsection.4.26.2.8}%
+\contentsline {subsubsection}{\numberline {4.26.2.9}pgdir}{51}{subsubsection.4.26.2.9}%
+\contentsline {subsubsection}{\numberline {4.26.2.10}pid}{51}{subsubsection.4.26.2.10}%
+\contentsline {subsubsection}{\numberline {4.26.2.11}priority}{51}{subsubsection.4.26.2.11}%
+\contentsline {subsubsection}{\numberline {4.26.2.12}state}{51}{subsubsection.4.26.2.12}%
+\contentsline {subsubsection}{\numberline {4.26.2.13}sz}{52}{subsubsection.4.26.2.13}%
+\contentsline {subsubsection}{\numberline {4.26.2.14}tf}{52}{subsubsection.4.26.2.14}%
+\contentsline {section}{\numberline {4.27}proghdr}{52}{section.4.27}%
+\contentsline {subsection}{\numberline {4.27.1}Detailed Description}{52}{subsection.4.27.1}%
+\contentsline {subsection}{\numberline {4.27.2}Member Data Documentation}{52}{subsection.4.27.2}%
+\contentsline {subsubsection}{\numberline {4.27.2.1}align}{53}{subsubsection.4.27.2.1}%
+\contentsline {subsubsection}{\numberline {4.27.2.2}filesz}{53}{subsubsection.4.27.2.2}%
+\contentsline {subsubsection}{\numberline {4.27.2.3}flags}{53}{subsubsection.4.27.2.3}%
+\contentsline {subsubsection}{\numberline {4.27.2.4}memsz}{53}{subsubsection.4.27.2.4}%
+\contentsline {subsubsection}{\numberline {4.27.2.5}off}{53}{subsubsection.4.27.2.5}%
+\contentsline {subsubsection}{\numberline {4.27.2.6}paddr}{54}{subsubsection.4.27.2.6}%
+\contentsline {subsubsection}{\numberline {4.27.2.7}type}{54}{subsubsection.4.27.2.7}%
+\contentsline {subsubsection}{\numberline {4.27.2.8}vaddr}{54}{subsubsection.4.27.2.8}%
+\contentsline {section}{\numberline {4.28}redircmd}{54}{section.4.28}%
+\contentsline {subsection}{\numberline {4.28.1}Detailed Description}{54}{subsection.4.28.1}%
+\contentsline {subsection}{\numberline {4.28.2}Member Data Documentation}{54}{subsection.4.28.2}%
+\contentsline {subsubsection}{\numberline {4.28.2.1}cmd}{55}{subsubsection.4.28.2.1}%
+\contentsline {subsubsection}{\numberline {4.28.2.2}efile}{55}{subsubsection.4.28.2.2}%
+\contentsline {subsubsection}{\numberline {4.28.2.3}fd}{55}{subsubsection.4.28.2.3}%
+\contentsline {subsubsection}{\numberline {4.28.2.4}file}{55}{subsubsection.4.28.2.4}%
+\contentsline {subsubsection}{\numberline {4.28.2.5}mode}{55}{subsubsection.4.28.2.5}%
+\contentsline {subsubsection}{\numberline {4.28.2.6}type}{56}{subsubsection.4.28.2.6}%
+\contentsline {section}{\numberline {4.29}rtcdate}{56}{section.4.29}%
+\contentsline {subsection}{\numberline {4.29.1}Detailed Description}{56}{subsection.4.29.1}%
+\contentsline {subsection}{\numberline {4.29.2}Member Data Documentation}{56}{subsection.4.29.2}%
+\contentsline {subsubsection}{\numberline {4.29.2.1}day}{56}{subsubsection.4.29.2.1}%
+\contentsline {subsubsection}{\numberline {4.29.2.2}hour}{57}{subsubsection.4.29.2.2}%
+\contentsline {subsubsection}{\numberline {4.29.2.3}minute}{57}{subsubsection.4.29.2.3}%
+\contentsline {subsubsection}{\numberline {4.29.2.4}month}{57}{subsubsection.4.29.2.4}%
+\contentsline {subsubsection}{\numberline {4.29.2.5}second}{57}{subsubsection.4.29.2.5}%
+\contentsline {subsubsection}{\numberline {4.29.2.6}year}{57}{subsubsection.4.29.2.6}%
+\contentsline {section}{\numberline {4.30}run}{58}{section.4.30}%
+\contentsline {subsection}{\numberline {4.30.1}Detailed Description}{58}{subsection.4.30.1}%
+\contentsline {subsection}{\numberline {4.30.2}Member Data Documentation}{58}{subsection.4.30.2}%
+\contentsline {subsubsection}{\numberline {4.30.2.1}next}{58}{subsubsection.4.30.2.1}%
+\contentsline {section}{\numberline {4.31}segdesc}{58}{section.4.31}%
+\contentsline {subsection}{\numberline {4.31.1}Detailed Description}{59}{subsection.4.31.1}%
+\contentsline {subsection}{\numberline {4.31.2}Member Data Documentation}{59}{subsection.4.31.2}%
+\contentsline {subsubsection}{\numberline {4.31.2.1}avl}{59}{subsubsection.4.31.2.1}%
+\contentsline {subsubsection}{\numberline {4.31.2.2}base\_15\_0}{59}{subsubsection.4.31.2.2}%
+\contentsline {subsubsection}{\numberline {4.31.2.3}base\_23\_16}{59}{subsubsection.4.31.2.3}%
+\contentsline {subsubsection}{\numberline {4.31.2.4}base\_31\_24}{59}{subsubsection.4.31.2.4}%
+\contentsline {subsubsection}{\numberline {4.31.2.5}db}{59}{subsubsection.4.31.2.5}%
+\contentsline {subsubsection}{\numberline {4.31.2.6}dpl}{60}{subsubsection.4.31.2.6}%
+\contentsline {subsubsection}{\numberline {4.31.2.7}g}{60}{subsubsection.4.31.2.7}%
+\contentsline {subsubsection}{\numberline {4.31.2.8}lim\_15\_0}{60}{subsubsection.4.31.2.8}%
+\contentsline {subsubsection}{\numberline {4.31.2.9}lim\_19\_16}{60}{subsubsection.4.31.2.9}%
+\contentsline {subsubsection}{\numberline {4.31.2.10}p}{60}{subsubsection.4.31.2.10}%
+\contentsline {subsubsection}{\numberline {4.31.2.11}rsv1}{60}{subsubsection.4.31.2.11}%
+\contentsline {subsubsection}{\numberline {4.31.2.12}s}{61}{subsubsection.4.31.2.12}%
+\contentsline {subsubsection}{\numberline {4.31.2.13}type}{61}{subsubsection.4.31.2.13}%
+\contentsline {section}{\numberline {4.32}sleeplock}{61}{section.4.32}%
+\contentsline {subsection}{\numberline {4.32.1}Detailed Description}{61}{subsection.4.32.1}%
+\contentsline {subsection}{\numberline {4.32.2}Member Data Documentation}{61}{subsection.4.32.2}%
+\contentsline {subsubsection}{\numberline {4.32.2.1}lk}{61}{subsubsection.4.32.2.1}%
+\contentsline {subsubsection}{\numberline {4.32.2.2}locked}{62}{subsubsection.4.32.2.2}%
+\contentsline {subsubsection}{\numberline {4.32.2.3}name}{62}{subsubsection.4.32.2.3}%
+\contentsline {subsubsection}{\numberline {4.32.2.4}pid}{62}{subsubsection.4.32.2.4}%
+\contentsline {section}{\numberline {4.33}spinlock}{62}{section.4.33}%
+\contentsline {subsection}{\numberline {4.33.1}Detailed Description}{62}{subsection.4.33.1}%
+\contentsline {subsection}{\numberline {4.33.2}Member Data Documentation}{63}{subsection.4.33.2}%
+\contentsline {subsubsection}{\numberline {4.33.2.1}cpu}{63}{subsubsection.4.33.2.1}%
+\contentsline {subsubsection}{\numberline {4.33.2.2}locked}{63}{subsubsection.4.33.2.2}%
+\contentsline {subsubsection}{\numberline {4.33.2.3}name}{63}{subsubsection.4.33.2.3}%
+\contentsline {subsubsection}{\numberline {4.33.2.4}pcs}{63}{subsubsection.4.33.2.4}%
+\contentsline {section}{\numberline {4.34}stat}{63}{section.4.34}%
+\contentsline {subsection}{\numberline {4.34.1}Detailed Description}{64}{subsection.4.34.1}%
+\contentsline {subsection}{\numberline {4.34.2}Member Data Documentation}{64}{subsection.4.34.2}%
+\contentsline {subsubsection}{\numberline {4.34.2.1}dev}{64}{subsubsection.4.34.2.1}%
+\contentsline {subsubsection}{\numberline {4.34.2.2}ino}{64}{subsubsection.4.34.2.2}%
+\contentsline {subsubsection}{\numberline {4.34.2.3}nlink}{64}{subsubsection.4.34.2.3}%
+\contentsline {subsubsection}{\numberline {4.34.2.4}size}{65}{subsubsection.4.34.2.4}%
+\contentsline {subsubsection}{\numberline {4.34.2.5}type}{65}{subsubsection.4.34.2.5}%
+\contentsline {section}{\numberline {4.35}superblock}{65}{section.4.35}%
+\contentsline {subsection}{\numberline {4.35.1}Detailed Description}{65}{subsection.4.35.1}%
+\contentsline {subsection}{\numberline {4.35.2}Member Data Documentation}{65}{subsection.4.35.2}%
+\contentsline {subsubsection}{\numberline {4.35.2.1}bmapstart}{66}{subsubsection.4.35.2.1}%
+\contentsline {subsubsection}{\numberline {4.35.2.2}inodestart}{66}{subsubsection.4.35.2.2}%
+\contentsline {subsubsection}{\numberline {4.35.2.3}logstart}{66}{subsubsection.4.35.2.3}%
+\contentsline {subsubsection}{\numberline {4.35.2.4}nblocks}{66}{subsubsection.4.35.2.4}%
+\contentsline {subsubsection}{\numberline {4.35.2.5}ninodes}{66}{subsubsection.4.35.2.5}%
+\contentsline {subsubsection}{\numberline {4.35.2.6}nlog}{67}{subsubsection.4.35.2.6}%
+\contentsline {subsubsection}{\numberline {4.35.2.7}size}{67}{subsubsection.4.35.2.7}%
+\contentsline {section}{\numberline {4.36}taskstate}{67}{section.4.36}%
+\contentsline {subsection}{\numberline {4.36.1}Detailed Description}{68}{subsection.4.36.1}%
+\contentsline {subsection}{\numberline {4.36.2}Member Data Documentation}{68}{subsection.4.36.2}%
+\contentsline {subsubsection}{\numberline {4.36.2.1}cr3}{68}{subsubsection.4.36.2.1}%
+\contentsline {subsubsection}{\numberline {4.36.2.2}cs}{68}{subsubsection.4.36.2.2}%
+\contentsline {subsubsection}{\numberline {4.36.2.3}ds}{68}{subsubsection.4.36.2.3}%
+\contentsline {subsubsection}{\numberline {4.36.2.4}eax}{69}{subsubsection.4.36.2.4}%
+\contentsline {subsubsection}{\numberline {4.36.2.5}ebp}{69}{subsubsection.4.36.2.5}%
+\contentsline {subsubsection}{\numberline {4.36.2.6}ebx}{69}{subsubsection.4.36.2.6}%
+\contentsline {subsubsection}{\numberline {4.36.2.7}ecx}{69}{subsubsection.4.36.2.7}%
+\contentsline {subsubsection}{\numberline {4.36.2.8}edi}{69}{subsubsection.4.36.2.8}%
+\contentsline {subsubsection}{\numberline {4.36.2.9}edx}{69}{subsubsection.4.36.2.9}%
+\contentsline {subsubsection}{\numberline {4.36.2.10}eflags}{70}{subsubsection.4.36.2.10}%
+\contentsline {subsubsection}{\numberline {4.36.2.11}eip}{70}{subsubsection.4.36.2.11}%
+\contentsline {subsubsection}{\numberline {4.36.2.12}es}{70}{subsubsection.4.36.2.12}%
+\contentsline {subsubsection}{\numberline {4.36.2.13}esi}{70}{subsubsection.4.36.2.13}%
+\contentsline {subsubsection}{\numberline {4.36.2.14}esp}{70}{subsubsection.4.36.2.14}%
+\contentsline {subsubsection}{\numberline {4.36.2.15}esp0}{70}{subsubsection.4.36.2.15}%
+\contentsline {subsubsection}{\numberline {4.36.2.16}esp1}{71}{subsubsection.4.36.2.16}%
+\contentsline {subsubsection}{\numberline {4.36.2.17}esp2}{71}{subsubsection.4.36.2.17}%
+\contentsline {subsubsection}{\numberline {4.36.2.18}fs}{71}{subsubsection.4.36.2.18}%
+\contentsline {subsubsection}{\numberline {4.36.2.19}gs}{71}{subsubsection.4.36.2.19}%
+\contentsline {subsubsection}{\numberline {4.36.2.20}iomb}{71}{subsubsection.4.36.2.20}%
+\contentsline {subsubsection}{\numberline {4.36.2.21}ldt}{71}{subsubsection.4.36.2.21}%
+\contentsline {subsubsection}{\numberline {4.36.2.22}link}{72}{subsubsection.4.36.2.22}%
+\contentsline {subsubsection}{\numberline {4.36.2.23}padding1}{72}{subsubsection.4.36.2.23}%
+\contentsline {subsubsection}{\numberline {4.36.2.24}padding10}{72}{subsubsection.4.36.2.24}%
+\contentsline {subsubsection}{\numberline {4.36.2.25}padding2}{72}{subsubsection.4.36.2.25}%
+\contentsline {subsubsection}{\numberline {4.36.2.26}padding3}{72}{subsubsection.4.36.2.26}%
+\contentsline {subsubsection}{\numberline {4.36.2.27}padding4}{72}{subsubsection.4.36.2.27}%
+\contentsline {subsubsection}{\numberline {4.36.2.28}padding5}{73}{subsubsection.4.36.2.28}%
+\contentsline {subsubsection}{\numberline {4.36.2.29}padding6}{73}{subsubsection.4.36.2.29}%
+\contentsline {subsubsection}{\numberline {4.36.2.30}padding7}{73}{subsubsection.4.36.2.30}%
+\contentsline {subsubsection}{\numberline {4.36.2.31}padding8}{73}{subsubsection.4.36.2.31}%
+\contentsline {subsubsection}{\numberline {4.36.2.32}padding9}{73}{subsubsection.4.36.2.32}%
+\contentsline {subsubsection}{\numberline {4.36.2.33}ss}{73}{subsubsection.4.36.2.33}%
+\contentsline {subsubsection}{\numberline {4.36.2.34}ss0}{74}{subsubsection.4.36.2.34}%
+\contentsline {subsubsection}{\numberline {4.36.2.35}ss1}{74}{subsubsection.4.36.2.35}%
+\contentsline {subsubsection}{\numberline {4.36.2.36}ss2}{74}{subsubsection.4.36.2.36}%
+\contentsline {subsubsection}{\numberline {4.36.2.37}t}{74}{subsubsection.4.36.2.37}%
+\contentsline {section}{\numberline {4.37}trapframe}{74}{section.4.37}%
+\contentsline {subsection}{\numberline {4.37.1}Detailed Description}{75}{subsection.4.37.1}%
+\contentsline {subsection}{\numberline {4.37.2}Member Data Documentation}{75}{subsection.4.37.2}%
+\contentsline {subsubsection}{\numberline {4.37.2.1}cs}{75}{subsubsection.4.37.2.1}%
+\contentsline {subsubsection}{\numberline {4.37.2.2}ds}{76}{subsubsection.4.37.2.2}%
+\contentsline {subsubsection}{\numberline {4.37.2.3}eax}{76}{subsubsection.4.37.2.3}%
+\contentsline {subsubsection}{\numberline {4.37.2.4}ebp}{76}{subsubsection.4.37.2.4}%
+\contentsline {subsubsection}{\numberline {4.37.2.5}ebx}{76}{subsubsection.4.37.2.5}%
+\contentsline {subsubsection}{\numberline {4.37.2.6}ecx}{76}{subsubsection.4.37.2.6}%
+\contentsline {subsubsection}{\numberline {4.37.2.7}edi}{76}{subsubsection.4.37.2.7}%
+\contentsline {subsubsection}{\numberline {4.37.2.8}edx}{77}{subsubsection.4.37.2.8}%
+\contentsline {subsubsection}{\numberline {4.37.2.9}eflags}{77}{subsubsection.4.37.2.9}%
+\contentsline {subsubsection}{\numberline {4.37.2.10}eip}{77}{subsubsection.4.37.2.10}%
+\contentsline {subsubsection}{\numberline {4.37.2.11}err}{77}{subsubsection.4.37.2.11}%
+\contentsline {subsubsection}{\numberline {4.37.2.12}es}{77}{subsubsection.4.37.2.12}%
+\contentsline {subsubsection}{\numberline {4.37.2.13}esi}{78}{subsubsection.4.37.2.13}%
+\contentsline {subsubsection}{\numberline {4.37.2.14}esp}{78}{subsubsection.4.37.2.14}%
+\contentsline {subsubsection}{\numberline {4.37.2.15}fs}{78}{subsubsection.4.37.2.15}%
+\contentsline {subsubsection}{\numberline {4.37.2.16}gs}{78}{subsubsection.4.37.2.16}%
+\contentsline {subsubsection}{\numberline {4.37.2.17}oesp}{78}{subsubsection.4.37.2.17}%
+\contentsline {subsubsection}{\numberline {4.37.2.18}padding1}{78}{subsubsection.4.37.2.18}%
+\contentsline {subsubsection}{\numberline {4.37.2.19}padding2}{79}{subsubsection.4.37.2.19}%
+\contentsline {subsubsection}{\numberline {4.37.2.20}padding3}{79}{subsubsection.4.37.2.20}%
+\contentsline {subsubsection}{\numberline {4.37.2.21}padding4}{79}{subsubsection.4.37.2.21}%
+\contentsline {subsubsection}{\numberline {4.37.2.22}padding5}{79}{subsubsection.4.37.2.22}%
+\contentsline {subsubsection}{\numberline {4.37.2.23}padding6}{79}{subsubsection.4.37.2.23}%
+\contentsline {subsubsection}{\numberline {4.37.2.24}ss}{79}{subsubsection.4.37.2.24}%
+\contentsline {subsubsection}{\numberline {4.37.2.25}trapno}{80}{subsubsection.4.37.2.25}%
+\contentsline {section}{\numberline {4.38}uproc}{80}{section.4.38}%
+\contentsline {subsection}{\numberline {4.38.1}Detailed Description}{80}{subsection.4.38.1}%
+\contentsline {subsection}{\numberline {4.38.2}Member Data Documentation}{80}{subsection.4.38.2}%
+\contentsline {subsubsection}{\numberline {4.38.2.1}name}{80}{subsubsection.4.38.2.1}%
+\contentsline {subsubsection}{\numberline {4.38.2.2}pid}{80}{subsubsection.4.38.2.2}%
+\contentsline {subsubsection}{\numberline {4.38.2.3}ppid}{80}{subsubsection.4.38.2.3}%
+\contentsline {chapter}{\numberline {5}File Documentation}{81}{chapter.5}%
+\contentsline {section}{\numberline {5.1}asm.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{81}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Macro Definition Documentation}{81}{subsection.5.1.1}%
+\contentsline {subsubsection}{\numberline {5.1.1.1}SEG\_ASM}{81}{subsubsection.5.1.1.1}%
+\contentsline {subsubsection}{\numberline {5.1.1.2}SEG\_NULLASM}{81}{subsubsection.5.1.1.2}%
+\contentsline {subsubsection}{\numberline {5.1.1.3}STA\_R}{82}{subsubsection.5.1.1.3}%
+\contentsline {subsubsection}{\numberline {5.1.1.4}STA\_W}{82}{subsubsection.5.1.1.4}%
+\contentsline {subsubsection}{\numberline {5.1.1.5}STA\_X}{82}{subsubsection.5.1.1.5}%
+\contentsline {section}{\numberline {5.2}asm.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{82}{section.5.2}%
+\contentsline {section}{\numberline {5.3}bio.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{82}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Function Documentation}{83}{subsection.5.3.1}%
+\contentsline {subsubsection}{\numberline {5.3.1.1}bget()}{83}{subsubsection.5.3.1.1}%
+\contentsline {subsubsection}{\numberline {5.3.1.2}binit()}{84}{subsubsection.5.3.1.2}%
+\contentsline {subsubsection}{\numberline {5.3.1.3}bread()}{84}{subsubsection.5.3.1.3}%
+\contentsline {subsubsection}{\numberline {5.3.1.4}brelse()}{84}{subsubsection.5.3.1.4}%
+\contentsline {subsubsection}{\numberline {5.3.1.5}bwrite()}{85}{subsubsection.5.3.1.5}%
+\contentsline {subsection}{\numberline {5.3.2}Variable Documentation}{85}{subsection.5.3.2}%
+\contentsline {subsubsection}{\numberline {5.3.2.1}}{85}{subsubsection.5.3.2.1}%
+\contentsline {subsubsection}{\numberline {5.3.2.2}buf}{85}{subsubsection.5.3.2.2}%
+\contentsline {subsubsection}{\numberline {5.3.2.3}head}{85}{subsubsection.5.3.2.3}%
+\contentsline {subsubsection}{\numberline {5.3.2.4}lock}{86}{subsubsection.5.3.2.4}%
+\contentsline {section}{\numberline {5.4}bio.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{86}{section.5.4}%
+\contentsline {section}{\numberline {5.5}bio.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{88}{section.5.5}%
+\contentsline {section}{\numberline {5.6}bio.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{88}{section.5.6}%
+\contentsline {section}{\numberline {5.7}bootasm.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{88}{section.5.7}%
+\contentsline {section}{\numberline {5.8}bootasm.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{88}{section.5.8}%
+\contentsline {section}{\numberline {5.9}bootmain.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{88}{section.5.9}%
+\contentsline {subsection}{\numberline {5.9.1}Macro Definition Documentation}{88}{subsection.5.9.1}%
+\contentsline {subsubsection}{\numberline {5.9.1.1}SECTSIZE}{88}{subsubsection.5.9.1.1}%
+\contentsline {subsection}{\numberline {5.9.2}Function Documentation}{89}{subsection.5.9.2}%
+\contentsline {subsubsection}{\numberline {5.9.2.1}bootmain()}{89}{subsubsection.5.9.2.1}%
+\contentsline {subsubsection}{\numberline {5.9.2.2}readsect()}{89}{subsubsection.5.9.2.2}%
+\contentsline {subsubsection}{\numberline {5.9.2.3}readseg()}{90}{subsubsection.5.9.2.3}%
+\contentsline {subsubsection}{\numberline {5.9.2.4}waitdisk()}{90}{subsubsection.5.9.2.4}%
+\contentsline {section}{\numberline {5.10}bootmain.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{90}{section.5.10}%
+\contentsline {section}{\numberline {5.11}bootmain.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{91}{section.5.11}%
+\contentsline {section}{\numberline {5.12}bootmain.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{91}{section.5.12}%
+\contentsline {section}{\numberline {5.13}buf.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{92}{section.5.13}%
+\contentsline {subsection}{\numberline {5.13.1}Macro Definition Documentation}{92}{subsection.5.13.1}%
+\contentsline {subsubsection}{\numberline {5.13.1.1}B\_DIRTY}{92}{subsubsection.5.13.1.1}%
+\contentsline {subsubsection}{\numberline {5.13.1.2}B\_VALID}{92}{subsubsection.5.13.1.2}%
+\contentsline {section}{\numberline {5.14}buf.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{92}{section.5.14}%
+\contentsline {section}{\numberline {5.15}cat.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{93}{section.5.15}%
+\contentsline {subsection}{\numberline {5.15.1}Function Documentation}{93}{subsection.5.15.1}%
+\contentsline {subsubsection}{\numberline {5.15.1.1}cat()}{93}{subsubsection.5.15.1.1}%
+\contentsline {subsubsection}{\numberline {5.15.1.2}main()}{94}{subsubsection.5.15.1.2}%
+\contentsline {subsection}{\numberline {5.15.2}Variable Documentation}{94}{subsection.5.15.2}%
+\contentsline {subsubsection}{\numberline {5.15.2.1}buf}{94}{subsubsection.5.15.2.1}%
+\contentsline {section}{\numberline {5.16}cat.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{94}{section.5.16}%
+\contentsline {section}{\numberline {5.17}cat.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{95}{section.5.17}%
+\contentsline {section}{\numberline {5.18}cat.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{95}{section.5.18}%
+\contentsline {section}{\numberline {5.19}console.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{95}{section.5.19}%
+\contentsline {subsection}{\numberline {5.19.1}Macro Definition Documentation}{96}{subsection.5.19.1}%
+\contentsline {subsubsection}{\numberline {5.19.1.1}BACKSPACE}{96}{subsubsection.5.19.1.1}%
+\contentsline {subsubsection}{\numberline {5.19.1.2}C}{96}{subsubsection.5.19.1.2}%
+\contentsline {subsubsection}{\numberline {5.19.1.3}CRTPORT}{96}{subsubsection.5.19.1.3}%
+\contentsline {subsubsection}{\numberline {5.19.1.4}INPUT\_BUF}{96}{subsubsection.5.19.1.4}%
+\contentsline {subsection}{\numberline {5.19.2}Function Documentation}{97}{subsection.5.19.2}%
+\contentsline {subsubsection}{\numberline {5.19.2.1}cgaputc()}{97}{subsubsection.5.19.2.1}%
+\contentsline {subsubsection}{\numberline {5.19.2.2}consoleinit()}{97}{subsubsection.5.19.2.2}%
+\contentsline {subsubsection}{\numberline {5.19.2.3}consoleintr()}{98}{subsubsection.5.19.2.3}%
+\contentsline {subsubsection}{\numberline {5.19.2.4}consoleread()}{98}{subsubsection.5.19.2.4}%
+\contentsline {subsubsection}{\numberline {5.19.2.5}consolewrite()}{99}{subsubsection.5.19.2.5}%
+\contentsline {subsubsection}{\numberline {5.19.2.6}consputc()}{99}{subsubsection.5.19.2.6}%
+\contentsline {subsubsection}{\numberline {5.19.2.7}cprintf()}{100}{subsubsection.5.19.2.7}%
+\contentsline {subsubsection}{\numberline {5.19.2.8}panic()}{100}{subsubsection.5.19.2.8}%
+\contentsline {subsubsection}{\numberline {5.19.2.9}printint()}{101}{subsubsection.5.19.2.9}%
+\contentsline {subsection}{\numberline {5.19.3}Variable Documentation}{101}{subsection.5.19.3}%
+\contentsline {subsubsection}{\numberline {5.19.3.1}buf}{101}{subsubsection.5.19.3.1}%
+\contentsline {subsubsection}{\numberline {5.19.3.2}}{102}{subsubsection.5.19.3.2}%
+\contentsline {subsubsection}{\numberline {5.19.3.3}crt}{102}{subsubsection.5.19.3.3}%
+\contentsline {subsubsection}{\numberline {5.19.3.4}e}{102}{subsubsection.5.19.3.4}%
+\contentsline {subsubsection}{\numberline {5.19.3.5}}{102}{subsubsection.5.19.3.5}%
+\contentsline {subsubsection}{\numberline {5.19.3.6}lock}{102}{subsubsection.5.19.3.6}%
+\contentsline {subsubsection}{\numberline {5.19.3.7}locking}{102}{subsubsection.5.19.3.7}%
+\contentsline {subsubsection}{\numberline {5.19.3.8}panicked}{103}{subsubsection.5.19.3.8}%
+\contentsline {subsubsection}{\numberline {5.19.3.9}r}{103}{subsubsection.5.19.3.9}%
+\contentsline {subsubsection}{\numberline {5.19.3.10}w}{103}{subsubsection.5.19.3.10}%
+\contentsline {section}{\numberline {5.20}console.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{103}{section.5.20}%
+\contentsline {section}{\numberline {5.21}console.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{107}{section.5.21}%
+\contentsline {section}{\numberline {5.22}console.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{107}{section.5.22}%
+\contentsline {section}{\numberline {5.23}date.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{107}{section.5.23}%
+\contentsline {section}{\numberline {5.24}date.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{107}{section.5.24}%
+\contentsline {section}{\numberline {5.25}defs.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{107}{section.5.25}%
+\contentsline {subsection}{\numberline {5.25.1}Macro Definition Documentation}{110}{subsection.5.25.1}%
+\contentsline {subsubsection}{\numberline {5.25.1.1}NELEM}{110}{subsubsection.5.25.1.1}%
+\contentsline {subsection}{\numberline {5.25.2}Function Documentation}{110}{subsection.5.25.2}%
+\contentsline {subsubsection}{\numberline {5.25.2.1}acquire()}{111}{subsubsection.5.25.2.1}%
+\contentsline {subsubsection}{\numberline {5.25.2.2}acquiresleep()}{111}{subsubsection.5.25.2.2}%
+\contentsline {subsubsection}{\numberline {5.25.2.3}allocuvm()}{111}{subsubsection.5.25.2.3}%
+\contentsline {subsubsection}{\numberline {5.25.2.4}argint()}{112}{subsubsection.5.25.2.4}%
+\contentsline {subsubsection}{\numberline {5.25.2.5}argptr()}{112}{subsubsection.5.25.2.5}%
+\contentsline {subsubsection}{\numberline {5.25.2.6}argstr()}{113}{subsubsection.5.25.2.6}%
+\contentsline {subsubsection}{\numberline {5.25.2.7}begin\_op()}{113}{subsubsection.5.25.2.7}%
+\contentsline {subsubsection}{\numberline {5.25.2.8}binit()}{113}{subsubsection.5.25.2.8}%
+\contentsline {subsubsection}{\numberline {5.25.2.9}bread()}{114}{subsubsection.5.25.2.9}%
+\contentsline {subsubsection}{\numberline {5.25.2.10}brelse()}{114}{subsubsection.5.25.2.10}%
+\contentsline {subsubsection}{\numberline {5.25.2.11}bwrite()}{114}{subsubsection.5.25.2.11}%
+\contentsline {subsubsection}{\numberline {5.25.2.12}chpr()}{115}{subsubsection.5.25.2.12}%
+\contentsline {subsubsection}{\numberline {5.25.2.13}clearpteu()}{115}{subsubsection.5.25.2.13}%
+\contentsline {subsubsection}{\numberline {5.25.2.14}cmostime()}{115}{subsubsection.5.25.2.14}%
+\contentsline {subsubsection}{\numberline {5.25.2.15}consoleinit()}{116}{subsubsection.5.25.2.15}%
+\contentsline {subsubsection}{\numberline {5.25.2.16}consoleintr()}{116}{subsubsection.5.25.2.16}%
+\contentsline {subsubsection}{\numberline {5.25.2.17}copyout()}{117}{subsubsection.5.25.2.17}%
+\contentsline {subsubsection}{\numberline {5.25.2.18}copyuvm()}{117}{subsubsection.5.25.2.18}%
+\contentsline {subsubsection}{\numberline {5.25.2.19}cprintf()}{118}{subsubsection.5.25.2.19}%
+\contentsline {subsubsection}{\numberline {5.25.2.20}cps()}{119}{subsubsection.5.25.2.20}%
+\contentsline {subsubsection}{\numberline {5.25.2.21}cpuid()}{119}{subsubsection.5.25.2.21}%
+\contentsline {subsubsection}{\numberline {5.25.2.22}deallocuvm()}{119}{subsubsection.5.25.2.22}%
+\contentsline {subsubsection}{\numberline {5.25.2.23}dirlink()}{120}{subsubsection.5.25.2.23}%
+\contentsline {subsubsection}{\numberline {5.25.2.24}dirlookup()}{120}{subsubsection.5.25.2.24}%
+\contentsline {subsubsection}{\numberline {5.25.2.25}end\_op()}{121}{subsubsection.5.25.2.25}%
+\contentsline {subsubsection}{\numberline {5.25.2.26}exec()}{121}{subsubsection.5.25.2.26}%
+\contentsline {subsubsection}{\numberline {5.25.2.27}exit()}{123}{subsubsection.5.25.2.27}%
+\contentsline {subsubsection}{\numberline {5.25.2.28}fetchint()}{124}{subsubsection.5.25.2.28}%
+\contentsline {subsubsection}{\numberline {5.25.2.29}fetchstr()}{124}{subsubsection.5.25.2.29}%
+\contentsline {subsubsection}{\numberline {5.25.2.30}filealloc()}{124}{subsubsection.5.25.2.30}%
+\contentsline {subsubsection}{\numberline {5.25.2.31}fileclose()}{125}{subsubsection.5.25.2.31}%
+\contentsline {subsubsection}{\numberline {5.25.2.32}filedup()}{125}{subsubsection.5.25.2.32}%
+\contentsline {subsubsection}{\numberline {5.25.2.33}fileinit()}{125}{subsubsection.5.25.2.33}%
+\contentsline {subsubsection}{\numberline {5.25.2.34}fileread()}{126}{subsubsection.5.25.2.34}%
+\contentsline {subsubsection}{\numberline {5.25.2.35}filestat()}{126}{subsubsection.5.25.2.35}%
+\contentsline {subsubsection}{\numberline {5.25.2.36}filewrite()}{126}{subsubsection.5.25.2.36}%
+\contentsline {subsubsection}{\numberline {5.25.2.37}fork()}{127}{subsubsection.5.25.2.37}%
+\contentsline {subsubsection}{\numberline {5.25.2.38}freevm()}{128}{subsubsection.5.25.2.38}%
+\contentsline {subsubsection}{\numberline {5.25.2.39}getcallerpcs()}{128}{subsubsection.5.25.2.39}%
+\contentsline {subsubsection}{\numberline {5.25.2.40}getprocs()}{128}{subsubsection.5.25.2.40}%
+\contentsline {subsubsection}{\numberline {5.25.2.41}growproc()}{129}{subsubsection.5.25.2.41}%
+\contentsline {subsubsection}{\numberline {5.25.2.42}holding()}{129}{subsubsection.5.25.2.42}%
+\contentsline {subsubsection}{\numberline {5.25.2.43}holdingsleep()}{129}{subsubsection.5.25.2.43}%
+\contentsline {subsubsection}{\numberline {5.25.2.44}ialloc()}{130}{subsubsection.5.25.2.44}%
+\contentsline {subsubsection}{\numberline {5.25.2.45}ideinit()}{130}{subsubsection.5.25.2.45}%
+\contentsline {subsubsection}{\numberline {5.25.2.46}ideintr()}{130}{subsubsection.5.25.2.46}%
+\contentsline {subsubsection}{\numberline {5.25.2.47}iderw()}{131}{subsubsection.5.25.2.47}%
+\contentsline {subsubsection}{\numberline {5.25.2.48}idtinit()}{132}{subsubsection.5.25.2.48}%
+\contentsline {subsubsection}{\numberline {5.25.2.49}idup()}{132}{subsubsection.5.25.2.49}%
+\contentsline {subsubsection}{\numberline {5.25.2.50}iinit()}{132}{subsubsection.5.25.2.50}%
+\contentsline {subsubsection}{\numberline {5.25.2.51}ilock()}{133}{subsubsection.5.25.2.51}%
+\contentsline {subsubsection}{\numberline {5.25.2.52}initlock()}{133}{subsubsection.5.25.2.52}%
+\contentsline {subsubsection}{\numberline {5.25.2.53}initlog()}{133}{subsubsection.5.25.2.53}%
+\contentsline {subsubsection}{\numberline {5.25.2.54}initsleeplock()}{134}{subsubsection.5.25.2.54}%
+\contentsline {subsubsection}{\numberline {5.25.2.55}inituvm()}{134}{subsubsection.5.25.2.55}%
+\contentsline {subsubsection}{\numberline {5.25.2.56}ioapicenable()}{134}{subsubsection.5.25.2.56}%
+\contentsline {subsubsection}{\numberline {5.25.2.57}ioapicinit()}{135}{subsubsection.5.25.2.57}%
+\contentsline {subsubsection}{\numberline {5.25.2.58}iput()}{135}{subsubsection.5.25.2.58}%
+\contentsline {subsubsection}{\numberline {5.25.2.59}iunlock()}{135}{subsubsection.5.25.2.59}%
+\contentsline {subsubsection}{\numberline {5.25.2.60}iunlockput()}{136}{subsubsection.5.25.2.60}%
+\contentsline {subsubsection}{\numberline {5.25.2.61}iupdate()}{136}{subsubsection.5.25.2.61}%
+\contentsline {subsubsection}{\numberline {5.25.2.62}kalloc()}{136}{subsubsection.5.25.2.62}%
+\contentsline {subsubsection}{\numberline {5.25.2.63}kbdintr()}{137}{subsubsection.5.25.2.63}%
+\contentsline {subsubsection}{\numberline {5.25.2.64}kfree()}{137}{subsubsection.5.25.2.64}%
+\contentsline {subsubsection}{\numberline {5.25.2.65}kill()}{137}{subsubsection.5.25.2.65}%
+\contentsline {subsubsection}{\numberline {5.25.2.66}kinit1()}{138}{subsubsection.5.25.2.66}%
+\contentsline {subsubsection}{\numberline {5.25.2.67}kinit2()}{138}{subsubsection.5.25.2.67}%
+\contentsline {subsubsection}{\numberline {5.25.2.68}kvmalloc()}{138}{subsubsection.5.25.2.68}%
+\contentsline {subsubsection}{\numberline {5.25.2.69}lapiceoi()}{138}{subsubsection.5.25.2.69}%
+\contentsline {subsubsection}{\numberline {5.25.2.70}lapicid()}{139}{subsubsection.5.25.2.70}%
+\contentsline {subsubsection}{\numberline {5.25.2.71}lapicinit()}{139}{subsubsection.5.25.2.71}%
+\contentsline {subsubsection}{\numberline {5.25.2.72}lapicstartap()}{140}{subsubsection.5.25.2.72}%
+\contentsline {subsubsection}{\numberline {5.25.2.73}loaduvm()}{140}{subsubsection.5.25.2.73}%
+\contentsline {subsubsection}{\numberline {5.25.2.74}log\_write()}{141}{subsubsection.5.25.2.74}%
+\contentsline {subsubsection}{\numberline {5.25.2.75}memcmp()}{141}{subsubsection.5.25.2.75}%
+\contentsline {subsubsection}{\numberline {5.25.2.76}memmove()}{141}{subsubsection.5.25.2.76}%
+\contentsline {subsubsection}{\numberline {5.25.2.77}memset()}{142}{subsubsection.5.25.2.77}%
+\contentsline {subsubsection}{\numberline {5.25.2.78}microdelay()}{142}{subsubsection.5.25.2.78}%
+\contentsline {subsubsection}{\numberline {5.25.2.79}mpinit()}{143}{subsubsection.5.25.2.79}%
+\contentsline {subsubsection}{\numberline {5.25.2.80}mycpu()}{143}{subsubsection.5.25.2.80}%
+\contentsline {subsubsection}{\numberline {5.25.2.81}myproc()}{144}{subsubsection.5.25.2.81}%
+\contentsline {subsubsection}{\numberline {5.25.2.82}namecmp()}{144}{subsubsection.5.25.2.82}%
+\contentsline {subsubsection}{\numberline {5.25.2.83}namei()}{144}{subsubsection.5.25.2.83}%
+\contentsline {subsubsection}{\numberline {5.25.2.84}nameiparent()}{144}{subsubsection.5.25.2.84}%
+\contentsline {subsubsection}{\numberline {5.25.2.85}panic()}{145}{subsubsection.5.25.2.85}%
+\contentsline {subsubsection}{\numberline {5.25.2.86}picenable()}{145}{subsubsection.5.25.2.86}%
+\contentsline {subsubsection}{\numberline {5.25.2.87}picinit()}{145}{subsubsection.5.25.2.87}%
+\contentsline {subsubsection}{\numberline {5.25.2.88}pinit()}{145}{subsubsection.5.25.2.88}%
+\contentsline {subsubsection}{\numberline {5.25.2.89}pipealloc()}{146}{subsubsection.5.25.2.89}%
+\contentsline {subsubsection}{\numberline {5.25.2.90}pipeclose()}{146}{subsubsection.5.25.2.90}%
+\contentsline {subsubsection}{\numberline {5.25.2.91}piperead()}{147}{subsubsection.5.25.2.91}%
+\contentsline {subsubsection}{\numberline {5.25.2.92}pipewrite()}{147}{subsubsection.5.25.2.92}%
+\contentsline {subsubsection}{\numberline {5.25.2.93}popcli()}{148}{subsubsection.5.25.2.93}%
+\contentsline {subsubsection}{\numberline {5.25.2.94}procdump()}{148}{subsubsection.5.25.2.94}%
+\contentsline {subsubsection}{\numberline {5.25.2.95}pushcli()}{148}{subsubsection.5.25.2.95}%
+\contentsline {subsubsection}{\numberline {5.25.2.96}readi()}{149}{subsubsection.5.25.2.96}%
+\contentsline {subsubsection}{\numberline {5.25.2.97}readsb()}{149}{subsubsection.5.25.2.97}%
+\contentsline {subsubsection}{\numberline {5.25.2.98}release()}{149}{subsubsection.5.25.2.98}%
+\contentsline {subsubsection}{\numberline {5.25.2.99}releasesleep()}{150}{subsubsection.5.25.2.99}%
+\contentsline {subsubsection}{\numberline {5.25.2.100}safestrcpy()}{150}{subsubsection.5.25.2.100}%
+\contentsline {subsubsection}{\numberline {5.25.2.101}sched()}{151}{subsubsection.5.25.2.101}%
+\contentsline {subsubsection}{\numberline {5.25.2.102}scheduler()}{151}{subsubsection.5.25.2.102}%
+\contentsline {subsubsection}{\numberline {5.25.2.103}seginit()}{152}{subsubsection.5.25.2.103}%
+\contentsline {subsubsection}{\numberline {5.25.2.104}setproc()}{152}{subsubsection.5.25.2.104}%
+\contentsline {subsubsection}{\numberline {5.25.2.105}setupkvm()}{152}{subsubsection.5.25.2.105}%
+\contentsline {subsubsection}{\numberline {5.25.2.106}sleep()}{153}{subsubsection.5.25.2.106}%
+\contentsline {subsubsection}{\numberline {5.25.2.107}stati()}{153}{subsubsection.5.25.2.107}%
+\contentsline {subsubsection}{\numberline {5.25.2.108}strlen()}{154}{subsubsection.5.25.2.108}%
+\contentsline {subsubsection}{\numberline {5.25.2.109}strncmp()}{154}{subsubsection.5.25.2.109}%
+\contentsline {subsubsection}{\numberline {5.25.2.110}strncpy()}{154}{subsubsection.5.25.2.110}%
+\contentsline {subsubsection}{\numberline {5.25.2.111}switchkvm()}{155}{subsubsection.5.25.2.111}%
+\contentsline {subsubsection}{\numberline {5.25.2.112}switchuvm()}{155}{subsubsection.5.25.2.112}%
+\contentsline {subsubsection}{\numberline {5.25.2.113}swtch()}{155}{subsubsection.5.25.2.113}%
+\contentsline {subsubsection}{\numberline {5.25.2.114}syscall()}{156}{subsubsection.5.25.2.114}%
+\contentsline {subsubsection}{\numberline {5.25.2.115}timerinit()}{156}{subsubsection.5.25.2.115}%
+\contentsline {subsubsection}{\numberline {5.25.2.116}tvinit()}{156}{subsubsection.5.25.2.116}%
+\contentsline {subsubsection}{\numberline {5.25.2.117}uartinit()}{156}{subsubsection.5.25.2.117}%
+\contentsline {subsubsection}{\numberline {5.25.2.118}uartintr()}{157}{subsubsection.5.25.2.118}%
+\contentsline {subsubsection}{\numberline {5.25.2.119}uartputc()}{157}{subsubsection.5.25.2.119}%
+\contentsline {subsubsection}{\numberline {5.25.2.120}userinit()}{158}{subsubsection.5.25.2.120}%
+\contentsline {subsubsection}{\numberline {5.25.2.121}uva2ka()}{158}{subsubsection.5.25.2.121}%
+\contentsline {subsubsection}{\numberline {5.25.2.122}wait()}{159}{subsubsection.5.25.2.122}%
+\contentsline {subsubsection}{\numberline {5.25.2.123}wakeup()}{159}{subsubsection.5.25.2.123}%
+\contentsline {subsubsection}{\numberline {5.25.2.124}writei()}{160}{subsubsection.5.25.2.124}%
+\contentsline {subsubsection}{\numberline {5.25.2.125}yield()}{160}{subsubsection.5.25.2.125}%
+\contentsline {subsection}{\numberline {5.25.3}Variable Documentation}{160}{subsection.5.25.3}%
+\contentsline {subsubsection}{\numberline {5.25.3.1}ioapicid}{161}{subsubsection.5.25.3.1}%
+\contentsline {subsubsection}{\numberline {5.25.3.2}ismp}{161}{subsubsection.5.25.3.2}%
+\contentsline {subsubsection}{\numberline {5.25.3.3}lapic}{161}{subsubsection.5.25.3.3}%
+\contentsline {subsubsection}{\numberline {5.25.3.4}ticks}{161}{subsubsection.5.25.3.4}%
+\contentsline {subsubsection}{\numberline {5.25.3.5}tickslock}{161}{subsubsection.5.25.3.5}%
+\contentsline {section}{\numberline {5.26}defs.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{162}{section.5.26}%
+\contentsline {section}{\numberline {5.27}echo.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{164}{section.5.27}%
+\contentsline {subsection}{\numberline {5.27.1}Function Documentation}{164}{subsection.5.27.1}%
+\contentsline {subsubsection}{\numberline {5.27.1.1}main()}{164}{subsubsection.5.27.1.1}%
+\contentsline {section}{\numberline {5.28}echo.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{165}{section.5.28}%
+\contentsline {section}{\numberline {5.29}echo.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{165}{section.5.29}%
+\contentsline {section}{\numberline {5.30}echo.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{165}{section.5.30}%
+\contentsline {section}{\numberline {5.31}elf.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{165}{section.5.31}%
+\contentsline {subsection}{\numberline {5.31.1}Macro Definition Documentation}{165}{subsection.5.31.1}%
+\contentsline {subsubsection}{\numberline {5.31.1.1}ELF\_MAGIC}{165}{subsubsection.5.31.1.1}%
+\contentsline {subsubsection}{\numberline {5.31.1.2}ELF\_PROG\_FLAG\_EXEC}{166}{subsubsection.5.31.1.2}%
+\contentsline {subsubsection}{\numberline {5.31.1.3}ELF\_PROG\_FLAG\_READ}{166}{subsubsection.5.31.1.3}%
+\contentsline {subsubsection}{\numberline {5.31.1.4}ELF\_PROG\_FLAG\_WRITE}{166}{subsubsection.5.31.1.4}%
+\contentsline {subsubsection}{\numberline {5.31.1.5}ELF\_PROG\_LOAD}{166}{subsubsection.5.31.1.5}%
+\contentsline {section}{\numberline {5.32}elf.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{166}{section.5.32}%
+\contentsline {section}{\numberline {5.33}entryother.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{167}{section.5.33}%
+\contentsline {section}{\numberline {5.34}entryother.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{167}{section.5.34}%
+\contentsline {section}{\numberline {5.35}exec.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{167}{section.5.35}%
+\contentsline {subsection}{\numberline {5.35.1}Function Documentation}{167}{subsection.5.35.1}%
+\contentsline {subsubsection}{\numberline {5.35.1.1}exec()}{168}{subsubsection.5.35.1.1}%
+\contentsline {section}{\numberline {5.36}exec.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{169}{section.5.36}%
+\contentsline {section}{\numberline {5.37}exec.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{170}{section.5.37}%
+\contentsline {section}{\numberline {5.38}exec.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{170}{section.5.38}%
+\contentsline {section}{\numberline {5.39}exit.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{171}{section.5.39}%
+\contentsline {subsection}{\numberline {5.39.1}Function Documentation}{171}{subsection.5.39.1}%
+\contentsline {subsubsection}{\numberline {5.39.1.1}main()}{171}{subsubsection.5.39.1.1}%
+\contentsline {section}{\numberline {5.40}exit.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{171}{section.5.40}%
+\contentsline {section}{\numberline {5.41}exit.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{171}{section.5.41}%
+\contentsline {section}{\numberline {5.42}exit.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{171}{section.5.42}%
+\contentsline {section}{\numberline {5.43}fcntl.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{172}{section.5.43}%
+\contentsline {subsection}{\numberline {5.43.1}Macro Definition Documentation}{172}{subsection.5.43.1}%
+\contentsline {subsubsection}{\numberline {5.43.1.1}O\_CREATE}{172}{subsubsection.5.43.1.1}%
+\contentsline {subsubsection}{\numberline {5.43.1.2}O\_RDONLY}{172}{subsubsection.5.43.1.2}%
+\contentsline {subsubsection}{\numberline {5.43.1.3}O\_RDWR}{172}{subsubsection.5.43.1.3}%
+\contentsline {subsubsection}{\numberline {5.43.1.4}O\_WRONLY}{172}{subsubsection.5.43.1.4}%
+\contentsline {section}{\numberline {5.44}fcntl.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{173}{section.5.44}%
+\contentsline {section}{\numberline {5.45}file.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{173}{section.5.45}%
+\contentsline {subsection}{\numberline {5.45.1}Function Documentation}{173}{subsection.5.45.1}%
+\contentsline {subsubsection}{\numberline {5.45.1.1}filealloc()}{174}{subsubsection.5.45.1.1}%
+\contentsline {subsubsection}{\numberline {5.45.1.2}fileclose()}{174}{subsubsection.5.45.1.2}%
+\contentsline {subsubsection}{\numberline {5.45.1.3}filedup()}{174}{subsubsection.5.45.1.3}%
+\contentsline {subsubsection}{\numberline {5.45.1.4}fileinit()}{175}{subsubsection.5.45.1.4}%
+\contentsline {subsubsection}{\numberline {5.45.1.5}fileread()}{175}{subsubsection.5.45.1.5}%
+\contentsline {subsubsection}{\numberline {5.45.1.6}filestat()}{175}{subsubsection.5.45.1.6}%
+\contentsline {subsubsection}{\numberline {5.45.1.7}filewrite()}{176}{subsubsection.5.45.1.7}%
+\contentsline {subsection}{\numberline {5.45.2}Variable Documentation}{176}{subsection.5.45.2}%
+\contentsline {subsubsection}{\numberline {5.45.2.1}devsw}{176}{subsubsection.5.45.2.1}%
+\contentsline {subsubsection}{\numberline {5.45.2.2}file}{176}{subsubsection.5.45.2.2}%
+\contentsline {subsubsection}{\numberline {5.45.2.3}}{177}{subsubsection.5.45.2.3}%
+\contentsline {subsubsection}{\numberline {5.45.2.4}lock}{177}{subsubsection.5.45.2.4}%
+\contentsline {section}{\numberline {5.46}file.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{177}{section.5.46}%
+\contentsline {section}{\numberline {5.47}file.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{179}{section.5.47}%
+\contentsline {section}{\numberline {5.48}file.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{179}{section.5.48}%
+\contentsline {section}{\numberline {5.49}file.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{179}{section.5.49}%
+\contentsline {subsection}{\numberline {5.49.1}Macro Definition Documentation}{179}{subsection.5.49.1}%
+\contentsline {subsubsection}{\numberline {5.49.1.1}CONSOLE}{179}{subsubsection.5.49.1.1}%
+\contentsline {subsection}{\numberline {5.49.2}Variable Documentation}{180}{subsection.5.49.2}%
+\contentsline {subsubsection}{\numberline {5.49.2.1}devsw}{180}{subsubsection.5.49.2.1}%
+\contentsline {section}{\numberline {5.50}file.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{180}{section.5.50}%
+\contentsline {section}{\numberline {5.51}foo.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{180}{section.5.51}%
+\contentsline {subsection}{\numberline {5.51.1}Function Documentation}{181}{subsection.5.51.1}%
+\contentsline {subsubsection}{\numberline {5.51.1.1}main()}{181}{subsubsection.5.51.1.1}%
+\contentsline {section}{\numberline {5.52}foo.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{181}{section.5.52}%
+\contentsline {section}{\numberline {5.53}foo.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{182}{section.5.53}%
+\contentsline {section}{\numberline {5.54}foo.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{182}{section.5.54}%
+\contentsline {section}{\numberline {5.55}forktest.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{182}{section.5.55}%
+\contentsline {subsection}{\numberline {5.55.1}Macro Definition Documentation}{182}{subsection.5.55.1}%
+\contentsline {subsubsection}{\numberline {5.55.1.1}N}{182}{subsubsection.5.55.1.1}%
+\contentsline {subsection}{\numberline {5.55.2}Function Documentation}{183}{subsection.5.55.2}%
+\contentsline {subsubsection}{\numberline {5.55.2.1}forktest()}{183}{subsubsection.5.55.2.1}%
+\contentsline {subsubsection}{\numberline {5.55.2.2}main()}{183}{subsubsection.5.55.2.2}%
+\contentsline {subsubsection}{\numberline {5.55.2.3}printf()}{184}{subsubsection.5.55.2.3}%
+\contentsline {section}{\numberline {5.56}forktest.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{184}{section.5.56}%
+\contentsline {section}{\numberline {5.57}forktest.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{185}{section.5.57}%
+\contentsline {section}{\numberline {5.58}forktest.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{185}{section.5.58}%
+\contentsline {section}{\numberline {5.59}fs.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{185}{section.5.59}%
+\contentsline {subsection}{\numberline {5.59.1}Macro Definition Documentation}{186}{subsection.5.59.1}%
+\contentsline {subsubsection}{\numberline {5.59.1.1}min}{186}{subsubsection.5.59.1.1}%
+\contentsline {subsection}{\numberline {5.59.2}Function Documentation}{186}{subsection.5.59.2}%
+\contentsline {subsubsection}{\numberline {5.59.2.1}balloc()}{186}{subsubsection.5.59.2.1}%
+\contentsline {subsubsection}{\numberline {5.59.2.2}bfree()}{187}{subsubsection.5.59.2.2}%
+\contentsline {subsubsection}{\numberline {5.59.2.3}bmap()}{187}{subsubsection.5.59.2.3}%
+\contentsline {subsubsection}{\numberline {5.59.2.4}bzero()}{188}{subsubsection.5.59.2.4}%
+\contentsline {subsubsection}{\numberline {5.59.2.5}dirlink()}{188}{subsubsection.5.59.2.5}%
+\contentsline {subsubsection}{\numberline {5.59.2.6}dirlookup()}{189}{subsubsection.5.59.2.6}%
+\contentsline {subsubsection}{\numberline {5.59.2.7}ialloc()}{189}{subsubsection.5.59.2.7}%
+\contentsline {subsubsection}{\numberline {5.59.2.8}idup()}{190}{subsubsection.5.59.2.8}%
+\contentsline {subsubsection}{\numberline {5.59.2.9}iget()}{190}{subsubsection.5.59.2.9}%
+\contentsline {subsubsection}{\numberline {5.59.2.10}iinit()}{191}{subsubsection.5.59.2.10}%
+\contentsline {subsubsection}{\numberline {5.59.2.11}ilock()}{191}{subsubsection.5.59.2.11}%
+\contentsline {subsubsection}{\numberline {5.59.2.12}iput()}{192}{subsubsection.5.59.2.12}%
+\contentsline {subsubsection}{\numberline {5.59.2.13}itrunc()}{192}{subsubsection.5.59.2.13}%
+\contentsline {subsubsection}{\numberline {5.59.2.14}iunlock()}{193}{subsubsection.5.59.2.14}%
+\contentsline {subsubsection}{\numberline {5.59.2.15}iunlockput()}{193}{subsubsection.5.59.2.15}%
+\contentsline {subsubsection}{\numberline {5.59.2.16}iupdate()}{193}{subsubsection.5.59.2.16}%
+\contentsline {subsubsection}{\numberline {5.59.2.17}namecmp()}{194}{subsubsection.5.59.2.17}%
+\contentsline {subsubsection}{\numberline {5.59.2.18}namei()}{194}{subsubsection.5.59.2.18}%
+\contentsline {subsubsection}{\numberline {5.59.2.19}nameiparent()}{194}{subsubsection.5.59.2.19}%
+\contentsline {subsubsection}{\numberline {5.59.2.20}namex()}{195}{subsubsection.5.59.2.20}%
+\contentsline {subsubsection}{\numberline {5.59.2.21}readi()}{195}{subsubsection.5.59.2.21}%
+\contentsline {subsubsection}{\numberline {5.59.2.22}readsb()}{196}{subsubsection.5.59.2.22}%
+\contentsline {subsubsection}{\numberline {5.59.2.23}skipelem()}{196}{subsubsection.5.59.2.23}%
+\contentsline {subsubsection}{\numberline {5.59.2.24}stati()}{197}{subsubsection.5.59.2.24}%
+\contentsline {subsubsection}{\numberline {5.59.2.25}writei()}{197}{subsubsection.5.59.2.25}%
+\contentsline {subsection}{\numberline {5.59.3}Variable Documentation}{197}{subsection.5.59.3}%
+\contentsline {subsubsection}{\numberline {5.59.3.1}}{198}{subsubsection.5.59.3.1}%
+\contentsline {subsubsection}{\numberline {5.59.3.2}inode}{198}{subsubsection.5.59.3.2}%
+\contentsline {subsubsection}{\numberline {5.59.3.3}lock}{198}{subsubsection.5.59.3.3}%
+\contentsline {subsubsection}{\numberline {5.59.3.4}sb}{198}{subsubsection.5.59.3.4}%
+\contentsline {section}{\numberline {5.60}fs.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{198}{section.5.60}%
+\contentsline {section}{\numberline {5.61}fs.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{206}{section.5.61}%
+\contentsline {section}{\numberline {5.62}fs.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{206}{section.5.62}%
+\contentsline {section}{\numberline {5.63}fs.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{206}{section.5.63}%
+\contentsline {subsection}{\numberline {5.63.1}Macro Definition Documentation}{207}{subsection.5.63.1}%
+\contentsline {subsubsection}{\numberline {5.63.1.1}BBLOCK}{207}{subsubsection.5.63.1.1}%
+\contentsline {subsubsection}{\numberline {5.63.1.2}BPB}{207}{subsubsection.5.63.1.2}%
+\contentsline {subsubsection}{\numberline {5.63.1.3}BSIZE}{207}{subsubsection.5.63.1.3}%
+\contentsline {subsubsection}{\numberline {5.63.1.4}DIRSIZ}{207}{subsubsection.5.63.1.4}%
+\contentsline {subsubsection}{\numberline {5.63.1.5}IBLOCK}{207}{subsubsection.5.63.1.5}%
+\contentsline {subsubsection}{\numberline {5.63.1.6}IPB}{208}{subsubsection.5.63.1.6}%
+\contentsline {subsubsection}{\numberline {5.63.1.7}MAXFILE}{208}{subsubsection.5.63.1.7}%
+\contentsline {subsubsection}{\numberline {5.63.1.8}NDIRECT}{208}{subsubsection.5.63.1.8}%
+\contentsline {subsubsection}{\numberline {5.63.1.9}NINDIRECT}{208}{subsubsection.5.63.1.9}%
+\contentsline {subsubsection}{\numberline {5.63.1.10}ROOTINO}{208}{subsubsection.5.63.1.10}%
+\contentsline {section}{\numberline {5.64}fs.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{209}{section.5.64}%
+\contentsline {section}{\numberline {5.65}grep.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{209}{section.5.65}%
+\contentsline {subsection}{\numberline {5.65.1}Function Documentation}{210}{subsection.5.65.1}%
+\contentsline {subsubsection}{\numberline {5.65.1.1}grep()}{210}{subsubsection.5.65.1.1}%
+\contentsline {subsubsection}{\numberline {5.65.1.2}main()}{210}{subsubsection.5.65.1.2}%
+\contentsline {subsubsection}{\numberline {5.65.1.3}match()}{211}{subsubsection.5.65.1.3}%
+\contentsline {subsubsection}{\numberline {5.65.1.4}matchhere()}{211}{subsubsection.5.65.1.4}%
+\contentsline {subsubsection}{\numberline {5.65.1.5}matchstar()}{212}{subsubsection.5.65.1.5}%
+\contentsline {subsection}{\numberline {5.65.2}Variable Documentation}{212}{subsection.5.65.2}%
+\contentsline {subsubsection}{\numberline {5.65.2.1}buf}{212}{subsubsection.5.65.2.1}%
+\contentsline {section}{\numberline {5.66}grep.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{212}{section.5.66}%
+\contentsline {section}{\numberline {5.67}grep.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{213}{section.5.67}%
+\contentsline {section}{\numberline {5.68}grep.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{213}{section.5.68}%
+\contentsline {section}{\numberline {5.69}ide.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{214}{section.5.69}%
+\contentsline {subsection}{\numberline {5.69.1}Macro Definition Documentation}{214}{subsection.5.69.1}%
+\contentsline {subsubsection}{\numberline {5.69.1.1}IDE\_BSY}{215}{subsubsection.5.69.1.1}%
+\contentsline {subsubsection}{\numberline {5.69.1.2}IDE\_CMD\_RDMUL}{215}{subsubsection.5.69.1.2}%
+\contentsline {subsubsection}{\numberline {5.69.1.3}IDE\_CMD\_READ}{215}{subsubsection.5.69.1.3}%
+\contentsline {subsubsection}{\numberline {5.69.1.4}IDE\_CMD\_WRITE}{215}{subsubsection.5.69.1.4}%
+\contentsline {subsubsection}{\numberline {5.69.1.5}IDE\_CMD\_WRMUL}{215}{subsubsection.5.69.1.5}%
+\contentsline {subsubsection}{\numberline {5.69.1.6}IDE\_DF}{215}{subsubsection.5.69.1.6}%
+\contentsline {subsubsection}{\numberline {5.69.1.7}IDE\_DRDY}{216}{subsubsection.5.69.1.7}%
+\contentsline {subsubsection}{\numberline {5.69.1.8}IDE\_ERR}{216}{subsubsection.5.69.1.8}%
+\contentsline {subsubsection}{\numberline {5.69.1.9}SECTOR\_SIZE}{216}{subsubsection.5.69.1.9}%
+\contentsline {subsection}{\numberline {5.69.2}Function Documentation}{216}{subsection.5.69.2}%
+\contentsline {subsubsection}{\numberline {5.69.2.1}ideinit()}{216}{subsubsection.5.69.2.1}%
+\contentsline {subsubsection}{\numberline {5.69.2.2}ideintr()}{217}{subsubsection.5.69.2.2}%
+\contentsline {subsubsection}{\numberline {5.69.2.3}iderw()}{217}{subsubsection.5.69.2.3}%
+\contentsline {subsubsection}{\numberline {5.69.2.4}idestart()}{218}{subsubsection.5.69.2.4}%
+\contentsline {subsubsection}{\numberline {5.69.2.5}idewait()}{218}{subsubsection.5.69.2.5}%
+\contentsline {subsection}{\numberline {5.69.3}Variable Documentation}{218}{subsection.5.69.3}%
+\contentsline {subsubsection}{\numberline {5.69.3.1}havedisk1}{218}{subsubsection.5.69.3.1}%
+\contentsline {subsubsection}{\numberline {5.69.3.2}idelock}{219}{subsubsection.5.69.3.2}%
+\contentsline {subsubsection}{\numberline {5.69.3.3}idequeue}{219}{subsubsection.5.69.3.3}%
+\contentsline {section}{\numberline {5.70}ide.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{219}{section.5.70}%
+\contentsline {section}{\numberline {5.71}ide.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{221}{section.5.71}%
+\contentsline {section}{\numberline {5.72}ide.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{221}{section.5.72}%
+\contentsline {section}{\numberline {5.73}init.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{221}{section.5.73}%
+\contentsline {subsection}{\numberline {5.73.1}Function Documentation}{221}{subsection.5.73.1}%
+\contentsline {subsubsection}{\numberline {5.73.1.1}main()}{222}{subsubsection.5.73.1.1}%
+\contentsline {subsection}{\numberline {5.73.2}Variable Documentation}{222}{subsection.5.73.2}%
+\contentsline {subsubsection}{\numberline {5.73.2.1}argv}{222}{subsubsection.5.73.2.1}%
+\contentsline {section}{\numberline {5.74}init.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{222}{section.5.74}%
+\contentsline {section}{\numberline {5.75}init.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{223}{section.5.75}%
+\contentsline {section}{\numberline {5.76}init.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{223}{section.5.76}%
+\contentsline {section}{\numberline {5.77}initcode.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{223}{section.5.77}%
+\contentsline {section}{\numberline {5.78}initcode.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{223}{section.5.78}%
+\contentsline {section}{\numberline {5.79}ioapic.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{223}{section.5.79}%
+\contentsline {subsection}{\numberline {5.79.1}Macro Definition Documentation}{224}{subsection.5.79.1}%
+\contentsline {subsubsection}{\numberline {5.79.1.1}INT\_ACTIVELOW}{224}{subsubsection.5.79.1.1}%
+\contentsline {subsubsection}{\numberline {5.79.1.2}INT\_DISABLED}{224}{subsubsection.5.79.1.2}%
+\contentsline {subsubsection}{\numberline {5.79.1.3}INT\_LEVEL}{224}{subsubsection.5.79.1.3}%
+\contentsline {subsubsection}{\numberline {5.79.1.4}INT\_LOGICAL}{224}{subsubsection.5.79.1.4}%
+\contentsline {subsubsection}{\numberline {5.79.1.5}IOAPIC}{225}{subsubsection.5.79.1.5}%
+\contentsline {subsubsection}{\numberline {5.79.1.6}REG\_ID}{225}{subsubsection.5.79.1.6}%
+\contentsline {subsubsection}{\numberline {5.79.1.7}REG\_TABLE}{225}{subsubsection.5.79.1.7}%
+\contentsline {subsubsection}{\numberline {5.79.1.8}REG\_VER}{225}{subsubsection.5.79.1.8}%
+\contentsline {subsection}{\numberline {5.79.2}Function Documentation}{225}{subsection.5.79.2}%
+\contentsline {subsubsection}{\numberline {5.79.2.1}ioapicenable()}{225}{subsubsection.5.79.2.1}%
+\contentsline {subsubsection}{\numberline {5.79.2.2}ioapicinit()}{226}{subsubsection.5.79.2.2}%
+\contentsline {subsubsection}{\numberline {5.79.2.3}ioapicread()}{226}{subsubsection.5.79.2.3}%
+\contentsline {subsubsection}{\numberline {5.79.2.4}ioapicwrite()}{226}{subsubsection.5.79.2.4}%
+\contentsline {subsection}{\numberline {5.79.3}Variable Documentation}{226}{subsection.5.79.3}%
+\contentsline {subsubsection}{\numberline {5.79.3.1}ioapic}{227}{subsubsection.5.79.3.1}%
+\contentsline {section}{\numberline {5.80}ioapic.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{227}{section.5.80}%
+\contentsline {section}{\numberline {5.81}ioapic.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{228}{section.5.81}%
+\contentsline {section}{\numberline {5.82}ioapic.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{228}{section.5.82}%
+\contentsline {section}{\numberline {5.83}kalloc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{228}{section.5.83}%
+\contentsline {subsection}{\numberline {5.83.1}Function Documentation}{228}{subsection.5.83.1}%
+\contentsline {subsubsection}{\numberline {5.83.1.1}freerange()}{229}{subsubsection.5.83.1.1}%
+\contentsline {subsubsection}{\numberline {5.83.1.2}kalloc()}{229}{subsubsection.5.83.1.2}%
+\contentsline {subsubsection}{\numberline {5.83.1.3}kfree()}{229}{subsubsection.5.83.1.3}%
+\contentsline {subsubsection}{\numberline {5.83.1.4}kinit1()}{230}{subsubsection.5.83.1.4}%
+\contentsline {subsubsection}{\numberline {5.83.1.5}kinit2()}{230}{subsubsection.5.83.1.5}%
+\contentsline {subsection}{\numberline {5.83.2}Variable Documentation}{230}{subsection.5.83.2}%
+\contentsline {subsubsection}{\numberline {5.83.2.1}end}{230}{subsubsection.5.83.2.1}%
+\contentsline {subsubsection}{\numberline {5.83.2.2}freelist}{230}{subsubsection.5.83.2.2}%
+\contentsline {subsubsection}{\numberline {5.83.2.3}}{230}{subsubsection.5.83.2.3}%
+\contentsline {subsubsection}{\numberline {5.83.2.4}lock}{231}{subsubsection.5.83.2.4}%
+\contentsline {subsubsection}{\numberline {5.83.2.5}use\_lock}{231}{subsubsection.5.83.2.5}%
+\contentsline {section}{\numberline {5.84}kalloc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{231}{section.5.84}%
+\contentsline {section}{\numberline {5.85}kalloc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{232}{section.5.85}%
+\contentsline {section}{\numberline {5.86}kalloc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{232}{section.5.86}%
+\contentsline {section}{\numberline {5.87}kbd.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{232}{section.5.87}%
+\contentsline {subsection}{\numberline {5.87.1}Function Documentation}{233}{subsection.5.87.1}%
+\contentsline {subsubsection}{\numberline {5.87.1.1}kbdgetc()}{233}{subsubsection.5.87.1.1}%
+\contentsline {subsubsection}{\numberline {5.87.1.2}kbdintr()}{233}{subsubsection.5.87.1.2}%
+\contentsline {section}{\numberline {5.88}kbd.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{234}{section.5.88}%
+\contentsline {section}{\numberline {5.89}kbd.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{234}{section.5.89}%
+\contentsline {section}{\numberline {5.90}kbd.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{234}{section.5.90}%
+\contentsline {section}{\numberline {5.91}kbd.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{234}{section.5.91}%
+\contentsline {subsection}{\numberline {5.91.1}Macro Definition Documentation}{235}{subsection.5.91.1}%
+\contentsline {subsubsection}{\numberline {5.91.1.1}ALT}{235}{subsubsection.5.91.1.1}%
+\contentsline {subsubsection}{\numberline {5.91.1.2}C}{235}{subsubsection.5.91.1.2}%
+\contentsline {subsubsection}{\numberline {5.91.1.3}CAPSLOCK}{236}{subsubsection.5.91.1.3}%
+\contentsline {subsubsection}{\numberline {5.91.1.4}CTL}{236}{subsubsection.5.91.1.4}%
+\contentsline {subsubsection}{\numberline {5.91.1.5}E0ESC}{236}{subsubsection.5.91.1.5}%
+\contentsline {subsubsection}{\numberline {5.91.1.6}KBDATAP}{236}{subsubsection.5.91.1.6}%
+\contentsline {subsubsection}{\numberline {5.91.1.7}KBS\_DIB}{236}{subsubsection.5.91.1.7}%
+\contentsline {subsubsection}{\numberline {5.91.1.8}KBSTATP}{236}{subsubsection.5.91.1.8}%
+\contentsline {subsubsection}{\numberline {5.91.1.9}KEY\_DEL}{237}{subsubsection.5.91.1.9}%
+\contentsline {subsubsection}{\numberline {5.91.1.10}KEY\_DN}{237}{subsubsection.5.91.1.10}%
+\contentsline {subsubsection}{\numberline {5.91.1.11}KEY\_END}{237}{subsubsection.5.91.1.11}%
+\contentsline {subsubsection}{\numberline {5.91.1.12}KEY\_HOME}{237}{subsubsection.5.91.1.12}%
+\contentsline {subsubsection}{\numberline {5.91.1.13}KEY\_INS}{237}{subsubsection.5.91.1.13}%
+\contentsline {subsubsection}{\numberline {5.91.1.14}KEY\_LF}{237}{subsubsection.5.91.1.14}%
+\contentsline {subsubsection}{\numberline {5.91.1.15}KEY\_PGDN}{238}{subsubsection.5.91.1.15}%
+\contentsline {subsubsection}{\numberline {5.91.1.16}KEY\_PGUP}{238}{subsubsection.5.91.1.16}%
+\contentsline {subsubsection}{\numberline {5.91.1.17}KEY\_RT}{238}{subsubsection.5.91.1.17}%
+\contentsline {subsubsection}{\numberline {5.91.1.18}KEY\_UP}{238}{subsubsection.5.91.1.18}%
+\contentsline {subsubsection}{\numberline {5.91.1.19}NO}{238}{subsubsection.5.91.1.19}%
+\contentsline {subsubsection}{\numberline {5.91.1.20}NUMLOCK}{238}{subsubsection.5.91.1.20}%
+\contentsline {subsubsection}{\numberline {5.91.1.21}SCROLLLOCK}{239}{subsubsection.5.91.1.21}%
+\contentsline {subsubsection}{\numberline {5.91.1.22}SHIFT}{239}{subsubsection.5.91.1.22}%
+\contentsline {subsection}{\numberline {5.91.2}Variable Documentation}{239}{subsection.5.91.2}%
+\contentsline {subsubsection}{\numberline {5.91.2.1}ctlmap}{239}{subsubsection.5.91.2.1}%
+\contentsline {subsubsection}{\numberline {5.91.2.2}normalmap}{240}{subsubsection.5.91.2.2}%
+\contentsline {subsubsection}{\numberline {5.91.2.3}shiftcode}{240}{subsubsection.5.91.2.3}%
+\contentsline {subsubsection}{\numberline {5.91.2.4}shiftmap}{240}{subsubsection.5.91.2.4}%
+\contentsline {subsubsection}{\numberline {5.91.2.5}togglecode}{241}{subsubsection.5.91.2.5}%
+\contentsline {section}{\numberline {5.92}kbd.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{241}{section.5.92}%
+\contentsline {section}{\numberline {5.93}kill.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{243}{section.5.93}%
+\contentsline {subsection}{\numberline {5.93.1}Function Documentation}{243}{subsection.5.93.1}%
+\contentsline {subsubsection}{\numberline {5.93.1.1}main()}{243}{subsubsection.5.93.1.1}%
+\contentsline {section}{\numberline {5.94}kill.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{243}{section.5.94}%
+\contentsline {section}{\numberline {5.95}kill.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{244}{section.5.95}%
+\contentsline {section}{\numberline {5.96}kill.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{244}{section.5.96}%
+\contentsline {section}{\numberline {5.97}lapic.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{244}{section.5.97}%
+\contentsline {subsection}{\numberline {5.97.1}Macro Definition Documentation}{245}{subsection.5.97.1}%
+\contentsline {subsubsection}{\numberline {5.97.1.1}ASSERT}{245}{subsubsection.5.97.1.1}%
+\contentsline {subsubsection}{\numberline {5.97.1.2}BCAST}{245}{subsubsection.5.97.1.2}%
+\contentsline {subsubsection}{\numberline {5.97.1.3}BUSY}{246}{subsubsection.5.97.1.3}%
+\contentsline {subsubsection}{\numberline {5.97.1.4}CMOS\_PORT}{246}{subsubsection.5.97.1.4}%
+\contentsline {subsubsection}{\numberline {5.97.1.5}CMOS\_RETURN}{246}{subsubsection.5.97.1.5}%
+\contentsline {subsubsection}{\numberline {5.97.1.6}CMOS\_STATA}{246}{subsubsection.5.97.1.6}%
+\contentsline {subsubsection}{\numberline {5.97.1.7}CMOS\_STATB}{246}{subsubsection.5.97.1.7}%
+\contentsline {subsubsection}{\numberline {5.97.1.8}CMOS\_UIP}{246}{subsubsection.5.97.1.8}%
+\contentsline {subsubsection}{\numberline {5.97.1.9}CONV}{247}{subsubsection.5.97.1.9}%
+\contentsline {subsubsection}{\numberline {5.97.1.10}DAY}{247}{subsubsection.5.97.1.10}%
+\contentsline {subsubsection}{\numberline {5.97.1.11}DEASSERT}{247}{subsubsection.5.97.1.11}%
+\contentsline {subsubsection}{\numberline {5.97.1.12}DELIVS}{247}{subsubsection.5.97.1.12}%
+\contentsline {subsubsection}{\numberline {5.97.1.13}ENABLE}{247}{subsubsection.5.97.1.13}%
+\contentsline {subsubsection}{\numberline {5.97.1.14}EOI}{247}{subsubsection.5.97.1.14}%
+\contentsline {subsubsection}{\numberline {5.97.1.15}ERROR}{248}{subsubsection.5.97.1.15}%
+\contentsline {subsubsection}{\numberline {5.97.1.16}ESR}{248}{subsubsection.5.97.1.16}%
+\contentsline {subsubsection}{\numberline {5.97.1.17}FIXED}{248}{subsubsection.5.97.1.17}%
+\contentsline {subsubsection}{\numberline {5.97.1.18}HOURS}{248}{subsubsection.5.97.1.18}%
+\contentsline {subsubsection}{\numberline {5.97.1.19}ICRHI}{248}{subsubsection.5.97.1.19}%
+\contentsline {subsubsection}{\numberline {5.97.1.20}ICRLO}{248}{subsubsection.5.97.1.20}%
+\contentsline {subsubsection}{\numberline {5.97.1.21}ID}{249}{subsubsection.5.97.1.21}%
+\contentsline {subsubsection}{\numberline {5.97.1.22}INIT}{249}{subsubsection.5.97.1.22}%
+\contentsline {subsubsection}{\numberline {5.97.1.23}LEVEL}{249}{subsubsection.5.97.1.23}%
+\contentsline {subsubsection}{\numberline {5.97.1.24}LINT0}{249}{subsubsection.5.97.1.24}%
+\contentsline {subsubsection}{\numberline {5.97.1.25}LINT1}{249}{subsubsection.5.97.1.25}%
+\contentsline {subsubsection}{\numberline {5.97.1.26}MASKED}{249}{subsubsection.5.97.1.26}%
+\contentsline {subsubsection}{\numberline {5.97.1.27}MINS}{250}{subsubsection.5.97.1.27}%
+\contentsline {subsubsection}{\numberline {5.97.1.28}MONTH}{250}{subsubsection.5.97.1.28}%
+\contentsline {subsubsection}{\numberline {5.97.1.29}PCINT}{250}{subsubsection.5.97.1.29}%
+\contentsline {subsubsection}{\numberline {5.97.1.30}PERIODIC}{250}{subsubsection.5.97.1.30}%
+\contentsline {subsubsection}{\numberline {5.97.1.31}SECS}{250}{subsubsection.5.97.1.31}%
+\contentsline {subsubsection}{\numberline {5.97.1.32}STARTUP}{250}{subsubsection.5.97.1.32}%
+\contentsline {subsubsection}{\numberline {5.97.1.33}SVR}{251}{subsubsection.5.97.1.33}%
+\contentsline {subsubsection}{\numberline {5.97.1.34}TCCR}{251}{subsubsection.5.97.1.34}%
+\contentsline {subsubsection}{\numberline {5.97.1.35}TDCR}{251}{subsubsection.5.97.1.35}%
+\contentsline {subsubsection}{\numberline {5.97.1.36}TICR}{251}{subsubsection.5.97.1.36}%
+\contentsline {subsubsection}{\numberline {5.97.1.37}TIMER}{251}{subsubsection.5.97.1.37}%
+\contentsline {subsubsection}{\numberline {5.97.1.38}TPR}{251}{subsubsection.5.97.1.38}%
+\contentsline {subsubsection}{\numberline {5.97.1.39}VER}{252}{subsubsection.5.97.1.39}%
+\contentsline {subsubsection}{\numberline {5.97.1.40}X1}{252}{subsubsection.5.97.1.40}%
+\contentsline {subsubsection}{\numberline {5.97.1.41}YEAR}{252}{subsubsection.5.97.1.41}%
+\contentsline {subsection}{\numberline {5.97.2}Function Documentation}{252}{subsection.5.97.2}%
+\contentsline {subsubsection}{\numberline {5.97.2.1}cmos\_read()}{252}{subsubsection.5.97.2.1}%
+\contentsline {subsubsection}{\numberline {5.97.2.2}cmostime()}{253}{subsubsection.5.97.2.2}%
+\contentsline {subsubsection}{\numberline {5.97.2.3}fill\_rtcdate()}{253}{subsubsection.5.97.2.3}%
+\contentsline {subsubsection}{\numberline {5.97.2.4}lapiceoi()}{253}{subsubsection.5.97.2.4}%
+\contentsline {subsubsection}{\numberline {5.97.2.5}lapicid()}{254}{subsubsection.5.97.2.5}%
+\contentsline {subsubsection}{\numberline {5.97.2.6}lapicinit()}{254}{subsubsection.5.97.2.6}%
+\contentsline {subsubsection}{\numberline {5.97.2.7}lapicstartap()}{255}{subsubsection.5.97.2.7}%
+\contentsline {subsubsection}{\numberline {5.97.2.8}lapicw()}{255}{subsubsection.5.97.2.8}%
+\contentsline {subsubsection}{\numberline {5.97.2.9}microdelay()}{255}{subsubsection.5.97.2.9}%
+\contentsline {subsection}{\numberline {5.97.3}Variable Documentation}{256}{subsection.5.97.3}%
+\contentsline {subsubsection}{\numberline {5.97.3.1}lapic}{256}{subsubsection.5.97.3.1}%
+\contentsline {section}{\numberline {5.98}lapic.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{256}{section.5.98}%
+\contentsline {section}{\numberline {5.99}lapic.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{259}{section.5.99}%
+\contentsline {section}{\numberline {5.100}lapic.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{259}{section.5.100}%
+\contentsline {section}{\numberline {5.101}ln.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{259}{section.5.101}%
+\contentsline {subsection}{\numberline {5.101.1}Function Documentation}{259}{subsection.5.101.1}%
+\contentsline {subsubsection}{\numberline {5.101.1.1}main()}{259}{subsubsection.5.101.1.1}%
+\contentsline {section}{\numberline {5.102}ln.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{259}{section.5.102}%
+\contentsline {section}{\numberline {5.103}ln.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{260}{section.5.103}%
+\contentsline {section}{\numberline {5.104}ln.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{260}{section.5.104}%
+\contentsline {section}{\numberline {5.105}log.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{260}{section.5.105}%
+\contentsline {subsection}{\numberline {5.105.1}Function Documentation}{260}{subsection.5.105.1}%
+\contentsline {subsubsection}{\numberline {5.105.1.1}begin\_op()}{261}{subsubsection.5.105.1.1}%
+\contentsline {subsubsection}{\numberline {5.105.1.2}commit()}{261}{subsubsection.5.105.1.2}%
+\contentsline {subsubsection}{\numberline {5.105.1.3}end\_op()}{261}{subsubsection.5.105.1.3}%
+\contentsline {subsubsection}{\numberline {5.105.1.4}initlog()}{262}{subsubsection.5.105.1.4}%
+\contentsline {subsubsection}{\numberline {5.105.1.5}install\_trans()}{262}{subsubsection.5.105.1.5}%
+\contentsline {subsubsection}{\numberline {5.105.1.6}log\_write()}{263}{subsubsection.5.105.1.6}%
+\contentsline {subsubsection}{\numberline {5.105.1.7}read\_head()}{263}{subsubsection.5.105.1.7}%
+\contentsline {subsubsection}{\numberline {5.105.1.8}recover\_from\_log()}{263}{subsubsection.5.105.1.8}%
+\contentsline {subsubsection}{\numberline {5.105.1.9}write\_head()}{264}{subsubsection.5.105.1.9}%
+\contentsline {subsubsection}{\numberline {5.105.1.10}write\_log()}{264}{subsubsection.5.105.1.10}%
+\contentsline {subsection}{\numberline {5.105.2}Variable Documentation}{264}{subsection.5.105.2}%
+\contentsline {subsubsection}{\numberline {5.105.2.1}log}{264}{subsubsection.5.105.2.1}%
+\contentsline {section}{\numberline {5.106}log.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{265}{section.5.106}%
+\contentsline {section}{\numberline {5.107}log.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{267}{section.5.107}%
+\contentsline {section}{\numberline {5.108}log.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{267}{section.5.108}%
+\contentsline {section}{\numberline {5.109}ls.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{268}{section.5.109}%
+\contentsline {subsection}{\numberline {5.109.1}Function Documentation}{268}{subsection.5.109.1}%
+\contentsline {subsubsection}{\numberline {5.109.1.1}fmtname()}{268}{subsubsection.5.109.1.1}%
+\contentsline {subsubsection}{\numberline {5.109.1.2}ls()}{268}{subsubsection.5.109.1.2}%
+\contentsline {subsubsection}{\numberline {5.109.1.3}main()}{269}{subsubsection.5.109.1.3}%
+\contentsline {section}{\numberline {5.110}ls.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{269}{section.5.110}%
+\contentsline {section}{\numberline {5.111}ls.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{271}{section.5.111}%
+\contentsline {section}{\numberline {5.112}ls.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{271}{section.5.112}%
+\contentsline {section}{\numberline {5.113}main.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{271}{section.5.113}%
+\contentsline {subsection}{\numberline {5.113.1}Function Documentation}{271}{subsection.5.113.1}%
+\contentsline {subsubsection}{\numberline {5.113.1.1}\_\_attribute\_\_()}{271}{subsubsection.5.113.1.1}%
+\contentsline {subsubsection}{\numberline {5.113.1.2}mpenter()}{272}{subsubsection.5.113.1.2}%
+\contentsline {subsubsection}{\numberline {5.113.1.3}mpmain()}{272}{subsubsection.5.113.1.3}%
+\contentsline {subsubsection}{\numberline {5.113.1.4}startothers()}{272}{subsubsection.5.113.1.4}%
+\contentsline {subsection}{\numberline {5.113.2}Variable Documentation}{273}{subsection.5.113.2}%
+\contentsline {subsubsection}{\numberline {5.113.2.1}entrypgdir}{273}{subsubsection.5.113.2.1}%
+\contentsline {section}{\numberline {5.114}main.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{273}{section.5.114}%
+\contentsline {section}{\numberline {5.115}main.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{275}{section.5.115}%
+\contentsline {section}{\numberline {5.116}main.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{275}{section.5.116}%
+\contentsline {section}{\numberline {5.117}memide.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{275}{section.5.117}%
+\contentsline {subsection}{\numberline {5.117.1}Function Documentation}{275}{subsection.5.117.1}%
+\contentsline {subsubsection}{\numberline {5.117.1.1}ideinit()}{275}{subsubsection.5.117.1.1}%
+\contentsline {subsubsection}{\numberline {5.117.1.2}ideintr()}{276}{subsubsection.5.117.1.2}%
+\contentsline {subsubsection}{\numberline {5.117.1.3}iderw()}{276}{subsubsection.5.117.1.3}%
+\contentsline {subsection}{\numberline {5.117.2}Variable Documentation}{276}{subsection.5.117.2}%
+\contentsline {subsubsection}{\numberline {5.117.2.1}\_binary\_fs\_img\_size}{276}{subsubsection.5.117.2.1}%
+\contentsline {subsubsection}{\numberline {5.117.2.2}\_binary\_fs\_img\_start}{277}{subsubsection.5.117.2.2}%
+\contentsline {subsubsection}{\numberline {5.117.2.3}disksize}{277}{subsubsection.5.117.2.3}%
+\contentsline {subsubsection}{\numberline {5.117.2.4}memdisk}{277}{subsubsection.5.117.2.4}%
+\contentsline {section}{\numberline {5.118}memide.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{277}{section.5.118}%
+\contentsline {section}{\numberline {5.119}memlayout.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{278}{section.5.119}%
+\contentsline {subsection}{\numberline {5.119.1}Macro Definition Documentation}{278}{subsection.5.119.1}%
+\contentsline {subsubsection}{\numberline {5.119.1.1}DEVSPACE}{278}{subsubsection.5.119.1.1}%
+\contentsline {subsubsection}{\numberline {5.119.1.2}EXTMEM}{278}{subsubsection.5.119.1.2}%
+\contentsline {subsubsection}{\numberline {5.119.1.3}KERNBASE}{279}{subsubsection.5.119.1.3}%
+\contentsline {subsubsection}{\numberline {5.119.1.4}KERNLINK}{279}{subsubsection.5.119.1.4}%
+\contentsline {subsubsection}{\numberline {5.119.1.5}P2V}{279}{subsubsection.5.119.1.5}%
+\contentsline {subsubsection}{\numberline {5.119.1.6}P2V\_WO}{279}{subsubsection.5.119.1.6}%
+\contentsline {subsubsection}{\numberline {5.119.1.7}PHYSTOP}{279}{subsubsection.5.119.1.7}%
+\contentsline {subsubsection}{\numberline {5.119.1.8}V2P}{279}{subsubsection.5.119.1.8}%
+\contentsline {subsubsection}{\numberline {5.119.1.9}V2P\_WO}{280}{subsubsection.5.119.1.9}%
+\contentsline {section}{\numberline {5.120}memlayout.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{280}{section.5.120}%
+\contentsline {section}{\numberline {5.121}mkdir.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{280}{section.5.121}%
+\contentsline {subsection}{\numberline {5.121.1}Function Documentation}{280}{subsection.5.121.1}%
+\contentsline {subsubsection}{\numberline {5.121.1.1}main()}{280}{subsubsection.5.121.1.1}%
+\contentsline {section}{\numberline {5.122}mkdir.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{281}{section.5.122}%
+\contentsline {section}{\numberline {5.123}mkdir.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{281}{section.5.123}%
+\contentsline {section}{\numberline {5.124}mkdir.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{281}{section.5.124}%
+\contentsline {section}{\numberline {5.125}mkfs.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{281}{section.5.125}%
+\contentsline {subsection}{\numberline {5.125.1}Macro Definition Documentation}{282}{subsection.5.125.1}%
+\contentsline {subsubsection}{\numberline {5.125.1.1}min}{282}{subsubsection.5.125.1.1}%
+\contentsline {subsubsection}{\numberline {5.125.1.2}NINODES}{282}{subsubsection.5.125.1.2}%
+\contentsline {subsubsection}{\numberline {5.125.1.3}stat}{283}{subsubsection.5.125.1.3}%
+\contentsline {subsubsection}{\numberline {5.125.1.4}static\_assert}{283}{subsubsection.5.125.1.4}%
+\contentsline {subsection}{\numberline {5.125.2}Function Documentation}{283}{subsection.5.125.2}%
+\contentsline {subsubsection}{\numberline {5.125.2.1}balloc()}{283}{subsubsection.5.125.2.1}%
+\contentsline {subsubsection}{\numberline {5.125.2.2}ialloc()}{283}{subsubsection.5.125.2.2}%
+\contentsline {subsubsection}{\numberline {5.125.2.3}iappend()}{284}{subsubsection.5.125.2.3}%
+\contentsline {subsubsection}{\numberline {5.125.2.4}main()}{284}{subsubsection.5.125.2.4}%
+\contentsline {subsubsection}{\numberline {5.125.2.5}rinode()}{286}{subsubsection.5.125.2.5}%
+\contentsline {subsubsection}{\numberline {5.125.2.6}rsect()}{286}{subsubsection.5.125.2.6}%
+\contentsline {subsubsection}{\numberline {5.125.2.7}winode()}{286}{subsubsection.5.125.2.7}%
+\contentsline {subsubsection}{\numberline {5.125.2.8}wsect()}{287}{subsubsection.5.125.2.8}%
+\contentsline {subsubsection}{\numberline {5.125.2.9}xint()}{287}{subsubsection.5.125.2.9}%
+\contentsline {subsubsection}{\numberline {5.125.2.10}xshort()}{287}{subsubsection.5.125.2.10}%
+\contentsline {subsection}{\numberline {5.125.3}Variable Documentation}{287}{subsection.5.125.3}%
+\contentsline {subsubsection}{\numberline {5.125.3.1}freeblock}{288}{subsubsection.5.125.3.1}%
+\contentsline {subsubsection}{\numberline {5.125.3.2}freeinode}{288}{subsubsection.5.125.3.2}%
+\contentsline {subsubsection}{\numberline {5.125.3.3}fsfd}{288}{subsubsection.5.125.3.3}%
+\contentsline {subsubsection}{\numberline {5.125.3.4}nbitmap}{288}{subsubsection.5.125.3.4}%
+\contentsline {subsubsection}{\numberline {5.125.3.5}nblocks}{288}{subsubsection.5.125.3.5}%
+\contentsline {subsubsection}{\numberline {5.125.3.6}ninodeblocks}{289}{subsubsection.5.125.3.6}%
+\contentsline {subsubsection}{\numberline {5.125.3.7}nlog}{289}{subsubsection.5.125.3.7}%
+\contentsline {subsubsection}{\numberline {5.125.3.8}nmeta}{289}{subsubsection.5.125.3.8}%
+\contentsline {subsubsection}{\numberline {5.125.3.9}sb}{289}{subsubsection.5.125.3.9}%
+\contentsline {subsubsection}{\numberline {5.125.3.10}zeroes}{289}{subsubsection.5.125.3.10}%
+\contentsline {section}{\numberline {5.126}mkfs.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{290}{section.5.126}%
+\contentsline {section}{\numberline {5.127}mmu.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{293}{section.5.127}%
+\contentsline {subsection}{\numberline {5.127.1}Macro Definition Documentation}{294}{subsection.5.127.1}%
+\contentsline {subsubsection}{\numberline {5.127.1.1}CR0\_PE}{294}{subsubsection.5.127.1.1}%
+\contentsline {subsubsection}{\numberline {5.127.1.2}CR0\_PG}{294}{subsubsection.5.127.1.2}%
+\contentsline {subsubsection}{\numberline {5.127.1.3}CR0\_WP}{295}{subsubsection.5.127.1.3}%
+\contentsline {subsubsection}{\numberline {5.127.1.4}CR4\_PSE}{295}{subsubsection.5.127.1.4}%
+\contentsline {subsubsection}{\numberline {5.127.1.5}DPL\_USER}{295}{subsubsection.5.127.1.5}%
+\contentsline {subsubsection}{\numberline {5.127.1.6}FL\_IF}{295}{subsubsection.5.127.1.6}%
+\contentsline {subsubsection}{\numberline {5.127.1.7}NPDENTRIES}{295}{subsubsection.5.127.1.7}%
+\contentsline {subsubsection}{\numberline {5.127.1.8}NPTENTRIES}{295}{subsubsection.5.127.1.8}%
+\contentsline {subsubsection}{\numberline {5.127.1.9}NSEGS}{296}{subsubsection.5.127.1.9}%
+\contentsline {subsubsection}{\numberline {5.127.1.10}PDX}{296}{subsubsection.5.127.1.10}%
+\contentsline {subsubsection}{\numberline {5.127.1.11}PDXSHIFT}{296}{subsubsection.5.127.1.11}%
+\contentsline {subsubsection}{\numberline {5.127.1.12}PGADDR}{296}{subsubsection.5.127.1.12}%
+\contentsline {subsubsection}{\numberline {5.127.1.13}PGROUNDDOWN}{296}{subsubsection.5.127.1.13}%
+\contentsline {subsubsection}{\numberline {5.127.1.14}PGROUNDUP}{296}{subsubsection.5.127.1.14}%
+\contentsline {subsubsection}{\numberline {5.127.1.15}PGSIZE}{297}{subsubsection.5.127.1.15}%
+\contentsline {subsubsection}{\numberline {5.127.1.16}PTE\_ADDR}{297}{subsubsection.5.127.1.16}%
+\contentsline {subsubsection}{\numberline {5.127.1.17}PTE\_FLAGS}{297}{subsubsection.5.127.1.17}%
+\contentsline {subsubsection}{\numberline {5.127.1.18}PTE\_P}{297}{subsubsection.5.127.1.18}%
+\contentsline {subsubsection}{\numberline {5.127.1.19}PTE\_PS}{297}{subsubsection.5.127.1.19}%
+\contentsline {subsubsection}{\numberline {5.127.1.20}PTE\_U}{297}{subsubsection.5.127.1.20}%
+\contentsline {subsubsection}{\numberline {5.127.1.21}PTE\_W}{298}{subsubsection.5.127.1.21}%
+\contentsline {subsubsection}{\numberline {5.127.1.22}PTX}{298}{subsubsection.5.127.1.22}%
+\contentsline {subsubsection}{\numberline {5.127.1.23}PTXSHIFT}{298}{subsubsection.5.127.1.23}%
+\contentsline {subsubsection}{\numberline {5.127.1.24}SEG}{298}{subsubsection.5.127.1.24}%
+\contentsline {subsubsection}{\numberline {5.127.1.25}SEG16}{298}{subsubsection.5.127.1.25}%
+\contentsline {subsubsection}{\numberline {5.127.1.26}SEG\_KCODE}{299}{subsubsection.5.127.1.26}%
+\contentsline {subsubsection}{\numberline {5.127.1.27}SEG\_KDATA}{299}{subsubsection.5.127.1.27}%
+\contentsline {subsubsection}{\numberline {5.127.1.28}SEG\_TSS}{299}{subsubsection.5.127.1.28}%
+\contentsline {subsubsection}{\numberline {5.127.1.29}SEG\_UCODE}{299}{subsubsection.5.127.1.29}%
+\contentsline {subsubsection}{\numberline {5.127.1.30}SEG\_UDATA}{299}{subsubsection.5.127.1.30}%
+\contentsline {subsubsection}{\numberline {5.127.1.31}SETGATE}{300}{subsubsection.5.127.1.31}%
+\contentsline {subsubsection}{\numberline {5.127.1.32}STA\_R}{300}{subsubsection.5.127.1.32}%
+\contentsline {subsubsection}{\numberline {5.127.1.33}STA\_W}{300}{subsubsection.5.127.1.33}%
+\contentsline {subsubsection}{\numberline {5.127.1.34}STA\_X}{300}{subsubsection.5.127.1.34}%
+\contentsline {subsubsection}{\numberline {5.127.1.35}STS\_IG32}{300}{subsubsection.5.127.1.35}%
+\contentsline {subsubsection}{\numberline {5.127.1.36}STS\_T32A}{301}{subsubsection.5.127.1.36}%
+\contentsline {subsubsection}{\numberline {5.127.1.37}STS\_TG32}{301}{subsubsection.5.127.1.37}%
+\contentsline {subsection}{\numberline {5.127.2}Typedef Documentation}{301}{subsection.5.127.2}%
+\contentsline {subsubsection}{\numberline {5.127.2.1}pte\_t}{301}{subsubsection.5.127.2.1}%
+\contentsline {section}{\numberline {5.128}mmu.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{301}{section.5.128}%
+\contentsline {section}{\numberline {5.129}mp.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{303}{section.5.129}%
+\contentsline {subsection}{\numberline {5.129.1}Function Documentation}{304}{subsection.5.129.1}%
+\contentsline {subsubsection}{\numberline {5.129.1.1}mpconfig()}{304}{subsubsection.5.129.1.1}%
+\contentsline {subsubsection}{\numberline {5.129.1.2}mpinit()}{304}{subsubsection.5.129.1.2}%
+\contentsline {subsubsection}{\numberline {5.129.1.3}mpsearch()}{305}{subsubsection.5.129.1.3}%
+\contentsline {subsubsection}{\numberline {5.129.1.4}mpsearch1()}{305}{subsubsection.5.129.1.4}%
+\contentsline {subsubsection}{\numberline {5.129.1.5}sum()}{306}{subsubsection.5.129.1.5}%
+\contentsline {subsection}{\numberline {5.129.2}Variable Documentation}{306}{subsection.5.129.2}%
+\contentsline {subsubsection}{\numberline {5.129.2.1}cpus}{306}{subsubsection.5.129.2.1}%
+\contentsline {subsubsection}{\numberline {5.129.2.2}ioapicid}{306}{subsubsection.5.129.2.2}%
+\contentsline {subsubsection}{\numberline {5.129.2.3}ncpu}{307}{subsubsection.5.129.2.3}%
+\contentsline {section}{\numberline {5.130}mp.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{307}{section.5.130}%
+\contentsline {section}{\numberline {5.131}mp.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{308}{section.5.131}%
+\contentsline {section}{\numberline {5.132}mp.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{308}{section.5.132}%
+\contentsline {section}{\numberline {5.133}mp.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{309}{section.5.133}%
+\contentsline {subsection}{\numberline {5.133.1}Macro Definition Documentation}{309}{subsection.5.133.1}%
+\contentsline {subsubsection}{\numberline {5.133.1.1}MPBOOT}{309}{subsubsection.5.133.1.1}%
+\contentsline {subsubsection}{\numberline {5.133.1.2}MPBUS}{309}{subsubsection.5.133.1.2}%
+\contentsline {subsubsection}{\numberline {5.133.1.3}MPIOAPIC}{309}{subsubsection.5.133.1.3}%
+\contentsline {subsubsection}{\numberline {5.133.1.4}MPIOINTR}{310}{subsubsection.5.133.1.4}%
+\contentsline {subsubsection}{\numberline {5.133.1.5}MPLINTR}{310}{subsubsection.5.133.1.5}%
+\contentsline {subsubsection}{\numberline {5.133.1.6}MPPROC}{310}{subsubsection.5.133.1.6}%
+\contentsline {section}{\numberline {5.134}mp.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{310}{section.5.134}%
+\contentsline {section}{\numberline {5.135}nice.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{311}{section.5.135}%
+\contentsline {subsection}{\numberline {5.135.1}Function Documentation}{311}{subsection.5.135.1}%
+\contentsline {subsubsection}{\numberline {5.135.1.1}main()}{311}{subsubsection.5.135.1.1}%
+\contentsline {section}{\numberline {5.136}nice.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{312}{section.5.136}%
+\contentsline {section}{\numberline {5.137}nice.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{312}{section.5.137}%
+\contentsline {section}{\numberline {5.138}nice.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{312}{section.5.138}%
+\contentsline {section}{\numberline {5.139}param.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{312}{section.5.139}%
+\contentsline {subsection}{\numberline {5.139.1}Macro Definition Documentation}{312}{subsection.5.139.1}%
+\contentsline {subsubsection}{\numberline {5.139.1.1}FSSIZE}{313}{subsubsection.5.139.1.1}%
+\contentsline {subsubsection}{\numberline {5.139.1.2}KSTACKSIZE}{313}{subsubsection.5.139.1.2}%
+\contentsline {subsubsection}{\numberline {5.139.1.3}LOGSIZE}{313}{subsubsection.5.139.1.3}%
+\contentsline {subsubsection}{\numberline {5.139.1.4}MAXARG}{313}{subsubsection.5.139.1.4}%
+\contentsline {subsubsection}{\numberline {5.139.1.5}MAXOPBLOCKS}{313}{subsubsection.5.139.1.5}%
+\contentsline {subsubsection}{\numberline {5.139.1.6}NBUF}{313}{subsubsection.5.139.1.6}%
+\contentsline {subsubsection}{\numberline {5.139.1.7}NCPU}{314}{subsubsection.5.139.1.7}%
+\contentsline {subsubsection}{\numberline {5.139.1.8}NDEV}{314}{subsubsection.5.139.1.8}%
+\contentsline {subsubsection}{\numberline {5.139.1.9}NFILE}{314}{subsubsection.5.139.1.9}%
+\contentsline {subsubsection}{\numberline {5.139.1.10}NINODE}{314}{subsubsection.5.139.1.10}%
+\contentsline {subsubsection}{\numberline {5.139.1.11}NOFILE}{314}{subsubsection.5.139.1.11}%
+\contentsline {subsubsection}{\numberline {5.139.1.12}NPROC}{314}{subsubsection.5.139.1.12}%
+\contentsline {subsubsection}{\numberline {5.139.1.13}ROOTDEV}{315}{subsubsection.5.139.1.13}%
+\contentsline {section}{\numberline {5.140}param.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{315}{section.5.140}%
+\contentsline {section}{\numberline {5.141}picirq.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{315}{section.5.141}%
+\contentsline {subsection}{\numberline {5.141.1}Macro Definition Documentation}{315}{subsection.5.141.1}%
+\contentsline {subsubsection}{\numberline {5.141.1.1}IO\_PIC1}{315}{subsubsection.5.141.1.1}%
+\contentsline {subsubsection}{\numberline {5.141.1.2}IO\_PIC2}{316}{subsubsection.5.141.1.2}%
+\contentsline {subsection}{\numberline {5.141.2}Function Documentation}{316}{subsection.5.141.2}%
+\contentsline {subsubsection}{\numberline {5.141.2.1}picinit()}{316}{subsubsection.5.141.2.1}%
+\contentsline {section}{\numberline {5.142}picirq.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{316}{section.5.142}%
+\contentsline {section}{\numberline {5.143}picirq.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{316}{section.5.143}%
+\contentsline {section}{\numberline {5.144}picirq.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{316}{section.5.144}%
+\contentsline {section}{\numberline {5.145}pipe.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{317}{section.5.145}%
+\contentsline {subsection}{\numberline {5.145.1}Macro Definition Documentation}{317}{subsection.5.145.1}%
+\contentsline {subsubsection}{\numberline {5.145.1.1}PIPESIZE}{317}{subsubsection.5.145.1.1}%
+\contentsline {subsection}{\numberline {5.145.2}Function Documentation}{317}{subsection.5.145.2}%
+\contentsline {subsubsection}{\numberline {5.145.2.1}pipealloc()}{318}{subsubsection.5.145.2.1}%
+\contentsline {subsubsection}{\numberline {5.145.2.2}pipeclose()}{318}{subsubsection.5.145.2.2}%
+\contentsline {subsubsection}{\numberline {5.145.2.3}piperead()}{319}{subsubsection.5.145.2.3}%
+\contentsline {subsubsection}{\numberline {5.145.2.4}pipewrite()}{319}{subsubsection.5.145.2.4}%
+\contentsline {section}{\numberline {5.146}pipe.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{320}{section.5.146}%
+\contentsline {section}{\numberline {5.147}pipe.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{321}{section.5.147}%
+\contentsline {section}{\numberline {5.148}pipe.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{321}{section.5.148}%
+\contentsline {section}{\numberline {5.149}printf.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{321}{section.5.149}%
+\contentsline {subsection}{\numberline {5.149.1}Function Documentation}{322}{subsection.5.149.1}%
+\contentsline {subsubsection}{\numberline {5.149.1.1}printf()}{322}{subsubsection.5.149.1.1}%
+\contentsline {subsubsection}{\numberline {5.149.1.2}printint()}{322}{subsubsection.5.149.1.2}%
+\contentsline {subsubsection}{\numberline {5.149.1.3}putc()}{323}{subsubsection.5.149.1.3}%
+\contentsline {section}{\numberline {5.150}printf.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{323}{section.5.150}%
+\contentsline {section}{\numberline {5.151}printf.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{324}{section.5.151}%
+\contentsline {section}{\numberline {5.152}printf.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{324}{section.5.152}%
+\contentsline {section}{\numberline {5.153}proc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{324}{section.5.153}%
+\contentsline {subsection}{\numberline {5.153.1}Function Documentation}{325}{subsection.5.153.1}%
+\contentsline {subsubsection}{\numberline {5.153.1.1}allocproc()}{326}{subsubsection.5.153.1.1}%
+\contentsline {subsubsection}{\numberline {5.153.1.2}chpr()}{326}{subsubsection.5.153.1.2}%
+\contentsline {subsubsection}{\numberline {5.153.1.3}cps()}{327}{subsubsection.5.153.1.3}%
+\contentsline {subsubsection}{\numberline {5.153.1.4}cpuid()}{327}{subsubsection.5.153.1.4}%
+\contentsline {subsubsection}{\numberline {5.153.1.5}exit()}{327}{subsubsection.5.153.1.5}%
+\contentsline {subsubsection}{\numberline {5.153.1.6}fork()}{328}{subsubsection.5.153.1.6}%
+\contentsline {subsubsection}{\numberline {5.153.1.7}forkret()}{329}{subsubsection.5.153.1.7}%
+\contentsline {subsubsection}{\numberline {5.153.1.8}growproc()}{329}{subsubsection.5.153.1.8}%
+\contentsline {subsubsection}{\numberline {5.153.1.9}kill()}{330}{subsubsection.5.153.1.9}%
+\contentsline {subsubsection}{\numberline {5.153.1.10}mycpu()}{330}{subsubsection.5.153.1.10}%
+\contentsline {subsubsection}{\numberline {5.153.1.11}myproc()}{330}{subsubsection.5.153.1.11}%
+\contentsline {subsubsection}{\numberline {5.153.1.12}pinit()}{331}{subsubsection.5.153.1.12}%
+\contentsline {subsubsection}{\numberline {5.153.1.13}procdump()}{331}{subsubsection.5.153.1.13}%
+\contentsline {subsubsection}{\numberline {5.153.1.14}sched()}{331}{subsubsection.5.153.1.14}%
+\contentsline {subsubsection}{\numberline {5.153.1.15}scheduler()}{332}{subsubsection.5.153.1.15}%
+\contentsline {subsubsection}{\numberline {5.153.1.16}sleep()}{332}{subsubsection.5.153.1.16}%
+\contentsline {subsubsection}{\numberline {5.153.1.17}trapret()}{333}{subsubsection.5.153.1.17}%
+\contentsline {subsubsection}{\numberline {5.153.1.18}userinit()}{333}{subsubsection.5.153.1.18}%
+\contentsline {subsubsection}{\numberline {5.153.1.19}wait()}{334}{subsubsection.5.153.1.19}%
+\contentsline {subsubsection}{\numberline {5.153.1.20}wakeup()}{334}{subsubsection.5.153.1.20}%
+\contentsline {subsubsection}{\numberline {5.153.1.21}wakeup1()}{335}{subsubsection.5.153.1.21}%
+\contentsline {subsubsection}{\numberline {5.153.1.22}yield()}{335}{subsubsection.5.153.1.22}%
+\contentsline {subsection}{\numberline {5.153.2}Variable Documentation}{335}{subsection.5.153.2}%
+\contentsline {subsubsection}{\numberline {5.153.2.1}initproc}{335}{subsubsection.5.153.2.1}%
+\contentsline {subsubsection}{\numberline {5.153.2.2}lock}{335}{subsubsection.5.153.2.2}%
+\contentsline {subsubsection}{\numberline {5.153.2.3}nextpid}{336}{subsubsection.5.153.2.3}%
+\contentsline {subsubsection}{\numberline {5.153.2.4}proc}{336}{subsubsection.5.153.2.4}%
+\contentsline {subsubsection}{\numberline {5.153.2.5}}{336}{subsubsection.5.153.2.5}%
+\contentsline {section}{\numberline {5.154}proc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{336}{section.5.154}%
+\contentsline {section}{\numberline {5.155}proc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{343}{section.5.155}%
+\contentsline {section}{\numberline {5.156}proc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{343}{section.5.156}%
+\contentsline {section}{\numberline {5.157}proc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{343}{section.5.157}%
+\contentsline {subsection}{\numberline {5.157.1}Enumeration Type Documentation}{343}{subsection.5.157.1}%
+\contentsline {subsubsection}{\numberline {5.157.1.1}procstate}{343}{subsubsection.5.157.1.1}%
+\contentsline {subsection}{\numberline {5.157.2}Variable Documentation}{344}{subsection.5.157.2}%
+\contentsline {subsubsection}{\numberline {5.157.2.1}cpus}{344}{subsubsection.5.157.2.1}%
+\contentsline {subsubsection}{\numberline {5.157.2.2}ncpu}{344}{subsubsection.5.157.2.2}%
+\contentsline {section}{\numberline {5.158}proc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{344}{section.5.158}%
+\contentsline {section}{\numberline {5.159}ps.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{345}{section.5.159}%
+\contentsline {subsection}{\numberline {5.159.1}Function Documentation}{345}{subsection.5.159.1}%
+\contentsline {subsubsection}{\numberline {5.159.1.1}main()}{345}{subsubsection.5.159.1.1}%
+\contentsline {section}{\numberline {5.160}ps.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{346}{section.5.160}%
+\contentsline {section}{\numberline {5.161}ps.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{346}{section.5.161}%
+\contentsline {section}{\numberline {5.162}ps.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{346}{section.5.162}%
+\contentsline {section}{\numberline {5.163}pstree.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{346}{section.5.163}%
+\contentsline {subsection}{\numberline {5.163.1}Macro Definition Documentation}{346}{subsection.5.163.1}%
+\contentsline {subsubsection}{\numberline {5.163.1.1}MAXPROC}{346}{subsubsection.5.163.1.1}%
+\contentsline {subsection}{\numberline {5.163.2}Function Documentation}{347}{subsection.5.163.2}%
+\contentsline {subsubsection}{\numberline {5.163.2.1}main()}{347}{subsubsection.5.163.2.1}%
+\contentsline {section}{\numberline {5.164}pstree.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{347}{section.5.164}%
+\contentsline {section}{\numberline {5.165}pstree.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{348}{section.5.165}%
+\contentsline {section}{\numberline {5.166}pstree.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{348}{section.5.166}%
+\contentsline {section}{\numberline {5.167}README.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}md File Reference}{348}{section.5.167}%
+\contentsline {section}{\numberline {5.168}rm.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{348}{section.5.168}%
+\contentsline {subsection}{\numberline {5.168.1}Function Documentation}{348}{subsection.5.168.1}%
+\contentsline {subsubsection}{\numberline {5.168.1.1}main()}{349}{subsubsection.5.168.1.1}%
+\contentsline {section}{\numberline {5.169}rm.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{349}{section.5.169}%
+\contentsline {section}{\numberline {5.170}rm.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{349}{section.5.170}%
+\contentsline {section}{\numberline {5.171}rm.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{349}{section.5.171}%
+\contentsline {section}{\numberline {5.172}sh.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{349}{section.5.172}%
+\contentsline {subsection}{\numberline {5.172.1}Macro Definition Documentation}{350}{subsection.5.172.1}%
+\contentsline {subsubsection}{\numberline {5.172.1.1}BACK}{351}{subsubsection.5.172.1.1}%
+\contentsline {subsubsection}{\numberline {5.172.1.2}EXEC}{351}{subsubsection.5.172.1.2}%
+\contentsline {subsubsection}{\numberline {5.172.1.3}LIST}{351}{subsubsection.5.172.1.3}%
+\contentsline {subsubsection}{\numberline {5.172.1.4}MAXARGS}{351}{subsubsection.5.172.1.4}%
+\contentsline {subsubsection}{\numberline {5.172.1.5}PIPE}{351}{subsubsection.5.172.1.5}%
+\contentsline {subsubsection}{\numberline {5.172.1.6}REDIR}{351}{subsubsection.5.172.1.6}%
+\contentsline {subsection}{\numberline {5.172.2}Function Documentation}{352}{subsection.5.172.2}%
+\contentsline {subsubsection}{\numberline {5.172.2.1}backcmd()}{352}{subsubsection.5.172.2.1}%
+\contentsline {subsubsection}{\numberline {5.172.2.2}execcmd()}{352}{subsubsection.5.172.2.2}%
+\contentsline {subsubsection}{\numberline {5.172.2.3}fork1()}{352}{subsubsection.5.172.2.3}%
+\contentsline {subsubsection}{\numberline {5.172.2.4}getcmd()}{353}{subsubsection.5.172.2.4}%
+\contentsline {subsubsection}{\numberline {5.172.2.5}gettoken()}{353}{subsubsection.5.172.2.5}%
+\contentsline {subsubsection}{\numberline {5.172.2.6}listcmd()}{354}{subsubsection.5.172.2.6}%
+\contentsline {subsubsection}{\numberline {5.172.2.7}main()}{354}{subsubsection.5.172.2.7}%
+\contentsline {subsubsection}{\numberline {5.172.2.8}nulterminate()}{354}{subsubsection.5.172.2.8}%
+\contentsline {subsubsection}{\numberline {5.172.2.9}panic()}{355}{subsubsection.5.172.2.9}%
+\contentsline {subsubsection}{\numberline {5.172.2.10}parseblock()}{355}{subsubsection.5.172.2.10}%
+\contentsline {subsubsection}{\numberline {5.172.2.11}parsecmd()}{356}{subsubsection.5.172.2.11}%
+\contentsline {subsubsection}{\numberline {5.172.2.12}parseexec()}{356}{subsubsection.5.172.2.12}%
+\contentsline {subsubsection}{\numberline {5.172.2.13}parseline()}{357}{subsubsection.5.172.2.13}%
+\contentsline {subsubsection}{\numberline {5.172.2.14}parsepipe()}{357}{subsubsection.5.172.2.14}%
+\contentsline {subsubsection}{\numberline {5.172.2.15}parseredirs()}{357}{subsubsection.5.172.2.15}%
+\contentsline {subsubsection}{\numberline {5.172.2.16}peek()}{358}{subsubsection.5.172.2.16}%
+\contentsline {subsubsection}{\numberline {5.172.2.17}pipecmd()}{358}{subsubsection.5.172.2.17}%
+\contentsline {subsubsection}{\numberline {5.172.2.18}redircmd()}{359}{subsubsection.5.172.2.18}%
+\contentsline {subsubsection}{\numberline {5.172.2.19}runcmd()}{359}{subsubsection.5.172.2.19}%
+\contentsline {subsection}{\numberline {5.172.3}Variable Documentation}{360}{subsection.5.172.3}%
+\contentsline {subsubsection}{\numberline {5.172.3.1}symbols}{360}{subsubsection.5.172.3.1}%
+\contentsline {subsubsection}{\numberline {5.172.3.2}whitespace}{360}{subsubsection.5.172.3.2}%
+\contentsline {section}{\numberline {5.173}sh.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{361}{section.5.173}%
+\contentsline {section}{\numberline {5.174}sh.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{366}{section.5.174}%
+\contentsline {section}{\numberline {5.175}sh.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{366}{section.5.175}%
+\contentsline {section}{\numberline {5.176}shutdown.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{366}{section.5.176}%
+\contentsline {subsection}{\numberline {5.176.1}Function Documentation}{367}{subsection.5.176.1}%
+\contentsline {subsubsection}{\numberline {5.176.1.1}main()}{367}{subsubsection.5.176.1.1}%
+\contentsline {section}{\numberline {5.177}shutdown.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{367}{section.5.177}%
+\contentsline {section}{\numberline {5.178}shutdown.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{367}{section.5.178}%
+\contentsline {section}{\numberline {5.179}shutdown.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{367}{section.5.179}%
+\contentsline {section}{\numberline {5.180}sleeplock.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{368}{section.5.180}%
+\contentsline {subsection}{\numberline {5.180.1}Function Documentation}{368}{subsection.5.180.1}%
+\contentsline {subsubsection}{\numberline {5.180.1.1}acquiresleep()}{368}{subsubsection.5.180.1.1}%
+\contentsline {subsubsection}{\numberline {5.180.1.2}holdingsleep()}{368}{subsubsection.5.180.1.2}%
+\contentsline {subsubsection}{\numberline {5.180.1.3}initsleeplock()}{369}{subsubsection.5.180.1.3}%
+\contentsline {subsubsection}{\numberline {5.180.1.4}releasesleep()}{369}{subsubsection.5.180.1.4}%
+\contentsline {section}{\numberline {5.181}sleeplock.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{369}{section.5.181}%
+\contentsline {section}{\numberline {5.182}sleeplock.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{370}{section.5.182}%
+\contentsline {section}{\numberline {5.183}sleeplock.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{370}{section.5.183}%
+\contentsline {section}{\numberline {5.184}sleeplock.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{370}{section.5.184}%
+\contentsline {section}{\numberline {5.185}sleeplock.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{370}{section.5.185}%
+\contentsline {section}{\numberline {5.186}spinlock.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{370}{section.5.186}%
+\contentsline {subsection}{\numberline {5.186.1}Function Documentation}{371}{subsection.5.186.1}%
+\contentsline {subsubsection}{\numberline {5.186.1.1}acquire()}{371}{subsubsection.5.186.1.1}%
+\contentsline {subsubsection}{\numberline {5.186.1.2}getcallerpcs()}{371}{subsubsection.5.186.1.2}%
+\contentsline {subsubsection}{\numberline {5.186.1.3}holding()}{372}{subsubsection.5.186.1.3}%
+\contentsline {subsubsection}{\numberline {5.186.1.4}initlock()}{372}{subsubsection.5.186.1.4}%
+\contentsline {subsubsection}{\numberline {5.186.1.5}popcli()}{372}{subsubsection.5.186.1.5}%
+\contentsline {subsubsection}{\numberline {5.186.1.6}pushcli()}{373}{subsubsection.5.186.1.6}%
+\contentsline {subsubsection}{\numberline {5.186.1.7}release()}{373}{subsubsection.5.186.1.7}%
+\contentsline {section}{\numberline {5.187}spinlock.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{373}{section.5.187}%
+\contentsline {section}{\numberline {5.188}spinlock.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{375}{section.5.188}%
+\contentsline {section}{\numberline {5.189}spinlock.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{375}{section.5.189}%
+\contentsline {section}{\numberline {5.190}spinlock.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{375}{section.5.190}%
+\contentsline {section}{\numberline {5.191}spinlock.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{375}{section.5.191}%
+\contentsline {section}{\numberline {5.192}stat.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{375}{section.5.192}%
+\contentsline {subsection}{\numberline {5.192.1}Macro Definition Documentation}{376}{subsection.5.192.1}%
+\contentsline {subsubsection}{\numberline {5.192.1.1}T\_DEV}{376}{subsubsection.5.192.1.1}%
+\contentsline {subsubsection}{\numberline {5.192.1.2}T\_DIR}{376}{subsubsection.5.192.1.2}%
+\contentsline {subsubsection}{\numberline {5.192.1.3}T\_FILE}{376}{subsubsection.5.192.1.3}%
+\contentsline {section}{\numberline {5.193}stat.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{376}{section.5.193}%
+\contentsline {section}{\numberline {5.194}stressfs.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{377}{section.5.194}%
+\contentsline {subsection}{\numberline {5.194.1}Function Documentation}{377}{subsection.5.194.1}%
+\contentsline {subsubsection}{\numberline {5.194.1.1}main()}{377}{subsubsection.5.194.1.1}%
+\contentsline {section}{\numberline {5.195}stressfs.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{378}{section.5.195}%
+\contentsline {section}{\numberline {5.196}stressfs.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{378}{section.5.196}%
+\contentsline {section}{\numberline {5.197}stressfs.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{378}{section.5.197}%
+\contentsline {section}{\numberline {5.198}string.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{378}{section.5.198}%
+\contentsline {subsection}{\numberline {5.198.1}Function Documentation}{379}{subsection.5.198.1}%
+\contentsline {subsubsection}{\numberline {5.198.1.1}memcmp()}{379}{subsubsection.5.198.1.1}%
+\contentsline {subsubsection}{\numberline {5.198.1.2}memcpy()}{379}{subsubsection.5.198.1.2}%
+\contentsline {subsubsection}{\numberline {5.198.1.3}memmove()}{380}{subsubsection.5.198.1.3}%
+\contentsline {subsubsection}{\numberline {5.198.1.4}memset()}{380}{subsubsection.5.198.1.4}%
+\contentsline {subsubsection}{\numberline {5.198.1.5}safestrcpy()}{380}{subsubsection.5.198.1.5}%
+\contentsline {subsubsection}{\numberline {5.198.1.6}strlen()}{381}{subsubsection.5.198.1.6}%
+\contentsline {subsubsection}{\numberline {5.198.1.7}strncmp()}{381}{subsubsection.5.198.1.7}%
+\contentsline {subsubsection}{\numberline {5.198.1.8}strncpy()}{381}{subsubsection.5.198.1.8}%
+\contentsline {section}{\numberline {5.199}string.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{382}{section.5.199}%
+\contentsline {section}{\numberline {5.200}string.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{383}{section.5.200}%
+\contentsline {section}{\numberline {5.201}string.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{383}{section.5.201}%
+\contentsline {section}{\numberline {5.202}syscall.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{383}{section.5.202}%
+\contentsline {subsection}{\numberline {5.202.1}Function Documentation}{384}{subsection.5.202.1}%
+\contentsline {subsubsection}{\numberline {5.202.1.1}argint()}{384}{subsubsection.5.202.1.1}%
+\contentsline {subsubsection}{\numberline {5.202.1.2}argptr()}{385}{subsubsection.5.202.1.2}%
+\contentsline {subsubsection}{\numberline {5.202.1.3}argstr()}{385}{subsubsection.5.202.1.3}%
+\contentsline {subsubsection}{\numberline {5.202.1.4}fetchint()}{385}{subsubsection.5.202.1.4}%
+\contentsline {subsubsection}{\numberline {5.202.1.5}fetchstr()}{386}{subsubsection.5.202.1.5}%
+\contentsline {subsubsection}{\numberline {5.202.1.6}sys\_chdir()}{386}{subsubsection.5.202.1.6}%
+\contentsline {subsubsection}{\numberline {5.202.1.7}sys\_chpr()}{386}{subsubsection.5.202.1.7}%
+\contentsline {subsubsection}{\numberline {5.202.1.8}sys\_close()}{387}{subsubsection.5.202.1.8}%
+\contentsline {subsubsection}{\numberline {5.202.1.9}sys\_cps()}{387}{subsubsection.5.202.1.9}%
+\contentsline {subsubsection}{\numberline {5.202.1.10}sys\_dup()}{387}{subsubsection.5.202.1.10}%
+\contentsline {subsubsection}{\numberline {5.202.1.11}sys\_exec()}{388}{subsubsection.5.202.1.11}%
+\contentsline {subsubsection}{\numberline {5.202.1.12}sys\_exit()}{388}{subsubsection.5.202.1.12}%
+\contentsline {subsubsection}{\numberline {5.202.1.13}sys\_fork()}{388}{subsubsection.5.202.1.13}%
+\contentsline {subsubsection}{\numberline {5.202.1.14}sys\_fstat()}{388}{subsubsection.5.202.1.14}%
+\contentsline {subsubsection}{\numberline {5.202.1.15}sys\_getpid()}{389}{subsubsection.5.202.1.15}%
+\contentsline {subsubsection}{\numberline {5.202.1.16}sys\_getprocs()}{389}{subsubsection.5.202.1.16}%
+\contentsline {subsubsection}{\numberline {5.202.1.17}sys\_halt()}{389}{subsubsection.5.202.1.17}%
+\contentsline {subsubsection}{\numberline {5.202.1.18}sys\_kill()}{390}{subsubsection.5.202.1.18}%
+\contentsline {subsubsection}{\numberline {5.202.1.19}sys\_link()}{390}{subsubsection.5.202.1.19}%
+\contentsline {subsubsection}{\numberline {5.202.1.20}sys\_mkdir()}{391}{subsubsection.5.202.1.20}%
+\contentsline {subsubsection}{\numberline {5.202.1.21}sys\_mknod()}{391}{subsubsection.5.202.1.21}%
+\contentsline {subsubsection}{\numberline {5.202.1.22}sys\_open()}{391}{subsubsection.5.202.1.22}%
+\contentsline {subsubsection}{\numberline {5.202.1.23}sys\_pipe()}{392}{subsubsection.5.202.1.23}%
+\contentsline {subsubsection}{\numberline {5.202.1.24}sys\_read()}{392}{subsubsection.5.202.1.24}%
+\contentsline {subsubsection}{\numberline {5.202.1.25}sys\_sbrk()}{393}{subsubsection.5.202.1.25}%
+\contentsline {subsubsection}{\numberline {5.202.1.26}sys\_sleep()}{393}{subsubsection.5.202.1.26}%
+\contentsline {subsubsection}{\numberline {5.202.1.27}sys\_unlink()}{394}{subsubsection.5.202.1.27}%
+\contentsline {subsubsection}{\numberline {5.202.1.28}sys\_uptime()}{394}{subsubsection.5.202.1.28}%
+\contentsline {subsubsection}{\numberline {5.202.1.29}sys\_wait()}{395}{subsubsection.5.202.1.29}%
+\contentsline {subsubsection}{\numberline {5.202.1.30}sys\_write()}{395}{subsubsection.5.202.1.30}%
+\contentsline {subsubsection}{\numberline {5.202.1.31}syscall()}{395}{subsubsection.5.202.1.31}%
+\contentsline {subsection}{\numberline {5.202.2}Variable Documentation}{395}{subsection.5.202.2}%
+\contentsline {subsubsection}{\numberline {5.202.2.1}syscalls}{396}{subsubsection.5.202.2.1}%
+\contentsline {section}{\numberline {5.203}syscall.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{396}{section.5.203}%
+\contentsline {section}{\numberline {5.204}syscall.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{398}{section.5.204}%
+\contentsline {section}{\numberline {5.205}syscall.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{398}{section.5.205}%
+\contentsline {section}{\numberline {5.206}syscall.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{398}{section.5.206}%
+\contentsline {subsection}{\numberline {5.206.1}Macro Definition Documentation}{399}{subsection.5.206.1}%
+\contentsline {subsubsection}{\numberline {5.206.1.1}SYS\_chdir}{399}{subsubsection.5.206.1.1}%
+\contentsline {subsubsection}{\numberline {5.206.1.2}SYS\_chpr}{399}{subsubsection.5.206.1.2}%
+\contentsline {subsubsection}{\numberline {5.206.1.3}SYS\_close}{399}{subsubsection.5.206.1.3}%
+\contentsline {subsubsection}{\numberline {5.206.1.4}SYS\_cps}{399}{subsubsection.5.206.1.4}%
+\contentsline {subsubsection}{\numberline {5.206.1.5}SYS\_dup}{400}{subsubsection.5.206.1.5}%
+\contentsline {subsubsection}{\numberline {5.206.1.6}SYS\_exec}{400}{subsubsection.5.206.1.6}%
+\contentsline {subsubsection}{\numberline {5.206.1.7}SYS\_exit}{400}{subsubsection.5.206.1.7}%
+\contentsline {subsubsection}{\numberline {5.206.1.8}SYS\_fork}{400}{subsubsection.5.206.1.8}%
+\contentsline {subsubsection}{\numberline {5.206.1.9}SYS\_fstat}{400}{subsubsection.5.206.1.9}%
+\contentsline {subsubsection}{\numberline {5.206.1.10}SYS\_getpid}{400}{subsubsection.5.206.1.10}%
+\contentsline {subsubsection}{\numberline {5.206.1.11}SYS\_getprocs}{401}{subsubsection.5.206.1.11}%
+\contentsline {subsubsection}{\numberline {5.206.1.12}SYS\_halt}{401}{subsubsection.5.206.1.12}%
+\contentsline {subsubsection}{\numberline {5.206.1.13}SYS\_kill}{401}{subsubsection.5.206.1.13}%
+\contentsline {subsubsection}{\numberline {5.206.1.14}SYS\_link}{401}{subsubsection.5.206.1.14}%
+\contentsline {subsubsection}{\numberline {5.206.1.15}SYS\_mkdir}{401}{subsubsection.5.206.1.15}%
+\contentsline {subsubsection}{\numberline {5.206.1.16}SYS\_mknod}{401}{subsubsection.5.206.1.16}%
+\contentsline {subsubsection}{\numberline {5.206.1.17}SYS\_open}{402}{subsubsection.5.206.1.17}%
+\contentsline {subsubsection}{\numberline {5.206.1.18}SYS\_pipe}{402}{subsubsection.5.206.1.18}%
+\contentsline {subsubsection}{\numberline {5.206.1.19}SYS\_read}{402}{subsubsection.5.206.1.19}%
+\contentsline {subsubsection}{\numberline {5.206.1.20}SYS\_sbrk}{402}{subsubsection.5.206.1.20}%
+\contentsline {subsubsection}{\numberline {5.206.1.21}SYS\_sleep}{402}{subsubsection.5.206.1.21}%
+\contentsline {subsubsection}{\numberline {5.206.1.22}SYS\_unlink}{402}{subsubsection.5.206.1.22}%
+\contentsline {subsubsection}{\numberline {5.206.1.23}SYS\_uptime}{403}{subsubsection.5.206.1.23}%
+\contentsline {subsubsection}{\numberline {5.206.1.24}SYS\_wait}{403}{subsubsection.5.206.1.24}%
+\contentsline {subsubsection}{\numberline {5.206.1.25}SYS\_write}{403}{subsubsection.5.206.1.25}%
+\contentsline {section}{\numberline {5.207}syscall.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{403}{section.5.207}%
+\contentsline {section}{\numberline {5.208}sysfile.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{404}{section.5.208}%
+\contentsline {subsection}{\numberline {5.208.1}Function Documentation}{404}{subsection.5.208.1}%
+\contentsline {subsubsection}{\numberline {5.208.1.1}argfd()}{404}{subsubsection.5.208.1.1}%
+\contentsline {subsubsection}{\numberline {5.208.1.2}create()}{405}{subsubsection.5.208.1.2}%
+\contentsline {subsubsection}{\numberline {5.208.1.3}fdalloc()}{406}{subsubsection.5.208.1.3}%
+\contentsline {subsubsection}{\numberline {5.208.1.4}isdirempty()}{406}{subsubsection.5.208.1.4}%
+\contentsline {subsubsection}{\numberline {5.208.1.5}sys\_chdir()}{406}{subsubsection.5.208.1.5}%
+\contentsline {subsubsection}{\numberline {5.208.1.6}sys\_close()}{407}{subsubsection.5.208.1.6}%
+\contentsline {subsubsection}{\numberline {5.208.1.7}sys\_dup()}{407}{subsubsection.5.208.1.7}%
+\contentsline {subsubsection}{\numberline {5.208.1.8}sys\_exec()}{407}{subsubsection.5.208.1.8}%
+\contentsline {subsubsection}{\numberline {5.208.1.9}sys\_fstat()}{408}{subsubsection.5.208.1.9}%
+\contentsline {subsubsection}{\numberline {5.208.1.10}sys\_link()}{408}{subsubsection.5.208.1.10}%
+\contentsline {subsubsection}{\numberline {5.208.1.11}sys\_mkdir()}{409}{subsubsection.5.208.1.11}%
+\contentsline {subsubsection}{\numberline {5.208.1.12}sys\_mknod()}{409}{subsubsection.5.208.1.12}%
+\contentsline {subsubsection}{\numberline {5.208.1.13}sys\_open()}{409}{subsubsection.5.208.1.13}%
+\contentsline {subsubsection}{\numberline {5.208.1.14}sys\_pipe()}{410}{subsubsection.5.208.1.14}%
+\contentsline {subsubsection}{\numberline {5.208.1.15}sys\_read()}{410}{subsubsection.5.208.1.15}%
+\contentsline {subsubsection}{\numberline {5.208.1.16}sys\_unlink()}{411}{subsubsection.5.208.1.16}%
+\contentsline {subsubsection}{\numberline {5.208.1.17}sys\_write()}{412}{subsubsection.5.208.1.17}%
+\contentsline {section}{\numberline {5.209}sysfile.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{412}{section.5.209}%
+\contentsline {section}{\numberline {5.210}sysfile.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{417}{section.5.210}%
+\contentsline {section}{\numberline {5.211}sysfile.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{417}{section.5.211}%
+\contentsline {section}{\numberline {5.212}sysproc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{417}{section.5.212}%
+\contentsline {subsection}{\numberline {5.212.1}Function Documentation}{418}{subsection.5.212.1}%
+\contentsline {subsubsection}{\numberline {5.212.1.1}sys\_chpr()}{418}{subsubsection.5.212.1.1}%
+\contentsline {subsubsection}{\numberline {5.212.1.2}sys\_cps()}{418}{subsubsection.5.212.1.2}%
+\contentsline {subsubsection}{\numberline {5.212.1.3}sys\_exit()}{419}{subsubsection.5.212.1.3}%
+\contentsline {subsubsection}{\numberline {5.212.1.4}sys\_fork()}{419}{subsubsection.5.212.1.4}%
+\contentsline {subsubsection}{\numberline {5.212.1.5}sys\_getpid()}{419}{subsubsection.5.212.1.5}%
+\contentsline {subsubsection}{\numberline {5.212.1.6}sys\_getprocs()}{419}{subsubsection.5.212.1.6}%
+\contentsline {subsubsection}{\numberline {5.212.1.7}sys\_halt()}{420}{subsubsection.5.212.1.7}%
+\contentsline {subsubsection}{\numberline {5.212.1.8}sys\_kill()}{420}{subsubsection.5.212.1.8}%
+\contentsline {subsubsection}{\numberline {5.212.1.9}sys\_sbrk()}{420}{subsubsection.5.212.1.9}%
+\contentsline {subsubsection}{\numberline {5.212.1.10}sys\_sleep()}{421}{subsubsection.5.212.1.10}%
+\contentsline {subsubsection}{\numberline {5.212.1.11}sys\_uptime()}{421}{subsubsection.5.212.1.11}%
+\contentsline {subsubsection}{\numberline {5.212.1.12}sys\_wait()}{421}{subsubsection.5.212.1.12}%
+\contentsline {subsection}{\numberline {5.212.2}Variable Documentation}{421}{subsection.5.212.2}%
+\contentsline {subsubsection}{\numberline {5.212.2.1}lock}{422}{subsubsection.5.212.2.1}%
+\contentsline {subsubsection}{\numberline {5.212.2.2}proc}{422}{subsubsection.5.212.2.2}%
+\contentsline {subsubsection}{\numberline {5.212.2.3}}{422}{subsubsection.5.212.2.3}%
+\contentsline {section}{\numberline {5.213}sysproc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{422}{section.5.213}%
+\contentsline {section}{\numberline {5.214}sysproc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{424}{section.5.214}%
+\contentsline {section}{\numberline {5.215}sysproc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{424}{section.5.215}%
+\contentsline {section}{\numberline {5.216}trap.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{424}{section.5.216}%
+\contentsline {subsection}{\numberline {5.216.1}Function Documentation}{425}{subsection.5.216.1}%
+\contentsline {subsubsection}{\numberline {5.216.1.1}idtinit()}{425}{subsubsection.5.216.1.1}%
+\contentsline {subsubsection}{\numberline {5.216.1.2}trap()}{425}{subsubsection.5.216.1.2}%
+\contentsline {subsubsection}{\numberline {5.216.1.3}tvinit()}{426}{subsubsection.5.216.1.3}%
+\contentsline {subsection}{\numberline {5.216.2}Variable Documentation}{426}{subsection.5.216.2}%
+\contentsline {subsubsection}{\numberline {5.216.2.1}idt}{427}{subsubsection.5.216.2.1}%
+\contentsline {subsubsection}{\numberline {5.216.2.2}ticks}{427}{subsubsection.5.216.2.2}%
+\contentsline {subsubsection}{\numberline {5.216.2.3}tickslock}{427}{subsubsection.5.216.2.3}%
+\contentsline {subsubsection}{\numberline {5.216.2.4}vectors}{427}{subsubsection.5.216.2.4}%
+\contentsline {section}{\numberline {5.217}trap.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{428}{section.5.217}%
+\contentsline {section}{\numberline {5.218}trap.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{429}{section.5.218}%
+\contentsline {section}{\numberline {5.219}trap.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{429}{section.5.219}%
+\contentsline {section}{\numberline {5.220}traps.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{429}{section.5.220}%
+\contentsline {subsection}{\numberline {5.220.1}Macro Definition Documentation}{430}{subsection.5.220.1}%
+\contentsline {subsubsection}{\numberline {5.220.1.1}IRQ\_COM1}{430}{subsubsection.5.220.1.1}%
+\contentsline {subsubsection}{\numberline {5.220.1.2}IRQ\_ERROR}{430}{subsubsection.5.220.1.2}%
+\contentsline {subsubsection}{\numberline {5.220.1.3}IRQ\_IDE}{430}{subsubsection.5.220.1.3}%
+\contentsline {subsubsection}{\numberline {5.220.1.4}IRQ\_KBD}{430}{subsubsection.5.220.1.4}%
+\contentsline {subsubsection}{\numberline {5.220.1.5}IRQ\_SPURIOUS}{431}{subsubsection.5.220.1.5}%
+\contentsline {subsubsection}{\numberline {5.220.1.6}IRQ\_TIMER}{431}{subsubsection.5.220.1.6}%
+\contentsline {subsubsection}{\numberline {5.220.1.7}T\_ALIGN}{431}{subsubsection.5.220.1.7}%
+\contentsline {subsubsection}{\numberline {5.220.1.8}T\_BOUND}{431}{subsubsection.5.220.1.8}%
+\contentsline {subsubsection}{\numberline {5.220.1.9}T\_BRKPT}{431}{subsubsection.5.220.1.9}%
+\contentsline {subsubsection}{\numberline {5.220.1.10}T\_DBLFLT}{431}{subsubsection.5.220.1.10}%
+\contentsline {subsubsection}{\numberline {5.220.1.11}T\_DEBUG}{432}{subsubsection.5.220.1.11}%
+\contentsline {subsubsection}{\numberline {5.220.1.12}T\_DEFAULT}{432}{subsubsection.5.220.1.12}%
+\contentsline {subsubsection}{\numberline {5.220.1.13}T\_DEVICE}{432}{subsubsection.5.220.1.13}%
+\contentsline {subsubsection}{\numberline {5.220.1.14}T\_DIVIDE}{432}{subsubsection.5.220.1.14}%
+\contentsline {subsubsection}{\numberline {5.220.1.15}T\_FPERR}{432}{subsubsection.5.220.1.15}%
+\contentsline {subsubsection}{\numberline {5.220.1.16}T\_GPFLT}{432}{subsubsection.5.220.1.16}%
+\contentsline {subsubsection}{\numberline {5.220.1.17}T\_ILLOP}{433}{subsubsection.5.220.1.17}%
+\contentsline {subsubsection}{\numberline {5.220.1.18}T\_IRQ0}{433}{subsubsection.5.220.1.18}%
+\contentsline {subsubsection}{\numberline {5.220.1.19}T\_MCHK}{433}{subsubsection.5.220.1.19}%
+\contentsline {subsubsection}{\numberline {5.220.1.20}T\_NMI}{433}{subsubsection.5.220.1.20}%
+\contentsline {subsubsection}{\numberline {5.220.1.21}T\_OFLOW}{433}{subsubsection.5.220.1.21}%
+\contentsline {subsubsection}{\numberline {5.220.1.22}T\_PGFLT}{433}{subsubsection.5.220.1.22}%
+\contentsline {subsubsection}{\numberline {5.220.1.23}T\_SEGNP}{434}{subsubsection.5.220.1.23}%
+\contentsline {subsubsection}{\numberline {5.220.1.24}T\_SIMDERR}{434}{subsubsection.5.220.1.24}%
+\contentsline {subsubsection}{\numberline {5.220.1.25}T\_STACK}{434}{subsubsection.5.220.1.25}%
+\contentsline {subsubsection}{\numberline {5.220.1.26}T\_SYSCALL}{434}{subsubsection.5.220.1.26}%
+\contentsline {subsubsection}{\numberline {5.220.1.27}T\_TSS}{434}{subsubsection.5.220.1.27}%
+\contentsline {section}{\numberline {5.221}traps.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{435}{section.5.221}%
+\contentsline {section}{\numberline {5.222}types.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{435}{section.5.222}%
+\contentsline {subsection}{\numberline {5.222.1}Typedef Documentation}{435}{subsection.5.222.1}%
+\contentsline {subsubsection}{\numberline {5.222.1.1}pde\_t}{435}{subsubsection.5.222.1.1}%
+\contentsline {subsubsection}{\numberline {5.222.1.2}uchar}{436}{subsubsection.5.222.1.2}%
+\contentsline {subsubsection}{\numberline {5.222.1.3}uint}{436}{subsubsection.5.222.1.3}%
+\contentsline {subsubsection}{\numberline {5.222.1.4}ushort}{436}{subsubsection.5.222.1.4}%
+\contentsline {section}{\numberline {5.223}types.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{436}{section.5.223}%
+\contentsline {section}{\numberline {5.224}uart.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{436}{section.5.224}%
+\contentsline {subsection}{\numberline {5.224.1}Macro Definition Documentation}{437}{subsection.5.224.1}%
+\contentsline {subsubsection}{\numberline {5.224.1.1}COM1}{437}{subsubsection.5.224.1.1}%
+\contentsline {subsection}{\numberline {5.224.2}Function Documentation}{437}{subsection.5.224.2}%
+\contentsline {subsubsection}{\numberline {5.224.2.1}uartgetc()}{437}{subsubsection.5.224.2.1}%
+\contentsline {subsubsection}{\numberline {5.224.2.2}uartinit()}{438}{subsubsection.5.224.2.2}%
+\contentsline {subsubsection}{\numberline {5.224.2.3}uartintr()}{438}{subsubsection.5.224.2.3}%
+\contentsline {subsubsection}{\numberline {5.224.2.4}uartputc()}{438}{subsubsection.5.224.2.4}%
+\contentsline {subsection}{\numberline {5.224.3}Variable Documentation}{439}{subsection.5.224.3}%
+\contentsline {subsubsection}{\numberline {5.224.3.1}uart}{439}{subsubsection.5.224.3.1}%
+\contentsline {section}{\numberline {5.225}uart.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{439}{section.5.225}%
+\contentsline {section}{\numberline {5.226}uart.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{440}{section.5.226}%
+\contentsline {section}{\numberline {5.227}uart.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{440}{section.5.227}%
+\contentsline {section}{\numberline {5.228}ulib.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{440}{section.5.228}%
+\contentsline {subsection}{\numberline {5.228.1}Function Documentation}{440}{subsection.5.228.1}%
+\contentsline {subsubsection}{\numberline {5.228.1.1}atoi()}{441}{subsubsection.5.228.1.1}%
+\contentsline {subsubsection}{\numberline {5.228.1.2}gets()}{441}{subsubsection.5.228.1.2}%
+\contentsline {subsubsection}{\numberline {5.228.1.3}memmove()}{441}{subsubsection.5.228.1.3}%
+\contentsline {subsubsection}{\numberline {5.228.1.4}memset()}{442}{subsubsection.5.228.1.4}%
+\contentsline {subsubsection}{\numberline {5.228.1.5}stat()}{442}{subsubsection.5.228.1.5}%
+\contentsline {subsubsection}{\numberline {5.228.1.6}strchr()}{442}{subsubsection.5.228.1.6}%
+\contentsline {subsubsection}{\numberline {5.228.1.7}strcmp()}{443}{subsubsection.5.228.1.7}%
+\contentsline {subsubsection}{\numberline {5.228.1.8}strcpy()}{443}{subsubsection.5.228.1.8}%
+\contentsline {subsubsection}{\numberline {5.228.1.9}strlen()}{443}{subsubsection.5.228.1.9}%
+\contentsline {section}{\numberline {5.229}ulib.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{444}{section.5.229}%
+\contentsline {section}{\numberline {5.230}ulib.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{445}{section.5.230}%
+\contentsline {section}{\numberline {5.231}ulib.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{445}{section.5.231}%
+\contentsline {section}{\numberline {5.232}umalloc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{445}{section.5.232}%
+\contentsline {subsection}{\numberline {5.232.1}Typedef Documentation}{446}{subsection.5.232.1}%
+\contentsline {subsubsection}{\numberline {5.232.1.1}Align}{446}{subsubsection.5.232.1.1}%
+\contentsline {subsubsection}{\numberline {5.232.1.2}Header}{446}{subsubsection.5.232.1.2}%
+\contentsline {subsection}{\numberline {5.232.2}Function Documentation}{446}{subsection.5.232.2}%
+\contentsline {subsubsection}{\numberline {5.232.2.1}free()}{446}{subsubsection.5.232.2.1}%
+\contentsline {subsubsection}{\numberline {5.232.2.2}malloc()}{447}{subsubsection.5.232.2.2}%
+\contentsline {subsubsection}{\numberline {5.232.2.3}morecore()}{447}{subsubsection.5.232.2.3}%
+\contentsline {subsection}{\numberline {5.232.3}Variable Documentation}{447}{subsection.5.232.3}%
+\contentsline {subsubsection}{\numberline {5.232.3.1}base}{448}{subsubsection.5.232.3.1}%
+\contentsline {subsubsection}{\numberline {5.232.3.2}freep}{448}{subsubsection.5.232.3.2}%
+\contentsline {section}{\numberline {5.233}umalloc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{448}{section.5.233}%
+\contentsline {section}{\numberline {5.234}umalloc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{449}{section.5.234}%
+\contentsline {section}{\numberline {5.235}umalloc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{449}{section.5.235}%
+\contentsline {section}{\numberline {5.236}uproc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{449}{section.5.236}%
+\contentsline {section}{\numberline {5.237}uproc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{449}{section.5.237}%
+\contentsline {section}{\numberline {5.238}user.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{450}{section.5.238}%
+\contentsline {subsection}{\numberline {5.238.1}Function Documentation}{450}{subsection.5.238.1}%
+\contentsline {subsubsection}{\numberline {5.238.1.1}atoi()}{451}{subsubsection.5.238.1.1}%
+\contentsline {subsubsection}{\numberline {5.238.1.2}chdir()}{451}{subsubsection.5.238.1.2}%
+\contentsline {subsubsection}{\numberline {5.238.1.3}chpr()}{451}{subsubsection.5.238.1.3}%
+\contentsline {subsubsection}{\numberline {5.238.1.4}close()}{451}{subsubsection.5.238.1.4}%
+\contentsline {subsubsection}{\numberline {5.238.1.5}cps()}{452}{subsubsection.5.238.1.5}%
+\contentsline {subsubsection}{\numberline {5.238.1.6}dup()}{452}{subsubsection.5.238.1.6}%
+\contentsline {subsubsection}{\numberline {5.238.1.7}exec()}{452}{subsubsection.5.238.1.7}%
+\contentsline {subsubsection}{\numberline {5.238.1.8}exit()}{453}{subsubsection.5.238.1.8}%
+\contentsline {subsubsection}{\numberline {5.238.1.9}fork()}{454}{subsubsection.5.238.1.9}%
+\contentsline {subsubsection}{\numberline {5.238.1.10}free()}{455}{subsubsection.5.238.1.10}%
+\contentsline {subsubsection}{\numberline {5.238.1.11}fstat()}{455}{subsubsection.5.238.1.11}%
+\contentsline {subsubsection}{\numberline {5.238.1.12}getpid()}{455}{subsubsection.5.238.1.12}%
+\contentsline {subsubsection}{\numberline {5.238.1.13}getprocs()}{456}{subsubsection.5.238.1.13}%
+\contentsline {subsubsection}{\numberline {5.238.1.14}gets()}{456}{subsubsection.5.238.1.14}%
+\contentsline {subsubsection}{\numberline {5.238.1.15}halt()}{456}{subsubsection.5.238.1.15}%
+\contentsline {subsubsection}{\numberline {5.238.1.16}kill()}{456}{subsubsection.5.238.1.16}%
+\contentsline {subsubsection}{\numberline {5.238.1.17}link()}{457}{subsubsection.5.238.1.17}%
+\contentsline {subsubsection}{\numberline {5.238.1.18}malloc()}{457}{subsubsection.5.238.1.18}%
+\contentsline {subsubsection}{\numberline {5.238.1.19}memmove()}{457}{subsubsection.5.238.1.19}%
+\contentsline {subsubsection}{\numberline {5.238.1.20}memset()}{458}{subsubsection.5.238.1.20}%
+\contentsline {subsubsection}{\numberline {5.238.1.21}mkdir()}{458}{subsubsection.5.238.1.21}%
+\contentsline {subsubsection}{\numberline {5.238.1.22}mknod()}{458}{subsubsection.5.238.1.22}%
+\contentsline {subsubsection}{\numberline {5.238.1.23}open()}{458}{subsubsection.5.238.1.23}%
+\contentsline {subsubsection}{\numberline {5.238.1.24}pipe()}{459}{subsubsection.5.238.1.24}%
+\contentsline {subsubsection}{\numberline {5.238.1.25}printf()}{459}{subsubsection.5.238.1.25}%
+\contentsline {subsubsection}{\numberline {5.238.1.26}read()}{459}{subsubsection.5.238.1.26}%
+\contentsline {subsubsection}{\numberline {5.238.1.27}sbrk()}{459}{subsubsection.5.238.1.27}%
+\contentsline {subsubsection}{\numberline {5.238.1.28}sleep()}{459}{subsubsection.5.238.1.28}%
+\contentsline {subsubsection}{\numberline {5.238.1.29}stat()}{460}{subsubsection.5.238.1.29}%
+\contentsline {subsubsection}{\numberline {5.238.1.30}strchr()}{460}{subsubsection.5.238.1.30}%
+\contentsline {subsubsection}{\numberline {5.238.1.31}strcmp()}{460}{subsubsection.5.238.1.31}%
+\contentsline {subsubsection}{\numberline {5.238.1.32}strcpy()}{461}{subsubsection.5.238.1.32}%
+\contentsline {subsubsection}{\numberline {5.238.1.33}strlen()}{461}{subsubsection.5.238.1.33}%
+\contentsline {subsubsection}{\numberline {5.238.1.34}unlink()}{461}{subsubsection.5.238.1.34}%
+\contentsline {subsubsection}{\numberline {5.238.1.35}uptime()}{461}{subsubsection.5.238.1.35}%
+\contentsline {subsubsection}{\numberline {5.238.1.36}wait()}{462}{subsubsection.5.238.1.36}%
+\contentsline {subsubsection}{\numberline {5.238.1.37}write()}{462}{subsubsection.5.238.1.37}%
+\contentsline {section}{\numberline {5.239}user.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{462}{section.5.239}%
+\contentsline {section}{\numberline {5.240}usertests.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{463}{section.5.240}%
+\contentsline {subsection}{\numberline {5.240.1}Macro Definition Documentation}{464}{subsection.5.240.1}%
+\contentsline {subsubsection}{\numberline {5.240.1.1}BIG}{464}{subsubsection.5.240.1.1}%
+\contentsline {subsubsection}{\numberline {5.240.1.2}RTC\_ADDR}{465}{subsubsection.5.240.1.2}%
+\contentsline {subsubsection}{\numberline {5.240.1.3}RTC\_DATA}{465}{subsubsection.5.240.1.3}%
+\contentsline {subsection}{\numberline {5.240.2}Function Documentation}{465}{subsection.5.240.2}%
+\contentsline {subsubsection}{\numberline {5.240.2.1}argptest()}{465}{subsubsection.5.240.2.1}%
+\contentsline {subsubsection}{\numberline {5.240.2.2}bigargtest()}{465}{subsubsection.5.240.2.2}%
+\contentsline {subsubsection}{\numberline {5.240.2.3}bigdir()}{466}{subsubsection.5.240.2.3}%
+\contentsline {subsubsection}{\numberline {5.240.2.4}bigfile()}{467}{subsubsection.5.240.2.4}%
+\contentsline {subsubsection}{\numberline {5.240.2.5}bigwrite()}{467}{subsubsection.5.240.2.5}%
+\contentsline {subsubsection}{\numberline {5.240.2.6}bsstest()}{468}{subsubsection.5.240.2.6}%
+\contentsline {subsubsection}{\numberline {5.240.2.7}concreate()}{468}{subsubsection.5.240.2.7}%
+\contentsline {subsubsection}{\numberline {5.240.2.8}createdelete()}{469}{subsubsection.5.240.2.8}%
+\contentsline {subsubsection}{\numberline {5.240.2.9}createtest()}{470}{subsubsection.5.240.2.9}%
+\contentsline {subsubsection}{\numberline {5.240.2.10}dirfile()}{471}{subsubsection.5.240.2.10}%
+\contentsline {subsubsection}{\numberline {5.240.2.11}dirtest()}{472}{subsubsection.5.240.2.11}%
+\contentsline {subsubsection}{\numberline {5.240.2.12}exectest()}{472}{subsubsection.5.240.2.12}%
+\contentsline {subsubsection}{\numberline {5.240.2.13}exitiputtest()}{473}{subsubsection.5.240.2.13}%
+\contentsline {subsubsection}{\numberline {5.240.2.14}exitwait()}{473}{subsubsection.5.240.2.14}%
+\contentsline {subsubsection}{\numberline {5.240.2.15}forktest()}{474}{subsubsection.5.240.2.15}%
+\contentsline {subsubsection}{\numberline {5.240.2.16}fourfiles()}{474}{subsubsection.5.240.2.16}%
+\contentsline {subsubsection}{\numberline {5.240.2.17}fourteen()}{475}{subsubsection.5.240.2.17}%
+\contentsline {subsubsection}{\numberline {5.240.2.18}fsfull()}{476}{subsubsection.5.240.2.18}%
+\contentsline {subsubsection}{\numberline {5.240.2.19}iputtest()}{476}{subsubsection.5.240.2.19}%
+\contentsline {subsubsection}{\numberline {5.240.2.20}iref()}{477}{subsubsection.5.240.2.20}%
+\contentsline {subsubsection}{\numberline {5.240.2.21}linktest()}{478}{subsubsection.5.240.2.21}%
+\contentsline {subsubsection}{\numberline {5.240.2.22}linkunlink()}{478}{subsubsection.5.240.2.22}%
+\contentsline {subsubsection}{\numberline {5.240.2.23}main()}{479}{subsubsection.5.240.2.23}%
+\contentsline {subsubsection}{\numberline {5.240.2.24}mem()}{480}{subsubsection.5.240.2.24}%
+\contentsline {subsubsection}{\numberline {5.240.2.25}openiputtest()}{480}{subsubsection.5.240.2.25}%
+\contentsline {subsubsection}{\numberline {5.240.2.26}opentest()}{481}{subsubsection.5.240.2.26}%
+\contentsline {subsubsection}{\numberline {5.240.2.27}pipe1()}{481}{subsubsection.5.240.2.27}%
+\contentsline {subsubsection}{\numberline {5.240.2.28}preempt()}{482}{subsubsection.5.240.2.28}%
+\contentsline {subsubsection}{\numberline {5.240.2.29}rand()}{483}{subsubsection.5.240.2.29}%
+\contentsline {subsubsection}{\numberline {5.240.2.30}rmdot()}{483}{subsubsection.5.240.2.30}%
+\contentsline {subsubsection}{\numberline {5.240.2.31}sbrktest()}{484}{subsubsection.5.240.2.31}%
+\contentsline {subsubsection}{\numberline {5.240.2.32}sharedfd()}{485}{subsubsection.5.240.2.32}%
+\contentsline {subsubsection}{\numberline {5.240.2.33}subdir()}{486}{subsubsection.5.240.2.33}%
+\contentsline {subsubsection}{\numberline {5.240.2.34}uio()}{488}{subsubsection.5.240.2.34}%
+\contentsline {subsubsection}{\numberline {5.240.2.35}unlinkread()}{489}{subsubsection.5.240.2.35}%
+\contentsline {subsubsection}{\numberline {5.240.2.36}validateint()}{490}{subsubsection.5.240.2.36}%
+\contentsline {subsubsection}{\numberline {5.240.2.37}validatetest()}{490}{subsubsection.5.240.2.37}%
+\contentsline {subsubsection}{\numberline {5.240.2.38}writetest()}{491}{subsubsection.5.240.2.38}%
+\contentsline {subsubsection}{\numberline {5.240.2.39}writetest1()}{491}{subsubsection.5.240.2.39}%
+\contentsline {subsection}{\numberline {5.240.3}Variable Documentation}{492}{subsection.5.240.3}%
+\contentsline {subsubsection}{\numberline {5.240.3.1}buf}{492}{subsubsection.5.240.3.1}%
+\contentsline {subsubsection}{\numberline {5.240.3.2}echoargv}{492}{subsubsection.5.240.3.2}%
+\contentsline {subsubsection}{\numberline {5.240.3.3}name}{493}{subsubsection.5.240.3.3}%
+\contentsline {subsubsection}{\numberline {5.240.3.4}randstate}{493}{subsubsection.5.240.3.4}%
+\contentsline {subsubsection}{\numberline {5.240.3.5}stdout}{493}{subsubsection.5.240.3.5}%
+\contentsline {subsubsection}{\numberline {5.240.3.6}uninit}{493}{subsubsection.5.240.3.6}%
+\contentsline {section}{\numberline {5.241}usertests.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{494}{section.5.241}%
+\contentsline {section}{\numberline {5.242}usertests.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{514}{section.5.242}%
+\contentsline {section}{\numberline {5.243}usertests.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{514}{section.5.243}%
+\contentsline {section}{\numberline {5.244}vm.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{515}{section.5.244}%
+\contentsline {subsection}{\numberline {5.244.1}Function Documentation}{515}{subsection.5.244.1}%
+\contentsline {subsubsection}{\numberline {5.244.1.1}allocuvm()}{516}{subsubsection.5.244.1.1}%
+\contentsline {subsubsection}{\numberline {5.244.1.2}clearpteu()}{516}{subsubsection.5.244.1.2}%
+\contentsline {subsubsection}{\numberline {5.244.1.3}copyout()}{517}{subsubsection.5.244.1.3}%
+\contentsline {subsubsection}{\numberline {5.244.1.4}copyuvm()}{517}{subsubsection.5.244.1.4}%
+\contentsline {subsubsection}{\numberline {5.244.1.5}deallocuvm()}{518}{subsubsection.5.244.1.5}%
+\contentsline {subsubsection}{\numberline {5.244.1.6}freevm()}{518}{subsubsection.5.244.1.6}%
+\contentsline {subsubsection}{\numberline {5.244.1.7}inituvm()}{519}{subsubsection.5.244.1.7}%
+\contentsline {subsubsection}{\numberline {5.244.1.8}kvmalloc()}{519}{subsubsection.5.244.1.8}%
+\contentsline {subsubsection}{\numberline {5.244.1.9}loaduvm()}{519}{subsubsection.5.244.1.9}%
+\contentsline {subsubsection}{\numberline {5.244.1.10}mappages()}{520}{subsubsection.5.244.1.10}%
+\contentsline {subsubsection}{\numberline {5.244.1.11}seginit()}{520}{subsubsection.5.244.1.11}%
+\contentsline {subsubsection}{\numberline {5.244.1.12}setupkvm()}{521}{subsubsection.5.244.1.12}%
+\contentsline {subsubsection}{\numberline {5.244.1.13}switchkvm()}{521}{subsubsection.5.244.1.13}%
+\contentsline {subsubsection}{\numberline {5.244.1.14}switchuvm()}{521}{subsubsection.5.244.1.14}%
+\contentsline {subsubsection}{\numberline {5.244.1.15}uva2ka()}{522}{subsubsection.5.244.1.15}%
+\contentsline {subsubsection}{\numberline {5.244.1.16}walkpgdir()}{522}{subsubsection.5.244.1.16}%
+\contentsline {subsection}{\numberline {5.244.2}Variable Documentation}{522}{subsection.5.244.2}%
+\contentsline {subsubsection}{\numberline {5.244.2.1}data}{522}{subsubsection.5.244.2.1}%
+\contentsline {subsubsection}{\numberline {5.244.2.2}kmap}{523}{subsubsection.5.244.2.2}%
+\contentsline {subsubsection}{\numberline {5.244.2.3}kpgdir}{523}{subsubsection.5.244.2.3}%
+\contentsline {section}{\numberline {5.245}vm.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{523}{section.5.245}%
+\contentsline {section}{\numberline {5.246}vm.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{528}{section.5.246}%
+\contentsline {section}{\numberline {5.247}vm.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{528}{section.5.247}%
+\contentsline {section}{\numberline {5.248}wc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{528}{section.5.248}%
+\contentsline {subsection}{\numberline {5.248.1}Function Documentation}{528}{subsection.5.248.1}%
+\contentsline {subsubsection}{\numberline {5.248.1.1}main()}{528}{subsubsection.5.248.1.1}%
+\contentsline {subsubsection}{\numberline {5.248.1.2}wc()}{529}{subsubsection.5.248.1.2}%
+\contentsline {subsection}{\numberline {5.248.2}Variable Documentation}{529}{subsection.5.248.2}%
+\contentsline {subsubsection}{\numberline {5.248.2.1}buf}{529}{subsubsection.5.248.2.1}%
+\contentsline {section}{\numberline {5.249}wc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{529}{section.5.249}%
+\contentsline {section}{\numberline {5.250}wc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{530}{section.5.250}%
+\contentsline {section}{\numberline {5.251}wc.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{530}{section.5.251}%
+\contentsline {section}{\numberline {5.252}x86.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h File Reference}{530}{section.5.252}%
+\contentsline {subsection}{\numberline {5.252.1}Function Documentation}{531}{subsection.5.252.1}%
+\contentsline {subsubsection}{\numberline {5.252.1.1}cli()}{531}{subsubsection.5.252.1.1}%
+\contentsline {subsubsection}{\numberline {5.252.1.2}inb()}{531}{subsubsection.5.252.1.2}%
+\contentsline {subsubsection}{\numberline {5.252.1.3}insl()}{531}{subsubsection.5.252.1.3}%
+\contentsline {subsubsection}{\numberline {5.252.1.4}lcr3()}{532}{subsubsection.5.252.1.4}%
+\contentsline {subsubsection}{\numberline {5.252.1.5}lgdt()}{532}{subsubsection.5.252.1.5}%
+\contentsline {subsubsection}{\numberline {5.252.1.6}lidt()}{532}{subsubsection.5.252.1.6}%
+\contentsline {subsubsection}{\numberline {5.252.1.7}loadgs()}{533}{subsubsection.5.252.1.7}%
+\contentsline {subsubsection}{\numberline {5.252.1.8}ltr()}{533}{subsubsection.5.252.1.8}%
+\contentsline {subsubsection}{\numberline {5.252.1.9}outb()}{533}{subsubsection.5.252.1.9}%
+\contentsline {subsubsection}{\numberline {5.252.1.10}outsl()}{533}{subsubsection.5.252.1.10}%
+\contentsline {subsubsection}{\numberline {5.252.1.11}outw()}{534}{subsubsection.5.252.1.11}%
+\contentsline {subsubsection}{\numberline {5.252.1.12}rcr2()}{534}{subsubsection.5.252.1.12}%
+\contentsline {subsubsection}{\numberline {5.252.1.13}readeflags()}{534}{subsubsection.5.252.1.13}%
+\contentsline {subsubsection}{\numberline {5.252.1.14}sti()}{534}{subsubsection.5.252.1.14}%
+\contentsline {subsubsection}{\numberline {5.252.1.15}stosb()}{535}{subsubsection.5.252.1.15}%
+\contentsline {subsubsection}{\numberline {5.252.1.16}stosl()}{535}{subsubsection.5.252.1.16}%
+\contentsline {subsubsection}{\numberline {5.252.1.17}xchg()}{535}{subsubsection.5.252.1.17}%
+\contentsline {section}{\numberline {5.253}x86.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{536}{section.5.253}%
+\contentsline {section}{\numberline {5.254}xv6.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}dox File Reference}{538}{section.5.254}%
+\contentsline {section}{\numberline {5.255}zombie.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{538}{section.5.255}%
+\contentsline {subsection}{\numberline {5.255.1}Function Documentation}{538}{subsection.5.255.1}%
+\contentsline {subsubsection}{\numberline {5.255.1.1}main()}{538}{subsubsection.5.255.1.1}%
+\contentsline {section}{\numberline {5.256}zombie.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c}{538}{section.5.256}%
+\contentsline {section}{\numberline {5.257}zombie.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d File Reference}{539}{section.5.257}%
+\contentsline {section}{\numberline {5.258}zombie.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}d}{539}{section.5.258}%
+\contentsline {chapter}{Index}{541}{section*.178}%

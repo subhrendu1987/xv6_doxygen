@@ -1,0 +1,47 @@
+\hypertarget{elf_8h_source}{}\doxysection{elf.\+h}
+\mbox{\hyperlink{elf_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00001}00001 \textcolor{comment}{// Format of an ELF executable file}}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00003}\mbox{\hyperlink{elf_8h_abb1c2e5626667aacc7b3efd269a6c0eb}{00003}} \textcolor{preprocessor}{\#define ELF\_MAGIC 0x464C457FU  }\textcolor{comment}{// "{}\(\backslash\)x7FELF"{} in little endian}}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00005}00005 \textcolor{comment}{// File header}}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00006}\mbox{\hyperlink{structelfhdr}{00006}} \textcolor{keyword}{struct }\mbox{\hyperlink{structelfhdr}{elfhdr}} \{}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00007}\mbox{\hyperlink{structelfhdr_a28ee8116d69b533277311c5f3773b6b2}{00007}}   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structelfhdr_a28ee8116d69b533277311c5f3773b6b2}{magic}};  \textcolor{comment}{// must equal ELF\_MAGIC}}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00008}\mbox{\hyperlink{structelfhdr_a22ec6f2383f0488ee18a18673398f201}{00008}}   \mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} \mbox{\hyperlink{structelfhdr_a22ec6f2383f0488ee18a18673398f201}{elf}}[12];}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00009}\mbox{\hyperlink{structelfhdr_a2cd2eaf0c952e30f8196890787ef68fe}{00009}}   \mbox{\hyperlink{types_8h_ab95f123a6c9bcfee6a343170ef8c5f69}{ushort}} \mbox{\hyperlink{structelfhdr_a2cd2eaf0c952e30f8196890787ef68fe}{type}};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00010}\mbox{\hyperlink{structelfhdr_a17113c58d39b044bb1ae78733a8c68fc}{00010}}   \mbox{\hyperlink{types_8h_ab95f123a6c9bcfee6a343170ef8c5f69}{ushort}} \mbox{\hyperlink{structelfhdr_a17113c58d39b044bb1ae78733a8c68fc}{machine}};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00011}\mbox{\hyperlink{structelfhdr_abb1c8274f47cfdbbcefe44af2d5c723d}{00011}}   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structelfhdr_abb1c8274f47cfdbbcefe44af2d5c723d}{version}};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00012}\mbox{\hyperlink{structelfhdr_ad40755e1b2c6efc3ec0ad95889f743a5}{00012}}   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structelfhdr_ad40755e1b2c6efc3ec0ad95889f743a5}{entry}};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00013}\mbox{\hyperlink{structelfhdr_a1d463f67fcf951c06cfaa37850004c51}{00013}}   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structelfhdr_a1d463f67fcf951c06cfaa37850004c51}{phoff}};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00014}\mbox{\hyperlink{structelfhdr_a465ccdf83d0e26d129d723a493a6e764}{00014}}   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structelfhdr_a465ccdf83d0e26d129d723a493a6e764}{shoff}};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00015}\mbox{\hyperlink{structelfhdr_a2f1e0957c83938630ef0ed074830df03}{00015}}   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structelfhdr_a2f1e0957c83938630ef0ed074830df03}{flags}};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00016}\mbox{\hyperlink{structelfhdr_aeffe5743cc720e5795af5d17b6fd6928}{00016}}   \mbox{\hyperlink{types_8h_ab95f123a6c9bcfee6a343170ef8c5f69}{ushort}} \mbox{\hyperlink{structelfhdr_aeffe5743cc720e5795af5d17b6fd6928}{ehsize}};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00017}\mbox{\hyperlink{structelfhdr_ac636a4a9c4c61933c6044275ed687bc9}{00017}}   \mbox{\hyperlink{types_8h_ab95f123a6c9bcfee6a343170ef8c5f69}{ushort}} \mbox{\hyperlink{structelfhdr_ac636a4a9c4c61933c6044275ed687bc9}{phentsize}};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00018}\mbox{\hyperlink{structelfhdr_a3eff58d58a3ee83aa53d7ffdebdb6b5b}{00018}}   \mbox{\hyperlink{types_8h_ab95f123a6c9bcfee6a343170ef8c5f69}{ushort}} \mbox{\hyperlink{structelfhdr_a3eff58d58a3ee83aa53d7ffdebdb6b5b}{phnum}};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00019}\mbox{\hyperlink{structelfhdr_aeedc5375e3f67e8dda6351e0e80b8e02}{00019}}   \mbox{\hyperlink{types_8h_ab95f123a6c9bcfee6a343170ef8c5f69}{ushort}} \mbox{\hyperlink{structelfhdr_aeedc5375e3f67e8dda6351e0e80b8e02}{shentsize}};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00020}\mbox{\hyperlink{structelfhdr_aebf9526933b9f0502bdbafacce3734c1}{00020}}   \mbox{\hyperlink{types_8h_ab95f123a6c9bcfee6a343170ef8c5f69}{ushort}} \mbox{\hyperlink{structelfhdr_aebf9526933b9f0502bdbafacce3734c1}{shnum}};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00021}\mbox{\hyperlink{structelfhdr_a84f3d7712c99bfea3f4be42728dc0a0e}{00021}}   \mbox{\hyperlink{types_8h_ab95f123a6c9bcfee6a343170ef8c5f69}{ushort}} \mbox{\hyperlink{structelfhdr_a84f3d7712c99bfea3f4be42728dc0a0e}{shstrndx}};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00022}00022 \};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00024}00024 \textcolor{comment}{// Program section header}}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00025}\mbox{\hyperlink{structproghdr}{00025}} \textcolor{keyword}{struct }\mbox{\hyperlink{structproghdr}{proghdr}} \{}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00026}\mbox{\hyperlink{structproghdr_a42ea22dcdaa75a9cbdf7cd366b85e9ea}{00026}}   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structproghdr_a42ea22dcdaa75a9cbdf7cd366b85e9ea}{type}};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00027}\mbox{\hyperlink{structproghdr_a979532386fd448596cc5046339a2cd2d}{00027}}   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structproghdr_a979532386fd448596cc5046339a2cd2d}{off}};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00028}\mbox{\hyperlink{structproghdr_a6fa1051e19935bbedc5eaf086f5330b4}{00028}}   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structproghdr_a6fa1051e19935bbedc5eaf086f5330b4}{vaddr}};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00029}\mbox{\hyperlink{structproghdr_af65905aa5c4ccb33aac7dad5783e14d9}{00029}}   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structproghdr_af65905aa5c4ccb33aac7dad5783e14d9}{paddr}};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00030}\mbox{\hyperlink{structproghdr_a95dee0f1864ec1602f1ff6998ac00df0}{00030}}   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structproghdr_a95dee0f1864ec1602f1ff6998ac00df0}{filesz}};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00031}\mbox{\hyperlink{structproghdr_a9f703ade191af1054b3de797d8167d89}{00031}}   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structproghdr_a9f703ade191af1054b3de797d8167d89}{memsz}};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00032}\mbox{\hyperlink{structproghdr_ab3ad45ccf4b38dec384206ecbd099076}{00032}}   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structproghdr_ab3ad45ccf4b38dec384206ecbd099076}{flags}};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00033}\mbox{\hyperlink{structproghdr_a9a7d455ad6830cd1a37aa324911880ec}{00033}}   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structproghdr_a9a7d455ad6830cd1a37aa324911880ec}{align}};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00034}00034 \};}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00036}00036 \textcolor{comment}{// Values for Proghdr type}}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00037}\mbox{\hyperlink{elf_8h_a6a45c035b7a2930e62ac97a6bd8121e9}{00037}} \textcolor{preprocessor}{\#define ELF\_PROG\_LOAD           1}}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00039}00039 \textcolor{comment}{// Flag bits for Proghdr flags}}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00040}\mbox{\hyperlink{elf_8h_ac9608330ae745d90d7b59374fe827538}{00040}} \textcolor{preprocessor}{\#define ELF\_PROG\_FLAG\_EXEC      1}}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00041}\mbox{\hyperlink{elf_8h_a18b2debb63e51b9f66a702e3625a8622}{00041}} \textcolor{preprocessor}{\#define ELF\_PROG\_FLAG\_WRITE     2}}
+\DoxyCodeLine{\Hypertarget{elf_8h_source_l00042}\mbox{\hyperlink{elf_8h_a63df5e8bbab03913953e0042936f32c6}{00042}} \textcolor{preprocessor}{\#define ELF\_PROG\_FLAG\_READ      4}}
+
+\end{DoxyCode}

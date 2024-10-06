@@ -1,0 +1,234 @@
+\hypertarget{lapic_8c_source}{}\doxysection{lapic.\+c}
+\mbox{\hyperlink{lapic_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00001}00001 \textcolor{comment}{// The local APIC manages internal (non-\/I/O) interrupts.}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00002}00002 \textcolor{comment}{// See Chapter 8 \& Appendix C of Intel processor manual volume 3.}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00004}00004 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{param_8h}{param.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00005}00005 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00006}00006 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{defs_8h}{defs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00007}00007 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{date_8h}{date.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00008}00008 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{memlayout_8h}{memlayout.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00009}00009 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{traps_8h}{traps.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00010}00010 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{mmu_8h}{mmu.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00011}00011 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{x86_8h}{x86.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00013}00013 \textcolor{comment}{// Local APIC registers, divided by 4 for use as uint[] indices.}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00014}\mbox{\hyperlink{lapic_8c_a77ceac8d6af195fe72f95f6afd87c45e}{00014}} \textcolor{preprocessor}{\#define ID      (0x0020/4)   }\textcolor{comment}{// ID}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00015}\mbox{\hyperlink{lapic_8c_a98ed931f97fef7e06e3ea441d0326c67}{00015}} \textcolor{preprocessor}{\#define VER     (0x0030/4)   }\textcolor{comment}{// Version}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00016}\mbox{\hyperlink{lapic_8c_a0d378efcaaff1100c96bff8856bfc036}{00016}} \textcolor{preprocessor}{\#define TPR     (0x0080/4)   }\textcolor{comment}{// Task Priority}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00017}\mbox{\hyperlink{lapic_8c_a04c9015da7e7ea45f3b80793809e2d7b}{00017}} \textcolor{preprocessor}{\#define EOI     (0x00B0/4)   }\textcolor{comment}{// EOI}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00018}\mbox{\hyperlink{lapic_8c_a062fc16f4eacb723c76e2c87c8495412}{00018}} \textcolor{preprocessor}{\#define SVR     (0x00F0/4)   }\textcolor{comment}{// Spurious Interrupt Vector}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00019}\mbox{\hyperlink{lapic_8c_a514ad415fb6125ba296793df7d1a468a}{00019}} \textcolor{preprocessor}{  \#define ENABLE     0x00000100   }\textcolor{comment}{// Unit Enable}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00020}\mbox{\hyperlink{lapic_8c_ae4ad5e3805ffa2cbe03b65421edd8f99}{00020}} \textcolor{preprocessor}{\#define ESR     (0x0280/4)   }\textcolor{comment}{// Error Status}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00021}\mbox{\hyperlink{lapic_8c_ae6db3be23c343c0823604670010635f7}{00021}} \textcolor{preprocessor}{\#define ICRLO   (0x0300/4)   }\textcolor{comment}{// Interrupt Command}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00022}\mbox{\hyperlink{lapic_8c_ab5889105dcd019008c9448dff61323f6}{00022}} \textcolor{preprocessor}{  \#define INIT       0x00000500   }\textcolor{comment}{// INIT/RESET}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00023}\mbox{\hyperlink{lapic_8c_ad0dd8aa1d9d769cf15609ca108af4af9}{00023}} \textcolor{preprocessor}{  \#define STARTUP    0x00000600   }\textcolor{comment}{// Startup IPI}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00024}\mbox{\hyperlink{lapic_8c_a5f0b856b460d14d6fac161e35cfdb9d1}{00024}} \textcolor{preprocessor}{  \#define DELIVS     0x00001000   }\textcolor{comment}{// Delivery status}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00025}\mbox{\hyperlink{lapic_8c_af343b20373ba49a92fce523e948f2ab3}{00025}} \textcolor{preprocessor}{  \#define ASSERT     0x00004000   }\textcolor{comment}{// Assert interrupt (vs deassert)}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00026}\mbox{\hyperlink{lapic_8c_a8b48e10f84b81902cf66c89ac52649b7}{00026}} \textcolor{preprocessor}{  \#define DEASSERT   0x00000000}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00027}\mbox{\hyperlink{lapic_8c_a73f717b7aae31163c2a85f67883bf0ed}{00027}} \textcolor{preprocessor}{  \#define LEVEL      0x00008000   }\textcolor{comment}{// Level triggered}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00028}\mbox{\hyperlink{lapic_8c_adc4a14c073a7427003796cbd9d435758}{00028}} \textcolor{preprocessor}{  \#define BCAST      0x00080000   }\textcolor{comment}{// Send to all APICs, including self.}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00029}\mbox{\hyperlink{lapic_8c_ab5be0aaddb58ffb9cb20c12530d66316}{00029}} \textcolor{preprocessor}{  \#define BUSY       0x00001000}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00030}\mbox{\hyperlink{lapic_8c_a20207ffc8e6f0bdcefb5c42a5b5c3fb8}{00030}} \textcolor{preprocessor}{  \#define FIXED      0x00000000}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00031}\mbox{\hyperlink{lapic_8c_a9382474befd66e12c502eb221e4f9a0d}{00031}} \textcolor{preprocessor}{\#define ICRHI   (0x0310/4)   }\textcolor{comment}{// Interrupt Command [63:32]}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00032}\mbox{\hyperlink{lapic_8c_a599217205dc3092c26567a2bd868ef3a}{00032}} \textcolor{preprocessor}{\#define TIMER   (0x0320/4)   }\textcolor{comment}{// Local Vector Table 0 (TIMER)}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00033}\mbox{\hyperlink{lapic_8c_a1964818ccd90a6173ea48cecb652feeb}{00033}} \textcolor{preprocessor}{  \#define X1         0x0000000B   }\textcolor{comment}{// divide counts by 1}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00034}\mbox{\hyperlink{lapic_8c_af36821ad7b93ab31dcfaaa25e134fdf0}{00034}} \textcolor{preprocessor}{  \#define PERIODIC   0x00020000   }\textcolor{comment}{// Periodic}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00035}\mbox{\hyperlink{lapic_8c_a5c989e3931132d4a4aca9cacfcb8b075}{00035}} \textcolor{preprocessor}{\#define PCINT   (0x0340/4)   }\textcolor{comment}{// Performance Counter LVT}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00036}\mbox{\hyperlink{lapic_8c_acec8cff36b5e5b2b4bda262480db2af2}{00036}} \textcolor{preprocessor}{\#define LINT0   (0x0350/4)   }\textcolor{comment}{// Local Vector Table 1 (LINT0)}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00037}\mbox{\hyperlink{lapic_8c_a19035d504c49cf257ef4dc27cd3eb668}{00037}} \textcolor{preprocessor}{\#define LINT1   (0x0360/4)   }\textcolor{comment}{// Local Vector Table 2 (LINT1)}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00038}\mbox{\hyperlink{lapic_8c_a8fe83ac76edc595f6b98cd4a4127aed5}{00038}} \textcolor{preprocessor}{\#define ERROR   (0x0370/4)   }\textcolor{comment}{// Local Vector Table 3 (ERROR)}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00039}\mbox{\hyperlink{lapic_8c_a8fe9c058dcb81f528134d37e741182a3}{00039}} \textcolor{preprocessor}{  \#define MASKED     0x00010000   }\textcolor{comment}{// Interrupt masked}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00040}\mbox{\hyperlink{lapic_8c_af1d7a14061b402e4718eff6d9ef7ada4}{00040}} \textcolor{preprocessor}{\#define TICR    (0x0380/4)   }\textcolor{comment}{// Timer Initial Count}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00041}\mbox{\hyperlink{lapic_8c_a1a73e99a3dd2d2d7dc6bbf084638e044}{00041}} \textcolor{preprocessor}{\#define TCCR    (0x0390/4)   }\textcolor{comment}{// Timer Current Count}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00042}\mbox{\hyperlink{lapic_8c_a11b0b699f28c2043fcd6da289fff7375}{00042}} \textcolor{preprocessor}{\#define TDCR    (0x03E0/4)   }\textcolor{comment}{// Timer Divide Configuration}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00044}\mbox{\hyperlink{defs_8h_a4029f3e2439d5912f93543b8addd10ec}{00044}} \textcolor{keyword}{volatile} \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} *\mbox{\hyperlink{lapic_8c_a4029f3e2439d5912f93543b8addd10ec}{lapic}};  \textcolor{comment}{// Initialized in mp.c}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00046}00046 \textcolor{comment}{//PAGEBREAK!}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00047}00047 \textcolor{keyword}{static} \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00048}00048 lapicw(\textcolor{keywordtype}{int} index, \textcolor{keywordtype}{int} value)}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00049}00049 \{}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00050}00050   \mbox{\hyperlink{lapic_8c_a4029f3e2439d5912f93543b8addd10ec}{lapic}}[index] = value;}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00051}00051   \mbox{\hyperlink{lapic_8c_a4029f3e2439d5912f93543b8addd10ec}{lapic}}[\mbox{\hyperlink{lapic_8c_a77ceac8d6af195fe72f95f6afd87c45e}{ID}}];  \textcolor{comment}{// wait for write to finish, by reading}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00052}00052 \}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00053}00053 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00054}00054 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00055}\mbox{\hyperlink{defs_8h_a6b48a1e50acc73cb3e70a65774c87392}{00055}} \mbox{\hyperlink{lapic_8c_a6b48a1e50acc73cb3e70a65774c87392}{lapicinit}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00056}00056 \{}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00057}00057   \textcolor{keywordflow}{if}(!\mbox{\hyperlink{lapic_8c_a4029f3e2439d5912f93543b8addd10ec}{lapic}})}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00058}00058     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00060}00060   \textcolor{comment}{// Enable local APIC; set spurious interrupt vector.}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00061}00061   lapicw(\mbox{\hyperlink{lapic_8c_a062fc16f4eacb723c76e2c87c8495412}{SVR}}, \mbox{\hyperlink{lapic_8c_a514ad415fb6125ba296793df7d1a468a}{ENABLE}} | (\mbox{\hyperlink{traps_8h_a17129100154901eb81be6e438843a0e1}{T\_IRQ0}} + \mbox{\hyperlink{traps_8h_a0e95f09d5e5653670eede10844d73875}{IRQ\_SPURIOUS}}));}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00062}00062 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00063}00063   \textcolor{comment}{// The timer repeatedly counts down at bus frequency}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00064}00064   \textcolor{comment}{// from lapic[TICR] and then issues an interrupt.}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00065}00065   \textcolor{comment}{// If xv6 cared more about precise timekeeping,}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00066}00066   \textcolor{comment}{// TICR would be calibrated using an external time source.}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00067}00067   lapicw(\mbox{\hyperlink{lapic_8c_a11b0b699f28c2043fcd6da289fff7375}{TDCR}}, \mbox{\hyperlink{lapic_8c_a1964818ccd90a6173ea48cecb652feeb}{X1}});}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00068}00068   lapicw(\mbox{\hyperlink{lapic_8c_a599217205dc3092c26567a2bd868ef3a}{TIMER}}, \mbox{\hyperlink{lapic_8c_af36821ad7b93ab31dcfaaa25e134fdf0}{PERIODIC}} | (\mbox{\hyperlink{traps_8h_a17129100154901eb81be6e438843a0e1}{T\_IRQ0}} + \mbox{\hyperlink{traps_8h_a85fc66e3edd4ed6a4db6e455feaba8ca}{IRQ\_TIMER}}));}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00069}00069   lapicw(\mbox{\hyperlink{lapic_8c_af1d7a14061b402e4718eff6d9ef7ada4}{TICR}}, 10000000);}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00070}00070 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00071}00071   \textcolor{comment}{// Disable logical interrupt lines.}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00072}00072   lapicw(\mbox{\hyperlink{lapic_8c_acec8cff36b5e5b2b4bda262480db2af2}{LINT0}}, \mbox{\hyperlink{lapic_8c_a8fe9c058dcb81f528134d37e741182a3}{MASKED}});}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00073}00073   lapicw(\mbox{\hyperlink{lapic_8c_a19035d504c49cf257ef4dc27cd3eb668}{LINT1}}, \mbox{\hyperlink{lapic_8c_a8fe9c058dcb81f528134d37e741182a3}{MASKED}});}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00074}00074 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00075}00075   \textcolor{comment}{// Disable performance counter overflow interrupts}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00076}00076   \textcolor{comment}{// on machines that provide that interrupt entry.}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00077}00077   \textcolor{keywordflow}{if}(((\mbox{\hyperlink{lapic_8c_a4029f3e2439d5912f93543b8addd10ec}{lapic}}[\mbox{\hyperlink{lapic_8c_a98ed931f97fef7e06e3ea441d0326c67}{VER}}]>>16) \& 0xFF) >= 4)}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00078}00078     lapicw(\mbox{\hyperlink{lapic_8c_a5c989e3931132d4a4aca9cacfcb8b075}{PCINT}}, \mbox{\hyperlink{lapic_8c_a8fe9c058dcb81f528134d37e741182a3}{MASKED}});}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00079}00079 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00080}00080   \textcolor{comment}{// Map error interrupt to IRQ\_ERROR.}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00081}00081   lapicw(\mbox{\hyperlink{lapic_8c_a8fe83ac76edc595f6b98cd4a4127aed5}{ERROR}}, \mbox{\hyperlink{traps_8h_a17129100154901eb81be6e438843a0e1}{T\_IRQ0}} + \mbox{\hyperlink{traps_8h_a7546e682900c4558b1f8c4f0633bc7b9}{IRQ\_ERROR}});}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00083}00083   \textcolor{comment}{// Clear error status register (requires back-\/to-\/back writes).}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00084}00084   lapicw(\mbox{\hyperlink{lapic_8c_ae4ad5e3805ffa2cbe03b65421edd8f99}{ESR}}, 0);}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00085}00085   lapicw(\mbox{\hyperlink{lapic_8c_ae4ad5e3805ffa2cbe03b65421edd8f99}{ESR}}, 0);}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00086}00086 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00087}00087   \textcolor{comment}{// Ack any outstanding interrupts.}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00088}00088   lapicw(\mbox{\hyperlink{lapic_8c_a04c9015da7e7ea45f3b80793809e2d7b}{EOI}}, 0);}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00089}00089 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00090}00090   \textcolor{comment}{// Send an Init Level De-\/Assert to synchronise arbitration ID's.}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00091}00091   lapicw(\mbox{\hyperlink{lapic_8c_a9382474befd66e12c502eb221e4f9a0d}{ICRHI}}, 0);}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00092}00092   lapicw(\mbox{\hyperlink{lapic_8c_ae6db3be23c343c0823604670010635f7}{ICRLO}}, \mbox{\hyperlink{lapic_8c_adc4a14c073a7427003796cbd9d435758}{BCAST}} | \mbox{\hyperlink{lapic_8c_ab5889105dcd019008c9448dff61323f6}{INIT}} | \mbox{\hyperlink{lapic_8c_a73f717b7aae31163c2a85f67883bf0ed}{LEVEL}});}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00093}00093   \textcolor{keywordflow}{while}(\mbox{\hyperlink{lapic_8c_a4029f3e2439d5912f93543b8addd10ec}{lapic}}[\mbox{\hyperlink{lapic_8c_ae6db3be23c343c0823604670010635f7}{ICRLO}}] \& \mbox{\hyperlink{lapic_8c_a5f0b856b460d14d6fac161e35cfdb9d1}{DELIVS}})}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00094}00094     ;}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00095}00095 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00096}00096   \textcolor{comment}{// Enable interrupts on the APIC (but not on the processor).}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00097}00097   lapicw(\mbox{\hyperlink{lapic_8c_a0d378efcaaff1100c96bff8856bfc036}{TPR}}, 0);}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00098}00098 \}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00099}00099 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00100}00100 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00101}\mbox{\hyperlink{defs_8h_a627f7996b64f99d885244a5102c85164}{00101}} \mbox{\hyperlink{lapic_8c_a627f7996b64f99d885244a5102c85164}{lapicid}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00102}00102 \{}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00103}00103   \textcolor{keywordflow}{if} (!\mbox{\hyperlink{lapic_8c_a4029f3e2439d5912f93543b8addd10ec}{lapic}})}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00104}00104     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00105}00105   \textcolor{keywordflow}{return} \mbox{\hyperlink{lapic_8c_a4029f3e2439d5912f93543b8addd10ec}{lapic}}[\mbox{\hyperlink{lapic_8c_a77ceac8d6af195fe72f95f6afd87c45e}{ID}}] >> 24;}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00106}00106 \}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00107}00107 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00108}00108 \textcolor{comment}{// Acknowledge interrupt.}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00109}00109 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00110}\mbox{\hyperlink{defs_8h_a42fdd0783bbeb7cdc646d360191cdcac}{00110}} \mbox{\hyperlink{lapic_8c_a42fdd0783bbeb7cdc646d360191cdcac}{lapiceoi}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00111}00111 \{}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00112}00112   \textcolor{keywordflow}{if}(\mbox{\hyperlink{lapic_8c_a4029f3e2439d5912f93543b8addd10ec}{lapic}})}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00113}00113     lapicw(\mbox{\hyperlink{lapic_8c_a04c9015da7e7ea45f3b80793809e2d7b}{EOI}}, 0);}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00114}00114 \}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00115}00115 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00116}00116 \textcolor{comment}{// Spin for a given number of microseconds.}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00117}00117 \textcolor{comment}{// On real hardware would want to tune this dynamically.}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00118}00118 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00119}\mbox{\hyperlink{defs_8h_ada0e72e8d0a1a48090829fd03a0b76ba}{00119}} \mbox{\hyperlink{lapic_8c_ae0ac6441d1d76d8ef821cdbbc6b6fc2f}{microdelay}}(\textcolor{keywordtype}{int} us)}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00120}00120 \{}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00121}00121 \}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00122}00122 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00123}\mbox{\hyperlink{lapic_8c_a6ef3cdae7f581dab8f55d73dfa7a49bb}{00123}} \textcolor{preprocessor}{\#define CMOS\_PORT    0x70}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00124}\mbox{\hyperlink{lapic_8c_aa08689fc090758a03b691b9909299ddc}{00124}} \textcolor{preprocessor}{\#define CMOS\_RETURN  0x71}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00125}00125 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00126}00126 \textcolor{comment}{// Start additional processor running entry code at addr.}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00127}00127 \textcolor{comment}{// See Appendix B of MultiProcessor Specification.}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00128}00128 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00129}\mbox{\hyperlink{defs_8h_ae46b07b96e4429fa85738ac2fe1768a0}{00129}} \mbox{\hyperlink{lapic_8c_a54df00c792282426648d2876835958fa}{lapicstartap}}(\mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} apicid, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} addr)}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00130}00130 \{}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00131}00131   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00132}00132   \mbox{\hyperlink{types_8h_ab95f123a6c9bcfee6a343170ef8c5f69}{ushort}} *wrv;}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00133}00133 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00134}00134   \textcolor{comment}{// "{}The BSP must initialize CMOS shutdown code to 0AH}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00135}00135   \textcolor{comment}{// and the warm reset vector (DWORD based at 40:67) to point at}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00136}00136   \textcolor{comment}{// the AP startup code prior to the [universal startup algorithm]."{}}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00137}00137   outb(\mbox{\hyperlink{lapic_8c_a6ef3cdae7f581dab8f55d73dfa7a49bb}{CMOS\_PORT}}, 0xF);  \textcolor{comment}{// offset 0xF is shutdown code}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00138}00138   outb(\mbox{\hyperlink{lapic_8c_a6ef3cdae7f581dab8f55d73dfa7a49bb}{CMOS\_PORT}}+1, 0x0A);}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00139}00139   wrv = (\mbox{\hyperlink{types_8h_ab95f123a6c9bcfee6a343170ef8c5f69}{ushort}}*)\mbox{\hyperlink{memlayout_8h_aefd5e8b62c49bba2cf20309c7dd174e2}{P2V}}((0x40<<4 | 0x67));  \textcolor{comment}{// Warm reset vector}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00140}00140   wrv[0] = 0;}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00141}00141   wrv[1] = addr >> 4;}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00142}00142 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00143}00143   \textcolor{comment}{// "{}Universal startup algorithm."{}}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00144}00144   \textcolor{comment}{// Send INIT (level-\/triggered) interrupt to reset other CPU.}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00145}00145   lapicw(\mbox{\hyperlink{lapic_8c_a9382474befd66e12c502eb221e4f9a0d}{ICRHI}}, apicid<<24);}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00146}00146   lapicw(\mbox{\hyperlink{lapic_8c_ae6db3be23c343c0823604670010635f7}{ICRLO}}, \mbox{\hyperlink{lapic_8c_ab5889105dcd019008c9448dff61323f6}{INIT}} | \mbox{\hyperlink{lapic_8c_a73f717b7aae31163c2a85f67883bf0ed}{LEVEL}} | \mbox{\hyperlink{lapic_8c_af343b20373ba49a92fce523e948f2ab3}{ASSERT}});}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00147}00147   \mbox{\hyperlink{lapic_8c_ae0ac6441d1d76d8ef821cdbbc6b6fc2f}{microdelay}}(200);}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00148}00148   lapicw(\mbox{\hyperlink{lapic_8c_ae6db3be23c343c0823604670010635f7}{ICRLO}}, \mbox{\hyperlink{lapic_8c_ab5889105dcd019008c9448dff61323f6}{INIT}} | \mbox{\hyperlink{lapic_8c_a73f717b7aae31163c2a85f67883bf0ed}{LEVEL}});}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00149}00149   \mbox{\hyperlink{lapic_8c_ae0ac6441d1d76d8ef821cdbbc6b6fc2f}{microdelay}}(100);    \textcolor{comment}{// should be 10ms, but too slow in Bochs!}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00150}00150 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00151}00151   \textcolor{comment}{// Send startup IPI (twice!) to enter code.}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00152}00152   \textcolor{comment}{// Regular hardware is supposed to only accept a STARTUP}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00153}00153   \textcolor{comment}{// when it is in the halted state due to an INIT.  So the second}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00154}00154   \textcolor{comment}{// should be ignored, but it is part of the official Intel algorithm.}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00155}00155   \textcolor{comment}{// Bochs complains about the second one.  Too bad for Bochs.}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00156}00156   \textcolor{keywordflow}{for}(i = 0; i < 2; i++)\{}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00157}00157     lapicw(\mbox{\hyperlink{lapic_8c_a9382474befd66e12c502eb221e4f9a0d}{ICRHI}}, apicid<<24);}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00158}00158     lapicw(\mbox{\hyperlink{lapic_8c_ae6db3be23c343c0823604670010635f7}{ICRLO}}, \mbox{\hyperlink{lapic_8c_ad0dd8aa1d9d769cf15609ca108af4af9}{STARTUP}} | (addr>>12));}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00159}00159     \mbox{\hyperlink{lapic_8c_ae0ac6441d1d76d8ef821cdbbc6b6fc2f}{microdelay}}(200);}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00160}00160   \}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00161}00161 \}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00162}00162 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00163}\mbox{\hyperlink{lapic_8c_a7961582c4c0d7e087ef0c461b27d2bcb}{00163}} \textcolor{preprocessor}{\#define CMOS\_STATA   0x0a}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00164}\mbox{\hyperlink{lapic_8c_a7cacd7bee07e3e7ccb0bf85965d33fa4}{00164}} \textcolor{preprocessor}{\#define CMOS\_STATB   0x0b}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00165}\mbox{\hyperlink{lapic_8c_a2c7758749c45a1f6a3ae41bcbdfa72f3}{00165}} \textcolor{preprocessor}{\#define CMOS\_UIP    (1 << 7)        }\textcolor{comment}{// RTC update in progress}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00166}00166 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00167}\mbox{\hyperlink{lapic_8c_a512a9ef84990cc5b81d736cb2520a063}{00167}} \textcolor{preprocessor}{\#define SECS    0x00}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00168}\mbox{\hyperlink{lapic_8c_afa2fdcd26bbe3ddf0ac9c9487aa59284}{00168}} \textcolor{preprocessor}{\#define MINS    0x02}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00169}\mbox{\hyperlink{lapic_8c_a212d0f839f6f7ca43ccde311f93d5892}{00169}} \textcolor{preprocessor}{\#define HOURS   0x04}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00170}\mbox{\hyperlink{lapic_8c_a509a01c55cbe47386fe24602b7c7fda1}{00170}} \textcolor{preprocessor}{\#define DAY     0x07}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00171}\mbox{\hyperlink{lapic_8c_a3729d06495d9713592f79f3122c9e677}{00171}} \textcolor{preprocessor}{\#define MONTH   0x08}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00172}\mbox{\hyperlink{lapic_8c_a5871356500f559add06ea81d60331b1b}{00172}} \textcolor{preprocessor}{\#define YEAR    0x09}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00173}00173 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00174}00174 \textcolor{keyword}{static} \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00175}00175 cmos\_read(\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} reg)}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00176}00176 \{}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00177}00177   outb(\mbox{\hyperlink{lapic_8c_a6ef3cdae7f581dab8f55d73dfa7a49bb}{CMOS\_PORT}},  reg);}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00178}00178   \mbox{\hyperlink{lapic_8c_ae0ac6441d1d76d8ef821cdbbc6b6fc2f}{microdelay}}(200);}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00179}00179 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00180}00180   \textcolor{keywordflow}{return} inb(\mbox{\hyperlink{lapic_8c_aa08689fc090758a03b691b9909299ddc}{CMOS\_RETURN}});}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00181}00181 \}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00182}00182 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00183}00183 \textcolor{keyword}{static} \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00184}00184 fill\_rtcdate(\textcolor{keyword}{struct} \mbox{\hyperlink{structrtcdate}{rtcdate}} *\mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}})}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00185}00185 \{}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00186}00186   \mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}}-\/>second = cmos\_read(\mbox{\hyperlink{lapic_8c_a512a9ef84990cc5b81d736cb2520a063}{SECS}});}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00187}00187   \mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}}-\/>minute = cmos\_read(\mbox{\hyperlink{lapic_8c_afa2fdcd26bbe3ddf0ac9c9487aa59284}{MINS}});}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00188}00188   \mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}}-\/>hour   = cmos\_read(\mbox{\hyperlink{lapic_8c_a212d0f839f6f7ca43ccde311f93d5892}{HOURS}});}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00189}00189   \mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}}-\/>day    = cmos\_read(\mbox{\hyperlink{lapic_8c_a509a01c55cbe47386fe24602b7c7fda1}{DAY}});}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00190}00190   \mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}}-\/>month  = cmos\_read(\mbox{\hyperlink{lapic_8c_a3729d06495d9713592f79f3122c9e677}{MONTH}});}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00191}00191   \mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}}-\/>year   = cmos\_read(\mbox{\hyperlink{lapic_8c_a5871356500f559add06ea81d60331b1b}{YEAR}});}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00192}00192 \}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00193}00193 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00194}00194 \textcolor{comment}{// qemu seems to use 24-\/hour GWT and the values are BCD encoded}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00195}00195 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00196}\mbox{\hyperlink{defs_8h_a7247ece9501e31d62cffad46ec33d7af}{00196}} \mbox{\hyperlink{lapic_8c_a7247ece9501e31d62cffad46ec33d7af}{cmostime}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structrtcdate}{rtcdate}} *\mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}})}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00197}00197 \{}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00198}00198   \textcolor{keyword}{struct }\mbox{\hyperlink{structrtcdate}{rtcdate}} t1, t2;}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00199}00199   \textcolor{keywordtype}{int} \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}, bcd;}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00200}00200 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00201}00201   \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}} = cmos\_read(\mbox{\hyperlink{lapic_8c_a7cacd7bee07e3e7ccb0bf85965d33fa4}{CMOS\_STATB}});}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00202}00202 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00203}00203   bcd = (\mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}} \& (1 << 2)) == 0;}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00204}00204 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00205}00205   \textcolor{comment}{// make sure CMOS doesn't modify time while we read it}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00206}00206   \textcolor{keywordflow}{for}(;;) \{}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00207}00207     fill\_rtcdate(\&t1);}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00208}00208     \textcolor{keywordflow}{if}(cmos\_read(\mbox{\hyperlink{lapic_8c_a7961582c4c0d7e087ef0c461b27d2bcb}{CMOS\_STATA}}) \& \mbox{\hyperlink{lapic_8c_a2c7758749c45a1f6a3ae41bcbdfa72f3}{CMOS\_UIP}})}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00209}00209         \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00210}00210     fill\_rtcdate(\&t2);}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00211}00211     \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_acdb4d3f48d2fb0a834722b1107d2b284}{memcmp}}(\&t1, \&t2, \textcolor{keyword}{sizeof}(t1)) == 0)}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00212}00212       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00213}00213   \}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00214}00214 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00215}00215   \textcolor{comment}{// convert}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00216}00216   \textcolor{keywordflow}{if}(bcd) \{}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00217}00217 \textcolor{preprocessor}{\#define    CONV(x)     (t1.x = ((t1.x >> 4) * 10) + (t1.x \& 0xf))}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00218}00218     \mbox{\hyperlink{lapic_8c_a7d52e480824afb678582f7b21cbd739d}{CONV}}(\mbox{\hyperlink{structrtcdate_affc39128483c500d77d1a012fe045664}{second}});}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00219}00219     \mbox{\hyperlink{lapic_8c_a7d52e480824afb678582f7b21cbd739d}{CONV}}(\mbox{\hyperlink{structrtcdate_a5984e264f332d7634912db2716472aa7}{minute}});}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00220}00220     \mbox{\hyperlink{lapic_8c_a7d52e480824afb678582f7b21cbd739d}{CONV}}(\mbox{\hyperlink{structrtcdate_ac601418b8ff95c35e8fddb47dd3fc77b}{hour}}  );}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00221}00221     \mbox{\hyperlink{lapic_8c_a7d52e480824afb678582f7b21cbd739d}{CONV}}(\mbox{\hyperlink{structrtcdate_a476a4a04d68d88b1515123aa24af8a4d}{day}}   );}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00222}00222     \mbox{\hyperlink{lapic_8c_a7d52e480824afb678582f7b21cbd739d}{CONV}}(\mbox{\hyperlink{structrtcdate_a3c509170b31d76f828681c2df54bf0b1}{month}} );}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00223}00223     \mbox{\hyperlink{lapic_8c_a7d52e480824afb678582f7b21cbd739d}{CONV}}(\mbox{\hyperlink{structrtcdate_a143aaaa0a5fcaae876c0af5f135ea5c8}{year}}  );}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00224}00224 \textcolor{preprocessor}{\#undef     CONV}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00225}00225   \}}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00226}00226 }
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00227}00227   *\mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}} = t1;}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00228}00228   \mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}}-\/>year += 2000;}
+\DoxyCodeLine{\Hypertarget{lapic_8c_source_l00229}00229 \}}
+
+\end{DoxyCode}

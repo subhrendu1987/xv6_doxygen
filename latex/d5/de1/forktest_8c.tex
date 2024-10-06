@@ -1,0 +1,164 @@
+\hypertarget{forktest_8c}{}\doxysection{forktest.\+c File Reference}
+\label{forktest_8c}\index{forktest.c@{forktest.c}}
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stat.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}user.\+h\char`\"{}}\newline
+Include dependency graph for forktest.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=249pt]{d4/d41/forktest_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{forktest_8c_a0240ac851181b84ac374872dc5434ee4}{N}}~1000
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}} (int fd, const char $\ast$s,...)
+\item 
+void \mbox{\hyperlink{forktest_8c_a0ef8ccf57bc8c491407ec513b234f83c}{forktest}} (void)
+\item 
+int \mbox{\hyperlink{forktest_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{forktest_8c_a0240ac851181b84ac374872dc5434ee4}\label{forktest_8c_a0240ac851181b84ac374872dc5434ee4}} 
+\index{forktest.c@{forktest.c}!N@{N}}
+\index{N@{N}!forktest.c@{forktest.c}}
+\doxysubsubsection{\texorpdfstring{N}{N}}
+{\footnotesize\ttfamily \#define N~1000}
+
+
+
+Definition at line \mbox{\hyperlink{forktest_8c_source_l00008}{8}} of file \mbox{\hyperlink{forktest_8c_source}{forktest.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{forktest_8c_a0ef8ccf57bc8c491407ec513b234f83c}\label{forktest_8c_a0ef8ccf57bc8c491407ec513b234f83c}} 
+\index{forktest.c@{forktest.c}!forktest@{forktest}}
+\index{forktest@{forktest}!forktest.c@{forktest.c}}
+\doxysubsubsection{\texorpdfstring{forktest()}{forktest()}}
+{\footnotesize\ttfamily void forktest (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{forktest_8c_source_l00017}{17}} of file \mbox{\hyperlink{forktest_8c_source}{forktest.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00018 \{}
+\DoxyCodeLine{00019   \textcolor{keywordtype}{int} n, pid;}
+\DoxyCodeLine{00020 }
+\DoxyCodeLine{00021   \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}fork test\(\backslash\)n"{}});}
+\DoxyCodeLine{00022 }
+\DoxyCodeLine{00023   \textcolor{keywordflow}{for}(n=0; n<\mbox{\hyperlink{forktest_8c_a0240ac851181b84ac374872dc5434ee4}{N}}; n++)\{}
+\DoxyCodeLine{00024     pid = \mbox{\hyperlink{defs_8h_acd2e1ded4bb6fce4500438bf928330f4}{fork}}();}
+\DoxyCodeLine{00025     \textcolor{keywordflow}{if}(pid < 0)}
+\DoxyCodeLine{00026       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00027     \textcolor{keywordflow}{if}(pid == 0)}
+\DoxyCodeLine{00028       \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00029   \}}
+\DoxyCodeLine{00030 }
+\DoxyCodeLine{00031   \textcolor{keywordflow}{if}(n == \mbox{\hyperlink{forktest_8c_a0240ac851181b84ac374872dc5434ee4}{N}})\{}
+\DoxyCodeLine{00032     \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}fork claimed to work N times!\(\backslash\)n"{}}, \mbox{\hyperlink{forktest_8c_a0240ac851181b84ac374872dc5434ee4}{N}});}
+\DoxyCodeLine{00033     \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00034   \}}
+\DoxyCodeLine{00035 }
+\DoxyCodeLine{00036   \textcolor{keywordflow}{for}(; n > 0; n-\/-\/)\{}
+\DoxyCodeLine{00037     \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_af6f31822f7e737b4e414bdac1ccb59a4}{wait}}() < 0)\{}
+\DoxyCodeLine{00038       \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}wait stopped early\(\backslash\)n"{}});}
+\DoxyCodeLine{00039       \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00040     \}}
+\DoxyCodeLine{00041   \}}
+\DoxyCodeLine{00042 }
+\DoxyCodeLine{00043   \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_af6f31822f7e737b4e414bdac1ccb59a4}{wait}}() != -\/1)\{}
+\DoxyCodeLine{00044     \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}wait got too many\(\backslash\)n"{}});}
+\DoxyCodeLine{00045     \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00046   \}}
+\DoxyCodeLine{00047 }
+\DoxyCodeLine{00048   \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}fork test OK\(\backslash\)n"{}});}
+\DoxyCodeLine{00049 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d5/de1/forktest_8c_a0ef8ccf57bc8c491407ec513b234f83c_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=204pt]{d5/de1/forktest_8c_a0ef8ccf57bc8c491407ec513b234f83c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{forktest_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{forktest_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+\index{forktest.c@{forktest.c}!main@{main}}
+\index{main@{main}!forktest.c@{forktest.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{forktest_8c_source_l00052}{52}} of file \mbox{\hyperlink{forktest_8c_source}{forktest.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00053 \{}
+\DoxyCodeLine{00054   \mbox{\hyperlink{forktest_8c_a0ef8ccf57bc8c491407ec513b234f83c}{forktest}}();}
+\DoxyCodeLine{00055   \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00056 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d5/de1/forktest_8c_a840291bc02cba5474a4cb46a9b9566fe_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{forktest_8c_a249680925885256274fa9f02dd51cec4}\label{forktest_8c_a249680925885256274fa9f02dd51cec4}} 
+\index{forktest.c@{forktest.c}!printf@{printf}}
+\index{printf@{printf}!forktest.c@{forktest.c}}
+\doxysubsubsection{\texorpdfstring{printf()}{printf()}}
+{\footnotesize\ttfamily void printf (\begin{DoxyParamCaption}\item[{int}]{fd,  }\item[{const char $\ast$}]{s,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{forktest_8c_source_l00011}{11}} of file \mbox{\hyperlink{forktest_8c_source}{forktest.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00012 \{}
+\DoxyCodeLine{00013   \mbox{\hyperlink{user_8h_ae57e95d717eb7386cd8b935a0c136abe}{write}}(fd, s, \mbox{\hyperlink{defs_8h_a5e5172aa1be36b8210c6dfd86800b44c}{strlen}}(s));}
+\DoxyCodeLine{00014 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=195pt]{d5/de1/forktest_8c_a249680925885256274fa9f02dd51cec4_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{d5/de1/forktest_8c_a249680925885256274fa9f02dd51cec4_icgraph}
+\end{center}
+\end{figure}

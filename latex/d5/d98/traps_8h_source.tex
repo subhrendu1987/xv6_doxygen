@@ -1,0 +1,43 @@
+\hypertarget{traps_8h_source}{}\doxysection{traps.\+h}
+\mbox{\hyperlink{traps_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00001}00001 \textcolor{comment}{// x86 trap and interrupt constants.}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00003}00003 \textcolor{comment}{// Processor-\/defined:}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00004}\mbox{\hyperlink{traps_8h_aafec4ddec2a31119ce77162e2d4e126d}{00004}} \textcolor{preprocessor}{\#define T\_DIVIDE         0      }\textcolor{comment}{// divide error}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00005}\mbox{\hyperlink{traps_8h_a7adfcee96fd3df5bc6308209e6fd8947}{00005}} \textcolor{preprocessor}{\#define T\_DEBUG          1      }\textcolor{comment}{// debug exception}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00006}\mbox{\hyperlink{traps_8h_a5549435e3ba47c1e8c2ee1ebbcde9e3c}{00006}} \textcolor{preprocessor}{\#define T\_NMI            2      }\textcolor{comment}{// non-\/maskable interrupt}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00007}\mbox{\hyperlink{traps_8h_aeb503241653717f4d1d117b6f718fd17}{00007}} \textcolor{preprocessor}{\#define T\_BRKPT          3      }\textcolor{comment}{// breakpoint}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00008}\mbox{\hyperlink{traps_8h_aa2d9567ea3f81683de5ccfacac0ee866}{00008}} \textcolor{preprocessor}{\#define T\_OFLOW          4      }\textcolor{comment}{// overflow}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00009}\mbox{\hyperlink{traps_8h_ac00f437e67ad81b01ae4cc85fc75d4e2}{00009}} \textcolor{preprocessor}{\#define T\_BOUND          5      }\textcolor{comment}{// bounds check}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00010}\mbox{\hyperlink{traps_8h_ab508bbd71b1eaa5278660be9fcd503a6}{00010}} \textcolor{preprocessor}{\#define T\_ILLOP          6      }\textcolor{comment}{// illegal opcode}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00011}\mbox{\hyperlink{traps_8h_aef6db5115b3223f8b9b97ec9cfa1d161}{00011}} \textcolor{preprocessor}{\#define T\_DEVICE         7      }\textcolor{comment}{// device not available}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00012}\mbox{\hyperlink{traps_8h_af1e4d5a54ee4b09367a99565acc33172}{00012}} \textcolor{preprocessor}{\#define T\_DBLFLT         8      }\textcolor{comment}{// double fault}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00013}00013 \textcolor{comment}{// \#define T\_COPROC      9      // reserved (not used since 486)}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00014}\mbox{\hyperlink{traps_8h_a547922760445e2906d9168a65d9bb132}{00014}} \textcolor{preprocessor}{\#define T\_TSS           10      }\textcolor{comment}{// invalid task switch segment}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00015}\mbox{\hyperlink{traps_8h_ad57a595242a4f6a42978dabaa6113ec0}{00015}} \textcolor{preprocessor}{\#define T\_SEGNP         11      }\textcolor{comment}{// segment not present}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00016}\mbox{\hyperlink{traps_8h_acf4cab67d7c76dc6b37ef3a037394d09}{00016}} \textcolor{preprocessor}{\#define T\_STACK         12      }\textcolor{comment}{// stack exception}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00017}\mbox{\hyperlink{traps_8h_a62141642981612f78963d6fa5a7f600a}{00017}} \textcolor{preprocessor}{\#define T\_GPFLT         13      }\textcolor{comment}{// general protection fault}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00018}\mbox{\hyperlink{traps_8h_a79fafc536ca51352802d69fe3118eead}{00018}} \textcolor{preprocessor}{\#define T\_PGFLT         14      }\textcolor{comment}{// page fault}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00019}00019 \textcolor{comment}{// \#define T\_RES        15      // reserved}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00020}\mbox{\hyperlink{traps_8h_a883155e087e0e436a6e2d734b5bd247b}{00020}} \textcolor{preprocessor}{\#define T\_FPERR         16      }\textcolor{comment}{// floating point error}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00021}\mbox{\hyperlink{traps_8h_a04b077da4e7bcdaa52e9900e3ac2ad46}{00021}} \textcolor{preprocessor}{\#define T\_ALIGN         17      }\textcolor{comment}{// aligment check}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00022}\mbox{\hyperlink{traps_8h_a39704806098b0fdee2ad18a46c87b5a4}{00022}} \textcolor{preprocessor}{\#define T\_MCHK          18      }\textcolor{comment}{// machine check}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00023}\mbox{\hyperlink{traps_8h_a009bee02b7ee62856b8662d16d12dea3}{00023}} \textcolor{preprocessor}{\#define T\_SIMDERR       19      }\textcolor{comment}{// SIMD floating point error}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00025}00025 \textcolor{comment}{// These are arbitrarily chosen, but with care not to overlap}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00026}00026 \textcolor{comment}{// processor defined exceptions or interrupt vectors.}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00027}\mbox{\hyperlink{traps_8h_a6914c7173b6fe6d04e78d0876e39d95e}{00027}} \textcolor{preprocessor}{\#define T\_SYSCALL       64      }\textcolor{comment}{// system call}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00028}\mbox{\hyperlink{traps_8h_a9b10f19a4f29fd2599888400adc48b0e}{00028}} \textcolor{preprocessor}{\#define T\_DEFAULT      500      }\textcolor{comment}{// catchall}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00030}\mbox{\hyperlink{traps_8h_a17129100154901eb81be6e438843a0e1}{00030}} \textcolor{preprocessor}{\#define T\_IRQ0          32      }\textcolor{comment}{// IRQ 0 corresponds to int T\_IRQ}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00032}\mbox{\hyperlink{traps_8h_a85fc66e3edd4ed6a4db6e455feaba8ca}{00032}} \textcolor{preprocessor}{\#define IRQ\_TIMER        0}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00033}\mbox{\hyperlink{traps_8h_a0b7569cda71298859ffb6ea55c03a36a}{00033}} \textcolor{preprocessor}{\#define IRQ\_KBD          1}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00034}\mbox{\hyperlink{traps_8h_a603b478f70a928f442e33fefba73494a}{00034}} \textcolor{preprocessor}{\#define IRQ\_COM1         4}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00035}\mbox{\hyperlink{traps_8h_ae17548e9192fbdecfb02247721aaf2df}{00035}} \textcolor{preprocessor}{\#define IRQ\_IDE         14}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00036}\mbox{\hyperlink{traps_8h_a7546e682900c4558b1f8c4f0633bc7b9}{00036}} \textcolor{preprocessor}{\#define IRQ\_ERROR       19}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00037}\mbox{\hyperlink{traps_8h_a0e95f09d5e5653670eede10844d73875}{00037}} \textcolor{preprocessor}{\#define IRQ\_SPURIOUS    31}}
+\DoxyCodeLine{\Hypertarget{traps_8h_source_l00038}00038 }
+
+\end{DoxyCode}

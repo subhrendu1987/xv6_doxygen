@@ -1,0 +1,112 @@
+\hypertarget{grep_8c_source}{}\doxysection{grep.\+c}
+\mbox{\hyperlink{grep_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00001}00001 \textcolor{comment}{// Simple grep.  Only supports \string^ . * \$ operators.}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00003}00003 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00004}00004 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{stat_8h}{stat.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00005}00005 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{user_8h}{user.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00007}\mbox{\hyperlink{grep_8c_ac75fce8692fd1d41a8985f6aacc4a175}{00007}} \textcolor{keywordtype}{char} \mbox{\hyperlink{structbuf}{buf}}[1024];}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00008}00008 \textcolor{keywordtype}{int} \mbox{\hyperlink{grep_8c_a21a26bd0e26e51f529e7fcc1f7ffbb0c}{match}}(\textcolor{keywordtype}{char}*, \textcolor{keywordtype}{char}*);}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00010}00010 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00011}\mbox{\hyperlink{grep_8c_aefb6587871b683544f860d4e2b518718}{00011}} \mbox{\hyperlink{grep_8c_aefb6587871b683544f860d4e2b518718}{grep}}(\textcolor{keywordtype}{char} *pattern, \textcolor{keywordtype}{int} fd)}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00012}00012 \{}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00013}00013   \textcolor{keywordtype}{int} n, m;}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00014}00014   \textcolor{keywordtype}{char} *p, *q;}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00016}00016   m = 0;}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00017}00017   \textcolor{keywordflow}{while}((n = \mbox{\hyperlink{user_8h_a2d73522d6354b8a141ecfaa9585a0c77}{read}}(fd, \mbox{\hyperlink{structbuf}{buf}}+m, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structbuf}{buf}})-\/m-\/1)) > 0)\{}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00018}00018     m += n;}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00019}00019     \mbox{\hyperlink{structbuf}{buf}}[m] = \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00020}00020     p = \mbox{\hyperlink{grep_8c_ac75fce8692fd1d41a8985f6aacc4a175}{buf}};}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00021}00021     \textcolor{keywordflow}{while}((q = \mbox{\hyperlink{ulib_8c_a34704df9bf598dd9b477bafe5642cfe7}{strchr}}(p, \textcolor{charliteral}{'\(\backslash\)n'})) != 0)\{}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00022}00022       *q = 0;}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00023}00023       \textcolor{keywordflow}{if}(\mbox{\hyperlink{grep_8c_a21a26bd0e26e51f529e7fcc1f7ffbb0c}{match}}(pattern, p))\{}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00024}00024         *q = \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00025}00025         \mbox{\hyperlink{user_8h_ae57e95d717eb7386cd8b935a0c136abe}{write}}(1, p, q+1 -\/ p);}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00026}00026       \}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00027}00027       p = q+1;}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00028}00028     \}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00029}00029     \textcolor{keywordflow}{if}(p == \mbox{\hyperlink{structbuf}{buf}})}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00030}00030       m = 0;}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00031}00031     \textcolor{keywordflow}{if}(m > 0)\{}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00032}00032       m -\/= p -\/ \mbox{\hyperlink{grep_8c_ac75fce8692fd1d41a8985f6aacc4a175}{buf}};}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00033}00033       \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(\mbox{\hyperlink{structbuf}{buf}}, p, m);}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00034}00034     \}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00035}00035   \}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00036}00036 \}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00038}00038 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00039}\mbox{\hyperlink{grep_8c_a0ddf1224851353fc92bfbff6f499fa97}{00039}} \mbox{\hyperlink{forktest_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}}(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} *\mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}[])}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00040}00040 \{}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00041}00041   \textcolor{keywordtype}{int} fd, i;}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00042}00042   \textcolor{keywordtype}{char} *pattern;}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00044}00044   \textcolor{keywordflow}{if}(argc <= 1)\{}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00045}00045     \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(2, \textcolor{stringliteral}{"{}usage: grep pattern [file ...]\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00046}00046     \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00047}00047   \}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00048}00048   pattern = \mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}[1];}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00049}00049 }
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00050}00050   \textcolor{keywordflow}{if}(argc <= 2)\{}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00051}00051     \mbox{\hyperlink{grep_8c_aefb6587871b683544f860d4e2b518718}{grep}}(pattern, 0);}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00052}00052     \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00053}00053   \}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00055}00055   \textcolor{keywordflow}{for}(i = 2; i < argc; i++)\{}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00056}00056     \textcolor{keywordflow}{if}((fd = \mbox{\hyperlink{user_8h_a2c4414339f388561554c2deab11a1a07}{open}}(\mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}[i], 0)) < 0)\{}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00057}00057       \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}grep: cannot open \%s\(\backslash\)n"{}}, \mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}[i]);}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00058}00058       \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00059}00059     \}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00060}00060     \mbox{\hyperlink{grep_8c_aefb6587871b683544f860d4e2b518718}{grep}}(pattern, fd);}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00061}00061     \mbox{\hyperlink{user_8h_ae152484c890a24e4d9b4980e7b965be0}{close}}(fd);}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00062}00062   \}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00063}00063   \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00064}00064 \}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00066}00066 \textcolor{comment}{// Regexp matcher from Kernighan \& Pike,}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00067}00067 \textcolor{comment}{// The Practice of Programming, Chapter 9.}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00069}00069 \textcolor{keywordtype}{int} \mbox{\hyperlink{grep_8c_a179fc8565cee7d1e5c9cf742e61f78e4}{matchhere}}(\textcolor{keywordtype}{char}*, \textcolor{keywordtype}{char}*);}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00070}00070 \textcolor{keywordtype}{int} \mbox{\hyperlink{grep_8c_a1775658a8b4077f2284310c5cdab3ef1}{matchstar}}(\textcolor{keywordtype}{int}, \textcolor{keywordtype}{char}*, \textcolor{keywordtype}{char}*);}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00071}00071 }
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00072}00072 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00073}\mbox{\hyperlink{grep_8c_a21a26bd0e26e51f529e7fcc1f7ffbb0c}{00073}} \mbox{\hyperlink{grep_8c_a21a26bd0e26e51f529e7fcc1f7ffbb0c}{match}}(\textcolor{keywordtype}{char} *re, \textcolor{keywordtype}{char} *text)}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00074}00074 \{}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00075}00075   \textcolor{keywordflow}{if}(re[0] == \textcolor{charliteral}{'\string^'})}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00076}00076     \textcolor{keywordflow}{return} \mbox{\hyperlink{grep_8c_a179fc8565cee7d1e5c9cf742e61f78e4}{matchhere}}(re+1, text);}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00077}00077   \textcolor{keywordflow}{do}\{  \textcolor{comment}{// must look at empty string}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00078}00078     \textcolor{keywordflow}{if}(\mbox{\hyperlink{grep_8c_a179fc8565cee7d1e5c9cf742e61f78e4}{matchhere}}(re, text))}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00079}00079       \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00080}00080   \}\textcolor{keywordflow}{while}(*text++ != \textcolor{charliteral}{'\(\backslash\)0'});}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00081}00081   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00082}00082 \}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00083}00083 }
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00084}00084 \textcolor{comment}{// matchhere: search for re at beginning of text}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00085}\mbox{\hyperlink{grep_8c_a179fc8565cee7d1e5c9cf742e61f78e4}{00085}} \textcolor{keywordtype}{int} \mbox{\hyperlink{grep_8c_a179fc8565cee7d1e5c9cf742e61f78e4}{matchhere}}(\textcolor{keywordtype}{char} *re, \textcolor{keywordtype}{char} *text)}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00086}00086 \{}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00087}00087   \textcolor{keywordflow}{if}(re[0] == \textcolor{charliteral}{'\(\backslash\)0'})}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00088}00088     \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00089}00089   \textcolor{keywordflow}{if}(re[1] == \textcolor{charliteral}{'*'})}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00090}00090     \textcolor{keywordflow}{return} \mbox{\hyperlink{grep_8c_a1775658a8b4077f2284310c5cdab3ef1}{matchstar}}(re[0], re+2, text);}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00091}00091   \textcolor{keywordflow}{if}(re[0] == \textcolor{charliteral}{'\$'} \&\& re[1] == \textcolor{charliteral}{'\(\backslash\)0'})}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00092}00092     \textcolor{keywordflow}{return} *text == \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00093}00093   \textcolor{keywordflow}{if}(*text!=\textcolor{charliteral}{'\(\backslash\)0'} \&\& (re[0]==\textcolor{charliteral}{'.'} || re[0]==*text))}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00094}00094     \textcolor{keywordflow}{return} \mbox{\hyperlink{grep_8c_a179fc8565cee7d1e5c9cf742e61f78e4}{matchhere}}(re+1, text+1);}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00095}00095   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00096}00096 \}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00097}00097 }
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00098}00098 \textcolor{comment}{// matchstar: search for c*re at beginning of text}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00099}\mbox{\hyperlink{grep_8c_a1775658a8b4077f2284310c5cdab3ef1}{00099}} \textcolor{keywordtype}{int} \mbox{\hyperlink{grep_8c_a1775658a8b4077f2284310c5cdab3ef1}{matchstar}}(\textcolor{keywordtype}{int} c, \textcolor{keywordtype}{char} *re, \textcolor{keywordtype}{char} *text)}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00100}00100 \{}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00101}00101   \textcolor{keywordflow}{do}\{  \textcolor{comment}{// a * matches zero or more instances}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00102}00102     \textcolor{keywordflow}{if}(\mbox{\hyperlink{grep_8c_a179fc8565cee7d1e5c9cf742e61f78e4}{matchhere}}(re, text))}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00103}00103       \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00104}00104   \}\textcolor{keywordflow}{while}(*text!=\textcolor{charliteral}{'\(\backslash\)0'} \&\& (*text++==c || c==\textcolor{charliteral}{'.'}));}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00105}00105   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00106}00106 \}}
+\DoxyCodeLine{\Hypertarget{grep_8c_source_l00107}00107 }
+
+\end{DoxyCode}

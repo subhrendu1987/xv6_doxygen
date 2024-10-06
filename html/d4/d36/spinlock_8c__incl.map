@@ -1,0 +1,11 @@
+<map id="spinlock.c" name="spinlock.c">
+<area shape="rect" id="node1" title=" " alt="" coords="308,5,389,31"/>
+<area shape="rect" id="node2" href="$d9/d49/types_8h.html" title=" " alt="" coords="5,79,71,104"/>
+<area shape="rect" id="node3" href="$d5/d64/defs_8h.html" title=" " alt="" coords="95,79,154,104"/>
+<area shape="rect" id="node4" href="$d5/d33/param_8h.html" title=" " alt="" coords="178,79,247,104"/>
+<area shape="rect" id="node5" href="$d5/d39/x86_8h.html" title=" " alt="" coords="272,79,327,104"/>
+<area shape="rect" id="node6" href="$d8/da9/memlayout_8h.html" title=" " alt="" coords="351,79,448,104"/>
+<area shape="rect" id="node7" href="$d2/df1/mmu_8h.html" title=" " alt="" coords="472,79,535,104"/>
+<area shape="rect" id="node8" href="$df/d03/proc_8h.html" title=" " alt="" coords="559,79,618,104"/>
+<area shape="rect" id="node9" href="$df/d63/spinlock_8h.html" title=" " alt="" coords="643,79,724,104"/>
+</map>

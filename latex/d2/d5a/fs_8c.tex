@@ -1,0 +1,842 @@
+\hypertarget{fs_8c}{}\doxysection{fs.\+c File Reference}
+\label{fs_8c}\index{fs.c@{fs.c}}
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}defs.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}param.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stat.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mmu.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}proc.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}spinlock.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}sleeplock.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}fs.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}buf.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}file.\+h\char`\"{}}\newline
+Include dependency graph for fs.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d4/d4f/fs_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{fs_8c_ac6afabdc09a49a433ee19d8a9486056d}{min}}(a,  b)~((a) $<$ (b) ? (a) \+: (b))
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{fs_8c_aff0080b2133027be2e525ca088b40e78}{readsb}} (int dev, struct \mbox{\hyperlink{structsuperblock}{superblock}} $\ast$\mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}})
+\item 
+void \mbox{\hyperlink{fs_8c_a301761a27cf266e0bad483272fb31a3c}{iinit}} (int dev)
+\item 
+struct \mbox{\hyperlink{structinode}{inode}} $\ast$ \mbox{\hyperlink{fs_8c_af95049367381647bc9487af49724b869}{ialloc}} (\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} dev, short type)
+\item 
+void \mbox{\hyperlink{fs_8c_a7220afa8e5f4bea540eb95879ea7df6e}{iupdate}} (struct \mbox{\hyperlink{structinode}{inode}} $\ast$ip)
+\item 
+struct \mbox{\hyperlink{structinode}{inode}} $\ast$ \mbox{\hyperlink{fs_8c_a24a91383ab80b4b8a1ef1f4df896035c}{idup}} (struct \mbox{\hyperlink{structinode}{inode}} $\ast$ip)
+\item 
+void \mbox{\hyperlink{fs_8c_aed28187406d84a3aa71f10c6235a03ec}{ilock}} (struct \mbox{\hyperlink{structinode}{inode}} $\ast$ip)
+\item 
+void \mbox{\hyperlink{fs_8c_ae4e29916219b9293b37f9c34220694fe}{iunlock}} (struct \mbox{\hyperlink{structinode}{inode}} $\ast$ip)
+\item 
+void \mbox{\hyperlink{fs_8c_ab3c447f135c68e4c3c1f8d5866f6e77b}{iput}} (struct \mbox{\hyperlink{structinode}{inode}} $\ast$ip)
+\item 
+void \mbox{\hyperlink{fs_8c_a207b3008bae35596c55ec7c4fc6875eb}{iunlockput}} (struct \mbox{\hyperlink{structinode}{inode}} $\ast$ip)
+\item 
+void \mbox{\hyperlink{fs_8c_a4ccff0bd4d9802e709d0af8d71a59861}{stati}} (struct \mbox{\hyperlink{structinode}{inode}} $\ast$ip, struct \mbox{\hyperlink{structstat}{stat}} $\ast$st)
+\item 
+int \mbox{\hyperlink{fs_8c_a3aba1fa9f6789d09356aec5b96d91fa8}{readi}} (struct \mbox{\hyperlink{structinode}{inode}} $\ast$ip, char $\ast$dst, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} off, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} n)
+\item 
+int \mbox{\hyperlink{fs_8c_a15858f4d8a4cc1def3d84d03c312836b}{writei}} (struct \mbox{\hyperlink{structinode}{inode}} $\ast$ip, char $\ast$src, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} off, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} n)
+\item 
+int \mbox{\hyperlink{fs_8c_ae74f6e5b19a4e7f3e72807ee67141819}{namecmp}} (const char $\ast$s, const char $\ast$t)
+\item 
+struct \mbox{\hyperlink{structinode}{inode}} $\ast$ \mbox{\hyperlink{fs_8c_a5341068f021beac8cf0032b97d231e6f}{dirlookup}} (struct \mbox{\hyperlink{structinode}{inode}} $\ast$dp, char $\ast$\mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}}, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} $\ast$poff)
+\item 
+int \mbox{\hyperlink{fs_8c_a69a135a0e8a06d9f306d77ebc0c1f7a0}{dirlink}} (struct \mbox{\hyperlink{structinode}{inode}} $\ast$dp, char $\ast$\mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}}, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} inum)
+\item 
+struct \mbox{\hyperlink{structinode}{inode}} $\ast$ \mbox{\hyperlink{fs_8c_a35c52ecf358097c17dcbbd5594acb41a}{namei}} (char $\ast$path)
+\item 
+struct \mbox{\hyperlink{structinode}{inode}} $\ast$ \mbox{\hyperlink{fs_8c_ade44726f2aed2af27fa0df5f63f9e688}{nameiparent}} (char $\ast$path, char $\ast$\mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}})
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structsuperblock}{superblock}} \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>struct \mbox{\hyperlink{structspinlock}{spinlock}} \mbox{\hyperlink{fs_8c_ab28e82cd5dda7d960095706a3ea20572}{lock}}\\
+\>struct \mbox{\hyperlink{structinode}{inode}} \mbox{\hyperlink{fs_8c_a6baaf26dd83b71b8d684c5d54a709e31}{inode}} \mbox{[}\mbox{\hyperlink{param_8h_adabafa10c7951be7c875cd2ee212be85}{NINODE}}\mbox{]}\\
+\} \mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}}\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{fs_8c_ac6afabdc09a49a433ee19d8a9486056d}\label{fs_8c_ac6afabdc09a49a433ee19d8a9486056d}} 
+\index{fs.c@{fs.c}!min@{min}}
+\index{min@{min}!fs.c@{fs.c}}
+\doxysubsubsection{\texorpdfstring{min}{min}}
+{\footnotesize\ttfamily \#define min(\begin{DoxyParamCaption}\item[{}]{a,  }\item[{}]{b }\end{DoxyParamCaption})~((a) $<$ (b) ? (a) \+: (b))}
+
+
+
+Definition at line \mbox{\hyperlink{fs_8c_source_l00024}{24}} of file \mbox{\hyperlink{fs_8c_source}{fs.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{fs_8c_a69a135a0e8a06d9f306d77ebc0c1f7a0}\label{fs_8c_a69a135a0e8a06d9f306d77ebc0c1f7a0}} 
+\index{fs.c@{fs.c}!dirlink@{dirlink}}
+\index{dirlink@{dirlink}!fs.c@{fs.c}}
+\doxysubsubsection{\texorpdfstring{dirlink()}{dirlink()}}
+{\footnotesize\ttfamily int dirlink (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structinode}{inode}} $\ast$}]{dp,  }\item[{char $\ast$}]{name,  }\item[{\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}}]{inum }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{fs_8c_source_l00552}{552}} of file \mbox{\hyperlink{fs_8c_source}{fs.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00553 \{}
+\DoxyCodeLine{00554   \textcolor{keywordtype}{int} off;}
+\DoxyCodeLine{00555   \textcolor{keyword}{struct }\mbox{\hyperlink{structdirent}{dirent}} de;}
+\DoxyCodeLine{00556   \textcolor{keyword}{struct }\mbox{\hyperlink{structinode}{inode}} *ip;}
+\DoxyCodeLine{00557 }
+\DoxyCodeLine{00558   \textcolor{comment}{// Check that name is not present.}}
+\DoxyCodeLine{00559   \textcolor{keywordflow}{if}((ip = \mbox{\hyperlink{fs_8c_a5341068f021beac8cf0032b97d231e6f}{dirlookup}}(dp, \mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}}, 0)) != 0)\{}
+\DoxyCodeLine{00560     \mbox{\hyperlink{fs_8c_ab3c447f135c68e4c3c1f8d5866f6e77b}{iput}}(ip);}
+\DoxyCodeLine{00561     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00562   \}}
+\DoxyCodeLine{00563 }
+\DoxyCodeLine{00564   \textcolor{comment}{// Look for an empty dirent.}}
+\DoxyCodeLine{00565   \textcolor{keywordflow}{for}(off = 0; off < dp-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}}; off += \textcolor{keyword}{sizeof}(de))\{}
+\DoxyCodeLine{00566     \textcolor{keywordflow}{if}(\mbox{\hyperlink{fs_8c_a3aba1fa9f6789d09356aec5b96d91fa8}{readi}}(dp, (\textcolor{keywordtype}{char}*)\&de, off, \textcolor{keyword}{sizeof}(de)) != \textcolor{keyword}{sizeof}(de))}
+\DoxyCodeLine{00567       \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}dirlink read"{}});}
+\DoxyCodeLine{00568     \textcolor{keywordflow}{if}(de.inum == 0)}
+\DoxyCodeLine{00569       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00570   \}}
+\DoxyCodeLine{00571 }
+\DoxyCodeLine{00572   \mbox{\hyperlink{defs_8h_a66107cd2364627727a36cef6c773b39c}{strncpy}}(de.name, \mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}}, \mbox{\hyperlink{fs_8h_a48246fb9e5cb7f6a71ebc9ebc2f06562}{DIRSIZ}});}
+\DoxyCodeLine{00573   de.inum = \mbox{\hyperlink{structinode_a8acc2b9df0bfc6856da62925763db7fe}{inum}};}
+\DoxyCodeLine{00574   \textcolor{keywordflow}{if}(\mbox{\hyperlink{fs_8c_a15858f4d8a4cc1def3d84d03c312836b}{writei}}(dp, (\textcolor{keywordtype}{char}*)\&de, off, \textcolor{keyword}{sizeof}(de)) != \textcolor{keyword}{sizeof}(de))}
+\DoxyCodeLine{00575     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}dirlink"{}});}
+\DoxyCodeLine{00576 }
+\DoxyCodeLine{00577   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00578 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/d5a/fs_8c_a69a135a0e8a06d9f306d77ebc0c1f7a0_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=211pt]{d2/d5a/fs_8c_a69a135a0e8a06d9f306d77ebc0c1f7a0_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{fs_8c_a5341068f021beac8cf0032b97d231e6f}\label{fs_8c_a5341068f021beac8cf0032b97d231e6f}} 
+\index{fs.c@{fs.c}!dirlookup@{dirlookup}}
+\index{dirlookup@{dirlookup}!fs.c@{fs.c}}
+\doxysubsubsection{\texorpdfstring{dirlookup()}{dirlookup()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structinode}{inode}} $\ast$ dirlookup (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structinode}{inode}} $\ast$}]{dp,  }\item[{char $\ast$}]{name,  }\item[{\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} $\ast$}]{poff }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{fs_8c_source_l00525}{525}} of file \mbox{\hyperlink{fs_8c_source}{fs.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00526 \{}
+\DoxyCodeLine{00527   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} off, inum;}
+\DoxyCodeLine{00528   \textcolor{keyword}{struct }\mbox{\hyperlink{structdirent}{dirent}} de;}
+\DoxyCodeLine{00529 }
+\DoxyCodeLine{00530   \textcolor{keywordflow}{if}(dp-\/>\mbox{\hyperlink{structinode_a8d74bec2898785c057111c328d23fda2}{type}} != \mbox{\hyperlink{stat_8h_a91136bcd71a9f499304f5d7e7e9d6376}{T\_DIR}})}
+\DoxyCodeLine{00531     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}dirlookup not DIR"{}});}
+\DoxyCodeLine{00532 }
+\DoxyCodeLine{00533   \textcolor{keywordflow}{for}(off = 0; off < dp-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}}; off += \textcolor{keyword}{sizeof}(de))\{}
+\DoxyCodeLine{00534     \textcolor{keywordflow}{if}(\mbox{\hyperlink{fs_8c_a3aba1fa9f6789d09356aec5b96d91fa8}{readi}}(dp, (\textcolor{keywordtype}{char}*)\&de, off, \textcolor{keyword}{sizeof}(de)) != \textcolor{keyword}{sizeof}(de))}
+\DoxyCodeLine{00535       \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}dirlookup read"{}});}
+\DoxyCodeLine{00536     \textcolor{keywordflow}{if}(de.inum == 0)}
+\DoxyCodeLine{00537       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00538     \textcolor{keywordflow}{if}(\mbox{\hyperlink{fs_8c_ae74f6e5b19a4e7f3e72807ee67141819}{namecmp}}(\mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}}, de.name) == 0)\{}
+\DoxyCodeLine{00539       \textcolor{comment}{// entry matches path element}}
+\DoxyCodeLine{00540       \textcolor{keywordflow}{if}(poff)}
+\DoxyCodeLine{00541         *poff = off;}
+\DoxyCodeLine{00542       \mbox{\hyperlink{structdirent_a68698c303a46d2a34232a2226629ac79}{inum}} = de.inum;}
+\DoxyCodeLine{00543       \textcolor{keywordflow}{return} iget(dp-\/>\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}}, \mbox{\hyperlink{structdirent_a68698c303a46d2a34232a2226629ac79}{inum}});}
+\DoxyCodeLine{00544     \}}
+\DoxyCodeLine{00545   \}}
+\DoxyCodeLine{00546 }
+\DoxyCodeLine{00547   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00548 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/d5a/fs_8c_a5341068f021beac8cf0032b97d231e6f_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=324pt]{d2/d5a/fs_8c_a5341068f021beac8cf0032b97d231e6f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{fs_8c_af95049367381647bc9487af49724b869}\label{fs_8c_af95049367381647bc9487af49724b869}} 
+\index{fs.c@{fs.c}!ialloc@{ialloc}}
+\index{ialloc@{ialloc}!fs.c@{fs.c}}
+\doxysubsubsection{\texorpdfstring{ialloc()}{ialloc()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structinode}{inode}} $\ast$ ialloc (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}}]{dev,  }\item[{short}]{type }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{fs_8c_source_l00195}{195}} of file \mbox{\hyperlink{fs_8c_source}{fs.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00196 \{}
+\DoxyCodeLine{00197   \textcolor{keywordtype}{int} inum;}
+\DoxyCodeLine{00198   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} *bp;}
+\DoxyCodeLine{00199   \textcolor{keyword}{struct }\mbox{\hyperlink{structdinode}{dinode}} *dip;}
+\DoxyCodeLine{00200 }
+\DoxyCodeLine{00201   \textcolor{keywordflow}{for}(inum = 1; inum < \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}.\mbox{\hyperlink{structsuperblock_a355d2a1ebdc51f80820c23e69363cf42}{ninodes}}; inum++)\{}
+\DoxyCodeLine{00202     bp = \mbox{\hyperlink{bio_8c_a30b8d2ef2300ed8e3d879a428fe39898}{bread}}(dev, \mbox{\hyperlink{fs_8h_ac9a5b990015f0f86e5d4c6b21d38ffa0}{IBLOCK}}(inum, \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}));}
+\DoxyCodeLine{00203     dip = (\textcolor{keyword}{struct }\mbox{\hyperlink{structdinode}{dinode}}*)bp-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}} + inum\%\mbox{\hyperlink{fs_8h_aadb6c866a6d0a173f5f0a6ed9c7e0228}{IPB}};}
+\DoxyCodeLine{00204     \textcolor{keywordflow}{if}(dip-\/>\mbox{\hyperlink{structdinode_abf6b2a8476a803284f1c927fb3b82259}{type}} == 0)\{  \textcolor{comment}{// a free inode}}
+\DoxyCodeLine{00205       \mbox{\hyperlink{defs_8h_a0098886a849eef10803e9f35ceec61b9}{memset}}(dip, 0, \textcolor{keyword}{sizeof}(*dip));}
+\DoxyCodeLine{00206       dip-\/>\mbox{\hyperlink{structdinode_abf6b2a8476a803284f1c927fb3b82259}{type}} = \mbox{\hyperlink{structdinode_abf6b2a8476a803284f1c927fb3b82259}{type}};}
+\DoxyCodeLine{00207       \mbox{\hyperlink{defs_8h_a270d0050dc50965f4f851717841ad33c}{log\_write}}(bp);   \textcolor{comment}{// mark it allocated on the disk}}
+\DoxyCodeLine{00208       \mbox{\hyperlink{bio_8c_ab5335aeb503731104314321a78a6d727}{brelse}}(bp);}
+\DoxyCodeLine{00209       \textcolor{keywordflow}{return} iget(dev, inum);}
+\DoxyCodeLine{00210     \}}
+\DoxyCodeLine{00211     \mbox{\hyperlink{bio_8c_ab5335aeb503731104314321a78a6d727}{brelse}}(bp);}
+\DoxyCodeLine{00212   \}}
+\DoxyCodeLine{00213   \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}ialloc: no inodes"{}});}
+\DoxyCodeLine{00214 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/d5a/fs_8c_af95049367381647bc9487af49724b869_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{fs_8c_a24a91383ab80b4b8a1ef1f4df896035c}\label{fs_8c_a24a91383ab80b4b8a1ef1f4df896035c}} 
+\index{fs.c@{fs.c}!idup@{idup}}
+\index{idup@{idup}!fs.c@{fs.c}}
+\doxysubsubsection{\texorpdfstring{idup()}{idup()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structinode}{inode}} $\ast$ idup (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structinode}{inode}} $\ast$}]{ip }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{fs_8c_source_l00277}{277}} of file \mbox{\hyperlink{fs_8c_source}{fs.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00278 \{}
+\DoxyCodeLine{00279   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}}.lock);}
+\DoxyCodeLine{00280   ip-\/>\mbox{\hyperlink{structinode_a6a519028ee67f805482b3e1725bf09c5}{ref}}++;}
+\DoxyCodeLine{00281   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}}.lock);}
+\DoxyCodeLine{00282   \textcolor{keywordflow}{return} ip;}
+\DoxyCodeLine{00283 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/d5a/fs_8c_a24a91383ab80b4b8a1ef1f4df896035c_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/d5a/fs_8c_a24a91383ab80b4b8a1ef1f4df896035c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{fs_8c_a301761a27cf266e0bad483272fb31a3c}\label{fs_8c_a301761a27cf266e0bad483272fb31a3c}} 
+\index{fs.c@{fs.c}!iinit@{iinit}}
+\index{iinit@{iinit}!fs.c@{fs.c}}
+\doxysubsubsection{\texorpdfstring{iinit()}{iinit()}}
+{\footnotesize\ttfamily void iinit (\begin{DoxyParamCaption}\item[{int}]{dev }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{fs_8c_source_l00172}{172}} of file \mbox{\hyperlink{fs_8c_source}{fs.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00173 \{}
+\DoxyCodeLine{00174   \textcolor{keywordtype}{int} i = 0;}
+\DoxyCodeLine{00175   }
+\DoxyCodeLine{00176   \mbox{\hyperlink{defs_8h_ab56d728e6966819a0260c358d3ac3419}{initlock}}(\&\mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}}.lock, \textcolor{stringliteral}{"{}icache"{}});}
+\DoxyCodeLine{00177   \textcolor{keywordflow}{for}(i = 0; i < \mbox{\hyperlink{param_8h_adabafa10c7951be7c875cd2ee212be85}{NINODE}}; i++) \{}
+\DoxyCodeLine{00178     \mbox{\hyperlink{defs_8h_af5ca8072e3877a883fb34ce59eff88cb}{initsleeplock}}(\&\mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}}.inode[i].lock, \textcolor{stringliteral}{"{}inode"{}});}
+\DoxyCodeLine{00179   \}}
+\DoxyCodeLine{00180 }
+\DoxyCodeLine{00181   \mbox{\hyperlink{fs_8c_aff0080b2133027be2e525ca088b40e78}{readsb}}(dev, \&\mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}});}
+\DoxyCodeLine{00182   \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{}sb: size \%d nblocks \%d ninodes \%d nlog \%d logstart \%d\(\backslash\)}}
+\DoxyCodeLine{00183 \textcolor{stringliteral}{ inodestart \%d bmap start \%d\(\backslash\)n"{}}, \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}.\mbox{\hyperlink{structsuperblock_a7c6e4d6da139ecee74eb7816d5d44fa6}{size}}, \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}.\mbox{\hyperlink{structsuperblock_a2a27a7cfb54689f0e1dcd1788d049218}{nblocks}},}
+\DoxyCodeLine{00184           \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}.\mbox{\hyperlink{structsuperblock_a355d2a1ebdc51f80820c23e69363cf42}{ninodes}}, \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}.\mbox{\hyperlink{structsuperblock_aea92ae872785fd4fb39b903d9157aac5}{nlog}}, \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}.\mbox{\hyperlink{structsuperblock_a460268b28aced19797e8d7b84aa60ebf}{logstart}}, \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}.\mbox{\hyperlink{structsuperblock_adde361528f3905445974301b424611c1}{inodestart}},}
+\DoxyCodeLine{00185           \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}.\mbox{\hyperlink{structsuperblock_a3c815dda5be6bda609389e76434171cc}{bmapstart}});}
+\DoxyCodeLine{00186 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/d5a/fs_8c_a301761a27cf266e0bad483272fb31a3c_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=192pt]{d2/d5a/fs_8c_a301761a27cf266e0bad483272fb31a3c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{fs_8c_aed28187406d84a3aa71f10c6235a03ec}\label{fs_8c_aed28187406d84a3aa71f10c6235a03ec}} 
+\index{fs.c@{fs.c}!ilock@{ilock}}
+\index{ilock@{ilock}!fs.c@{fs.c}}
+\doxysubsubsection{\texorpdfstring{ilock()}{ilock()}}
+{\footnotesize\ttfamily void ilock (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structinode}{inode}} $\ast$}]{ip }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{fs_8c_source_l00288}{288}} of file \mbox{\hyperlink{fs_8c_source}{fs.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00289 \{}
+\DoxyCodeLine{00290   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} *bp;}
+\DoxyCodeLine{00291   \textcolor{keyword}{struct }\mbox{\hyperlink{structdinode}{dinode}} *dip;}
+\DoxyCodeLine{00292 }
+\DoxyCodeLine{00293   \textcolor{keywordflow}{if}(ip == 0 || ip-\/>\mbox{\hyperlink{structinode_a6a519028ee67f805482b3e1725bf09c5}{ref}} < 1)}
+\DoxyCodeLine{00294     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}ilock"{}});}
+\DoxyCodeLine{00295 }
+\DoxyCodeLine{00296   \mbox{\hyperlink{defs_8h_aecd4639fe2f9aaad8e8cee2b5e0688c3}{acquiresleep}}(\&ip-\/>\mbox{\hyperlink{structinode_a46bad0e938fbd348ac02bdef0c8d6215}{lock}});}
+\DoxyCodeLine{00297 }
+\DoxyCodeLine{00298   \textcolor{keywordflow}{if}(ip-\/>\mbox{\hyperlink{structinode_aad324382ba30eb83daa5304fce7dca08}{valid}} == 0)\{}
+\DoxyCodeLine{00299     bp = \mbox{\hyperlink{bio_8c_a30b8d2ef2300ed8e3d879a428fe39898}{bread}}(ip-\/>\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}}, \mbox{\hyperlink{fs_8h_ac9a5b990015f0f86e5d4c6b21d38ffa0}{IBLOCK}}(ip-\/>\mbox{\hyperlink{structinode_a8acc2b9df0bfc6856da62925763db7fe}{inum}}, \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}));}
+\DoxyCodeLine{00300     dip = (\textcolor{keyword}{struct }\mbox{\hyperlink{structdinode}{dinode}}*)bp-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}} + ip-\/>\mbox{\hyperlink{structinode_a8acc2b9df0bfc6856da62925763db7fe}{inum}}\%\mbox{\hyperlink{fs_8h_aadb6c866a6d0a173f5f0a6ed9c7e0228}{IPB}};}
+\DoxyCodeLine{00301     ip-\/>\mbox{\hyperlink{structinode_a8d74bec2898785c057111c328d23fda2}{type}} = dip-\/>\mbox{\hyperlink{structdinode_abf6b2a8476a803284f1c927fb3b82259}{type}};}
+\DoxyCodeLine{00302     ip-\/>\mbox{\hyperlink{structinode_a34af7242018a977dace5730683850875}{major}} = dip-\/>\mbox{\hyperlink{structdinode_aca8272002020f48219df175c986db257}{major}};}
+\DoxyCodeLine{00303     ip-\/>\mbox{\hyperlink{structinode_a37878866e7905b666db2aa33076076a2}{minor}} = dip-\/>\mbox{\hyperlink{structdinode_ae97965f85e7353313f85035e8fc63495}{minor}};}
+\DoxyCodeLine{00304     ip-\/>\mbox{\hyperlink{structinode_af8b88b409bea7ef99c49a55f387538b2}{nlink}} = dip-\/>\mbox{\hyperlink{structdinode_a105562253b461c11413c9a229ef15358}{nlink}};}
+\DoxyCodeLine{00305     ip-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}} = dip-\/>\mbox{\hyperlink{structdinode_a990ad8ddf5f8c051fbbe95cf550d2164}{size}};}
+\DoxyCodeLine{00306     \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(ip-\/>\mbox{\hyperlink{structinode_a7ba4ab7e52404b80d6d854678715ae30}{addrs}}, dip-\/>\mbox{\hyperlink{structdinode_a705729b3a39c10c0ba6927fc5e4e0563}{addrs}}, \textcolor{keyword}{sizeof}(ip-\/>\mbox{\hyperlink{structinode_a7ba4ab7e52404b80d6d854678715ae30}{addrs}}));}
+\DoxyCodeLine{00307     \mbox{\hyperlink{bio_8c_ab5335aeb503731104314321a78a6d727}{brelse}}(bp);}
+\DoxyCodeLine{00308     ip-\/>\mbox{\hyperlink{structinode_aad324382ba30eb83daa5304fce7dca08}{valid}} = 1;}
+\DoxyCodeLine{00309     \textcolor{keywordflow}{if}(ip-\/>\mbox{\hyperlink{structinode_a8d74bec2898785c057111c328d23fda2}{type}} == 0)}
+\DoxyCodeLine{00310       \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}ilock: no type"{}});}
+\DoxyCodeLine{00311   \}}
+\DoxyCodeLine{00312 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/d5a/fs_8c_aed28187406d84a3aa71f10c6235a03ec_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/d5a/fs_8c_aed28187406d84a3aa71f10c6235a03ec_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{fs_8c_ab3c447f135c68e4c3c1f8d5866f6e77b}\label{fs_8c_ab3c447f135c68e4c3c1f8d5866f6e77b}} 
+\index{fs.c@{fs.c}!iput@{iput}}
+\index{iput@{iput}!fs.c@{fs.c}}
+\doxysubsubsection{\texorpdfstring{iput()}{iput()}}
+{\footnotesize\ttfamily void iput (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structinode}{inode}} $\ast$}]{ip }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{fs_8c_source_l00332}{332}} of file \mbox{\hyperlink{fs_8c_source}{fs.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00333 \{}
+\DoxyCodeLine{00334   \mbox{\hyperlink{defs_8h_aecd4639fe2f9aaad8e8cee2b5e0688c3}{acquiresleep}}(\&ip-\/>\mbox{\hyperlink{structinode_a46bad0e938fbd348ac02bdef0c8d6215}{lock}});}
+\DoxyCodeLine{00335   \textcolor{keywordflow}{if}(ip-\/>\mbox{\hyperlink{structinode_aad324382ba30eb83daa5304fce7dca08}{valid}} \&\& ip-\/>\mbox{\hyperlink{structinode_af8b88b409bea7ef99c49a55f387538b2}{nlink}} == 0)\{}
+\DoxyCodeLine{00336     \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}}.lock);}
+\DoxyCodeLine{00337     \textcolor{keywordtype}{int} \mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}} = ip-\/>\mbox{\hyperlink{structinode_a6a519028ee67f805482b3e1725bf09c5}{ref}};}
+\DoxyCodeLine{00338     \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}}.lock);}
+\DoxyCodeLine{00339     \textcolor{keywordflow}{if}(\mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}} == 1)\{}
+\DoxyCodeLine{00340       \textcolor{comment}{// inode has no links and no other references: truncate and free.}}
+\DoxyCodeLine{00341       itrunc(ip);}
+\DoxyCodeLine{00342       ip-\/>\mbox{\hyperlink{structinode_a8d74bec2898785c057111c328d23fda2}{type}} = 0;}
+\DoxyCodeLine{00343       \mbox{\hyperlink{fs_8c_a7220afa8e5f4bea540eb95879ea7df6e}{iupdate}}(ip);}
+\DoxyCodeLine{00344       ip-\/>\mbox{\hyperlink{structinode_aad324382ba30eb83daa5304fce7dca08}{valid}} = 0;}
+\DoxyCodeLine{00345     \}}
+\DoxyCodeLine{00346   \}}
+\DoxyCodeLine{00347   \mbox{\hyperlink{defs_8h_a840b479c87b1c047d7142f58e0ad0b27}{releasesleep}}(\&ip-\/>\mbox{\hyperlink{structinode_a46bad0e938fbd348ac02bdef0c8d6215}{lock}});}
+\DoxyCodeLine{00348 }
+\DoxyCodeLine{00349   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}}.lock);}
+\DoxyCodeLine{00350   ip-\/>\mbox{\hyperlink{structinode_a6a519028ee67f805482b3e1725bf09c5}{ref}}-\/-\/;}
+\DoxyCodeLine{00351   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{fs_8c_a5a78db4f7c856337d906f0606b19bff5}{icache}}.lock);}
+\DoxyCodeLine{00352 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/d5a/fs_8c_ab3c447f135c68e4c3c1f8d5866f6e77b_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{d2/d5a/fs_8c_ab3c447f135c68e4c3c1f8d5866f6e77b_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{fs_8c_ae4e29916219b9293b37f9c34220694fe}\label{fs_8c_ae4e29916219b9293b37f9c34220694fe}} 
+\index{fs.c@{fs.c}!iunlock@{iunlock}}
+\index{iunlock@{iunlock}!fs.c@{fs.c}}
+\doxysubsubsection{\texorpdfstring{iunlock()}{iunlock()}}
+{\footnotesize\ttfamily void iunlock (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structinode}{inode}} $\ast$}]{ip }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{fs_8c_source_l00316}{316}} of file \mbox{\hyperlink{fs_8c_source}{fs.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00317 \{}
+\DoxyCodeLine{00318   \textcolor{keywordflow}{if}(ip == 0 || !\mbox{\hyperlink{defs_8h_afa76133bc67c6026376d630da9b53b68}{holdingsleep}}(\&ip-\/>\mbox{\hyperlink{structinode_a46bad0e938fbd348ac02bdef0c8d6215}{lock}}) || ip-\/>\mbox{\hyperlink{structinode_a6a519028ee67f805482b3e1725bf09c5}{ref}} < 1)}
+\DoxyCodeLine{00319     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}iunlock"{}});}
+\DoxyCodeLine{00320 }
+\DoxyCodeLine{00321   \mbox{\hyperlink{defs_8h_a840b479c87b1c047d7142f58e0ad0b27}{releasesleep}}(\&ip-\/>\mbox{\hyperlink{structinode_a46bad0e938fbd348ac02bdef0c8d6215}{lock}});}
+\DoxyCodeLine{00322 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/d5a/fs_8c_ae4e29916219b9293b37f9c34220694fe_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/d5a/fs_8c_ae4e29916219b9293b37f9c34220694fe_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{fs_8c_a207b3008bae35596c55ec7c4fc6875eb}\label{fs_8c_a207b3008bae35596c55ec7c4fc6875eb}} 
+\index{fs.c@{fs.c}!iunlockput@{iunlockput}}
+\index{iunlockput@{iunlockput}!fs.c@{fs.c}}
+\doxysubsubsection{\texorpdfstring{iunlockput()}{iunlockput()}}
+{\footnotesize\ttfamily void iunlockput (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structinode}{inode}} $\ast$}]{ip }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{fs_8c_source_l00356}{356}} of file \mbox{\hyperlink{fs_8c_source}{fs.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00357 \{}
+\DoxyCodeLine{00358   \mbox{\hyperlink{fs_8c_ae4e29916219b9293b37f9c34220694fe}{iunlock}}(ip);}
+\DoxyCodeLine{00359   \mbox{\hyperlink{fs_8c_ab3c447f135c68e4c3c1f8d5866f6e77b}{iput}}(ip);}
+\DoxyCodeLine{00360 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/d5a/fs_8c_a207b3008bae35596c55ec7c4fc6875eb_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/d5a/fs_8c_a207b3008bae35596c55ec7c4fc6875eb_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{fs_8c_a7220afa8e5f4bea540eb95879ea7df6e}\label{fs_8c_a7220afa8e5f4bea540eb95879ea7df6e}} 
+\index{fs.c@{fs.c}!iupdate@{iupdate}}
+\index{iupdate@{iupdate}!fs.c@{fs.c}}
+\doxysubsubsection{\texorpdfstring{iupdate()}{iupdate()}}
+{\footnotesize\ttfamily void iupdate (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structinode}{inode}} $\ast$}]{ip }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{fs_8c_source_l00221}{221}} of file \mbox{\hyperlink{fs_8c_source}{fs.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00222 \{}
+\DoxyCodeLine{00223   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} *bp;}
+\DoxyCodeLine{00224   \textcolor{keyword}{struct }\mbox{\hyperlink{structdinode}{dinode}} *dip;}
+\DoxyCodeLine{00225 }
+\DoxyCodeLine{00226   bp = \mbox{\hyperlink{bio_8c_a30b8d2ef2300ed8e3d879a428fe39898}{bread}}(ip-\/>\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}}, \mbox{\hyperlink{fs_8h_ac9a5b990015f0f86e5d4c6b21d38ffa0}{IBLOCK}}(ip-\/>\mbox{\hyperlink{structinode_a8acc2b9df0bfc6856da62925763db7fe}{inum}}, \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}));}
+\DoxyCodeLine{00227   dip = (\textcolor{keyword}{struct }\mbox{\hyperlink{structdinode}{dinode}}*)bp-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}} + ip-\/>\mbox{\hyperlink{structinode_a8acc2b9df0bfc6856da62925763db7fe}{inum}}\%\mbox{\hyperlink{fs_8h_aadb6c866a6d0a173f5f0a6ed9c7e0228}{IPB}};}
+\DoxyCodeLine{00228   dip-\/>\mbox{\hyperlink{structdinode_abf6b2a8476a803284f1c927fb3b82259}{type}} = ip-\/>\mbox{\hyperlink{structinode_a8d74bec2898785c057111c328d23fda2}{type}};}
+\DoxyCodeLine{00229   dip-\/>\mbox{\hyperlink{structdinode_aca8272002020f48219df175c986db257}{major}} = ip-\/>\mbox{\hyperlink{structinode_a34af7242018a977dace5730683850875}{major}};}
+\DoxyCodeLine{00230   dip-\/>\mbox{\hyperlink{structdinode_ae97965f85e7353313f85035e8fc63495}{minor}} = ip-\/>\mbox{\hyperlink{structinode_a37878866e7905b666db2aa33076076a2}{minor}};}
+\DoxyCodeLine{00231   dip-\/>\mbox{\hyperlink{structdinode_a105562253b461c11413c9a229ef15358}{nlink}} = ip-\/>\mbox{\hyperlink{structinode_af8b88b409bea7ef99c49a55f387538b2}{nlink}};}
+\DoxyCodeLine{00232   dip-\/>\mbox{\hyperlink{structdinode_a990ad8ddf5f8c051fbbe95cf550d2164}{size}} = ip-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}};}
+\DoxyCodeLine{00233   \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(dip-\/>\mbox{\hyperlink{structdinode_a705729b3a39c10c0ba6927fc5e4e0563}{addrs}}, ip-\/>\mbox{\hyperlink{structinode_a7ba4ab7e52404b80d6d854678715ae30}{addrs}}, \textcolor{keyword}{sizeof}(ip-\/>\mbox{\hyperlink{structinode_a7ba4ab7e52404b80d6d854678715ae30}{addrs}}));}
+\DoxyCodeLine{00234   \mbox{\hyperlink{defs_8h_a270d0050dc50965f4f851717841ad33c}{log\_write}}(bp);}
+\DoxyCodeLine{00235   \mbox{\hyperlink{bio_8c_ab5335aeb503731104314321a78a6d727}{brelse}}(bp);}
+\DoxyCodeLine{00236 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/d5a/fs_8c_a7220afa8e5f4bea540eb95879ea7df6e_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{d2/d5a/fs_8c_a7220afa8e5f4bea540eb95879ea7df6e_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{fs_8c_ae74f6e5b19a4e7f3e72807ee67141819}\label{fs_8c_ae74f6e5b19a4e7f3e72807ee67141819}} 
+\index{fs.c@{fs.c}!namecmp@{namecmp}}
+\index{namecmp@{namecmp}!fs.c@{fs.c}}
+\doxysubsubsection{\texorpdfstring{namecmp()}{namecmp()}}
+{\footnotesize\ttfamily int namecmp (\begin{DoxyParamCaption}\item[{const char $\ast$}]{s,  }\item[{const char $\ast$}]{t }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{fs_8c_source_l00517}{517}} of file \mbox{\hyperlink{fs_8c_source}{fs.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00518 \{}
+\DoxyCodeLine{00519   \textcolor{keywordflow}{return} \mbox{\hyperlink{defs_8h_a27e878168063a98eae64b4273dcf33cc}{strncmp}}(s, t, \mbox{\hyperlink{fs_8h_a48246fb9e5cb7f6a71ebc9ebc2f06562}{DIRSIZ}});}
+\DoxyCodeLine{00520 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=227pt]{d2/d5a/fs_8c_ae74f6e5b19a4e7f3e72807ee67141819_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/d5a/fs_8c_ae74f6e5b19a4e7f3e72807ee67141819_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{fs_8c_a35c52ecf358097c17dcbbd5594acb41a}\label{fs_8c_a35c52ecf358097c17dcbbd5594acb41a}} 
+\index{fs.c@{fs.c}!namei@{namei}}
+\index{namei@{namei}!fs.c@{fs.c}}
+\doxysubsubsection{\texorpdfstring{namei()}{namei()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structinode}{inode}} $\ast$ namei (\begin{DoxyParamCaption}\item[{char $\ast$}]{path }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{fs_8c_source_l00660}{660}} of file \mbox{\hyperlink{fs_8c_source}{fs.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00661 \{}
+\DoxyCodeLine{00662   \textcolor{keywordtype}{char} \mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}}[\mbox{\hyperlink{fs_8h_a48246fb9e5cb7f6a71ebc9ebc2f06562}{DIRSIZ}}];}
+\DoxyCodeLine{00663   \textcolor{keywordflow}{return} namex(path, 0, \mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}});}
+\DoxyCodeLine{00664 \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/d5a/fs_8c_a35c52ecf358097c17dcbbd5594acb41a_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{fs_8c_ade44726f2aed2af27fa0df5f63f9e688}\label{fs_8c_ade44726f2aed2af27fa0df5f63f9e688}} 
+\index{fs.c@{fs.c}!nameiparent@{nameiparent}}
+\index{nameiparent@{nameiparent}!fs.c@{fs.c}}
+\doxysubsubsection{\texorpdfstring{nameiparent()}{nameiparent()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structinode}{inode}} $\ast$ nameiparent (\begin{DoxyParamCaption}\item[{char $\ast$}]{path,  }\item[{char $\ast$}]{name }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{fs_8c_source_l00667}{667}} of file \mbox{\hyperlink{fs_8c_source}{fs.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00668 \{}
+\DoxyCodeLine{00669   \textcolor{keywordflow}{return} namex(path, 1, \mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}});}
+\DoxyCodeLine{00670 \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=249pt]{d2/d5a/fs_8c_ade44726f2aed2af27fa0df5f63f9e688_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{fs_8c_a3aba1fa9f6789d09356aec5b96d91fa8}\label{fs_8c_a3aba1fa9f6789d09356aec5b96d91fa8}} 
+\index{fs.c@{fs.c}!readi@{readi}}
+\index{readi@{readi}!fs.c@{fs.c}}
+\doxysubsubsection{\texorpdfstring{readi()}{readi()}}
+{\footnotesize\ttfamily int readi (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structinode}{inode}} $\ast$}]{ip,  }\item[{char $\ast$}]{dst,  }\item[{\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}}]{off,  }\item[{\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}}]{n }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{fs_8c_source_l00453}{453}} of file \mbox{\hyperlink{fs_8c_source}{fs.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00454 \{}
+\DoxyCodeLine{00455   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} tot, m;}
+\DoxyCodeLine{00456   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} *bp;}
+\DoxyCodeLine{00457 }
+\DoxyCodeLine{00458   \textcolor{keywordflow}{if}(ip-\/>\mbox{\hyperlink{structinode_a8d74bec2898785c057111c328d23fda2}{type}} == \mbox{\hyperlink{stat_8h_a62b045a3e4fdf204bdddda0f3fc3d8c4}{T\_DEV}})\{}
+\DoxyCodeLine{00459     \textcolor{keywordflow}{if}(ip-\/>\mbox{\hyperlink{structinode_a34af7242018a977dace5730683850875}{major}} < 0 || ip-\/>\mbox{\hyperlink{structinode_a34af7242018a977dace5730683850875}{major}} >= \mbox{\hyperlink{param_8h_aa564a41c8409694da49b0badf2bb2853}{NDEV}} || !\mbox{\hyperlink{structdevsw}{devsw}}[ip-\/>\mbox{\hyperlink{structinode_a34af7242018a977dace5730683850875}{major}}].\mbox{\hyperlink{structdevsw_a4efbe00d0031a1c9005ef2186947ea37}{read}})}
+\DoxyCodeLine{00460       \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00461     \textcolor{keywordflow}{return} \mbox{\hyperlink{structdevsw}{devsw}}[ip-\/>\mbox{\hyperlink{structinode_a34af7242018a977dace5730683850875}{major}}].\mbox{\hyperlink{structdevsw_a4efbe00d0031a1c9005ef2186947ea37}{read}}(ip, dst, n);}
+\DoxyCodeLine{00462   \}}
+\DoxyCodeLine{00463 }
+\DoxyCodeLine{00464   \textcolor{keywordflow}{if}(off > ip-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}} || off + n < off)}
+\DoxyCodeLine{00465     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00466   \textcolor{keywordflow}{if}(off + n > ip-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}})}
+\DoxyCodeLine{00467     n = ip-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}} -\/ off;}
+\DoxyCodeLine{00468 }
+\DoxyCodeLine{00469   \textcolor{keywordflow}{for}(tot=0; tot<n; tot+=m, off+=m, dst+=m)\{}
+\DoxyCodeLine{00470     bp = \mbox{\hyperlink{bio_8c_a30b8d2ef2300ed8e3d879a428fe39898}{bread}}(ip-\/>\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}}, bmap(ip, off/\mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}}));}
+\DoxyCodeLine{00471     m = \mbox{\hyperlink{fs_8c_ac6afabdc09a49a433ee19d8a9486056d}{min}}(n -\/ tot, \mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}} -\/ off\%\mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}});}
+\DoxyCodeLine{00472     \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(dst, bp-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}} + off\%\mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}}, m);}
+\DoxyCodeLine{00473     \mbox{\hyperlink{bio_8c_ab5335aeb503731104314321a78a6d727}{brelse}}(bp);}
+\DoxyCodeLine{00474   \}}
+\DoxyCodeLine{00475   \textcolor{keywordflow}{return} n;}
+\DoxyCodeLine{00476 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/d5a/fs_8c_a3aba1fa9f6789d09356aec5b96d91fa8_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/d5a/fs_8c_a3aba1fa9f6789d09356aec5b96d91fa8_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{fs_8c_aff0080b2133027be2e525ca088b40e78}\label{fs_8c_aff0080b2133027be2e525ca088b40e78}} 
+\index{fs.c@{fs.c}!readsb@{readsb}}
+\index{readsb@{readsb}!fs.c@{fs.c}}
+\doxysubsubsection{\texorpdfstring{readsb()}{readsb()}}
+{\footnotesize\ttfamily void readsb (\begin{DoxyParamCaption}\item[{int}]{dev,  }\item[{struct \mbox{\hyperlink{structsuperblock}{superblock}} $\ast$}]{sb }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{fs_8c_source_l00032}{32}} of file \mbox{\hyperlink{fs_8c_source}{fs.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00033 \{}
+\DoxyCodeLine{00034   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} *bp;}
+\DoxyCodeLine{00035 }
+\DoxyCodeLine{00036   bp = \mbox{\hyperlink{bio_8c_a30b8d2ef2300ed8e3d879a428fe39898}{bread}}(\mbox{\hyperlink{structbuf_ac96082c2b5f22133ac7092ef81487227}{dev}}, 1);}
+\DoxyCodeLine{00037   \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(\mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}, bp-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}}, \textcolor{keyword}{sizeof}(*\mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}));}
+\DoxyCodeLine{00038   \mbox{\hyperlink{bio_8c_ab5335aeb503731104314321a78a6d727}{brelse}}(bp);}
+\DoxyCodeLine{00039 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/d5a/fs_8c_aff0080b2133027be2e525ca088b40e78_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=284pt]{d2/d5a/fs_8c_aff0080b2133027be2e525ca088b40e78_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{fs_8c_a4ccff0bd4d9802e709d0af8d71a59861}\label{fs_8c_a4ccff0bd4d9802e709d0af8d71a59861}} 
+\index{fs.c@{fs.c}!stati@{stati}}
+\index{stati@{stati}!fs.c@{fs.c}}
+\doxysubsubsection{\texorpdfstring{stati()}{stati()}}
+{\footnotesize\ttfamily void stati (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structinode}{inode}} $\ast$}]{ip,  }\item[{struct \mbox{\hyperlink{structstat}{stat}} $\ast$}]{st }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{fs_8c_source_l00440}{440}} of file \mbox{\hyperlink{fs_8c_source}{fs.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00441 \{}
+\DoxyCodeLine{00442   st-\/>\mbox{\hyperlink{structstat_a14ef4f85e6fb86bf296360361d0f393b}{dev}} = ip-\/>\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}};}
+\DoxyCodeLine{00443   st-\/>\mbox{\hyperlink{structstat_abf15624517ed5d79d0fa2a5553a68e25}{ino}} = ip-\/>\mbox{\hyperlink{structinode_a8acc2b9df0bfc6856da62925763db7fe}{inum}};}
+\DoxyCodeLine{00444   st-\/>\mbox{\hyperlink{structstat_a01f1b4cd7627d192a7875c9a188e0699}{type}} = ip-\/>\mbox{\hyperlink{structinode_a8d74bec2898785c057111c328d23fda2}{type}};}
+\DoxyCodeLine{00445   st-\/>\mbox{\hyperlink{structstat_a99ca3487fd2f4799337eb4281f8871e4}{nlink}} = ip-\/>\mbox{\hyperlink{structinode_af8b88b409bea7ef99c49a55f387538b2}{nlink}};}
+\DoxyCodeLine{00446   st-\/>\mbox{\hyperlink{structstat_a4ac15b64dd4d787c59a8a687d79adb35}{size}} = ip-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}};}
+\DoxyCodeLine{00447 \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=290pt]{d2/d5a/fs_8c_a4ccff0bd4d9802e709d0af8d71a59861_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{fs_8c_a15858f4d8a4cc1def3d84d03c312836b}\label{fs_8c_a15858f4d8a4cc1def3d84d03c312836b}} 
+\index{fs.c@{fs.c}!writei@{writei}}
+\index{writei@{writei}!fs.c@{fs.c}}
+\doxysubsubsection{\texorpdfstring{writei()}{writei()}}
+{\footnotesize\ttfamily int writei (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structinode}{inode}} $\ast$}]{ip,  }\item[{char $\ast$}]{src,  }\item[{\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}}]{off,  }\item[{\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}}]{n }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{fs_8c_source_l00482}{482}} of file \mbox{\hyperlink{fs_8c_source}{fs.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00483 \{}
+\DoxyCodeLine{00484   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} tot, m;}
+\DoxyCodeLine{00485   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} *bp;}
+\DoxyCodeLine{00486 }
+\DoxyCodeLine{00487   \textcolor{keywordflow}{if}(ip-\/>\mbox{\hyperlink{structinode_a8d74bec2898785c057111c328d23fda2}{type}} == \mbox{\hyperlink{stat_8h_a62b045a3e4fdf204bdddda0f3fc3d8c4}{T\_DEV}})\{}
+\DoxyCodeLine{00488     \textcolor{keywordflow}{if}(ip-\/>\mbox{\hyperlink{structinode_a34af7242018a977dace5730683850875}{major}} < 0 || ip-\/>\mbox{\hyperlink{structinode_a34af7242018a977dace5730683850875}{major}} >= \mbox{\hyperlink{param_8h_aa564a41c8409694da49b0badf2bb2853}{NDEV}} || !\mbox{\hyperlink{structdevsw}{devsw}}[ip-\/>\mbox{\hyperlink{structinode_a34af7242018a977dace5730683850875}{major}}].\mbox{\hyperlink{structdevsw_a87fd7af6c9a6fb8663fc206be7a233d4}{write}})}
+\DoxyCodeLine{00489       \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00490     \textcolor{keywordflow}{return} \mbox{\hyperlink{structdevsw}{devsw}}[ip-\/>\mbox{\hyperlink{structinode_a34af7242018a977dace5730683850875}{major}}].\mbox{\hyperlink{structdevsw_a87fd7af6c9a6fb8663fc206be7a233d4}{write}}(ip, src, n);}
+\DoxyCodeLine{00491   \}}
+\DoxyCodeLine{00492 }
+\DoxyCodeLine{00493   \textcolor{keywordflow}{if}(off > ip-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}} || off + n < off)}
+\DoxyCodeLine{00494     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00495   \textcolor{keywordflow}{if}(off + n > \mbox{\hyperlink{fs_8h_a714b2485a6dd312e37226e1f833728a9}{MAXFILE}}*\mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}})}
+\DoxyCodeLine{00496     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00497 }
+\DoxyCodeLine{00498   \textcolor{keywordflow}{for}(tot=0; tot<n; tot+=m, off+=m, src+=m)\{}
+\DoxyCodeLine{00499     bp = \mbox{\hyperlink{bio_8c_a30b8d2ef2300ed8e3d879a428fe39898}{bread}}(ip-\/>\mbox{\hyperlink{structinode_a121742a89c4531f03a7de1613d5be605}{dev}}, bmap(ip, off/\mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}}));}
+\DoxyCodeLine{00500     m = \mbox{\hyperlink{fs_8c_ac6afabdc09a49a433ee19d8a9486056d}{min}}(n -\/ tot, \mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}} -\/ off\%\mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}});}
+\DoxyCodeLine{00501     \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(bp-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}} + off\%\mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}}, src, m);}
+\DoxyCodeLine{00502     \mbox{\hyperlink{defs_8h_a270d0050dc50965f4f851717841ad33c}{log\_write}}(bp);}
+\DoxyCodeLine{00503     \mbox{\hyperlink{bio_8c_ab5335aeb503731104314321a78a6d727}{brelse}}(bp);}
+\DoxyCodeLine{00504   \}}
+\DoxyCodeLine{00505 }
+\DoxyCodeLine{00506   \textcolor{keywordflow}{if}(n > 0 \&\& off > ip-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}})\{}
+\DoxyCodeLine{00507     ip-\/>\mbox{\hyperlink{structinode_a918af769c48a8ca8afac057bf83d12de}{size}} = off;}
+\DoxyCodeLine{00508     \mbox{\hyperlink{fs_8c_a7220afa8e5f4bea540eb95879ea7df6e}{iupdate}}(ip);}
+\DoxyCodeLine{00509   \}}
+\DoxyCodeLine{00510   \textcolor{keywordflow}{return} n;}
+\DoxyCodeLine{00511 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/d5a/fs_8c_a15858f4d8a4cc1def3d84d03c312836b_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=314pt]{d2/d5a/fs_8c_a15858f4d8a4cc1def3d84d03c312836b_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{fs_8c_a5a78db4f7c856337d906f0606b19bff5}\label{fs_8c_a5a78db4f7c856337d906f0606b19bff5}} 
+\index{fs.c@{fs.c}!icache@{icache}}
+\index{icache@{icache}!fs.c@{fs.c}}
+\doxysubsubsection{\texorpdfstring{}{}}
+{\footnotesize\ttfamily struct  \{ ... \}  icache}
+
+\mbox{\Hypertarget{fs_8c_a6baaf26dd83b71b8d684c5d54a709e31}\label{fs_8c_a6baaf26dd83b71b8d684c5d54a709e31}} 
+\index{fs.c@{fs.c}!inode@{inode}}
+\index{inode@{inode}!fs.c@{fs.c}}
+\doxysubsubsection{\texorpdfstring{inode}{inode}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structinode}{inode}} \mbox{\hyperlink{structinode}{inode}}\mbox{[}\mbox{\hyperlink{param_8h_adabafa10c7951be7c875cd2ee212be85}{NINODE}}\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{fs_8c_source_l00168}{168}} of file \mbox{\hyperlink{fs_8c_source}{fs.\+c}}.
+
+\mbox{\Hypertarget{fs_8c_ab28e82cd5dda7d960095706a3ea20572}\label{fs_8c_ab28e82cd5dda7d960095706a3ea20572}} 
+\index{fs.c@{fs.c}!lock@{lock}}
+\index{lock@{lock}!fs.c@{fs.c}}
+\doxysubsubsection{\texorpdfstring{lock}{lock}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structspinlock}{spinlock}} lock}
+
+
+
+Definition at line \mbox{\hyperlink{fs_8c_source_l00167}{167}} of file \mbox{\hyperlink{fs_8c_source}{fs.\+c}}.
+
+\mbox{\Hypertarget{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}\label{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}} 
+\index{fs.c@{fs.c}!sb@{sb}}
+\index{sb@{sb}!fs.c@{fs.c}}
+\doxysubsubsection{\texorpdfstring{sb}{sb}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structsuperblock}{superblock}} sb}
+
+
+
+Definition at line \mbox{\hyperlink{fs_8c_source_l00028}{28}} of file \mbox{\hyperlink{fs_8c_source}{fs.\+c}}.
+

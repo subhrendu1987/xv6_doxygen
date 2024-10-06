@@ -1,0 +1,19 @@
+\hypertarget{shutdown_8c_source}{}\doxysection{shutdown.\+c}
+\mbox{\hyperlink{shutdown_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{shutdown_8c_source_l00001}00001 \textcolor{comment}{// Shuts down the system by using the halt() system call}}
+\DoxyCodeLine{\Hypertarget{shutdown_8c_source_l00002}00002 \textcolor{comment}{// to send a special signal to QEMU.}}
+\DoxyCodeLine{\Hypertarget{shutdown_8c_source_l00003}00003 \textcolor{comment}{// Added by Bill Katsak}}
+\DoxyCodeLine{\Hypertarget{shutdown_8c_source_l00004}00004 \textcolor{comment}{// Copied from: http://pdos.csail.mit.edu/6.828/2012/homework/xv6-\/syscall.html}}
+\DoxyCodeLine{\Hypertarget{shutdown_8c_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{shutdown_8c_source_l00006}00006 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{shutdown_8c_source_l00007}00007 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{stat_8h}{stat.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{shutdown_8c_source_l00008}00008 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{user_8h}{user.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{shutdown_8c_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{shutdown_8c_source_l00010}\mbox{\hyperlink{shutdown_8c_a0ddf1224851353fc92bfbff6f499fa97}{00010}} \textcolor{keywordtype}{int} \mbox{\hyperlink{forktest_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}}(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} *\mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}[])}
+\DoxyCodeLine{\Hypertarget{shutdown_8c_source_l00011}00011 \{}
+\DoxyCodeLine{\Hypertarget{shutdown_8c_source_l00012}00012     \mbox{\hyperlink{user_8h_acc5d6967658ca40336572a28036079d1}{halt}}();}
+\DoxyCodeLine{\Hypertarget{shutdown_8c_source_l00013}00013     \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{\Hypertarget{shutdown_8c_source_l00014}00014 \}}
+
+\end{DoxyCode}

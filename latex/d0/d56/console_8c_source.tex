@@ -1,0 +1,304 @@
+\hypertarget{console_8c_source}{}\doxysection{console.\+c}
+\mbox{\hyperlink{console_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00001}00001 \textcolor{comment}{// Console input and output.}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00002}00002 \textcolor{comment}{// Input is from the keyboard or serial port.}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00003}00003 \textcolor{comment}{// Output is written to the screen and serial port.}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00005}00005 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00006}00006 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{defs_8h}{defs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00007}00007 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{param_8h}{param.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00008}00008 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{traps_8h}{traps.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00009}00009 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{spinlock_8h}{spinlock.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00010}00010 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{sleeplock_8h}{sleeplock.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00011}00011 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{fs_8h}{fs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00012}00012 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{file_8h}{file.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00013}00013 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{memlayout_8h}{memlayout.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00014}00014 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{mmu_8h}{mmu.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00015}00015 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{proc_8h}{proc.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00016}00016 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{x86_8h}{x86.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00017}00017 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00018}00018 \textcolor{keyword}{static} \textcolor{keywordtype}{void} consputc(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00020}00020 \textcolor{keyword}{static} \textcolor{keywordtype}{int} panicked = 0;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00022}00022 \textcolor{keyword}{static} \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00023}\mbox{\hyperlink{console_8c_ab28e82cd5dda7d960095706a3ea20572}{00023}}   \textcolor{keyword}{struct }\mbox{\hyperlink{structspinlock}{spinlock}} \mbox{\hyperlink{console_8c_ab28e82cd5dda7d960095706a3ea20572}{lock}};}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00024}\mbox{\hyperlink{console_8c_ae51110da3bc13ef49e32d1e2cda5d55c}{00024}}   \textcolor{keywordtype}{int} \mbox{\hyperlink{console_8c_ae51110da3bc13ef49e32d1e2cda5d55c}{locking}};}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00025}00025 \} cons;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00027}00027 \textcolor{keyword}{static} \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00028}00028 printint(\textcolor{keywordtype}{int} xx, \textcolor{keywordtype}{int} base, \textcolor{keywordtype}{int} sign)}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00029}00029 \{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00030}00030   \textcolor{keyword}{static} \textcolor{keywordtype}{char} digits[] = \textcolor{stringliteral}{"{}0123456789abcdef"{}};}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00031}00031   \textcolor{keywordtype}{char} \mbox{\hyperlink{structbuf}{buf}}[16];}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00032}00032   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00033}00033   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} x;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00035}00035   \textcolor{keywordflow}{if}(sign \&\& (sign = xx < 0))}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00036}00036     x = -\/xx;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00037}00037   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00038}00038     x = xx;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00040}00040   i = 0;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00041}00041   \textcolor{keywordflow}{do}\{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00042}00042     \mbox{\hyperlink{structbuf}{buf}}[i++] = digits[x \% base];}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00043}00043   \}\textcolor{keywordflow}{while}((x /= base) != 0);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00045}00045   \textcolor{keywordflow}{if}(sign)}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00046}00046     \mbox{\hyperlink{structbuf}{buf}}[i++] = \textcolor{charliteral}{'-\/'};}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00048}00048   \textcolor{keywordflow}{while}(-\/-\/i >= 0)}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00049}00049     consputc(\mbox{\hyperlink{structbuf}{buf}}[i]);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00050}00050 \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00051}00051 \textcolor{comment}{//PAGEBREAK: 50}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00053}00053 \textcolor{comment}{// Print to the console. only understands \%d, \%x, \%p, \%s.}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00054}00054 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00055}\mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{00055}} \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{keywordtype}{char} *fmt, ...)}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00056}00056 \{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00057}00057   \textcolor{keywordtype}{int} i, c, \mbox{\hyperlink{console_8c_ae51110da3bc13ef49e32d1e2cda5d55c}{locking}};}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00058}00058   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} *argp;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00059}00059   \textcolor{keywordtype}{char} *s;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00061}00061   \mbox{\hyperlink{console_8c_ae51110da3bc13ef49e32d1e2cda5d55c}{locking}} = cons.locking;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00062}00062   \textcolor{keywordflow}{if}(\mbox{\hyperlink{console_8c_ae51110da3bc13ef49e32d1e2cda5d55c}{locking}})}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00063}00063     \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&cons.lock);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00064}00064 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00065}00065   \textcolor{keywordflow}{if} (fmt == 0)}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00066}00066     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}null fmt"{}});}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00068}00068   argp = (\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}*)(\textcolor{keywordtype}{void}*)(\&fmt + 1);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00069}00069   \textcolor{keywordflow}{for}(i = 0; (c = fmt[i] \& 0xff) != 0; i++)\{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00070}00070     \textcolor{keywordflow}{if}(c != \textcolor{charliteral}{'\%'})\{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00071}00071       consputc(c);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00072}00072       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00073}00073     \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00074}00074     c = fmt[++i] \& 0xff;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00075}00075     \textcolor{keywordflow}{if}(c == 0)}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00076}00076       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00077}00077     \textcolor{keywordflow}{switch}(c)\{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00078}00078     \textcolor{keywordflow}{case} \textcolor{charliteral}{'d'}:}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00079}00079       printint(*argp++, 10, 1);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00080}00080       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00081}00081     \textcolor{keywordflow}{case} \textcolor{charliteral}{'x'}:}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00082}00082     \textcolor{keywordflow}{case} \textcolor{charliteral}{'p'}:}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00083}00083       printint(*argp++, 16, 0);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00084}00084       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00085}00085     \textcolor{keywordflow}{case} \textcolor{charliteral}{'s'}:}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00086}00086       \textcolor{keywordflow}{if}((s = (\textcolor{keywordtype}{char}*)*argp++) == 0)}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00087}00087         s = \textcolor{stringliteral}{"{}(null)"{}};}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00088}00088       \textcolor{keywordflow}{for}(; *s; s++)}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00089}00089         consputc(*s);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00090}00090       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00091}00091     \textcolor{keywordflow}{case} \textcolor{charliteral}{'\%'}:}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00092}00092       consputc(\textcolor{charliteral}{'\%'});}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00093}00093       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00094}00094     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00095}00095       \textcolor{comment}{// Print unknown \% sequence to draw attention.}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00096}00096       consputc(\textcolor{charliteral}{'\%'});}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00097}00097       consputc(c);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00098}00098       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00099}00099     \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00100}00100   \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00101}00101 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00102}00102   \textcolor{keywordflow}{if}(\mbox{\hyperlink{console_8c_ae51110da3bc13ef49e32d1e2cda5d55c}{locking}})}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00103}00103     \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&cons.lock);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00104}00104 \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00105}00105 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00106}00106 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00107}\mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{00107}} \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{keywordtype}{char} *s)}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00108}00108 \{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00109}00109   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00110}00110   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structspinlock_ac9ef3f16f664094198af0b9063e23fe0}{pcs}}[10];}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00111}00111 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00112}00112   cli();}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00113}00113   cons.locking = 0;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00114}00114   \textcolor{comment}{// use lapiccpunum so that we can call panic from mycpu()}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00115}00115   \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{}lapicid \%d: panic: "{}}, \mbox{\hyperlink{defs_8h_a627f7996b64f99d885244a5102c85164}{lapicid}}());}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00116}00116   \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(s);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00117}00117   \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00118}00118   \mbox{\hyperlink{defs_8h_a4105de9e2969515d6c6c795c4386f69f}{getcallerpcs}}(\&s, \mbox{\hyperlink{structspinlock_ac9ef3f16f664094198af0b9063e23fe0}{pcs}});}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00119}00119   \textcolor{keywordflow}{for}(i=0; i<10; i++)}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00120}00120     \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{} \%p"{}}, \mbox{\hyperlink{structspinlock_ac9ef3f16f664094198af0b9063e23fe0}{pcs}}[i]);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00121}00121   panicked = 1; \textcolor{comment}{// freeze other CPU}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00122}00122   \textcolor{keywordflow}{for}(;;)}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00123}00123     ;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00124}00124 \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00125}00125 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00126}00126 \textcolor{comment}{//PAGEBREAK: 50}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00127}\mbox{\hyperlink{console_8c_a629568514359445d2fbda71d70eeb1ce}{00127}} \textcolor{preprocessor}{\#define BACKSPACE 0x100}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00128}\mbox{\hyperlink{console_8c_a2e3959df0a0c54f50f20d4776b14487f}{00128}} \textcolor{preprocessor}{\#define CRTPORT 0x3d4}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00129}00129 \textcolor{keyword}{static} \mbox{\hyperlink{types_8h_ab95f123a6c9bcfee6a343170ef8c5f69}{ushort}} *crt = (\mbox{\hyperlink{types_8h_ab95f123a6c9bcfee6a343170ef8c5f69}{ushort}}*)\mbox{\hyperlink{memlayout_8h_aefd5e8b62c49bba2cf20309c7dd174e2}{P2V}}(0xb8000);  \textcolor{comment}{// CGA memory}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00130}00130 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00131}00131 \textcolor{keyword}{static} \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00132}00132 cgaputc(\textcolor{keywordtype}{int} c)}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00133}00133 \{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00134}00134   \textcolor{keywordtype}{int} pos;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00135}00135 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00136}00136   \textcolor{comment}{// Cursor position: col + 80*row.}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00137}00137   outb(\mbox{\hyperlink{console_8c_a2e3959df0a0c54f50f20d4776b14487f}{CRTPORT}}, 14);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00138}00138   pos = inb(\mbox{\hyperlink{console_8c_a2e3959df0a0c54f50f20d4776b14487f}{CRTPORT}}+1) << 8;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00139}00139   outb(\mbox{\hyperlink{console_8c_a2e3959df0a0c54f50f20d4776b14487f}{CRTPORT}}, 15);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00140}00140   pos |= inb(\mbox{\hyperlink{console_8c_a2e3959df0a0c54f50f20d4776b14487f}{CRTPORT}}+1);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00141}00141 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00142}00142   \textcolor{keywordflow}{if}(c == \textcolor{charliteral}{'\(\backslash\)n'})}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00143}00143     pos += 80 -\/ pos\%80;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00144}00144   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(c == \mbox{\hyperlink{console_8c_a629568514359445d2fbda71d70eeb1ce}{BACKSPACE}})\{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00145}00145     \textcolor{keywordflow}{if}(pos > 0) -\/-\/pos;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00146}00146   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00147}00147     crt[pos++] = (c\&0xff) | 0x0700;  \textcolor{comment}{// black on white}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00148}00148 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00149}00149   \textcolor{keywordflow}{if}(pos < 0 || pos > 25*80)}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00150}00150     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}pos under/overflow"{}});}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00151}00151 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00152}00152   \textcolor{keywordflow}{if}((pos/80) >= 24)\{  \textcolor{comment}{// Scroll up.}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00153}00153     \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(crt, crt+80, \textcolor{keyword}{sizeof}(crt[0])*23*80);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00154}00154     pos -\/= 80;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00155}00155     \mbox{\hyperlink{defs_8h_a0098886a849eef10803e9f35ceec61b9}{memset}}(crt+pos, 0, \textcolor{keyword}{sizeof}(crt[0])*(24*80 -\/ pos));}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00156}00156   \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00157}00157 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00158}00158   outb(\mbox{\hyperlink{console_8c_a2e3959df0a0c54f50f20d4776b14487f}{CRTPORT}}, 14);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00159}00159   outb(\mbox{\hyperlink{console_8c_a2e3959df0a0c54f50f20d4776b14487f}{CRTPORT}}+1, pos>>8);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00160}00160   outb(\mbox{\hyperlink{console_8c_a2e3959df0a0c54f50f20d4776b14487f}{CRTPORT}}, 15);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00161}00161   outb(\mbox{\hyperlink{console_8c_a2e3959df0a0c54f50f20d4776b14487f}{CRTPORT}}+1, pos);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00162}00162   crt[pos] = \textcolor{charliteral}{' '} | 0x0700;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00163}00163 \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00164}00164 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00165}00165 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00166}00166 consputc(\textcolor{keywordtype}{int} c)}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00167}00167 \{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00168}00168   \textcolor{keywordflow}{if}(panicked)\{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00169}00169     cli();}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00170}00170     \textcolor{keywordflow}{for}(;;)}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00171}00171       ;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00172}00172   \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00173}00173 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00174}00174   \textcolor{keywordflow}{if}(c == \mbox{\hyperlink{console_8c_a629568514359445d2fbda71d70eeb1ce}{BACKSPACE}})\{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00175}00175     \mbox{\hyperlink{defs_8h_a571626618a1f05ff6854802e936845d6}{uartputc}}(\textcolor{charliteral}{'\(\backslash\)b'}); \mbox{\hyperlink{defs_8h_a571626618a1f05ff6854802e936845d6}{uartputc}}(\textcolor{charliteral}{' '}); \mbox{\hyperlink{defs_8h_a571626618a1f05ff6854802e936845d6}{uartputc}}(\textcolor{charliteral}{'\(\backslash\)b'});}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00176}00176   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00177}00177     \mbox{\hyperlink{defs_8h_a571626618a1f05ff6854802e936845d6}{uartputc}}(c);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00178}00178   cgaputc(c);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00179}00179 \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00180}00180 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00181}\mbox{\hyperlink{console_8c_a5d85434f2a29f6c3048aeac34d0ce41d}{00181}} \textcolor{preprocessor}{\#define INPUT\_BUF 128}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00182}00182 \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00183}\mbox{\hyperlink{console_8c_aa427837782b05b05204809dfba33c8f5}{00183}}   \textcolor{keywordtype}{char} \mbox{\hyperlink{structbuf}{buf}}[\mbox{\hyperlink{console_8c_a5d85434f2a29f6c3048aeac34d0ce41d}{INPUT\_BUF}}];}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00184}\mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{00184}}   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}};  \textcolor{comment}{// Read index}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00185}\mbox{\hyperlink{console_8c_afdeff54db9a334718662b709641fdfe1}{00185}}   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{console_8c_afdeff54db9a334718662b709641fdfe1}{w}};  \textcolor{comment}{// Write index}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00186}\mbox{\hyperlink{console_8c_ab56fa7c992b725d84916b987c3d532ea}{00186}}   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{console_8c_ab56fa7c992b725d84916b987c3d532ea}{e}};  \textcolor{comment}{// Edit index}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00187}\mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{00187}} \} \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}};}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00188}00188 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00189}\mbox{\hyperlink{console_8c_ac54ae397901fe700628cafadea3c5208}{00189}} \textcolor{preprocessor}{\#define C(x)  ((x)-\/'@')  }\textcolor{comment}{// Control-\/x}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00190}00190 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00191}00191 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00192}\mbox{\hyperlink{console_8c_aad3d6ca39f23bb6d2686d2967e415193}{00192}} \mbox{\hyperlink{console_8c_aad3d6ca39f23bb6d2686d2967e415193}{consoleintr}}(\textcolor{keywordtype}{int} (*getc)(\textcolor{keywordtype}{void}))}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00193}00193 \{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00194}00194   \textcolor{keywordtype}{int} c, doprocdump = 0;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00195}00195 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00196}00196   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&cons.lock);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00197}00197   \textcolor{keywordflow}{while}((c = getc()) >= 0)\{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00198}00198     \textcolor{keywordflow}{switch}(c)\{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00199}00199     \textcolor{keywordflow}{case} \mbox{\hyperlink{console_8c_ac54ae397901fe700628cafadea3c5208}{C}}(\textcolor{charliteral}{'P'}):  \textcolor{comment}{// Process listing.}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00200}00200       \textcolor{comment}{// procdump() locks cons.lock indirectly; invoke later}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00201}00201       doprocdump = 1;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00202}00202       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00203}00203     \textcolor{keywordflow}{case} \mbox{\hyperlink{console_8c_ac54ae397901fe700628cafadea3c5208}{C}}(\textcolor{charliteral}{'U'}):  \textcolor{comment}{// Kill line.}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00204}00204       \textcolor{keywordflow}{while}(\mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.e != \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.w \&\&}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00205}00205             \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.buf[(\mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.e-\/1) \% \mbox{\hyperlink{console_8c_a5d85434f2a29f6c3048aeac34d0ce41d}{INPUT\_BUF}}] != \textcolor{charliteral}{'\(\backslash\)n'})\{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00206}00206         \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.e-\/-\/;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00207}00207         consputc(\mbox{\hyperlink{console_8c_a629568514359445d2fbda71d70eeb1ce}{BACKSPACE}});}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00208}00208       \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00209}00209       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00210}00210     \textcolor{keywordflow}{case} \mbox{\hyperlink{console_8c_ac54ae397901fe700628cafadea3c5208}{C}}(\textcolor{charliteral}{'H'}): \textcolor{keywordflow}{case} \textcolor{stringliteral}{'\(\backslash\)x7f'}:  \textcolor{comment}{// Backspace}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00211}00211       \textcolor{keywordflow}{if}(\mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.e != \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.w)\{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00212}00212         \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.e-\/-\/;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00213}00213         consputc(\mbox{\hyperlink{console_8c_a629568514359445d2fbda71d70eeb1ce}{BACKSPACE}});}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00214}00214       \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00215}00215       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00216}00216     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00217}00217       \textcolor{keywordflow}{if}(c != 0 \&\& \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.e-\/\mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.r < \mbox{\hyperlink{console_8c_a5d85434f2a29f6c3048aeac34d0ce41d}{INPUT\_BUF}})\{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00218}00218         c = (c == \textcolor{charliteral}{'\(\backslash\)r'}) ? \textcolor{charliteral}{'\(\backslash\)n'} : c;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00219}00219         \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.buf[\mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.e++ \% \mbox{\hyperlink{console_8c_a5d85434f2a29f6c3048aeac34d0ce41d}{INPUT\_BUF}}] = c;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00220}00220         consputc(c);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00221}00221         \textcolor{keywordflow}{if}(c == \textcolor{charliteral}{'\(\backslash\)n'} || c == \mbox{\hyperlink{console_8c_ac54ae397901fe700628cafadea3c5208}{C}}(\textcolor{charliteral}{'D'}) || \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.e == \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.r+\mbox{\hyperlink{console_8c_a5d85434f2a29f6c3048aeac34d0ce41d}{INPUT\_BUF}})\{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00222}00222           \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.w = \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.e;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00223}00223           \mbox{\hyperlink{defs_8h_a245b56417239f499389b2e806bd99254}{wakeup}}(\&\mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.r);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00224}00224         \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00225}00225       \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00226}00226       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00227}00227     \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00228}00228   \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00229}00229   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&cons.lock);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00230}00230   \textcolor{keywordflow}{if}(doprocdump) \{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00231}00231     \mbox{\hyperlink{defs_8h_a7f185044294ebb57521c73f723990164}{procdump}}();  \textcolor{comment}{// now call procdump() wo. cons.lock held}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00232}00232   \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00233}00233 \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00234}00234 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00235}00235 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00236}\mbox{\hyperlink{console_8c_a28ac85a90987662e306ca8efbfe16074}{00236}} \mbox{\hyperlink{console_8c_a28ac85a90987662e306ca8efbfe16074}{consoleread}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structinode}{inode}} *ip, \textcolor{keywordtype}{char} *dst, \textcolor{keywordtype}{int} n)}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00237}00237 \{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00238}00238   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} target;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00239}00239   \textcolor{keywordtype}{int} c;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00240}00240 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00241}00241   \mbox{\hyperlink{defs_8h_af301c10ad8ced77a5dfb2de3a64c666c}{iunlock}}(ip);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00242}00242   target = n;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00243}00243   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&cons.lock);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00244}00244   \textcolor{keywordflow}{while}(n > 0)\{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00245}00245     \textcolor{keywordflow}{while}(\mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.r == \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.w)\{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00246}00246       \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}()-\/>killed)\{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00247}00247         \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&cons.lock);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00248}00248         \mbox{\hyperlink{defs_8h_a29a4d743d41fe659f74b0a57fdc25012}{ilock}}(ip);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00249}00249         \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00250}00250       \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00251}00251       \mbox{\hyperlink{defs_8h_aca4a88f06b3ebbcc04330f7ae06c8507}{sleep}}(\&\mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.r, \&cons.lock);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00252}00252     \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00253}00253     c = \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.buf[\mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.r++ \% \mbox{\hyperlink{console_8c_a5d85434f2a29f6c3048aeac34d0ce41d}{INPUT\_BUF}}];}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00254}00254     \textcolor{keywordflow}{if}(c == \mbox{\hyperlink{console_8c_ac54ae397901fe700628cafadea3c5208}{C}}(\textcolor{charliteral}{'D'}))\{  \textcolor{comment}{// EOF}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00255}00255       \textcolor{keywordflow}{if}(n < target)\{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00256}00256         \textcolor{comment}{// Save \string^D for next time, to make sure}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00257}00257         \textcolor{comment}{// caller gets a 0-\/byte result.}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00258}00258         \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.r-\/-\/;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00259}00259       \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00260}00260       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00261}00261     \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00262}00262     *dst++ = c;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00263}00263     -\/-\/n;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00264}00264     \textcolor{keywordflow}{if}(c == \textcolor{charliteral}{'\(\backslash\)n'})}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00265}00265       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00266}00266   \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00267}00267   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&cons.lock);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00268}00268   \mbox{\hyperlink{defs_8h_a29a4d743d41fe659f74b0a57fdc25012}{ilock}}(ip);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00269}00269 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00270}00270   \textcolor{keywordflow}{return} target -\/ n;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00271}00271 \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00272}00272 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00273}00273 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00274}\mbox{\hyperlink{console_8c_a6af7eb39268127d389792cec37785666}{00274}} \mbox{\hyperlink{console_8c_a6af7eb39268127d389792cec37785666}{consolewrite}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structinode}{inode}} *ip, \textcolor{keywordtype}{char} *\mbox{\hyperlink{structbuf}{buf}}, \textcolor{keywordtype}{int} n)}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00275}00275 \{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00276}00276   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00277}00277 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00278}00278   \mbox{\hyperlink{defs_8h_af301c10ad8ced77a5dfb2de3a64c666c}{iunlock}}(ip);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00279}00279   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&cons.lock);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00280}00280   \textcolor{keywordflow}{for}(i = 0; i < n; i++)}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00281}00281     consputc(\mbox{\hyperlink{structbuf}{buf}}[i] \& 0xff);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00282}00282   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&cons.lock);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00283}00283   \mbox{\hyperlink{defs_8h_a29a4d743d41fe659f74b0a57fdc25012}{ilock}}(ip);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00284}00284 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00285}00285   \textcolor{keywordflow}{return} n;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00286}00286 \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00287}00287 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00288}00288 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00289}\mbox{\hyperlink{console_8c_ab508ff0f4db26fe35cd25fa648f9ee75}{00289}} \mbox{\hyperlink{console_8c_ab508ff0f4db26fe35cd25fa648f9ee75}{consoleinit}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00290}00290 \{}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00291}00291   \mbox{\hyperlink{defs_8h_ab56d728e6966819a0260c358d3ac3419}{initlock}}(\&cons.lock, \textcolor{stringliteral}{"{}console"{}});}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00292}00292 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00293}00293   \mbox{\hyperlink{structdevsw}{devsw}}[\mbox{\hyperlink{file_8h_a6c17169f464fb1a2995dbe06faa47a5f}{CONSOLE}}].\mbox{\hyperlink{structdevsw_a87fd7af6c9a6fb8663fc206be7a233d4}{write}} = \mbox{\hyperlink{console_8c_a6af7eb39268127d389792cec37785666}{consolewrite}};}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00294}00294   \mbox{\hyperlink{structdevsw}{devsw}}[\mbox{\hyperlink{file_8h_a6c17169f464fb1a2995dbe06faa47a5f}{CONSOLE}}].\mbox{\hyperlink{structdevsw_a4efbe00d0031a1c9005ef2186947ea37}{read}} = \mbox{\hyperlink{console_8c_a28ac85a90987662e306ca8efbfe16074}{consoleread}};}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00295}00295   cons.locking = 1;}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00296}00296 }
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00297}00297   \mbox{\hyperlink{defs_8h_a63da75c0c2f0b051f2c790aea2116b63}{ioapicenable}}(\mbox{\hyperlink{traps_8h_a0b7569cda71298859ffb6ea55c03a36a}{IRQ\_KBD}}, 0);}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00298}00298 \}}
+\DoxyCodeLine{\Hypertarget{console_8c_source_l00299}00299 }
+
+\end{DoxyCode}

@@ -1,0 +1,169 @@
+\hypertarget{memide_8c}{}\doxysection{memide.\+c File Reference}
+\label{memide_8c}\index{memide.c@{memide.c}}
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}defs.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}param.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mmu.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}proc.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}x86.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}traps.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}spinlock.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}sleeplock.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}fs.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}buf.\+h\char`\"{}}\newline
+Include dependency graph for memide.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d13/memide_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{memide_8c_aefb190a6104cb58c0bc1f8fec88d1307}{ideinit}} (void)
+\item 
+void \mbox{\hyperlink{memide_8c_a709693afdb9b89d848e684e7acde1f8f}{ideintr}} (void)
+\item 
+void \mbox{\hyperlink{memide_8c_a7f36b008f02088c86f76e98e05b55af5}{iderw}} (struct \mbox{\hyperlink{structbuf}{buf}} $\ast$b)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} \mbox{\hyperlink{memide_8c_af73b74f3a51ba441c3b68b1cf3e276c3}{\+\_\+binary\+\_\+fs\+\_\+img\+\_\+start}} \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} \mbox{\hyperlink{memide_8c_a10b9652e23b65245bbc2126350c915d3}{\+\_\+binary\+\_\+fs\+\_\+img\+\_\+size}} \mbox{[}$\,$\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{memide_8c_aefb190a6104cb58c0bc1f8fec88d1307}\label{memide_8c_aefb190a6104cb58c0bc1f8fec88d1307}} 
+\index{memide.c@{memide.c}!ideinit@{ideinit}}
+\index{ideinit@{ideinit}!memide.c@{memide.c}}
+\doxysubsubsection{\texorpdfstring{ideinit()}{ideinit()}}
+{\footnotesize\ttfamily void ideinit (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{memide_8c_source_l00022}{22}} of file \mbox{\hyperlink{memide_8c_source}{memide.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00023 \{}
+\DoxyCodeLine{00024   memdisk = \mbox{\hyperlink{memide_8c_af73b74f3a51ba441c3b68b1cf3e276c3}{\_binary\_fs\_img\_start}};}
+\DoxyCodeLine{00025   disksize = (\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}})\mbox{\hyperlink{memide_8c_a10b9652e23b65245bbc2126350c915d3}{\_binary\_fs\_img\_size}}/\mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}};}
+\DoxyCodeLine{00026 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=229pt]{da/d9b/memide_8c_aefb190a6104cb58c0bc1f8fec88d1307_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{memide_8c_a709693afdb9b89d848e684e7acde1f8f}\label{memide_8c_a709693afdb9b89d848e684e7acde1f8f}} 
+\index{memide.c@{memide.c}!ideintr@{ideintr}}
+\index{ideintr@{ideintr}!memide.c@{memide.c}}
+\doxysubsubsection{\texorpdfstring{ideintr()}{ideintr()}}
+{\footnotesize\ttfamily void ideintr (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{memide_8c_source_l00030}{30}} of file \mbox{\hyperlink{memide_8c_source}{memide.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00031 \{}
+\DoxyCodeLine{00032   \textcolor{comment}{// no-\/op}}
+\DoxyCodeLine{00033 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{da/d9b/memide_8c_a709693afdb9b89d848e684e7acde1f8f_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=192pt]{da/d9b/memide_8c_a709693afdb9b89d848e684e7acde1f8f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{memide_8c_a7f36b008f02088c86f76e98e05b55af5}\label{memide_8c_a7f36b008f02088c86f76e98e05b55af5}} 
+\index{memide.c@{memide.c}!iderw@{iderw}}
+\index{iderw@{iderw}!memide.c@{memide.c}}
+\doxysubsubsection{\texorpdfstring{iderw()}{iderw()}}
+{\footnotesize\ttfamily void iderw (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structbuf}{buf}} $\ast$}]{b }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{memide_8c_source_l00039}{39}} of file \mbox{\hyperlink{memide_8c_source}{memide.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00040 \{}
+\DoxyCodeLine{00041   \mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} *p;}
+\DoxyCodeLine{00042 }
+\DoxyCodeLine{00043   \textcolor{keywordflow}{if}(!\mbox{\hyperlink{defs_8h_afa76133bc67c6026376d630da9b53b68}{holdingsleep}}(\&b-\/>\mbox{\hyperlink{structbuf_a626ad748d91d4bd7f4e65b74c73f2644}{lock}}))}
+\DoxyCodeLine{00044     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}iderw: buf not locked"{}});}
+\DoxyCodeLine{00045   \textcolor{keywordflow}{if}((b-\/>\mbox{\hyperlink{structbuf_ae7d6b6c34fdeadb38970efd0554aa1a9}{flags}} \& (\mbox{\hyperlink{buf_8h_afab4199c0d27da71061f1c0cd5b51520}{B\_VALID}}|\mbox{\hyperlink{buf_8h_adc32011df267adb9740bcd0abf0f0663}{B\_DIRTY}})) == \mbox{\hyperlink{buf_8h_afab4199c0d27da71061f1c0cd5b51520}{B\_VALID}})}
+\DoxyCodeLine{00046     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}iderw: nothing to do"{}});}
+\DoxyCodeLine{00047   \textcolor{keywordflow}{if}(b-\/>\mbox{\hyperlink{structbuf_ac96082c2b5f22133ac7092ef81487227}{dev}} != 1)}
+\DoxyCodeLine{00048     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}iderw: request not for disk 1"{}});}
+\DoxyCodeLine{00049   \textcolor{keywordflow}{if}(b-\/>\mbox{\hyperlink{structbuf_a756b2bcc88008bef7f21d688aa4a7a48}{blockno}} >= disksize)}
+\DoxyCodeLine{00050     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}iderw: block out of range"{}});}
+\DoxyCodeLine{00051 }
+\DoxyCodeLine{00052   p = memdisk + b-\/>\mbox{\hyperlink{structbuf_a756b2bcc88008bef7f21d688aa4a7a48}{blockno}}*\mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}};}
+\DoxyCodeLine{00053 }
+\DoxyCodeLine{00054   \textcolor{keywordflow}{if}(b-\/>\mbox{\hyperlink{structbuf_ae7d6b6c34fdeadb38970efd0554aa1a9}{flags}} \& \mbox{\hyperlink{buf_8h_adc32011df267adb9740bcd0abf0f0663}{B\_DIRTY}})\{}
+\DoxyCodeLine{00055     b-\/>\mbox{\hyperlink{structbuf_ae7d6b6c34fdeadb38970efd0554aa1a9}{flags}} \&= \string~B\_DIRTY;}
+\DoxyCodeLine{00056     \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(p, b-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}}, \mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}});}
+\DoxyCodeLine{00057   \} \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00058     \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(b-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}}, p, \mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}});}
+\DoxyCodeLine{00059   b-\/>\mbox{\hyperlink{structbuf_ae7d6b6c34fdeadb38970efd0554aa1a9}{flags}} |= \mbox{\hyperlink{buf_8h_afab4199c0d27da71061f1c0cd5b51520}{B\_VALID}};}
+\DoxyCodeLine{00060 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{da/d9b/memide_8c_a7f36b008f02088c86f76e98e05b55af5_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{da/d9b/memide_8c_a7f36b008f02088c86f76e98e05b55af5_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{memide_8c_a10b9652e23b65245bbc2126350c915d3}\label{memide_8c_a10b9652e23b65245bbc2126350c915d3}} 
+\index{memide.c@{memide.c}!\_binary\_fs\_img\_size@{\_binary\_fs\_img\_size}}
+\index{\_binary\_fs\_img\_size@{\_binary\_fs\_img\_size}!memide.c@{memide.c}}
+\doxysubsubsection{\texorpdfstring{\_binary\_fs\_img\_size}{\_binary\_fs\_img\_size}}
+{\footnotesize\ttfamily \mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} \+\_\+binary\+\_\+fs\+\_\+img\+\_\+size\mbox{[}$\,$\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{memide_8c_source_l00016}{16}} of file \mbox{\hyperlink{memide_8c_source}{memide.\+c}}.
+
+\mbox{\Hypertarget{memide_8c_af73b74f3a51ba441c3b68b1cf3e276c3}\label{memide_8c_af73b74f3a51ba441c3b68b1cf3e276c3}} 
+\index{memide.c@{memide.c}!\_binary\_fs\_img\_start@{\_binary\_fs\_img\_start}}
+\index{\_binary\_fs\_img\_start@{\_binary\_fs\_img\_start}!memide.c@{memide.c}}
+\doxysubsubsection{\texorpdfstring{\_binary\_fs\_img\_start}{\_binary\_fs\_img\_start}}
+{\footnotesize\ttfamily \mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} \+\_\+binary\+\_\+fs\+\_\+img\+\_\+start\mbox{[}$\,$\mbox{]}\hspace{0.3cm}{\ttfamily [extern]}}
+

@@ -1,0 +1,48 @@
+\hypertarget{zombie_8c}{}\doxysection{zombie.\+c File Reference}
+\label{zombie_8c}\index{zombie.c@{zombie.c}}
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stat.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}user.\+h\char`\"{}}\newline
+Include dependency graph for zombie.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=249pt]{d6/d9c/zombie_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{zombie_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{zombie_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{zombie_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+\index{zombie.c@{zombie.c}!main@{main}}
+\index{main@{main}!zombie.c@{zombie.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{zombie_8c_source_l00009}{9}} of file \mbox{\hyperlink{zombie_8c_source}{zombie.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00010 \{}
+\DoxyCodeLine{00011   \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_acd2e1ded4bb6fce4500438bf928330f4}{fork}}() > 0)}
+\DoxyCodeLine{00012     \mbox{\hyperlink{defs_8h_aca4a88f06b3ebbcc04330f7ae06c8507}{sleep}}(5);  \textcolor{comment}{// Let child exit before parent.}}
+\DoxyCodeLine{00013   \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00014 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da4/zombie_8c_a840291bc02cba5474a4cb46a9b9566fe_cgraph}
+\end{center}
+\end{figure}

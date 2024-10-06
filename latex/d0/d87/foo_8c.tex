@@ -1,0 +1,80 @@
+\hypertarget{foo_8c}{}\doxysection{foo.\+c File Reference}
+\label{foo_8c}\index{foo.c@{foo.c}}
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stat.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}user.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}fcntl.\+h\char`\"{}}\newline
+Include dependency graph for foo.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=312pt]{d2/d97/foo_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{foo_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$\mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{foo_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{foo_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{foo.c@{foo.c}!main@{main}}
+\index{main@{main}!foo.c@{foo.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{foo_8c_source_l00006}{6}} of file \mbox{\hyperlink{foo_8c_source}{foo.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00006                                  \{}
+\DoxyCodeLine{00007   \textcolor{keywordtype}{int} pid;}
+\DoxyCodeLine{00008   \textcolor{keywordtype}{int} k, n;}
+\DoxyCodeLine{00009   \textcolor{keywordtype}{int} x, z;}
+\DoxyCodeLine{00010 }
+\DoxyCodeLine{00011   \textcolor{keywordflow}{if} (argc != 2) \{}
+\DoxyCodeLine{00012     \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(2, \textcolor{stringliteral}{"{}usage: \%s n\(\backslash\)n"{}}, \mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}[0]);}
+\DoxyCodeLine{00013   \}}
+\DoxyCodeLine{00014 }
+\DoxyCodeLine{00015   n = \mbox{\hyperlink{ulib_8c_a30670a60464f77af17dfb353353d6df8}{atoi}}(\mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}[1]);}
+\DoxyCodeLine{00016 }
+\DoxyCodeLine{00017   \textcolor{keywordflow}{for} ( k = 0; k < n; k++ ) \{}
+\DoxyCodeLine{00018     pid = \mbox{\hyperlink{defs_8h_acd2e1ded4bb6fce4500438bf928330f4}{fork}} ();}
+\DoxyCodeLine{00019     \textcolor{keywordflow}{if} ( pid < 0 ) \{}
+\DoxyCodeLine{00020       \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}\%d failed in fork!\(\backslash\)n"{}}, \mbox{\hyperlink{user_8h_a939cb25a305fe68aad9b365077f1a8c7}{getpid}}());}
+\DoxyCodeLine{00021       \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00022     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (pid == 0) \{}
+\DoxyCodeLine{00023       \textcolor{comment}{// child}}
+\DoxyCodeLine{00024       \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}Child (with pid=\%d) created\(\backslash\)n"{}},\mbox{\hyperlink{user_8h_a939cb25a305fe68aad9b365077f1a8c7}{getpid}}());}
+\DoxyCodeLine{00025       \textcolor{keywordflow}{for} ( z = 0; z < 100.0; z += 0.1 )\{}
+\DoxyCodeLine{00026         x =  x + 3.14 * 89.64;   \textcolor{comment}{// useless calculations to consume CPU time}}
+\DoxyCodeLine{00027         \textcolor{keywordflow}{if}((z== (\textcolor{keywordtype}{int})z) \&\& ((z\%10) ==0))\{}
+\DoxyCodeLine{00028           \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}[pid=\%d] \%d \(\backslash\)n"{}},\mbox{\hyperlink{user_8h_a939cb25a305fe68aad9b365077f1a8c7}{getpid}}(),z);}
+\DoxyCodeLine{00029         \}}
+\DoxyCodeLine{00030       \}}
+\DoxyCodeLine{00031         }
+\DoxyCodeLine{00032       \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00033     \}}
+\DoxyCodeLine{00034   \}}
+\DoxyCodeLine{00035 }
+\DoxyCodeLine{00036   \textcolor{keywordflow}{for} (k = 0; k < n; k++) \{}
+\DoxyCodeLine{00037     \mbox{\hyperlink{defs_8h_af6f31822f7e737b4e414bdac1ccb59a4}{wait}}();}
+\DoxyCodeLine{00038   \}}
+\DoxyCodeLine{00039 }
+\DoxyCodeLine{00040   \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00041 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d0/d87/foo_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph}
+\end{center}
+\end{figure}

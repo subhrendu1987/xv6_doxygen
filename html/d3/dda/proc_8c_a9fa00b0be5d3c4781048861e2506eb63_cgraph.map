@@ -1,0 +1,17 @@
+<map id="scheduler" name="scheduler">
+<area shape="rect" id="node1" title=" " alt="" coords="5,474,84,499"/>
+<area shape="rect" id="node2" href="$d3/d2d/spinlock_8c.html#aed377f16a085b00de3a4b32392adbdfb" title=" " alt="" coords="143,297,207,322"/>
+<area shape="rect" id="node5" href="$d3/dda/proc_8c.html#ad427959ad025dabd8cd393b27ec39160" title=" " alt="" coords="516,373,577,398"/>
+<area shape="rect" id="node9" href="$d3/d2d/spinlock_8c.html#a1cee376aa9a00e754bf5481cd5f3d97b" title=" " alt="" coords="867,94,931,119"/>
+<area shape="rect" id="node13" href="$de/de9/vm_8c.html#a02ca0670bc1fe12e38453082631ff360" title=" " alt="" coords="132,550,217,575"/>
+<area shape="rect" id="node14" href="$de/de9/vm_8c.html#a87c90f0ab2a1b11c2b55f4e483bb8493" title=" " alt="" coords="269,499,354,525"/>
+<area shape="rect" id="node15" href="$d5/d64/defs_8h.html#a1d9e7047d3dfb57809a2541d8387705e" title=" " alt="" coords="146,599,203,625"/>
+<area shape="rect" id="node3" href="$d3/d2d/spinlock_8c.html#a6ac35304ea80f01086b47edcc2328010" title=" " alt="" coords="265,398,357,423"/>
+<area shape="rect" id="node4" href="$d3/d2d/spinlock_8c.html#aea48df3e5cfb903179ad3dc78ab502d9" title=" " alt="" coords="280,195,343,221"/>
+<area shape="rect" id="node7" href="$d0/d56/console_8c.html#a95c0aca5d6d7487933984f08b189917a" title=" " alt="" coords="625,246,679,271"/>
+<area shape="rect" id="node12" href="$d3/d2d/spinlock_8c.html#a206b749d1b7768dadce61cbcde7e0f1c" title=" " alt="" coords="405,347,468,373"/>
+<area shape="rect" id="node10" href="$d3/d2d/spinlock_8c.html#ae3424f669269fef400ce29c3aeb43fdb" title=" " alt="" coords="979,297,1035,322"/>
+<area shape="rect" id="node6" href="$dc/df6/lapic_8c.html#a627f7996b64f99d885244a5102c85164" title=" " alt="" coords="743,347,802,373"/>
+<area shape="rect" id="node8" href="$d0/d56/console_8c.html#a90f0742d846503e4ed1804f1df421ec6" title=" " alt="" coords="743,94,802,119"/>
+<area shape="rect" id="node11" href="$d5/d64/defs_8h.html#a4105de9e2969515d6c6c795c4386f69f" title=" " alt="" coords="727,246,819,271"/>
+</map>

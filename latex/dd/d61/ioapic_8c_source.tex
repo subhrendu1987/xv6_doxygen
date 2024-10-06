@@ -1,0 +1,80 @@
+\hypertarget{ioapic_8c_source}{}\doxysection{ioapic.\+c}
+\mbox{\hyperlink{ioapic_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00001}00001 \textcolor{comment}{// The I/O APIC manages hardware interrupts for an SMP system.}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00002}00002 \textcolor{comment}{// http://www.intel.com/design/chipsets/datashts/29056601.pdf}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00003}00003 \textcolor{comment}{// See also picirq.c.}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00005}00005 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00006}00006 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{defs_8h}{defs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00007}00007 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{traps_8h}{traps.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00009}\mbox{\hyperlink{ioapic_8c_a7d40119d2e49f7d8ae65520ccad99a1e}{00009}} \textcolor{preprocessor}{\#define IOAPIC  0xFEC00000   }\textcolor{comment}{// Default physical address of IO APIC}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00011}\mbox{\hyperlink{ioapic_8c_a91339a8293cb53b81407c016bc41e2b1}{00011}} \textcolor{preprocessor}{\#define REG\_ID     0x00  }\textcolor{comment}{// Register index: ID}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00012}\mbox{\hyperlink{ioapic_8c_ac56cc95ec46071699b119b24d6d808f9}{00012}} \textcolor{preprocessor}{\#define REG\_VER    0x01  }\textcolor{comment}{// Register index: version}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00013}\mbox{\hyperlink{ioapic_8c_ad31b206e97e5e8cc5c70f8713669b27f}{00013}} \textcolor{preprocessor}{\#define REG\_TABLE  0x10  }\textcolor{comment}{// Redirection table base}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00015}00015 \textcolor{comment}{// The redirection table starts at REG\_TABLE and uses}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00016}00016 \textcolor{comment}{// two registers to configure each interrupt.}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00017}00017 \textcolor{comment}{// The first (low) register in a pair contains configuration bits.}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00018}00018 \textcolor{comment}{// The second (high) register contains a bitmask telling which}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00019}00019 \textcolor{comment}{// CPUs can serve that interrupt.}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00020}\mbox{\hyperlink{ioapic_8c_ab26e186261a82b907e024126fafbff1f}{00020}} \textcolor{preprocessor}{\#define INT\_DISABLED   0x00010000  }\textcolor{comment}{// Interrupt disabled}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00021}\mbox{\hyperlink{ioapic_8c_aed01298d37e73ed9737c8a6b70e67caa}{00021}} \textcolor{preprocessor}{\#define INT\_LEVEL      0x00008000  }\textcolor{comment}{// Level-\/triggered (vs edge-\/)}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00022}\mbox{\hyperlink{ioapic_8c_a516778548109f98ff313d8753d030d37}{00022}} \textcolor{preprocessor}{\#define INT\_ACTIVELOW  0x00002000  }\textcolor{comment}{// Active low (vs high)}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00023}\mbox{\hyperlink{ioapic_8c_a7e41b4c95cc235d58d7a45411541f9de}{00023}} \textcolor{preprocessor}{\#define INT\_LOGICAL    0x00000800  }\textcolor{comment}{// Destination is CPU id (vs APIC ID)}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00025}\mbox{\hyperlink{ioapic_8c_a61d7da24dba0ce35323deb8bb6cf6f91}{00025}} \textcolor{keyword}{volatile} \textcolor{keyword}{struct }\mbox{\hyperlink{structioapic}{ioapic}} *\mbox{\hyperlink{structioapic}{ioapic}};}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00027}00027 \textcolor{comment}{// IO APIC MMIO structure: write reg, then read or write data.}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00028}\mbox{\hyperlink{structioapic}{00028}} \textcolor{keyword}{struct }\mbox{\hyperlink{structioapic}{ioapic}} \{}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00029}\mbox{\hyperlink{structioapic_a84bff406f77801bd1574b9cfb8c23ecf}{00029}}   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structioapic_a84bff406f77801bd1574b9cfb8c23ecf}{reg}};}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00030}\mbox{\hyperlink{structioapic_a28ee224d088b53995504eae8cc8fd6ba}{00030}}   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structioapic_a28ee224d088b53995504eae8cc8fd6ba}{pad}}[3];}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00031}\mbox{\hyperlink{structioapic_a0612c6bb75dc56f0c4c91ad214a02b3a}{00031}}   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structioapic_a0612c6bb75dc56f0c4c91ad214a02b3a}{data}};}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00032}00032 \};}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00034}00034 \textcolor{keyword}{static} \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00035}00035 ioapicread(\textcolor{keywordtype}{int} reg)}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00036}00036 \{}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00037}00037   \mbox{\hyperlink{structioapic}{ioapic}}-\/>\mbox{\hyperlink{structioapic_a84bff406f77801bd1574b9cfb8c23ecf}{reg}} = reg;}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00038}00038   \textcolor{keywordflow}{return} \mbox{\hyperlink{structioapic}{ioapic}}-\/>\mbox{\hyperlink{structioapic_a0612c6bb75dc56f0c4c91ad214a02b3a}{data}};}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00039}00039 \}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00041}00041 \textcolor{keyword}{static} \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00042}00042 ioapicwrite(\textcolor{keywordtype}{int} reg, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}})}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00043}00043 \{}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00044}00044   \mbox{\hyperlink{structioapic}{ioapic}}-\/>\mbox{\hyperlink{structioapic_a84bff406f77801bd1574b9cfb8c23ecf}{reg}} = reg;}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00045}00045   \mbox{\hyperlink{structioapic}{ioapic}}-\/>\mbox{\hyperlink{structioapic_a0612c6bb75dc56f0c4c91ad214a02b3a}{data}} = \mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}};}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00046}00046 \}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00048}00048 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00049}\mbox{\hyperlink{defs_8h_abce023b98422f397abdb425b20c8ceec}{00049}} \mbox{\hyperlink{ioapic_8c_abce023b98422f397abdb425b20c8ceec}{ioapicinit}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00050}00050 \{}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00051}00051   \textcolor{keywordtype}{int} i, id, maxintr;}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00053}00053   \mbox{\hyperlink{structioapic}{ioapic}} = (\textcolor{keyword}{volatile} \textcolor{keyword}{struct }\mbox{\hyperlink{structioapic}{ioapic}}*)\mbox{\hyperlink{ioapic_8c_a7d40119d2e49f7d8ae65520ccad99a1e}{IOAPIC}};}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00054}00054   maxintr = (ioapicread(\mbox{\hyperlink{ioapic_8c_ac56cc95ec46071699b119b24d6d808f9}{REG\_VER}}) >> 16) \& 0xFF;}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00055}00055   \textcolor{keywordtype}{id} = ioapicread(\mbox{\hyperlink{ioapic_8c_a91339a8293cb53b81407c016bc41e2b1}{REG\_ID}}) >> 24;}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00056}00056   \textcolor{keywordflow}{if}(\textcolor{keywordtype}{id} != \mbox{\hyperlink{defs_8h_a619ae379337e3cb2397ee0b6b4fd8d6b}{ioapicid}})}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00057}00057     \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{}ioapicinit: id isn't equal to ioapicid; not a MP\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00058}00058 }
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00059}00059   \textcolor{comment}{// Mark all interrupts edge-\/triggered, active high, disabled,}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00060}00060   \textcolor{comment}{// and not routed to any CPUs.}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00061}00061   \textcolor{keywordflow}{for}(i = 0; i <= maxintr; i++)\{}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00062}00062     ioapicwrite(\mbox{\hyperlink{ioapic_8c_ad31b206e97e5e8cc5c70f8713669b27f}{REG\_TABLE}}+2*i, \mbox{\hyperlink{ioapic_8c_ab26e186261a82b907e024126fafbff1f}{INT\_DISABLED}} | (\mbox{\hyperlink{traps_8h_a17129100154901eb81be6e438843a0e1}{T\_IRQ0}} + i));}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00063}00063     ioapicwrite(\mbox{\hyperlink{ioapic_8c_ad31b206e97e5e8cc5c70f8713669b27f}{REG\_TABLE}}+2*i+1, 0);}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00064}00064   \}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00065}00065 \}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00067}00067 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00068}\mbox{\hyperlink{defs_8h_a63da75c0c2f0b051f2c790aea2116b63}{00068}} \mbox{\hyperlink{ioapic_8c_a9688537a0879e9e2ac5a90184e2ef987}{ioapicenable}}(\textcolor{keywordtype}{int} irq, \textcolor{keywordtype}{int} cpunum)}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00069}00069 \{}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00070}00070   \textcolor{comment}{// Mark interrupt edge-\/triggered, active high,}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00071}00071   \textcolor{comment}{// enabled, and routed to the given cpunum,}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00072}00072   \textcolor{comment}{// which happens to be that cpu's APIC ID.}}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00073}00073   ioapicwrite(\mbox{\hyperlink{ioapic_8c_ad31b206e97e5e8cc5c70f8713669b27f}{REG\_TABLE}}+2*irq, \mbox{\hyperlink{traps_8h_a17129100154901eb81be6e438843a0e1}{T\_IRQ0}} + irq);}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00074}00074   ioapicwrite(\mbox{\hyperlink{ioapic_8c_ad31b206e97e5e8cc5c70f8713669b27f}{REG\_TABLE}}+2*irq+1, cpunum << 24);}
+\DoxyCodeLine{\Hypertarget{ioapic_8c_source_l00075}00075 \}}
+
+\end{DoxyCode}

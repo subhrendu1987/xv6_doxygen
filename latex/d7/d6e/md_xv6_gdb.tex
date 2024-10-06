@@ -1,0 +1,32 @@
+
+\begin{DoxyItemize}
+\item {\ttfamily \$nm kernel$\vert$ grep \+\_\+start}\mbox{[}$^\wedge$1\mbox{]}
+\item {\ttfamily \$make-\/nox-\/gdb}\mbox{[}$^\wedge$2\mbox{]}
+\item {\ttfamily \$gdb}\mbox{[}$^\wedge$0\mbox{]}
+\end{DoxyItemize}
+
+\mbox{[}$^\wedge$0\mbox{]}\+: (Cheatsheet) \mbox{[}\href{https://darkdust.net/files/GDB\%20Cheat\%20Sheet.pdf}{\texttt{ https\+://darkdust.\+net/files/\+GDB\%20\+Cheat\%20\+Sheet.\+pdf}}\mbox{]} \mbox{[}$^\wedge$1\mbox{]}\+: Get {\ttfamily ADDRESS} (e.\+g. 0x0010000c) \mbox{[}$^\wedge$2\mbox{]}\+: Get {\ttfamily TCP\+\_\+\+PORT} (e.\+g. \+:26000) \hypertarget{md_xv6_gdb_autotoc_md4}{}\doxysection{GDB shell commands}\label{md_xv6_gdb_autotoc_md4}
+\hypertarget{md_xv6_gdb_autotoc_md5}{}\doxysubsection{Entry address breakpoint}\label{md_xv6_gdb_autotoc_md5}
+
+\begin{DoxyItemize}
+\item {\ttfamily (gdb)set architecture i386\+:x86-\/64}
+\item {\ttfamily (gdb)target remote \+:26000}\mbox{[}$^\wedge$1\mbox{]}
+\item {\ttfamily (gdb)file kernel}
+\item {\ttfamily (gdb)break $\ast$0x0010000c}\mbox{[}$^\wedge$2\mbox{]}
+\item {\ttfamily (gdb)continue}
+\item {\ttfamily (gdb)quit}\mbox{[}$^\wedge$3\mbox{]}
+\end{DoxyItemize}\hypertarget{md_xv6_gdb_autotoc_md6}{}\doxysubsection{Context Switch break point}\label{md_xv6_gdb_autotoc_md6}
+
+\begin{DoxyItemize}
+\item {\ttfamily (gdb)set architecture i386\+:x86-\/64}
+\item {\ttfamily (gdb)target remote \+:26000}\mbox{[}$^\wedge$1\mbox{]}
+\item {\ttfamily (gdb)file kernel}
+\item {\ttfamily (gdb)break swtch}
+\item {\ttfamily (gdb)continue} \& {\ttfamily (gdb)step}
+\item {\ttfamily (gdb)clear}
+\item {\ttfamily (gdb)exec}
+\item {\ttfamily (gdb)print argv\mbox{[}0\mbox{]}} \& {\ttfamily (gdb)print argv\mbox{[}1\mbox{]}}
+\item {\ttfamily (gdb)backtrace}
+\item {\ttfamily (gdb)up}
+\item {\ttfamily (gdb)list} 
+\end{DoxyItemize}

@@ -1,0 +1,96 @@
+\hypertarget{pstree_8c}{}\doxysection{pstree.\+c File Reference}
+\label{pstree_8c}\index{pstree.c@{pstree.c}}
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stat.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}user.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}uproc.\+h\char`\"{}}\newline
+Include dependency graph for pstree.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=316pt]{d9/de7/pstree_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{pstree_8c_abe4567498db286a3185a522c6dae3cbc}{MAXPROC}}~64
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{pstree_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$\mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{pstree_8c_abe4567498db286a3185a522c6dae3cbc}\label{pstree_8c_abe4567498db286a3185a522c6dae3cbc}} 
+\index{pstree.c@{pstree.c}!MAXPROC@{MAXPROC}}
+\index{MAXPROC@{MAXPROC}!pstree.c@{pstree.c}}
+\doxysubsubsection{\texorpdfstring{MAXPROC}{MAXPROC}}
+{\footnotesize\ttfamily \#define MAXPROC~64}
+
+
+
+Definition at line \mbox{\hyperlink{pstree_8c_source_l00005}{5}} of file \mbox{\hyperlink{pstree_8c_source}{pstree.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{pstree_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{pstree_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{pstree.c@{pstree.c}!main@{main}}
+\index{main@{main}!pstree.c@{pstree.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{pstree_8c_source_l00008}{8}} of file \mbox{\hyperlink{pstree_8c_source}{pstree.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00008                             \{}
+\DoxyCodeLine{00009   \textcolor{comment}{// declare a uproc struct with an allocated size of 64}}
+\DoxyCodeLine{00010   \textcolor{keyword}{struct }\mbox{\hyperlink{structuproc}{uproc}} *prs = \mbox{\hyperlink{umalloc_8c_ac131c16d1dcb6bea908d0237c82e981d}{malloc}}(\mbox{\hyperlink{pstree_8c_abe4567498db286a3185a522c6dae3cbc}{MAXPROC}}*\textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \mbox{\hyperlink{structuproc}{uproc}}));}
+\DoxyCodeLine{00011 }
+\DoxyCodeLine{00012   \textcolor{comment}{// call getprocs in kernel space and get the amount of processes running back}}
+\DoxyCodeLine{00013   \textcolor{keywordtype}{int} num = \mbox{\hyperlink{defs_8h_aee260ddc6baeb66dbf14f5efb1b799b2}{getprocs}}(\mbox{\hyperlink{pstree_8c_abe4567498db286a3185a522c6dae3cbc}{MAXPROC}}, prs);}
+\DoxyCodeLine{00014 }
+\DoxyCodeLine{00015   \textcolor{comment}{// getprocs will return -\/1 if an error is received. Handle errors here}}
+\DoxyCodeLine{00016   \textcolor{keywordflow}{if}(num == -\/1)\{}
+\DoxyCodeLine{00017     \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}Kernel returned an error when getting processes. \(\backslash\)n"{}});}
+\DoxyCodeLine{00018     \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00019   \}}
+\DoxyCodeLine{00020 }
+\DoxyCodeLine{00021   \textcolor{comment}{// create a counter}}
+\DoxyCodeLine{00022   \textcolor{keywordtype}{int} i=0;}
+\DoxyCodeLine{00023 }
+\DoxyCodeLine{00024   \textcolor{comment}{// loop through uproc structs that were created in the kernel space for each process}}
+\DoxyCodeLine{00025   \textcolor{keywordflow}{for}(; i< num; i++) \{}
+\DoxyCodeLine{00026     \textcolor{comment}{// format output to the user}}
+\DoxyCodeLine{00027     \textcolor{keywordflow}{if}(prs[i].\mbox{\hyperlink{structuproc_a179010a9b3cc6e4dfd1dfd8fc1a7dcb8}{pid}} == 1)\{}
+\DoxyCodeLine{00028       \textcolor{comment}{// if the pid is 1 then this is init}}
+\DoxyCodeLine{00029       \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}\%s[\%d] \(\backslash\)n"{}}, prs[i].\mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}}, prs[i].\mbox{\hyperlink{structuproc_a179010a9b3cc6e4dfd1dfd8fc1a7dcb8}{pid}}-\/1);}
+\DoxyCodeLine{00030     \}\textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(prs[i].\mbox{\hyperlink{structuproc_a5c3d7f113b62601c9f92c3fd1ff915a2}{ppid}} == 1)\{}
+\DoxyCodeLine{00031       \textcolor{comment}{// if parent pid is 1, then it is a child to parent init}}
+\DoxyCodeLine{00032       \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}   \%s[\%d] \(\backslash\)n"{}}, prs[i].\mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}}, prs[i].\mbox{\hyperlink{structuproc_a179010a9b3cc6e4dfd1dfd8fc1a7dcb8}{pid}}-\/1);}
+\DoxyCodeLine{00033     \}\textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00034       \textcolor{comment}{// if parent pid is not 1, then it is a grandchild to init and child to another process}}
+\DoxyCodeLine{00035       \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}      \%s[\%d] \(\backslash\)n"{}}, prs[i].\mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}}, prs[i].\mbox{\hyperlink{structuproc_a179010a9b3cc6e4dfd1dfd8fc1a7dcb8}{pid}}-\/1);}
+\DoxyCodeLine{00036     \}}
+\DoxyCodeLine{00037   \}}
+\DoxyCodeLine{00038 }
+\DoxyCodeLine{00039   \textcolor{comment}{// exit after pstree command is done}}
+\DoxyCodeLine{00040   \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00041 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/d16/pstree_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph}
+\end{center}
+\end{figure}

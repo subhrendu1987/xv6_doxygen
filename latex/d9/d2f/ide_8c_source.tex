@@ -1,0 +1,173 @@
+\hypertarget{ide_8c_source}{}\doxysection{ide.\+c}
+\mbox{\hyperlink{ide_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00001}00001 \textcolor{comment}{// Simple PIO-\/based (non-\/DMA) IDE driver code.}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00003}00003 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00004}00004 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{defs_8h}{defs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00005}00005 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{param_8h}{param.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00006}00006 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{memlayout_8h}{memlayout.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00007}00007 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{mmu_8h}{mmu.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00008}00008 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{proc_8h}{proc.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00009}00009 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{x86_8h}{x86.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00010}00010 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{traps_8h}{traps.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00011}00011 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{spinlock_8h}{spinlock.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00012}00012 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{sleeplock_8h}{sleeplock.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00013}00013 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{fs_8h}{fs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00014}00014 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{buf_8h}{buf.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00016}\mbox{\hyperlink{ide_8c_aa35bad1e92008da628f27b2f6bb270aa}{00016}} \textcolor{preprocessor}{\#define SECTOR\_SIZE   512}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00017}\mbox{\hyperlink{ide_8c_aebe5f7f39eb6d658f4a430936dc1dfc2}{00017}} \textcolor{preprocessor}{\#define IDE\_BSY       0x80}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00018}\mbox{\hyperlink{ide_8c_a46b51ed8423e20960b46bd4451aad66b}{00018}} \textcolor{preprocessor}{\#define IDE\_DRDY      0x40}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00019}\mbox{\hyperlink{ide_8c_a8856c5f8e07087f4cc462dc093539f75}{00019}} \textcolor{preprocessor}{\#define IDE\_DF        0x20}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00020}\mbox{\hyperlink{ide_8c_ae27406a5efbf146eebd69751e36b1d14}{00020}} \textcolor{preprocessor}{\#define IDE\_ERR       0x01}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00022}\mbox{\hyperlink{ide_8c_ae117ee5b71546241f52d9088c0fffadc}{00022}} \textcolor{preprocessor}{\#define IDE\_CMD\_READ  0x20}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00023}\mbox{\hyperlink{ide_8c_ae7cbfd899670e7987022c3bb639e568d}{00023}} \textcolor{preprocessor}{\#define IDE\_CMD\_WRITE 0x30}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00024}\mbox{\hyperlink{ide_8c_a93b80911b1cd461ad95283151dfc90ee}{00024}} \textcolor{preprocessor}{\#define IDE\_CMD\_RDMUL 0xc4}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00025}\mbox{\hyperlink{ide_8c_a4afad2a87c6ecab61eefe7804384defc}{00025}} \textcolor{preprocessor}{\#define IDE\_CMD\_WRMUL 0xc5}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00027}00027 \textcolor{comment}{// idequeue points to the buf now being read/written to the disk.}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00028}00028 \textcolor{comment}{// idequeue-\/>qnext points to the next buf to be processed.}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00029}00029 \textcolor{comment}{// You must hold idelock while manipulating queue.}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00031}00031 \textcolor{keyword}{static} \textcolor{keyword}{struct }\mbox{\hyperlink{structspinlock}{spinlock}} idelock;}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00032}00032 \textcolor{keyword}{static} \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} *idequeue;}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00034}00034 \textcolor{keyword}{static} \textcolor{keywordtype}{int} havedisk1;}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00035}00035 \textcolor{keyword}{static} \textcolor{keywordtype}{void} idestart(\textcolor{keyword}{struct} \mbox{\hyperlink{structbuf}{buf}}*);}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00037}00037 \textcolor{comment}{// Wait for IDE disk to become ready.}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00038}00038 \textcolor{keyword}{static} \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00039}00039 idewait(\textcolor{keywordtype}{int} checkerr)}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00040}00040 \{}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00041}00041   \textcolor{keywordtype}{int} \mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}};}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00043}00043   \textcolor{keywordflow}{while}(((\mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}} = inb(0x1f7)) \& (\mbox{\hyperlink{ide_8c_aebe5f7f39eb6d658f4a430936dc1dfc2}{IDE\_BSY}}|\mbox{\hyperlink{ide_8c_a46b51ed8423e20960b46bd4451aad66b}{IDE\_DRDY}})) != \mbox{\hyperlink{ide_8c_a46b51ed8423e20960b46bd4451aad66b}{IDE\_DRDY}})}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00044}00044     ;}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00045}00045   \textcolor{keywordflow}{if}(checkerr \&\& (\mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}} \& (\mbox{\hyperlink{ide_8c_a8856c5f8e07087f4cc462dc093539f75}{IDE\_DF}}|\mbox{\hyperlink{ide_8c_ae27406a5efbf146eebd69751e36b1d14}{IDE\_ERR}})) != 0)}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00046}00046     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00047}00047   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00048}00048 \}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00049}00049 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00050}00050 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00051}\mbox{\hyperlink{defs_8h_aefb190a6104cb58c0bc1f8fec88d1307}{00051}} \mbox{\hyperlink{ide_8c_aefb190a6104cb58c0bc1f8fec88d1307}{ideinit}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00052}00052 \{}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00053}00053   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00055}00055   \mbox{\hyperlink{defs_8h_ab56d728e6966819a0260c358d3ac3419}{initlock}}(\&idelock, \textcolor{stringliteral}{"{}ide"{}});}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00056}00056   \mbox{\hyperlink{defs_8h_a63da75c0c2f0b051f2c790aea2116b63}{ioapicenable}}(\mbox{\hyperlink{traps_8h_ae17548e9192fbdecfb02247721aaf2df}{IRQ\_IDE}}, \mbox{\hyperlink{mp_8c_a6201a0661c3d5b88df5f63529298eb48}{ncpu}} -\/ 1);}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00057}00057   idewait(0);}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00058}00058 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00059}00059   \textcolor{comment}{// Check if disk 1 is present}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00060}00060   outb(0x1f6, 0xe0 | (1<<4));}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00061}00061   \textcolor{keywordflow}{for}(i=0; i<1000; i++)\{}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00062}00062     \textcolor{keywordflow}{if}(inb(0x1f7) != 0)\{}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00063}00063       havedisk1 = 1;}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00064}00064       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00065}00065     \}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00066}00066   \}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00068}00068   \textcolor{comment}{// Switch back to disk 0.}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00069}00069   outb(0x1f6, 0xe0 | (0<<4));}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00070}00070 \}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00071}00071 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00072}00072 \textcolor{comment}{// Start the request for b.  Caller must hold idelock.}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00073}00073 \textcolor{keyword}{static} \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00074}00074 idestart(\textcolor{keyword}{struct} \mbox{\hyperlink{structbuf}{buf}} *b)}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00075}00075 \{}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00076}00076   \textcolor{keywordflow}{if}(b == 0)}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00077}00077     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}idestart"{}});}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00078}00078   \textcolor{keywordflow}{if}(b-\/>\mbox{\hyperlink{structbuf_a756b2bcc88008bef7f21d688aa4a7a48}{blockno}} >= \mbox{\hyperlink{param_8h_a486f47992f736854db2444b01afd9991}{FSSIZE}})}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00079}00079     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}incorrect blockno"{}});}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00080}00080   \textcolor{keywordtype}{int} sector\_per\_block =  \mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}}/\mbox{\hyperlink{ide_8c_aa35bad1e92008da628f27b2f6bb270aa}{SECTOR\_SIZE}};}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00081}00081   \textcolor{keywordtype}{int} sector = b-\/>\mbox{\hyperlink{structbuf_a756b2bcc88008bef7f21d688aa4a7a48}{blockno}} * sector\_per\_block;}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00082}00082   \textcolor{keywordtype}{int} read\_cmd = (sector\_per\_block == 1) ? \mbox{\hyperlink{ide_8c_ae117ee5b71546241f52d9088c0fffadc}{IDE\_CMD\_READ}} :  \mbox{\hyperlink{ide_8c_a93b80911b1cd461ad95283151dfc90ee}{IDE\_CMD\_RDMUL}};}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00083}00083   \textcolor{keywordtype}{int} write\_cmd = (sector\_per\_block == 1) ? \mbox{\hyperlink{ide_8c_ae7cbfd899670e7987022c3bb639e568d}{IDE\_CMD\_WRITE}} : \mbox{\hyperlink{ide_8c_a4afad2a87c6ecab61eefe7804384defc}{IDE\_CMD\_WRMUL}};}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00084}00084 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00085}00085   \textcolor{keywordflow}{if} (sector\_per\_block > 7) \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}idestart"{}});}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00086}00086 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00087}00087   idewait(0);}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00088}00088   outb(0x3f6, 0);  \textcolor{comment}{// generate interrupt}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00089}00089   outb(0x1f2, sector\_per\_block);  \textcolor{comment}{// number of sectors}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00090}00090   outb(0x1f3, sector \& 0xff);}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00091}00091   outb(0x1f4, (sector >> 8) \& 0xff);}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00092}00092   outb(0x1f5, (sector >> 16) \& 0xff);}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00093}00093   outb(0x1f6, 0xe0 | ((b-\/>\mbox{\hyperlink{structbuf_ac96082c2b5f22133ac7092ef81487227}{dev}}\&1)<<4) | ((sector>>24)\&0x0f));}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00094}00094   \textcolor{keywordflow}{if}(b-\/>\mbox{\hyperlink{structbuf_ae7d6b6c34fdeadb38970efd0554aa1a9}{flags}} \& \mbox{\hyperlink{buf_8h_adc32011df267adb9740bcd0abf0f0663}{B\_DIRTY}})\{}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00095}00095     outb(0x1f7, write\_cmd);}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00096}00096     outsl(0x1f0, b-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}}, \mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}}/4);}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00097}00097   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00098}00098     outb(0x1f7, read\_cmd);}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00099}00099   \}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00100}00100 \}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00101}00101 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00102}00102 \textcolor{comment}{// Interrupt handler.}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00103}00103 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00104}\mbox{\hyperlink{defs_8h_a709693afdb9b89d848e684e7acde1f8f}{00104}} \mbox{\hyperlink{ide_8c_a709693afdb9b89d848e684e7acde1f8f}{ideintr}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00105}00105 \{}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00106}00106   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} *b;}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00107}00107 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00108}00108   \textcolor{comment}{// First queued buffer is the active request.}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00109}00109   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&idelock);}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00110}00110 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00111}00111   \textcolor{keywordflow}{if}((b = idequeue) == 0)\{}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00112}00112     \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&idelock);}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00113}00113     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00114}00114   \}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00115}00115   idequeue = b-\/>\mbox{\hyperlink{structbuf_aba5c088c4da07a5ec88edfacdae9b85a}{qnext}};}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00116}00116 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00117}00117   \textcolor{comment}{// Read data if needed.}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00118}00118   \textcolor{keywordflow}{if}(!(b-\/>\mbox{\hyperlink{structbuf_ae7d6b6c34fdeadb38970efd0554aa1a9}{flags}} \& \mbox{\hyperlink{buf_8h_adc32011df267adb9740bcd0abf0f0663}{B\_DIRTY}}) \&\& idewait(1) >= 0)}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00119}00119     insl(0x1f0, b-\/>\mbox{\hyperlink{structbuf_ab0ec38784ab94ed35e575cf6d33912d2}{data}}, \mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}}/4);}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00120}00120 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00121}00121   \textcolor{comment}{// Wake process waiting for this buf.}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00122}00122   b-\/>\mbox{\hyperlink{structbuf_ae7d6b6c34fdeadb38970efd0554aa1a9}{flags}} |= \mbox{\hyperlink{buf_8h_afab4199c0d27da71061f1c0cd5b51520}{B\_VALID}};}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00123}00123   b-\/>\mbox{\hyperlink{structbuf_ae7d6b6c34fdeadb38970efd0554aa1a9}{flags}} \&= \string~B\_DIRTY;}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00124}00124   \mbox{\hyperlink{defs_8h_a245b56417239f499389b2e806bd99254}{wakeup}}(b);}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00125}00125 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00126}00126   \textcolor{comment}{// Start disk on next buf in queue.}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00127}00127   \textcolor{keywordflow}{if}(idequeue != 0)}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00128}00128     idestart(idequeue);}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00129}00129 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00130}00130   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&idelock);}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00131}00131 \}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00132}00132 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00133}00133 \textcolor{comment}{//PAGEBREAK!}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00134}00134 \textcolor{comment}{// Sync buf with disk.}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00135}00135 \textcolor{comment}{// If B\_DIRTY is set, write buf to disk, clear B\_DIRTY, set B\_VALID.}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00136}00136 \textcolor{comment}{// Else if B\_VALID is not set, read buf from disk, set B\_VALID.}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00137}00137 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00138}\mbox{\hyperlink{defs_8h_a70985c3f5b2fb79737457b5c88f5327a}{00138}} \mbox{\hyperlink{ide_8c_a7f36b008f02088c86f76e98e05b55af5}{iderw}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structbuf}{buf}} *b)}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00139}00139 \{}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00140}00140   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} **pp;}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00141}00141 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00142}00142   \textcolor{keywordflow}{if}(!\mbox{\hyperlink{defs_8h_afa76133bc67c6026376d630da9b53b68}{holdingsleep}}(\&b-\/>\mbox{\hyperlink{structbuf_a626ad748d91d4bd7f4e65b74c73f2644}{lock}}))}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00143}00143     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}iderw: buf not locked"{}});}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00144}00144   \textcolor{keywordflow}{if}((b-\/>\mbox{\hyperlink{structbuf_ae7d6b6c34fdeadb38970efd0554aa1a9}{flags}} \& (\mbox{\hyperlink{buf_8h_afab4199c0d27da71061f1c0cd5b51520}{B\_VALID}}|\mbox{\hyperlink{buf_8h_adc32011df267adb9740bcd0abf0f0663}{B\_DIRTY}})) == \mbox{\hyperlink{buf_8h_afab4199c0d27da71061f1c0cd5b51520}{B\_VALID}})}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00145}00145     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}iderw: nothing to do"{}});}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00146}00146   \textcolor{keywordflow}{if}(b-\/>\mbox{\hyperlink{structbuf_ac96082c2b5f22133ac7092ef81487227}{dev}} != 0 \&\& !havedisk1)}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00147}00147     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}iderw: ide disk 1 not present"{}});}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00148}00148 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00149}00149   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&idelock);  \textcolor{comment}{//DOC:acquire-\/lock}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00150}00150 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00151}00151   \textcolor{comment}{// Append b to idequeue.}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00152}00152   b-\/>\mbox{\hyperlink{structbuf_aba5c088c4da07a5ec88edfacdae9b85a}{qnext}} = 0;}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00153}00153   \textcolor{keywordflow}{for}(pp=\&idequeue; *pp; pp=\&(*pp)-\/>\mbox{\hyperlink{structbuf_aba5c088c4da07a5ec88edfacdae9b85a}{qnext}})  \textcolor{comment}{//DOC:insert-\/queue}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00154}00154     ;}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00155}00155   *pp = b;}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00156}00156 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00157}00157   \textcolor{comment}{// Start disk if necessary.}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00158}00158   \textcolor{keywordflow}{if}(idequeue == b)}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00159}00159     idestart(b);}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00160}00160 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00161}00161   \textcolor{comment}{// Wait for request to finish.}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00162}00162   \textcolor{keywordflow}{while}((b-\/>\mbox{\hyperlink{structbuf_ae7d6b6c34fdeadb38970efd0554aa1a9}{flags}} \& (\mbox{\hyperlink{buf_8h_afab4199c0d27da71061f1c0cd5b51520}{B\_VALID}}|\mbox{\hyperlink{buf_8h_adc32011df267adb9740bcd0abf0f0663}{B\_DIRTY}})) != \mbox{\hyperlink{buf_8h_afab4199c0d27da71061f1c0cd5b51520}{B\_VALID}})\{}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00163}00163     \mbox{\hyperlink{defs_8h_aca4a88f06b3ebbcc04330f7ae06c8507}{sleep}}(b, \&idelock);}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00164}00164   \}}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00165}00165 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00166}00166 }
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00167}00167   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&idelock);}
+\DoxyCodeLine{\Hypertarget{ide_8c_source_l00168}00168 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,250 @@
+\hypertarget{log_8c}{}\doxysection{log.\+c File Reference}
+\label{log_8c}\index{log.c@{log.c}}
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}defs.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}param.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}spinlock.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}sleeplock.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}fs.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}buf.\+h\char`\"{}}\newline
+Include dependency graph for log.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{de/d6f/log_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structlogheader}{logheader}}
+\item 
+struct \mbox{\hyperlink{structlog}{log}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{log_8c_ad5e79aaefb91f41b9ef6aeae7ecf4708}{initlog}} (int dev)
+\item 
+void \mbox{\hyperlink{log_8c_ac96aa31ffc0500e749c62c4d377c21c9}{begin\+\_\+op}} (void)
+\item 
+void \mbox{\hyperlink{log_8c_ac0f12be0ca0de555e60b27b06a57a65b}{end\+\_\+op}} (void)
+\item 
+void \mbox{\hyperlink{log_8c_a7eacb0fbebe5ce4c7d3ddea15908b13d}{log\+\_\+write}} (struct \mbox{\hyperlink{structbuf}{buf}} $\ast$b)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structlog}{log}} \mbox{\hyperlink{log_8c_a3583f58fafd1ed3c2dba9d6dfc67c597}{log}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{log_8c_ac96aa31ffc0500e749c62c4d377c21c9}\label{log_8c_ac96aa31ffc0500e749c62c4d377c21c9}} 
+\index{log.c@{log.c}!begin\_op@{begin\_op}}
+\index{begin\_op@{begin\_op}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{begin\_op()}{begin\_op()}}
+{\footnotesize\ttfamily void begin\+\_\+op (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{log_8c_source_l00126}{126}} of file \mbox{\hyperlink{log_8c_source}{log.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00127 \{}
+\DoxyCodeLine{00128   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_a980a1d1aa9c60af7a82f297f8ab54d2e}{lock}});}
+\DoxyCodeLine{00129   \textcolor{keywordflow}{while}(1)\{}
+\DoxyCodeLine{00130     \textcolor{keywordflow}{if}(\mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_afc034b98b98897c179ca8fae8e2ee181}{committing}})\{}
+\DoxyCodeLine{00131       \mbox{\hyperlink{defs_8h_aca4a88f06b3ebbcc04330f7ae06c8507}{sleep}}(\&\mbox{\hyperlink{structlog}{log}}, \&\mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_a980a1d1aa9c60af7a82f297f8ab54d2e}{lock}});}
+\DoxyCodeLine{00132     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(\mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_a7808516ed2f708dcb13912b1e8fc20d9}{lh}}.\mbox{\hyperlink{structlogheader_a50b276b70d44ae77497ef1d71d182875}{n}} + (\mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_addfc1fc09a124978bd7e2a23a19d733d}{outstanding}}+1)*\mbox{\hyperlink{param_8h_a31cde324007b4e52bbba7079ec5e5f45}{MAXOPBLOCKS}} > \mbox{\hyperlink{param_8h_acc7694167c7840a913939a1b90808b4c}{LOGSIZE}})\{}
+\DoxyCodeLine{00133       \textcolor{comment}{// this op might exhaust log space; wait for commit.}}
+\DoxyCodeLine{00134       \mbox{\hyperlink{defs_8h_aca4a88f06b3ebbcc04330f7ae06c8507}{sleep}}(\&\mbox{\hyperlink{structlog}{log}}, \&\mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_a980a1d1aa9c60af7a82f297f8ab54d2e}{lock}});}
+\DoxyCodeLine{00135     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00136       \mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_addfc1fc09a124978bd7e2a23a19d733d}{outstanding}} += 1;}
+\DoxyCodeLine{00137       \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_a980a1d1aa9c60af7a82f297f8ab54d2e}{lock}});}
+\DoxyCodeLine{00138       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00139     \}}
+\DoxyCodeLine{00140   \}}
+\DoxyCodeLine{00141 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d7/df8/log_8c_ac96aa31ffc0500e749c62c4d377c21c9_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{d7/df8/log_8c_ac96aa31ffc0500e749c62c4d377c21c9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{log_8c_ac0f12be0ca0de555e60b27b06a57a65b}\label{log_8c_ac0f12be0ca0de555e60b27b06a57a65b}} 
+\index{log.c@{log.c}!end\_op@{end\_op}}
+\index{end\_op@{end\_op}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{end\_op()}{end\_op()}}
+{\footnotesize\ttfamily void end\+\_\+op (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{log_8c_source_l00146}{146}} of file \mbox{\hyperlink{log_8c_source}{log.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00147 \{}
+\DoxyCodeLine{00148   \textcolor{keywordtype}{int} do\_commit = 0;}
+\DoxyCodeLine{00149 }
+\DoxyCodeLine{00150   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_a980a1d1aa9c60af7a82f297f8ab54d2e}{lock}});}
+\DoxyCodeLine{00151   \mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_addfc1fc09a124978bd7e2a23a19d733d}{outstanding}} -\/= 1;}
+\DoxyCodeLine{00152   \textcolor{keywordflow}{if}(\mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_afc034b98b98897c179ca8fae8e2ee181}{committing}})}
+\DoxyCodeLine{00153     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}log.committing"{}});}
+\DoxyCodeLine{00154   \textcolor{keywordflow}{if}(\mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_addfc1fc09a124978bd7e2a23a19d733d}{outstanding}} == 0)\{}
+\DoxyCodeLine{00155     do\_commit = 1;}
+\DoxyCodeLine{00156     \mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_afc034b98b98897c179ca8fae8e2ee181}{committing}} = 1;}
+\DoxyCodeLine{00157   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{00158     \textcolor{comment}{// begin\_op() may be waiting for log space,}}
+\DoxyCodeLine{00159     \textcolor{comment}{// and decrementing log.outstanding has decreased}}
+\DoxyCodeLine{00160     \textcolor{comment}{// the amount of reserved space.}}
+\DoxyCodeLine{00161     \mbox{\hyperlink{defs_8h_a245b56417239f499389b2e806bd99254}{wakeup}}(\&\mbox{\hyperlink{structlog}{log}});}
+\DoxyCodeLine{00162   \}}
+\DoxyCodeLine{00163   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_a980a1d1aa9c60af7a82f297f8ab54d2e}{lock}});}
+\DoxyCodeLine{00164 }
+\DoxyCodeLine{00165   \textcolor{keywordflow}{if}(do\_commit)\{}
+\DoxyCodeLine{00166     \textcolor{comment}{// call commit w/o holding locks, since not allowed}}
+\DoxyCodeLine{00167     \textcolor{comment}{// to sleep with locks.}}
+\DoxyCodeLine{00168     commit();}
+\DoxyCodeLine{00169     \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_a980a1d1aa9c60af7a82f297f8ab54d2e}{lock}});}
+\DoxyCodeLine{00170     \mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_afc034b98b98897c179ca8fae8e2ee181}{committing}} = 0;}
+\DoxyCodeLine{00171     \mbox{\hyperlink{defs_8h_a245b56417239f499389b2e806bd99254}{wakeup}}(\&\mbox{\hyperlink{structlog}{log}});}
+\DoxyCodeLine{00172     \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_a980a1d1aa9c60af7a82f297f8ab54d2e}{lock}});}
+\DoxyCodeLine{00173   \}}
+\DoxyCodeLine{00174 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d7/df8/log_8c_ac0f12be0ca0de555e60b27b06a57a65b_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{d7/df8/log_8c_ac0f12be0ca0de555e60b27b06a57a65b_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{log_8c_ad5e79aaefb91f41b9ef6aeae7ecf4708}\label{log_8c_ad5e79aaefb91f41b9ef6aeae7ecf4708}} 
+\index{log.c@{log.c}!initlog@{initlog}}
+\index{initlog@{initlog}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{initlog()}{initlog()}}
+{\footnotesize\ttfamily void initlog (\begin{DoxyParamCaption}\item[{int}]{dev }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{log_8c_source_l00054}{54}} of file \mbox{\hyperlink{log_8c_source}{log.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00055 \{}
+\DoxyCodeLine{00056   \textcolor{keywordflow}{if} (\textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \mbox{\hyperlink{structlogheader}{logheader}}) >= \mbox{\hyperlink{fs_8h_a403cf3149c084cea115b85c90721039a}{BSIZE}})}
+\DoxyCodeLine{00057     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}initlog: too big logheader"{}});}
+\DoxyCodeLine{00058 }
+\DoxyCodeLine{00059   \textcolor{keyword}{struct }\mbox{\hyperlink{structsuperblock}{superblock}} \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}};}
+\DoxyCodeLine{00060   \mbox{\hyperlink{defs_8h_ab56d728e6966819a0260c358d3ac3419}{initlock}}(\&\mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_a980a1d1aa9c60af7a82f297f8ab54d2e}{lock}}, \textcolor{stringliteral}{"{}log"{}});}
+\DoxyCodeLine{00061   \mbox{\hyperlink{defs_8h_aff0080b2133027be2e525ca088b40e78}{readsb}}(dev, \&\mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}});}
+\DoxyCodeLine{00062   \mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_a28d847dd722497fa3497b14f68267618}{start}} = \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}.\mbox{\hyperlink{structsuperblock_a460268b28aced19797e8d7b84aa60ebf}{logstart}};}
+\DoxyCodeLine{00063   \mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_a2257e716d4b77efd0524286cf5772a41}{size}} = \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}.\mbox{\hyperlink{structsuperblock_aea92ae872785fd4fb39b903d9157aac5}{nlog}};}
+\DoxyCodeLine{00064   \mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_aebeeb9df7326549fb5d8b7221c9b0aa3}{dev}} = dev;}
+\DoxyCodeLine{00065   recover\_from\_log();}
+\DoxyCodeLine{00066 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d7/df8/log_8c_ad5e79aaefb91f41b9ef6aeae7ecf4708_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=202pt]{d7/df8/log_8c_ad5e79aaefb91f41b9ef6aeae7ecf4708_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{log_8c_a7eacb0fbebe5ce4c7d3ddea15908b13d}\label{log_8c_a7eacb0fbebe5ce4c7d3ddea15908b13d}} 
+\index{log.c@{log.c}!log\_write@{log\_write}}
+\index{log\_write@{log\_write}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{log\_write()}{log\_write()}}
+{\footnotesize\ttfamily void log\+\_\+write (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structbuf}{buf}} $\ast$}]{b }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{log_8c_source_l00214}{214}} of file \mbox{\hyperlink{log_8c_source}{log.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00215 \{}
+\DoxyCodeLine{00216   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00217 }
+\DoxyCodeLine{00218   \textcolor{keywordflow}{if} (\mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_a7808516ed2f708dcb13912b1e8fc20d9}{lh}}.\mbox{\hyperlink{structlogheader_a50b276b70d44ae77497ef1d71d182875}{n}} >= \mbox{\hyperlink{param_8h_acc7694167c7840a913939a1b90808b4c}{LOGSIZE}} || \mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_a7808516ed2f708dcb13912b1e8fc20d9}{lh}}.\mbox{\hyperlink{structlogheader_a50b276b70d44ae77497ef1d71d182875}{n}} >= \mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_a2257e716d4b77efd0524286cf5772a41}{size}} -\/ 1)}
+\DoxyCodeLine{00219     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}too big a transaction"{}});}
+\DoxyCodeLine{00220   \textcolor{keywordflow}{if} (\mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_addfc1fc09a124978bd7e2a23a19d733d}{outstanding}} < 1)}
+\DoxyCodeLine{00221     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}log\_write outside of trans"{}});}
+\DoxyCodeLine{00222 }
+\DoxyCodeLine{00223   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_a980a1d1aa9c60af7a82f297f8ab54d2e}{lock}});}
+\DoxyCodeLine{00224   \textcolor{keywordflow}{for} (i = 0; i < \mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_a7808516ed2f708dcb13912b1e8fc20d9}{lh}}.\mbox{\hyperlink{structlogheader_a50b276b70d44ae77497ef1d71d182875}{n}}; i++) \{}
+\DoxyCodeLine{00225     \textcolor{keywordflow}{if} (\mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_a7808516ed2f708dcb13912b1e8fc20d9}{lh}}.\mbox{\hyperlink{structlogheader_a020db7fe04c7ce6b8f4aee2092576c2c}{block}}[i] == b-\/>\mbox{\hyperlink{structbuf_a756b2bcc88008bef7f21d688aa4a7a48}{blockno}})   \textcolor{comment}{// log absorbtion}}
+\DoxyCodeLine{00226       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00227   \}}
+\DoxyCodeLine{00228   \mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_a7808516ed2f708dcb13912b1e8fc20d9}{lh}}.\mbox{\hyperlink{structlogheader_a020db7fe04c7ce6b8f4aee2092576c2c}{block}}[i] = b-\/>\mbox{\hyperlink{structbuf_a756b2bcc88008bef7f21d688aa4a7a48}{blockno}};}
+\DoxyCodeLine{00229   \textcolor{keywordflow}{if} (i == \mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_a7808516ed2f708dcb13912b1e8fc20d9}{lh}}.\mbox{\hyperlink{structlogheader_a50b276b70d44ae77497ef1d71d182875}{n}})}
+\DoxyCodeLine{00230     \mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_a7808516ed2f708dcb13912b1e8fc20d9}{lh}}.\mbox{\hyperlink{structlogheader_a50b276b70d44ae77497ef1d71d182875}{n}}++;}
+\DoxyCodeLine{00231   b-\/>\mbox{\hyperlink{structbuf_ae7d6b6c34fdeadb38970efd0554aa1a9}{flags}} |= \mbox{\hyperlink{buf_8h_adc32011df267adb9740bcd0abf0f0663}{B\_DIRTY}}; \textcolor{comment}{// prevent eviction}}
+\DoxyCodeLine{00232   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{structlog}{log}}.\mbox{\hyperlink{structlog_a980a1d1aa9c60af7a82f297f8ab54d2e}{lock}});}
+\DoxyCodeLine{00233 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d7/df8/log_8c_a7eacb0fbebe5ce4c7d3ddea15908b13d_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{d7/df8/log_8c_a7eacb0fbebe5ce4c7d3ddea15908b13d_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{log_8c_a3583f58fafd1ed3c2dba9d6dfc67c597}\label{log_8c_a3583f58fafd1ed3c2dba9d6dfc67c597}} 
+\index{log.c@{log.c}!log@{log}}
+\index{log@{log}!log.c@{log.c}}
+\doxysubsubsection{\texorpdfstring{log}{log}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structlog}{log}} \mbox{\hyperlink{structlog}{log}}}
+
+
+
+Definition at line \mbox{\hyperlink{log_8c_source_l00048}{48}} of file \mbox{\hyperlink{log_8c_source}{log.\+c}}.
+

@@ -1,0 +1,14 @@
+<map id="sysfile.c" name="sysfile.c">
+<area shape="rect" id="node1" title=" " alt="" coords="432,5,503,31"/>
+<area shape="rect" id="node2" href="$d9/d49/types_8h.html" title=" " alt="" coords="5,79,71,104"/>
+<area shape="rect" id="node3" href="$d5/d64/defs_8h.html" title=" " alt="" coords="95,79,154,104"/>
+<area shape="rect" id="node4" href="$d5/d33/param_8h.html" title=" " alt="" coords="178,79,247,104"/>
+<area shape="rect" id="node5" href="$d2/d1b/stat_8h.html" title=" " alt="" coords="272,79,327,104"/>
+<area shape="rect" id="node6" href="$d2/df1/mmu_8h.html" title=" " alt="" coords="351,79,413,104"/>
+<area shape="rect" id="node7" href="$df/d03/proc_8h.html" title=" " alt="" coords="438,79,497,104"/>
+<area shape="rect" id="node8" href="$df/d26/fs_8h.html" title=" " alt="" coords="521,79,565,104"/>
+<area shape="rect" id="node9" href="$df/d63/spinlock_8h.html" title=" " alt="" coords="589,79,671,104"/>
+<area shape="rect" id="node10" href="$d0/d74/sleeplock_8h.html" title=" " alt="" coords="695,79,783,104"/>
+<area shape="rect" id="node11" href="$d2/d4d/file_8h.html" title=" " alt="" coords="807,79,858,104"/>
+<area shape="rect" id="node12" href="$d7/d9f/fcntl_8h.html" title=" " alt="" coords="882,79,941,104"/>
+</map>

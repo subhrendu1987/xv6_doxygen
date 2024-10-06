@@ -1,0 +1,61 @@
+\hypertarget{sleeplock_8c_source}{}\doxysection{sleeplock.\+c}
+\mbox{\hyperlink{sleeplock_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00001}00001 \textcolor{comment}{// Sleeping locks}}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00003}00003 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00004}00004 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{defs_8h}{defs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00005}00005 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{param_8h}{param.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00006}00006 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{x86_8h}{x86.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00007}00007 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{memlayout_8h}{memlayout.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00008}00008 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{mmu_8h}{mmu.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00009}00009 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{proc_8h}{proc.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00010}00010 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{spinlock_8h}{spinlock.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00011}00011 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{sleeplock_8h}{sleeplock.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00013}00013 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00014}\mbox{\hyperlink{defs_8h_af5ca8072e3877a883fb34ce59eff88cb}{00014}} \mbox{\hyperlink{sleeplock_8c_aaa5746f0a7ae0071b2916be5fdedf4ab}{initsleeplock}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structsleeplock}{sleeplock}} *lk, \textcolor{keywordtype}{char} *\mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}})}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00015}00015 \{}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00016}00016   \mbox{\hyperlink{defs_8h_ab56d728e6966819a0260c358d3ac3419}{initlock}}(\&lk-\/>\mbox{\hyperlink{structsleeplock_a077241ea0e720d228d853208444c4c9d}{lk}}, \textcolor{stringliteral}{"{}sleep lock"{}});}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00017}00017   lk-\/>\mbox{\hyperlink{structsleeplock_a40f1db61da688063cd5ac4f72d839590}{name}} = \mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}};}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00018}00018   lk-\/>\mbox{\hyperlink{structsleeplock_ac5cfe608994a41b24cb1c0fd722910c3}{locked}} = 0;}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00019}00019   lk-\/>\mbox{\hyperlink{structsleeplock_a99a4c6a784956ab1c391a12af475a55e}{pid}} = 0;}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00020}00020 \}}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00022}00022 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00023}\mbox{\hyperlink{defs_8h_aecd4639fe2f9aaad8e8cee2b5e0688c3}{00023}} \mbox{\hyperlink{sleeplock_8c_aaad2d7a86d4859982dd9a132f5128ff2}{acquiresleep}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structsleeplock}{sleeplock}} *lk)}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00024}00024 \{}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00025}00025   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&lk-\/>\mbox{\hyperlink{structsleeplock_a077241ea0e720d228d853208444c4c9d}{lk}});}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00026}00026   \textcolor{keywordflow}{while} (lk-\/>\mbox{\hyperlink{structsleeplock_ac5cfe608994a41b24cb1c0fd722910c3}{locked}}) \{}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00027}00027     \mbox{\hyperlink{defs_8h_aca4a88f06b3ebbcc04330f7ae06c8507}{sleep}}(lk, \&lk-\/>\mbox{\hyperlink{structsleeplock_a077241ea0e720d228d853208444c4c9d}{lk}});}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00028}00028   \}}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00029}00029   lk-\/>\mbox{\hyperlink{structsleeplock_ac5cfe608994a41b24cb1c0fd722910c3}{locked}} = 1;}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00030}00030   lk-\/>\mbox{\hyperlink{structsleeplock_a99a4c6a784956ab1c391a12af475a55e}{pid}} = \mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}()-\/>\mbox{\hyperlink{structproc_acf2bdf54d1f957ccbcdc987007029944}{pid}};}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00031}00031   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&lk-\/>\mbox{\hyperlink{structsleeplock_a077241ea0e720d228d853208444c4c9d}{lk}});}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00032}00032 \}}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00034}00034 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00035}\mbox{\hyperlink{defs_8h_a840b479c87b1c047d7142f58e0ad0b27}{00035}} \mbox{\hyperlink{sleeplock_8c_aa997067c2c9bfef15af6fa0a10c20f4a}{releasesleep}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structsleeplock}{sleeplock}} *lk)}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00036}00036 \{}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00037}00037   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&lk-\/>\mbox{\hyperlink{structsleeplock_a077241ea0e720d228d853208444c4c9d}{lk}});}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00038}00038   lk-\/>\mbox{\hyperlink{structsleeplock_ac5cfe608994a41b24cb1c0fd722910c3}{locked}} = 0;}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00039}00039   lk-\/>\mbox{\hyperlink{structsleeplock_a99a4c6a784956ab1c391a12af475a55e}{pid}} = 0;}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00040}00040   \mbox{\hyperlink{defs_8h_a245b56417239f499389b2e806bd99254}{wakeup}}(lk);}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00041}00041   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&lk-\/>\mbox{\hyperlink{structsleeplock_a077241ea0e720d228d853208444c4c9d}{lk}});}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00042}00042 \}}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00044}00044 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00045}\mbox{\hyperlink{defs_8h_afa76133bc67c6026376d630da9b53b68}{00045}} \mbox{\hyperlink{sleeplock_8c_a6fdbe54cbecd8fc67d74793b27adcf05}{holdingsleep}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structsleeplock}{sleeplock}} *lk)}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00046}00046 \{}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00047}00047   \textcolor{keywordtype}{int} \mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}};}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00048}00048   }
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00049}00049   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&lk-\/>\mbox{\hyperlink{structsleeplock_a077241ea0e720d228d853208444c4c9d}{lk}});}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00050}00050   \mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}} = lk-\/>\mbox{\hyperlink{structsleeplock_ac5cfe608994a41b24cb1c0fd722910c3}{locked}} \&\& (lk-\/>\mbox{\hyperlink{structsleeplock_a99a4c6a784956ab1c391a12af475a55e}{pid}} == \mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}()-\/>\mbox{\hyperlink{structproc_acf2bdf54d1f957ccbcdc987007029944}{pid}});}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00051}00051   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&lk-\/>\mbox{\hyperlink{structsleeplock_a077241ea0e720d228d853208444c4c9d}{lk}});}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00052}00052   \textcolor{keywordflow}{return} \mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}};}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00053}00053 \}}
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{sleeplock_8c_source_l00056}00056 }
+
+\end{DoxyCode}

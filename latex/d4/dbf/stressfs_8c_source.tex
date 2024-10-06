@@ -1,0 +1,54 @@
+\hypertarget{stressfs_8c_source}{}\doxysection{stressfs.\+c}
+\mbox{\hyperlink{stressfs_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00001}00001 \textcolor{comment}{// Demonstrate that moving the "{}acquire"{} in iderw after the loop that}}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00002}00002 \textcolor{comment}{// appends to the idequeue results in a race.}}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00004}00004 \textcolor{comment}{// For this to work, you should also add a spin within iderw's}}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00005}00005 \textcolor{comment}{// idequeue traversal loop.  Adding the following demonstrated a panic}}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00006}00006 \textcolor{comment}{// after about 5 runs of stressfs in QEMU on a 2.1GHz CPU:}}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00007}00007 \textcolor{comment}{//    for (i = 0; i < 40000; i++)}}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00008}00008 \textcolor{comment}{//      asm volatile("{}"{});}}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00010}00010 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00011}00011 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{stat_8h}{stat.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00012}00012 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{user_8h}{user.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00013}00013 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{fs_8h}{fs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00014}00014 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{fcntl_8h}{fcntl.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00016}00016 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00017}\mbox{\hyperlink{stressfs_8c_a0ddf1224851353fc92bfbff6f499fa97}{00017}} \mbox{\hyperlink{forktest_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}}(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} *\mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}[])}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00018}00018 \{}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00019}00019   \textcolor{keywordtype}{int} fd, i;}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00020}00020   \textcolor{keywordtype}{char} path[] = \textcolor{stringliteral}{"{}stressfs0"{}};}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00021}00021   \textcolor{keywordtype}{char} \mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}}[512];}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00023}00023   \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}stressfs starting\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00024}00024   \mbox{\hyperlink{defs_8h_a0098886a849eef10803e9f35ceec61b9}{memset}}(\mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}}, \textcolor{charliteral}{'a'}, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}}));}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00026}00026   \textcolor{keywordflow}{for}(i = 0; i < 4; i++)}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00027}00027     \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_acd2e1ded4bb6fce4500438bf928330f4}{fork}}() > 0)}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00028}00028       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00030}00030   \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}write \%d\(\backslash\)n"{}}, i);}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00032}00032   path[8] += i;}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00033}00033   fd = \mbox{\hyperlink{user_8h_a2c4414339f388561554c2deab11a1a07}{open}}(path, \mbox{\hyperlink{fcntl_8h_ab40a23079c3b9a7e25ffdc8108c7fb02}{O\_CREATE}} | \mbox{\hyperlink{fcntl_8h_abb0586253488ee61072b73557eeb873b}{O\_RDWR}});}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00034}00034   \textcolor{keywordflow}{for}(i = 0; i < 20; i++)}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00035}00035 \textcolor{comment}{//    printf(fd, "{}\%d\(\backslash\)n"{}, i);}}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00036}00036     \mbox{\hyperlink{user_8h_ae57e95d717eb7386cd8b935a0c136abe}{write}}(fd, \mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}}, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}}));}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00037}00037   \mbox{\hyperlink{user_8h_ae152484c890a24e4d9b4980e7b965be0}{close}}(fd);}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00039}00039   \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}read\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00041}00041   fd = \mbox{\hyperlink{user_8h_a2c4414339f388561554c2deab11a1a07}{open}}(path, \mbox{\hyperlink{fcntl_8h_a7a68c9ffaac7dbcd652225dd7c06a54b}{O\_RDONLY}});}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00042}00042   \textcolor{keywordflow}{for} (i = 0; i < 20; i++)}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00043}00043     \mbox{\hyperlink{user_8h_a2d73522d6354b8a141ecfaa9585a0c77}{read}}(fd, \mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}}, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}}));}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00044}00044   \mbox{\hyperlink{user_8h_ae152484c890a24e4d9b4980e7b965be0}{close}}(fd);}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00046}00046   \mbox{\hyperlink{defs_8h_af6f31822f7e737b4e414bdac1ccb59a4}{wait}}();}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00048}00048   \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{\Hypertarget{stressfs_8c_source_l00049}00049 \}}
+
+\end{DoxyCode}

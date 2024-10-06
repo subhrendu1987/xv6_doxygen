@@ -1,0 +1,149 @@
+\hypertarget{bio_8c_source}{}\doxysection{bio.\+c}
+\mbox{\hyperlink{bio_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00001}00001 \textcolor{comment}{// Buffer cache.}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00002}00002 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00003}00003 \textcolor{comment}{// The buffer cache is a linked list of buf structures holding}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00004}00004 \textcolor{comment}{// cached copies of disk block contents.  Caching disk blocks}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00005}00005 \textcolor{comment}{// in memory reduces the number of disk reads and also provides}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00006}00006 \textcolor{comment}{// a synchronization point for disk blocks used by multiple processes.}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00007}00007 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00008}00008 \textcolor{comment}{// Interface:}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00009}00009 \textcolor{comment}{// * To get a buffer for a particular disk block, call bread.}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00010}00010 \textcolor{comment}{// * After changing buffer data, call bwrite to write it to disk.}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00011}00011 \textcolor{comment}{// * When done with the buffer, call brelse.}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00012}00012 \textcolor{comment}{// * Do not use the buffer after calling brelse.}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00013}00013 \textcolor{comment}{// * Only one process at a time can use a buffer,}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00014}00014 \textcolor{comment}{//     so do not keep them longer than necessary.}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00015}00015 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00016}00016 \textcolor{comment}{// The implementation uses two state flags internally:}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00017}00017 \textcolor{comment}{// * B\_VALID: the buffer data has been read from the disk.}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00018}00018 \textcolor{comment}{// * B\_DIRTY: the buffer data has been modified}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00019}00019 \textcolor{comment}{//     and needs to be written to disk.}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00021}00021 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00022}00022 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{defs_8h}{defs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00023}00023 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{param_8h}{param.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00024}00024 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{spinlock_8h}{spinlock.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00025}00025 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{sleeplock_8h}{sleeplock.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00026}00026 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{fs_8h}{fs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00027}00027 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{buf_8h}{buf.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00029}00029 \textcolor{keyword}{struct }\{}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00030}\mbox{\hyperlink{bio_8c_ab28e82cd5dda7d960095706a3ea20572}{00030}}   \textcolor{keyword}{struct }\mbox{\hyperlink{structspinlock}{spinlock}} \mbox{\hyperlink{bio_8c_ab28e82cd5dda7d960095706a3ea20572}{lock}};}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00031}\mbox{\hyperlink{bio_8c_a72ee90c61d41547b10a533c219e081c6}{00031}}   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} \mbox{\hyperlink{structbuf}{buf}}[\mbox{\hyperlink{param_8h_ad51e2f8dffd163c263ec676a268d0f0a}{NBUF}}];}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00033}00033   \textcolor{comment}{// Linked list of all buffers, through prev/next.}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00034}00034   \textcolor{comment}{// head.next is most recently used.}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00035}\mbox{\hyperlink{bio_8c_aa6e692c16f1b909f5cb2a1832cf43430}{00035}}   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} \mbox{\hyperlink{bio_8c_aa6e692c16f1b909f5cb2a1832cf43430}{head}};}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00036}\mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{00036}} \} \mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}};}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00038}00038 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00039}\mbox{\hyperlink{bio_8c_a53cca0ddc98c5f1de37124eca2575a59}{00039}} \mbox{\hyperlink{bio_8c_a53cca0ddc98c5f1de37124eca2575a59}{binit}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00040}00040 \{}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00041}00041   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} *b;}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00043}00043   \mbox{\hyperlink{defs_8h_ab56d728e6966819a0260c358d3ac3419}{initlock}}(\&\mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.lock, \textcolor{stringliteral}{"{}bcache"{}});}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00045}00045 \textcolor{comment}{//PAGEBREAK!}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00046}00046   \textcolor{comment}{// Create linked list of buffers}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00047}00047   \mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.head.prev = \&\mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.head;}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00048}00048   \mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.head.next = \&\mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.head;}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00049}00049   \textcolor{keywordflow}{for}(b = \mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.buf; b < \mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.buf+\mbox{\hyperlink{param_8h_ad51e2f8dffd163c263ec676a268d0f0a}{NBUF}}; b++)\{}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00050}00050     b-\/>\mbox{\hyperlink{structbuf_ab18c18abb22f07617619e9a74c71f51a}{next}} = \mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.head.next;}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00051}00051     b-\/>\mbox{\hyperlink{structbuf_a930cab1e1b3751795d31bfd0291dff4a}{prev}} = \&\mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.head;}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00052}00052     \mbox{\hyperlink{defs_8h_af5ca8072e3877a883fb34ce59eff88cb}{initsleeplock}}(\&b-\/>\mbox{\hyperlink{structbuf_a626ad748d91d4bd7f4e65b74c73f2644}{lock}}, \textcolor{stringliteral}{"{}buffer"{}});}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00053}00053     \mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.head.next-\/>prev = b;}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00054}00054     \mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.head.next = b;}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00055}00055   \}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00056}00056 \}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00057}00057 }
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00058}00058 \textcolor{comment}{// Look through buffer cache for block on device dev.}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00059}00059 \textcolor{comment}{// If not found, allocate a buffer.}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00060}00060 \textcolor{comment}{// In either case, return locked buffer.}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00061}00061 \textcolor{keyword}{static} \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}}*}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00062}00062 bget(\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structbuf_ac96082c2b5f22133ac7092ef81487227}{dev}}, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structbuf_a756b2bcc88008bef7f21d688aa4a7a48}{blockno}})}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00063}00063 \{}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00064}00064   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} *b;}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00066}00066   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.lock);}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00068}00068   \textcolor{comment}{// Is the block already cached?}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00069}00069   \textcolor{keywordflow}{for}(b = \mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.head.next; b != \&\mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.head; b = b-\/>\mbox{\hyperlink{structbuf_ab18c18abb22f07617619e9a74c71f51a}{next}})\{}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00070}00070     \textcolor{keywordflow}{if}(b-\/>\mbox{\hyperlink{structbuf_ac96082c2b5f22133ac7092ef81487227}{dev}} == \mbox{\hyperlink{structbuf_ac96082c2b5f22133ac7092ef81487227}{dev}} \&\& b-\/>\mbox{\hyperlink{structbuf_a756b2bcc88008bef7f21d688aa4a7a48}{blockno}} == \mbox{\hyperlink{structbuf_a756b2bcc88008bef7f21d688aa4a7a48}{blockno}})\{}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00071}00071       b-\/>\mbox{\hyperlink{structbuf_aaf5efe777371aaeb9944508fd52adda5}{refcnt}}++;}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00072}00072       \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.lock);}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00073}00073       \mbox{\hyperlink{defs_8h_aecd4639fe2f9aaad8e8cee2b5e0688c3}{acquiresleep}}(\&b-\/>\mbox{\hyperlink{structbuf_a626ad748d91d4bd7f4e65b74c73f2644}{lock}});}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00074}00074       \textcolor{keywordflow}{return} b;}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00075}00075     \}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00076}00076   \}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00077}00077 }
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00078}00078   \textcolor{comment}{// Not cached; recycle an unused buffer.}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00079}00079   \textcolor{comment}{// Even if refcnt==0, B\_DIRTY indicates a buffer is in use}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00080}00080   \textcolor{comment}{// because log.c has modified it but not yet committed it.}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00081}00081   \textcolor{keywordflow}{for}(b = \mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.head.prev; b != \&\mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.head; b = b-\/>\mbox{\hyperlink{structbuf_a930cab1e1b3751795d31bfd0291dff4a}{prev}})\{}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00082}00082     \textcolor{keywordflow}{if}(b-\/>\mbox{\hyperlink{structbuf_aaf5efe777371aaeb9944508fd52adda5}{refcnt}} == 0 \&\& (b-\/>\mbox{\hyperlink{structbuf_ae7d6b6c34fdeadb38970efd0554aa1a9}{flags}} \& \mbox{\hyperlink{buf_8h_adc32011df267adb9740bcd0abf0f0663}{B\_DIRTY}}) == 0) \{}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00083}00083       b-\/>\mbox{\hyperlink{structbuf_ac96082c2b5f22133ac7092ef81487227}{dev}} = \mbox{\hyperlink{structbuf_ac96082c2b5f22133ac7092ef81487227}{dev}};}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00084}00084       b-\/>\mbox{\hyperlink{structbuf_a756b2bcc88008bef7f21d688aa4a7a48}{blockno}} = \mbox{\hyperlink{structbuf_a756b2bcc88008bef7f21d688aa4a7a48}{blockno}};}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00085}00085       b-\/>\mbox{\hyperlink{structbuf_ae7d6b6c34fdeadb38970efd0554aa1a9}{flags}} = 0;}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00086}00086       b-\/>\mbox{\hyperlink{structbuf_aaf5efe777371aaeb9944508fd52adda5}{refcnt}} = 1;}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00087}00087       \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.lock);}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00088}00088       \mbox{\hyperlink{defs_8h_aecd4639fe2f9aaad8e8cee2b5e0688c3}{acquiresleep}}(\&b-\/>\mbox{\hyperlink{structbuf_a626ad748d91d4bd7f4e65b74c73f2644}{lock}});}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00089}00089       \textcolor{keywordflow}{return} b;}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00090}00090     \}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00091}00091   \}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00092}00092   \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}bget: no buffers"{}});}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00093}00093 \}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00094}00094 }
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00095}00095 \textcolor{comment}{// Return a locked buf with the contents of the indicated block.}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00096}00096 \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}}*}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00097}\mbox{\hyperlink{bio_8c_a30b8d2ef2300ed8e3d879a428fe39898}{00097}} \mbox{\hyperlink{bio_8c_a30b8d2ef2300ed8e3d879a428fe39898}{bread}}(\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structbuf_ac96082c2b5f22133ac7092ef81487227}{dev}}, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{structbuf_a756b2bcc88008bef7f21d688aa4a7a48}{blockno}})}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00098}00098 \{}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00099}00099   \textcolor{keyword}{struct }\mbox{\hyperlink{structbuf}{buf}} *b;}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00100}00100 }
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00101}00101   b = bget(\mbox{\hyperlink{structbuf_ac96082c2b5f22133ac7092ef81487227}{dev}}, \mbox{\hyperlink{structbuf_a756b2bcc88008bef7f21d688aa4a7a48}{blockno}});}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00102}00102   \textcolor{keywordflow}{if}((b-\/>\mbox{\hyperlink{structbuf_ae7d6b6c34fdeadb38970efd0554aa1a9}{flags}} \& \mbox{\hyperlink{buf_8h_afab4199c0d27da71061f1c0cd5b51520}{B\_VALID}}) == 0) \{}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00103}00103     \mbox{\hyperlink{defs_8h_a70985c3f5b2fb79737457b5c88f5327a}{iderw}}(b);}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00104}00104   \}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00105}00105   \textcolor{keywordflow}{return} b;}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00106}00106 \}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00107}00107 }
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00108}00108 \textcolor{comment}{// Write b's contents to disk.  Must be locked.}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00109}00109 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00110}\mbox{\hyperlink{bio_8c_a63c899c13b176ddf80064d32225e1298}{00110}} \mbox{\hyperlink{bio_8c_a63c899c13b176ddf80064d32225e1298}{bwrite}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structbuf}{buf}} *b)}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00111}00111 \{}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00112}00112   \textcolor{keywordflow}{if}(!\mbox{\hyperlink{defs_8h_afa76133bc67c6026376d630da9b53b68}{holdingsleep}}(\&b-\/>\mbox{\hyperlink{structbuf_a626ad748d91d4bd7f4e65b74c73f2644}{lock}}))}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00113}00113     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}bwrite"{}});}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00114}00114   b-\/>\mbox{\hyperlink{structbuf_ae7d6b6c34fdeadb38970efd0554aa1a9}{flags}} |= \mbox{\hyperlink{buf_8h_adc32011df267adb9740bcd0abf0f0663}{B\_DIRTY}};}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00115}00115   \mbox{\hyperlink{defs_8h_a70985c3f5b2fb79737457b5c88f5327a}{iderw}}(b);}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00116}00116 \}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00117}00117 }
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00118}00118 \textcolor{comment}{// Release a locked buffer.}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00119}00119 \textcolor{comment}{// Move to the head of the MRU list.}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00120}00120 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00121}\mbox{\hyperlink{bio_8c_ab5335aeb503731104314321a78a6d727}{00121}} \mbox{\hyperlink{bio_8c_ab5335aeb503731104314321a78a6d727}{brelse}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structbuf}{buf}} *b)}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00122}00122 \{}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00123}00123   \textcolor{keywordflow}{if}(!\mbox{\hyperlink{defs_8h_afa76133bc67c6026376d630da9b53b68}{holdingsleep}}(\&b-\/>\mbox{\hyperlink{structbuf_a626ad748d91d4bd7f4e65b74c73f2644}{lock}}))}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00124}00124     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}brelse"{}});}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00125}00125 }
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00126}00126   \mbox{\hyperlink{defs_8h_a840b479c87b1c047d7142f58e0ad0b27}{releasesleep}}(\&b-\/>\mbox{\hyperlink{structbuf_a626ad748d91d4bd7f4e65b74c73f2644}{lock}});}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00127}00127 }
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00128}00128   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.lock);}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00129}00129   b-\/>\mbox{\hyperlink{structbuf_aaf5efe777371aaeb9944508fd52adda5}{refcnt}}-\/-\/;}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00130}00130   \textcolor{keywordflow}{if} (b-\/>\mbox{\hyperlink{structbuf_aaf5efe777371aaeb9944508fd52adda5}{refcnt}} == 0) \{}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00131}00131     \textcolor{comment}{// no one is waiting for it.}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00132}00132     b-\/>\mbox{\hyperlink{structbuf_ab18c18abb22f07617619e9a74c71f51a}{next}}-\/>\mbox{\hyperlink{structbuf_a930cab1e1b3751795d31bfd0291dff4a}{prev}} = b-\/>\mbox{\hyperlink{structbuf_a930cab1e1b3751795d31bfd0291dff4a}{prev}};}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00133}00133     b-\/>\mbox{\hyperlink{structbuf_a930cab1e1b3751795d31bfd0291dff4a}{prev}}-\/>\mbox{\hyperlink{structbuf_ab18c18abb22f07617619e9a74c71f51a}{next}} = b-\/>\mbox{\hyperlink{structbuf_ab18c18abb22f07617619e9a74c71f51a}{next}};}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00134}00134     b-\/>\mbox{\hyperlink{structbuf_ab18c18abb22f07617619e9a74c71f51a}{next}} = \mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.head.next;}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00135}00135     b-\/>\mbox{\hyperlink{structbuf_a930cab1e1b3751795d31bfd0291dff4a}{prev}} = \&\mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.head;}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00136}00136     \mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.head.next-\/>prev = b;}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00137}00137     \mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.head.next = b;}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00138}00138   \}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00139}00139   }
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00140}00140   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{bio_8c_a7725a9957148b7740449a091ea12b0e4}{bcache}}.lock);}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00141}00141 \}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00142}00142 \textcolor{comment}{//PAGEBREAK!}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00143}00143 \textcolor{comment}{// Blank page.}}
+\DoxyCodeLine{\Hypertarget{bio_8c_source_l00144}00144 }
+
+\end{DoxyCode}

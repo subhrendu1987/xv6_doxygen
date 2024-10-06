@@ -1,0 +1,6 @@
+<map id="uartinit" name="uartinit">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,67,56"/>
+<area shape="rect" id="node2" href="$dd/d61/ioapic_8c.html#a9688537a0879e9e2ac5a90184e2ef987" title=" " alt="" coords="115,5,209,31"/>
+<area shape="rect" id="node3" href="$d1/d87/uart_8c.html#a55840fa098ac21df6535d6ac91956d07" title=" " alt="" coords="127,55,197,80"/>
+<area shape="rect" id="node4" href="$dc/df6/lapic_8c.html#ae0ac6441d1d76d8ef821cdbbc6b6fc2f" title=" " alt="" coords="257,55,343,80"/>
+</map>

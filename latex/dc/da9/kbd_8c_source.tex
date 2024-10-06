@@ -1,0 +1,55 @@
+\hypertarget{kbd_8c_source}{}\doxysection{kbd.\+c}
+\mbox{\hyperlink{kbd_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00001}00001 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00002}00002 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{x86_8h}{x86.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00003}00003 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{defs_8h}{defs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00004}00004 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{kbd_8h}{kbd.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00006}00006 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00007}\mbox{\hyperlink{kbd_8c_ae0e5224d52563340db794138daec14ca}{00007}} \mbox{\hyperlink{kbd_8c_ae0e5224d52563340db794138daec14ca}{kbdgetc}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00008}00008 \{}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00009}00009   \textcolor{keyword}{static} \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} shift;}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00010}00010   \textcolor{keyword}{static} \mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} *charcode[4] = \{}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00011}00011     normalmap, shiftmap, ctlmap, ctlmap}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00012}00012   \};}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00013}00013   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} st, \mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}}, c;}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00015}00015   st = inb(\mbox{\hyperlink{kbd_8h_a1e08ef54d0e877b370fbcc693b3e5aec}{KBSTATP}});}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00016}00016   \textcolor{keywordflow}{if}((st \& \mbox{\hyperlink{kbd_8h_a18012677006211070f49c39e758c1e18}{KBS\_DIB}}) == 0)}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00017}00017     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00018}00018   \mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}} = inb(\mbox{\hyperlink{kbd_8h_ae4a1cdd6f51065e61bc7e61b491ab508}{KBDATAP}});}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00020}00020   \textcolor{keywordflow}{if}(\mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}} == 0xE0)\{}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00021}00021     shift |= \mbox{\hyperlink{kbd_8h_a888d30b7a32808c7cdf95bfa59bf13b4}{E0ESC}};}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00022}00022     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00023}00023   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(\mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}} \& 0x80)\{}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00024}00024     \textcolor{comment}{// Key released}}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00025}00025     \mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}} = (shift \& \mbox{\hyperlink{kbd_8h_a888d30b7a32808c7cdf95bfa59bf13b4}{E0ESC}} ? \mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}} : \mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}} \& 0x7F);}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00026}00026     shift \&= \string~(shiftcode[\mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}}] | \mbox{\hyperlink{kbd_8h_a888d30b7a32808c7cdf95bfa59bf13b4}{E0ESC}});}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00027}00027     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00028}00028   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(shift \& \mbox{\hyperlink{kbd_8h_a888d30b7a32808c7cdf95bfa59bf13b4}{E0ESC}})\{}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00029}00029     \textcolor{comment}{// Last character was an E0 escape; or with 0x80}}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00030}00030     \mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}} |= 0x80;}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00031}00031     shift \&= \string~E0ESC;}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00032}00032   \}}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00034}00034   shift |= shiftcode[\mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}}];}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00035}00035   shift \string^= togglecode[\mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}}];}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00036}00036   c = charcode[shift \& (\mbox{\hyperlink{kbd_8h_ac16e9c5c93955f2c396aaa9829b72323}{CTL}} | \mbox{\hyperlink{kbd_8h_ac179eef68bcc694aa0ef8dd1eb09950b}{SHIFT}})][\mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}}];}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00037}00037   \textcolor{keywordflow}{if}(shift \& \mbox{\hyperlink{kbd_8h_ad36c01c5d7b1fc13a22426a497ac1b8b}{CAPSLOCK}})\{}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00038}00038     \textcolor{keywordflow}{if}(\textcolor{charliteral}{'a'} <= c \&\& c <= \textcolor{charliteral}{'z'})}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00039}00039       c += \textcolor{charliteral}{'A'} -\/ \textcolor{charliteral}{'a'};}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00040}00040     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(\textcolor{charliteral}{'A'} <= c \&\& c <= \textcolor{charliteral}{'Z'})}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00041}00041       c += \textcolor{charliteral}{'a'} -\/ \textcolor{charliteral}{'A'};}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00042}00042   \}}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00043}00043   \textcolor{keywordflow}{return} c;}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00044}00044 \}}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00046}00046 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00047}\mbox{\hyperlink{defs_8h_af3d6113fa152781400e1e0e728c55e54}{00047}} \mbox{\hyperlink{kbd_8c_af3d6113fa152781400e1e0e728c55e54}{kbdintr}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00048}00048 \{}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00049}00049   \mbox{\hyperlink{console_8c_aad3d6ca39f23bb6d2686d2967e415193}{consoleintr}}(\mbox{\hyperlink{kbd_8c_ae0e5224d52563340db794138daec14ca}{kbdgetc}});}
+\DoxyCodeLine{\Hypertarget{kbd_8c_source_l00050}00050 \}}
+
+\end{DoxyCode}

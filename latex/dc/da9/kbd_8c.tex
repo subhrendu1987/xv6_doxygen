@@ -1,0 +1,116 @@
+\hypertarget{kbd_8c}{}\doxysection{kbd.\+c File Reference}
+\label{kbd_8c}\index{kbd.c@{kbd.c}}
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}x86.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}defs.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}kbd.\+h\char`\"{}}\newline
+Include dependency graph for kbd.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=310pt]{d3/df0/kbd_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{kbd_8c_ae0e5224d52563340db794138daec14ca}{kbdgetc}} (void)
+\item 
+void \mbox{\hyperlink{kbd_8c_af3d6113fa152781400e1e0e728c55e54}{kbdintr}} (void)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{kbd_8c_ae0e5224d52563340db794138daec14ca}\label{kbd_8c_ae0e5224d52563340db794138daec14ca}} 
+\index{kbd.c@{kbd.c}!kbdgetc@{kbdgetc}}
+\index{kbdgetc@{kbdgetc}!kbd.c@{kbd.c}}
+\doxysubsubsection{\texorpdfstring{kbdgetc()}{kbdgetc()}}
+{\footnotesize\ttfamily int kbdgetc (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{kbd_8c_source_l00007}{7}} of file \mbox{\hyperlink{kbd_8c_source}{kbd.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00008 \{}
+\DoxyCodeLine{00009   \textcolor{keyword}{static} \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} shift;}
+\DoxyCodeLine{00010   \textcolor{keyword}{static} \mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} *charcode[4] = \{}
+\DoxyCodeLine{00011     normalmap, shiftmap, ctlmap, ctlmap}
+\DoxyCodeLine{00012   \};}
+\DoxyCodeLine{00013   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} st, \mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}}, c;}
+\DoxyCodeLine{00014 }
+\DoxyCodeLine{00015   st = inb(\mbox{\hyperlink{kbd_8h_a1e08ef54d0e877b370fbcc693b3e5aec}{KBSTATP}});}
+\DoxyCodeLine{00016   \textcolor{keywordflow}{if}((st \& \mbox{\hyperlink{kbd_8h_a18012677006211070f49c39e758c1e18}{KBS\_DIB}}) == 0)}
+\DoxyCodeLine{00017     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00018   \mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}} = inb(\mbox{\hyperlink{kbd_8h_ae4a1cdd6f51065e61bc7e61b491ab508}{KBDATAP}});}
+\DoxyCodeLine{00019 }
+\DoxyCodeLine{00020   \textcolor{keywordflow}{if}(\mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}} == 0xE0)\{}
+\DoxyCodeLine{00021     shift |= \mbox{\hyperlink{kbd_8h_a888d30b7a32808c7cdf95bfa59bf13b4}{E0ESC}};}
+\DoxyCodeLine{00022     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00023   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(\mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}} \& 0x80)\{}
+\DoxyCodeLine{00024     \textcolor{comment}{// Key released}}
+\DoxyCodeLine{00025     \mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}} = (shift \& \mbox{\hyperlink{kbd_8h_a888d30b7a32808c7cdf95bfa59bf13b4}{E0ESC}} ? \mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}} : \mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}} \& 0x7F);}
+\DoxyCodeLine{00026     shift \&= \string~(shiftcode[\mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}}] | \mbox{\hyperlink{kbd_8h_a888d30b7a32808c7cdf95bfa59bf13b4}{E0ESC}});}
+\DoxyCodeLine{00027     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00028   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(shift \& \mbox{\hyperlink{kbd_8h_a888d30b7a32808c7cdf95bfa59bf13b4}{E0ESC}})\{}
+\DoxyCodeLine{00029     \textcolor{comment}{// Last character was an E0 escape; or with 0x80}}
+\DoxyCodeLine{00030     \mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}} |= 0x80;}
+\DoxyCodeLine{00031     shift \&= \string~E0ESC;}
+\DoxyCodeLine{00032   \}}
+\DoxyCodeLine{00033 }
+\DoxyCodeLine{00034   shift |= shiftcode[\mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}}];}
+\DoxyCodeLine{00035   shift \string^= togglecode[\mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}}];}
+\DoxyCodeLine{00036   c = charcode[shift \& (\mbox{\hyperlink{kbd_8h_ac16e9c5c93955f2c396aaa9829b72323}{CTL}} | \mbox{\hyperlink{kbd_8h_ac179eef68bcc694aa0ef8dd1eb09950b}{SHIFT}})][\mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}}];}
+\DoxyCodeLine{00037   \textcolor{keywordflow}{if}(shift \& \mbox{\hyperlink{kbd_8h_ad36c01c5d7b1fc13a22426a497ac1b8b}{CAPSLOCK}})\{}
+\DoxyCodeLine{00038     \textcolor{keywordflow}{if}(\textcolor{charliteral}{'a'} <= c \&\& c <= \textcolor{charliteral}{'z'})}
+\DoxyCodeLine{00039       c += \textcolor{charliteral}{'A'} -\/ \textcolor{charliteral}{'a'};}
+\DoxyCodeLine{00040     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(\textcolor{charliteral}{'A'} <= c \&\& c <= \textcolor{charliteral}{'Z'})}
+\DoxyCodeLine{00041       c += \textcolor{charliteral}{'a'} -\/ \textcolor{charliteral}{'A'};}
+\DoxyCodeLine{00042   \}}
+\DoxyCodeLine{00043   \textcolor{keywordflow}{return} c;}
+\DoxyCodeLine{00044 \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=282pt]{dc/da9/kbd_8c_ae0e5224d52563340db794138daec14ca_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{kbd_8c_af3d6113fa152781400e1e0e728c55e54}\label{kbd_8c_af3d6113fa152781400e1e0e728c55e54}} 
+\index{kbd.c@{kbd.c}!kbdintr@{kbdintr}}
+\index{kbdintr@{kbdintr}!kbd.c@{kbd.c}}
+\doxysubsubsection{\texorpdfstring{kbdintr()}{kbdintr()}}
+{\footnotesize\ttfamily void kbdintr (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{kbd_8c_source_l00047}{47}} of file \mbox{\hyperlink{kbd_8c_source}{kbd.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00048 \{}
+\DoxyCodeLine{00049   \mbox{\hyperlink{console_8c_aad3d6ca39f23bb6d2686d2967e415193}{consoleintr}}(\mbox{\hyperlink{kbd_8c_ae0e5224d52563340db794138daec14ca}{kbdgetc}});}
+\DoxyCodeLine{00050 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dc/da9/kbd_8c_af3d6113fa152781400e1e0e728c55e54_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=195pt]{dc/da9/kbd_8c_af3d6113fa152781400e1e0e728c55e54_icgraph}
+\end{center}
+\end{figure}

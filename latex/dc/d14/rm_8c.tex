@@ -1,0 +1,60 @@
+\hypertarget{rm_8c}{}\doxysection{rm.\+c File Reference}
+\label{rm_8c}\index{rm.c@{rm.c}}
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stat.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}user.\+h\char`\"{}}\newline
+Include dependency graph for rm.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=249pt]{de/d02/rm_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{rm_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$\mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{rm_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{rm_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{rm.c@{rm.c}!main@{main}}
+\index{main@{main}!rm.c@{rm.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{rm_8c_source_l00006}{6}} of file \mbox{\hyperlink{rm_8c_source}{rm.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00007 \{}
+\DoxyCodeLine{00008   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00009 }
+\DoxyCodeLine{00010   \textcolor{keywordflow}{if}(argc < 2)\{}
+\DoxyCodeLine{00011     \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(2, \textcolor{stringliteral}{"{}Usage: rm files...\(\backslash\)n"{}});}
+\DoxyCodeLine{00012     \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00013   \}}
+\DoxyCodeLine{00014 }
+\DoxyCodeLine{00015   \textcolor{keywordflow}{for}(i = 1; i < argc; i++)\{}
+\DoxyCodeLine{00016     \textcolor{keywordflow}{if}(\mbox{\hyperlink{user_8h_a4ade26dbdb332f64c44daf49ba949ff4}{unlink}}(\mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}[i]) < 0)\{}
+\DoxyCodeLine{00017       \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(2, \textcolor{stringliteral}{"{}rm: \%s failed to delete\(\backslash\)n"{}}, \mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}[i]);}
+\DoxyCodeLine{00018       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00019     \}}
+\DoxyCodeLine{00020   \}}
+\DoxyCodeLine{00021 }
+\DoxyCodeLine{00022   \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00023 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dc/d14/rm_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph}
+\end{center}
+\end{figure}

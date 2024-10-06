@@ -1,0 +1,136 @@
+\hypertarget{wc_8c}{}\doxysection{wc.\+c File Reference}
+\label{wc_8c}\index{wc.c@{wc.c}}
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stat.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}user.\+h\char`\"{}}\newline
+Include dependency graph for wc.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=249pt]{d6/d11/wc_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{wc_8c_a4f21d23f0e3167f510b9f393b185751c}{wc}} (int fd, char $\ast$\mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}})
+\item 
+int \mbox{\hyperlink{wc_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$\mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+char \mbox{\hyperlink{wc_8c_a78a05cf530dddc61e7a26aefe187bd31}{buf}} \mbox{[}512\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{wc_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{wc_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{wc.c@{wc.c}!main@{main}}
+\index{main@{main}!wc.c@{wc.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{wc_8c_source_l00036}{36}} of file \mbox{\hyperlink{wc_8c_source}{wc.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00037 \{}
+\DoxyCodeLine{00038   \textcolor{keywordtype}{int} fd, i;}
+\DoxyCodeLine{00039 }
+\DoxyCodeLine{00040   \textcolor{keywordflow}{if}(argc <= 1)\{}
+\DoxyCodeLine{00041     \mbox{\hyperlink{wc_8c_a4f21d23f0e3167f510b9f393b185751c}{wc}}(0, \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00042     \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00043   \}}
+\DoxyCodeLine{00044 }
+\DoxyCodeLine{00045   \textcolor{keywordflow}{for}(i = 1; i < argc; i++)\{}
+\DoxyCodeLine{00046     \textcolor{keywordflow}{if}((fd = \mbox{\hyperlink{user_8h_a2c4414339f388561554c2deab11a1a07}{open}}(\mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}[i], 0)) < 0)\{}
+\DoxyCodeLine{00047       \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}wc: cannot open \%s\(\backslash\)n"{}}, \mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}[i]);}
+\DoxyCodeLine{00048       \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00049     \}}
+\DoxyCodeLine{00050     \mbox{\hyperlink{wc_8c_a4f21d23f0e3167f510b9f393b185751c}{wc}}(fd, \mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}[i]);}
+\DoxyCodeLine{00051     \mbox{\hyperlink{user_8h_ae152484c890a24e4d9b4980e7b965be0}{close}}(fd);}
+\DoxyCodeLine{00052   \}}
+\DoxyCodeLine{00053   \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00054 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/d7a/wc_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{wc_8c_a4f21d23f0e3167f510b9f393b185751c}\label{wc_8c_a4f21d23f0e3167f510b9f393b185751c}} 
+\index{wc.c@{wc.c}!wc@{wc}}
+\index{wc@{wc}!wc.c@{wc.c}}
+\doxysubsubsection{\texorpdfstring{wc()}{wc()}}
+{\footnotesize\ttfamily void wc (\begin{DoxyParamCaption}\item[{int}]{fd,  }\item[{char $\ast$}]{name }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{wc_8c_source_l00008}{8}} of file \mbox{\hyperlink{wc_8c_source}{wc.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00009 \{}
+\DoxyCodeLine{00010   \textcolor{keywordtype}{int} i, n;}
+\DoxyCodeLine{00011   \textcolor{keywordtype}{int} l, \mbox{\hyperlink{console_8c_afdeff54db9a334718662b709641fdfe1}{w}}, c, inword;}
+\DoxyCodeLine{00012 }
+\DoxyCodeLine{00013   l = \mbox{\hyperlink{console_8c_afdeff54db9a334718662b709641fdfe1}{w}} = c = 0;}
+\DoxyCodeLine{00014   inword = 0;}
+\DoxyCodeLine{00015   \textcolor{keywordflow}{while}((n = \mbox{\hyperlink{user_8h_a2d73522d6354b8a141ecfaa9585a0c77}{read}}(fd, \mbox{\hyperlink{structbuf}{buf}}, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structbuf}{buf}}))) > 0)\{}
+\DoxyCodeLine{00016     \textcolor{keywordflow}{for}(i=0; i<n; i++)\{}
+\DoxyCodeLine{00017       c++;}
+\DoxyCodeLine{00018       \textcolor{keywordflow}{if}(\mbox{\hyperlink{structbuf}{buf}}[i] == \textcolor{charliteral}{'\(\backslash\)n'})}
+\DoxyCodeLine{00019         l++;}
+\DoxyCodeLine{00020       \textcolor{keywordflow}{if}(\mbox{\hyperlink{ulib_8c_a34704df9bf598dd9b477bafe5642cfe7}{strchr}}(\textcolor{stringliteral}{"{} \(\backslash\)r\(\backslash\)t\(\backslash\)n\(\backslash\)v"{}}, \mbox{\hyperlink{structbuf}{buf}}[i]))}
+\DoxyCodeLine{00021         inword = 0;}
+\DoxyCodeLine{00022       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(!inword)\{}
+\DoxyCodeLine{00023         \mbox{\hyperlink{console_8c_afdeff54db9a334718662b709641fdfe1}{w}}++;}
+\DoxyCodeLine{00024         inword = 1;}
+\DoxyCodeLine{00025       \}}
+\DoxyCodeLine{00026     \}}
+\DoxyCodeLine{00027   \}}
+\DoxyCodeLine{00028   \textcolor{keywordflow}{if}(n < 0)\{}
+\DoxyCodeLine{00029     \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}wc: read error\(\backslash\)n"{}});}
+\DoxyCodeLine{00030     \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00031   \}}
+\DoxyCodeLine{00032   \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}\%d \%d \%d \%s\(\backslash\)n"{}}, l, \mbox{\hyperlink{console_8c_afdeff54db9a334718662b709641fdfe1}{w}}, c, \mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}});}
+\DoxyCodeLine{00033 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/d7a/wc_8c_a4f21d23f0e3167f510b9f393b185751c_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=183pt]{d3/d7a/wc_8c_a4f21d23f0e3167f510b9f393b185751c_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{wc_8c_a78a05cf530dddc61e7a26aefe187bd31}\label{wc_8c_a78a05cf530dddc61e7a26aefe187bd31}} 
+\index{wc.c@{wc.c}!buf@{buf}}
+\index{buf@{buf}!wc.c@{wc.c}}
+\doxysubsubsection{\texorpdfstring{buf}{buf}}
+{\footnotesize\ttfamily char \mbox{\hyperlink{structbuf}{buf}}\mbox{[}512\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{wc_8c_source_l00005}{5}} of file \mbox{\hyperlink{wc_8c_source}{wc.\+c}}.
+

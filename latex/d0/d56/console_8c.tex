@@ -1,0 +1,511 @@
+\hypertarget{console_8c}{}\doxysection{console.\+c File Reference}
+\label{console_8c}\index{console.c@{console.c}}
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}defs.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}param.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}traps.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}spinlock.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}sleeplock.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}fs.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}file.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}memlayout.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mmu.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}proc.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}x86.\+h\char`\"{}}\newline
+Include dependency graph for console.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{df/d7f/console_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{console_8c_a629568514359445d2fbda71d70eeb1ce}{BACKSPACE}}~0x100
+\item 
+\#define \mbox{\hyperlink{console_8c_a2e3959df0a0c54f50f20d4776b14487f}{CRTPORT}}~0x3d4
+\item 
+\#define \mbox{\hyperlink{console_8c_a5d85434f2a29f6c3048aeac34d0ce41d}{INPUT\+\_\+\+BUF}}~128
+\item 
+\#define \mbox{\hyperlink{console_8c_ac54ae397901fe700628cafadea3c5208}{C}}(x)~((x)-\/\textquotesingle{}@\textquotesingle{})
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}} (char $\ast$fmt,...)
+\item 
+void \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}} (char $\ast$s)
+\item 
+void \mbox{\hyperlink{console_8c_aad3d6ca39f23bb6d2686d2967e415193}{consoleintr}} (int($\ast$getc)(void))
+\item 
+int \mbox{\hyperlink{console_8c_a28ac85a90987662e306ca8efbfe16074}{consoleread}} (struct \mbox{\hyperlink{structinode}{inode}} $\ast$ip, char $\ast$dst, int n)
+\item 
+int \mbox{\hyperlink{console_8c_a6af7eb39268127d389792cec37785666}{consolewrite}} (struct \mbox{\hyperlink{structinode}{inode}} $\ast$ip, char $\ast$\mbox{\hyperlink{structbuf}{buf}}, int n)
+\item 
+void \mbox{\hyperlink{console_8c_ab508ff0f4db26fe35cd25fa648f9ee75}{consoleinit}} (void)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>char \mbox{\hyperlink{console_8c_aa427837782b05b05204809dfba33c8f5}{buf}} \mbox{[}\mbox{\hyperlink{console_8c_a5d85434f2a29f6c3048aeac34d0ce41d}{INPUT\_BUF}}\mbox{]}\\
+\>\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}}\\
+\>\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{console_8c_afdeff54db9a334718662b709641fdfe1}{w}}\\
+\>\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} \mbox{\hyperlink{console_8c_ab56fa7c992b725d84916b987c3d532ea}{e}}\\
+\} \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}\\
+
+\end{tabbing}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{console_8c_a629568514359445d2fbda71d70eeb1ce}\label{console_8c_a629568514359445d2fbda71d70eeb1ce}} 
+\index{console.c@{console.c}!BACKSPACE@{BACKSPACE}}
+\index{BACKSPACE@{BACKSPACE}!console.c@{console.c}}
+\doxysubsubsection{\texorpdfstring{BACKSPACE}{BACKSPACE}}
+{\footnotesize\ttfamily \#define BACKSPACE~0x100}
+
+
+
+Definition at line \mbox{\hyperlink{console_8c_source_l00127}{127}} of file \mbox{\hyperlink{console_8c_source}{console.\+c}}.
+
+\mbox{\Hypertarget{console_8c_ac54ae397901fe700628cafadea3c5208}\label{console_8c_ac54ae397901fe700628cafadea3c5208}} 
+\index{console.c@{console.c}!C@{C}}
+\index{C@{C}!console.c@{console.c}}
+\doxysubsubsection{\texorpdfstring{C}{C}}
+{\footnotesize\ttfamily \#define C(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})~((x)-\/\textquotesingle{}@\textquotesingle{})}
+
+
+
+Definition at line \mbox{\hyperlink{console_8c_source_l00189}{189}} of file \mbox{\hyperlink{console_8c_source}{console.\+c}}.
+
+\mbox{\Hypertarget{console_8c_a2e3959df0a0c54f50f20d4776b14487f}\label{console_8c_a2e3959df0a0c54f50f20d4776b14487f}} 
+\index{console.c@{console.c}!CRTPORT@{CRTPORT}}
+\index{CRTPORT@{CRTPORT}!console.c@{console.c}}
+\doxysubsubsection{\texorpdfstring{CRTPORT}{CRTPORT}}
+{\footnotesize\ttfamily \#define CRTPORT~0x3d4}
+
+
+
+Definition at line \mbox{\hyperlink{console_8c_source_l00128}{128}} of file \mbox{\hyperlink{console_8c_source}{console.\+c}}.
+
+\mbox{\Hypertarget{console_8c_a5d85434f2a29f6c3048aeac34d0ce41d}\label{console_8c_a5d85434f2a29f6c3048aeac34d0ce41d}} 
+\index{console.c@{console.c}!INPUT\_BUF@{INPUT\_BUF}}
+\index{INPUT\_BUF@{INPUT\_BUF}!console.c@{console.c}}
+\doxysubsubsection{\texorpdfstring{INPUT\_BUF}{INPUT\_BUF}}
+{\footnotesize\ttfamily \#define INPUT\+\_\+\+BUF~128}
+
+
+
+Definition at line \mbox{\hyperlink{console_8c_source_l00181}{181}} of file \mbox{\hyperlink{console_8c_source}{console.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{console_8c_ab508ff0f4db26fe35cd25fa648f9ee75}\label{console_8c_ab508ff0f4db26fe35cd25fa648f9ee75}} 
+\index{console.c@{console.c}!consoleinit@{consoleinit}}
+\index{consoleinit@{consoleinit}!console.c@{console.c}}
+\doxysubsubsection{\texorpdfstring{consoleinit()}{consoleinit()}}
+{\footnotesize\ttfamily void consoleinit (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{console_8c_source_l00289}{289}} of file \mbox{\hyperlink{console_8c_source}{console.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00290 \{}
+\DoxyCodeLine{00291   \mbox{\hyperlink{defs_8h_ab56d728e6966819a0260c358d3ac3419}{initlock}}(\&cons.lock, \textcolor{stringliteral}{"{}console"{}});}
+\DoxyCodeLine{00292 }
+\DoxyCodeLine{00293   \mbox{\hyperlink{structdevsw}{devsw}}[\mbox{\hyperlink{file_8h_a6c17169f464fb1a2995dbe06faa47a5f}{CONSOLE}}].\mbox{\hyperlink{structdevsw_a87fd7af6c9a6fb8663fc206be7a233d4}{write}} = \mbox{\hyperlink{console_8c_a6af7eb39268127d389792cec37785666}{consolewrite}};}
+\DoxyCodeLine{00294   \mbox{\hyperlink{structdevsw}{devsw}}[\mbox{\hyperlink{file_8h_a6c17169f464fb1a2995dbe06faa47a5f}{CONSOLE}}].\mbox{\hyperlink{structdevsw_a4efbe00d0031a1c9005ef2186947ea37}{read}} = \mbox{\hyperlink{console_8c_a28ac85a90987662e306ca8efbfe16074}{consoleread}};}
+\DoxyCodeLine{00295   cons.locking = 1;}
+\DoxyCodeLine{00296 }
+\DoxyCodeLine{00297   \mbox{\hyperlink{defs_8h_a63da75c0c2f0b051f2c790aea2116b63}{ioapicenable}}(\mbox{\hyperlink{traps_8h_a0b7569cda71298859ffb6ea55c03a36a}{IRQ\_KBD}}, 0);}
+\DoxyCodeLine{00298 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d0/d56/console_8c_ab508ff0f4db26fe35cd25fa648f9ee75_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{console_8c_aad3d6ca39f23bb6d2686d2967e415193}\label{console_8c_aad3d6ca39f23bb6d2686d2967e415193}} 
+\index{console.c@{console.c}!consoleintr@{consoleintr}}
+\index{consoleintr@{consoleintr}!console.c@{console.c}}
+\doxysubsubsection{\texorpdfstring{consoleintr()}{consoleintr()}}
+{\footnotesize\ttfamily void consoleintr (\begin{DoxyParamCaption}\item[{int($\ast$)(void)}]{getc }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{console_8c_source_l00192}{192}} of file \mbox{\hyperlink{console_8c_source}{console.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00193 \{}
+\DoxyCodeLine{00194   \textcolor{keywordtype}{int} c, doprocdump = 0;}
+\DoxyCodeLine{00195 }
+\DoxyCodeLine{00196   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&cons.lock);}
+\DoxyCodeLine{00197   \textcolor{keywordflow}{while}((c = getc()) >= 0)\{}
+\DoxyCodeLine{00198     \textcolor{keywordflow}{switch}(c)\{}
+\DoxyCodeLine{00199     \textcolor{keywordflow}{case} \mbox{\hyperlink{console_8c_ac54ae397901fe700628cafadea3c5208}{C}}(\textcolor{charliteral}{'P'}):  \textcolor{comment}{// Process listing.}}
+\DoxyCodeLine{00200       \textcolor{comment}{// procdump() locks cons.lock indirectly; invoke later}}
+\DoxyCodeLine{00201       doprocdump = 1;}
+\DoxyCodeLine{00202       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00203     \textcolor{keywordflow}{case} \mbox{\hyperlink{console_8c_ac54ae397901fe700628cafadea3c5208}{C}}(\textcolor{charliteral}{'U'}):  \textcolor{comment}{// Kill line.}}
+\DoxyCodeLine{00204       while(\mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.\mbox{\hyperlink{console_8c_ab56fa7c992b725d84916b987c3d532ea}{e}} != \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.\mbox{\hyperlink{console_8c_afdeff54db9a334718662b709641fdfe1}{w}} \&\&}
+\DoxyCodeLine{00205             \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.\mbox{\hyperlink{structbuf}{buf}}[(\mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.\mbox{\hyperlink{console_8c_ab56fa7c992b725d84916b987c3d532ea}{e}}-\/1) \% \mbox{\hyperlink{console_8c_a5d85434f2a29f6c3048aeac34d0ce41d}{INPUT\_BUF}}] != \textcolor{stringliteral}{'\(\backslash\)n'})\{}
+\DoxyCodeLine{00206         \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.e-\/-\/;}
+\DoxyCodeLine{00207         consputc(\mbox{\hyperlink{console_8c_a629568514359445d2fbda71d70eeb1ce}{BACKSPACE}});}
+\DoxyCodeLine{00208       \}}
+\DoxyCodeLine{00209       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00210     \textcolor{keywordflow}{case} \mbox{\hyperlink{console_8c_ac54ae397901fe700628cafadea3c5208}{C}}(\textcolor{charliteral}{'H'}): case \textcolor{stringliteral}{'\(\backslash\)x7f'}:  \textcolor{comment}{// Backspace}}
+\DoxyCodeLine{00211       if(\mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.\mbox{\hyperlink{console_8c_ab56fa7c992b725d84916b987c3d532ea}{e}} != \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.\mbox{\hyperlink{console_8c_afdeff54db9a334718662b709641fdfe1}{w}})\{}
+\DoxyCodeLine{00212         \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.e-\/-\/;}
+\DoxyCodeLine{00213         consputc(\mbox{\hyperlink{console_8c_a629568514359445d2fbda71d70eeb1ce}{BACKSPACE}});}
+\DoxyCodeLine{00214       \}}
+\DoxyCodeLine{00215       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00216     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00217       \textcolor{keywordflow}{if}(c != 0 \&\& \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.e-\/\mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.r < \mbox{\hyperlink{console_8c_a5d85434f2a29f6c3048aeac34d0ce41d}{INPUT\_BUF}})\{}
+\DoxyCodeLine{00218         c = (c == \textcolor{charliteral}{'\(\backslash\)r'}) ? \textcolor{charliteral}{'\(\backslash\)n'} : c;}
+\DoxyCodeLine{00219         \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.buf[\mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.e++ \% \mbox{\hyperlink{console_8c_a5d85434f2a29f6c3048aeac34d0ce41d}{INPUT\_BUF}}] = c;}
+\DoxyCodeLine{00220         consputc(c);}
+\DoxyCodeLine{00221         \textcolor{keywordflow}{if}(c == \textcolor{charliteral}{'\(\backslash\)n'} || c == \mbox{\hyperlink{console_8c_ac54ae397901fe700628cafadea3c5208}{C}}(\textcolor{charliteral}{'D'}) || \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.e == \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.r+\mbox{\hyperlink{console_8c_a5d85434f2a29f6c3048aeac34d0ce41d}{INPUT\_BUF}})\{}
+\DoxyCodeLine{00222           \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.w = \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.e;}
+\DoxyCodeLine{00223           \mbox{\hyperlink{defs_8h_a245b56417239f499389b2e806bd99254}{wakeup}}(\&\mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.r);}
+\DoxyCodeLine{00224         \}}
+\DoxyCodeLine{00225       \}}
+\DoxyCodeLine{00226       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00227     \}}
+\DoxyCodeLine{00228   \}}
+\DoxyCodeLine{00229   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&cons.lock);}
+\DoxyCodeLine{00230   \textcolor{keywordflow}{if}(doprocdump) \{}
+\DoxyCodeLine{00231     \mbox{\hyperlink{defs_8h_a7f185044294ebb57521c73f723990164}{procdump}}();  \textcolor{comment}{// now call procdump() wo. cons.lock held}}
+\DoxyCodeLine{00232   \}}
+\DoxyCodeLine{00233 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d0/d56/console_8c_aad3d6ca39f23bb6d2686d2967e415193_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=296pt]{d0/d56/console_8c_aad3d6ca39f23bb6d2686d2967e415193_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{console_8c_a28ac85a90987662e306ca8efbfe16074}\label{console_8c_a28ac85a90987662e306ca8efbfe16074}} 
+\index{console.c@{console.c}!consoleread@{consoleread}}
+\index{consoleread@{consoleread}!console.c@{console.c}}
+\doxysubsubsection{\texorpdfstring{consoleread()}{consoleread()}}
+{\footnotesize\ttfamily int consoleread (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structinode}{inode}} $\ast$}]{ip,  }\item[{char $\ast$}]{dst,  }\item[{int}]{n }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{console_8c_source_l00236}{236}} of file \mbox{\hyperlink{console_8c_source}{console.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00237 \{}
+\DoxyCodeLine{00238   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} target;}
+\DoxyCodeLine{00239   \textcolor{keywordtype}{int} c;}
+\DoxyCodeLine{00240 }
+\DoxyCodeLine{00241   \mbox{\hyperlink{defs_8h_af301c10ad8ced77a5dfb2de3a64c666c}{iunlock}}(ip);}
+\DoxyCodeLine{00242   target = n;}
+\DoxyCodeLine{00243   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&cons.lock);}
+\DoxyCodeLine{00244   \textcolor{keywordflow}{while}(n > 0)\{}
+\DoxyCodeLine{00245     \textcolor{keywordflow}{while}(\mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.r == \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.w)\{}
+\DoxyCodeLine{00246       \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}()-\/>killed)\{}
+\DoxyCodeLine{00247         \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&cons.lock);}
+\DoxyCodeLine{00248         \mbox{\hyperlink{defs_8h_a29a4d743d41fe659f74b0a57fdc25012}{ilock}}(ip);}
+\DoxyCodeLine{00249         \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00250       \}}
+\DoxyCodeLine{00251       \mbox{\hyperlink{defs_8h_aca4a88f06b3ebbcc04330f7ae06c8507}{sleep}}(\&\mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.r, \&cons.lock);}
+\DoxyCodeLine{00252     \}}
+\DoxyCodeLine{00253     c = \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.buf[\mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.r++ \% \mbox{\hyperlink{console_8c_a5d85434f2a29f6c3048aeac34d0ce41d}{INPUT\_BUF}}];}
+\DoxyCodeLine{00254     \textcolor{keywordflow}{if}(c == \mbox{\hyperlink{console_8c_ac54ae397901fe700628cafadea3c5208}{C}}(\textcolor{charliteral}{'D'}))\{  \textcolor{comment}{// EOF}}
+\DoxyCodeLine{00255       \textcolor{keywordflow}{if}(n < target)\{}
+\DoxyCodeLine{00256         \textcolor{comment}{// Save \string^D for next time, to make sure}}
+\DoxyCodeLine{00257         \textcolor{comment}{// caller gets a 0-\/byte result.}}
+\DoxyCodeLine{00258         \mbox{\hyperlink{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}{input}}.r-\/-\/;}
+\DoxyCodeLine{00259       \}}
+\DoxyCodeLine{00260       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00261     \}}
+\DoxyCodeLine{00262     *dst++ = c;}
+\DoxyCodeLine{00263     -\/-\/n;}
+\DoxyCodeLine{00264     \textcolor{keywordflow}{if}(c == \textcolor{charliteral}{'\(\backslash\)n'})}
+\DoxyCodeLine{00265       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00266   \}}
+\DoxyCodeLine{00267   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&cons.lock);}
+\DoxyCodeLine{00268   \mbox{\hyperlink{defs_8h_a29a4d743d41fe659f74b0a57fdc25012}{ilock}}(ip);}
+\DoxyCodeLine{00269 }
+\DoxyCodeLine{00270   \textcolor{keywordflow}{return} target -\/ n;}
+\DoxyCodeLine{00271 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d0/d56/console_8c_a28ac85a90987662e306ca8efbfe16074_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=248pt]{d0/d56/console_8c_a28ac85a90987662e306ca8efbfe16074_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{console_8c_a6af7eb39268127d389792cec37785666}\label{console_8c_a6af7eb39268127d389792cec37785666}} 
+\index{console.c@{console.c}!consolewrite@{consolewrite}}
+\index{consolewrite@{consolewrite}!console.c@{console.c}}
+\doxysubsubsection{\texorpdfstring{consolewrite()}{consolewrite()}}
+{\footnotesize\ttfamily int consolewrite (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structinode}{inode}} $\ast$}]{ip,  }\item[{char $\ast$}]{buf,  }\item[{int}]{n }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{console_8c_source_l00274}{274}} of file \mbox{\hyperlink{console_8c_source}{console.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00275 \{}
+\DoxyCodeLine{00276   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00277 }
+\DoxyCodeLine{00278   \mbox{\hyperlink{defs_8h_af301c10ad8ced77a5dfb2de3a64c666c}{iunlock}}(ip);}
+\DoxyCodeLine{00279   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&cons.lock);}
+\DoxyCodeLine{00280   \textcolor{keywordflow}{for}(i = 0; i < n; i++)}
+\DoxyCodeLine{00281     consputc(\mbox{\hyperlink{structbuf}{buf}}[i] \& 0xff);}
+\DoxyCodeLine{00282   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&cons.lock);}
+\DoxyCodeLine{00283   \mbox{\hyperlink{defs_8h_a29a4d743d41fe659f74b0a57fdc25012}{ilock}}(ip);}
+\DoxyCodeLine{00284 }
+\DoxyCodeLine{00285   \textcolor{keywordflow}{return} n;}
+\DoxyCodeLine{00286 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d0/d56/console_8c_a6af7eb39268127d389792cec37785666_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=250pt]{d0/d56/console_8c_a6af7eb39268127d389792cec37785666_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{console_8c_a90f0742d846503e4ed1804f1df421ec6}\label{console_8c_a90f0742d846503e4ed1804f1df421ec6}} 
+\index{console.c@{console.c}!cprintf@{cprintf}}
+\index{cprintf@{cprintf}!console.c@{console.c}}
+\doxysubsubsection{\texorpdfstring{cprintf()}{cprintf()}}
+{\footnotesize\ttfamily void cprintf (\begin{DoxyParamCaption}\item[{char $\ast$}]{fmt,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{console_8c_source_l00055}{55}} of file \mbox{\hyperlink{console_8c_source}{console.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00056 \{}
+\DoxyCodeLine{00057   \textcolor{keywordtype}{int} i, c, \mbox{\hyperlink{console_8c_ae51110da3bc13ef49e32d1e2cda5d55c}{locking}};}
+\DoxyCodeLine{00058   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} *argp;}
+\DoxyCodeLine{00059   \textcolor{keywordtype}{char} *s;}
+\DoxyCodeLine{00060 }
+\DoxyCodeLine{00061   \mbox{\hyperlink{console_8c_ae51110da3bc13ef49e32d1e2cda5d55c}{locking}} = cons.locking;}
+\DoxyCodeLine{00062   \textcolor{keywordflow}{if}(\mbox{\hyperlink{console_8c_ae51110da3bc13ef49e32d1e2cda5d55c}{locking}})}
+\DoxyCodeLine{00063     \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&cons.lock);}
+\DoxyCodeLine{00064 }
+\DoxyCodeLine{00065   \textcolor{keywordflow}{if} (fmt == 0)}
+\DoxyCodeLine{00066     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}null fmt"{}});}
+\DoxyCodeLine{00067 }
+\DoxyCodeLine{00068   argp = (\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}*)(\textcolor{keywordtype}{void}*)(\&fmt + 1);}
+\DoxyCodeLine{00069   \textcolor{keywordflow}{for}(i = 0; (c = fmt[i] \& 0xff) != 0; i++)\{}
+\DoxyCodeLine{00070     \textcolor{keywordflow}{if}(c != \textcolor{charliteral}{'\%'})\{}
+\DoxyCodeLine{00071       consputc(c);}
+\DoxyCodeLine{00072       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00073     \}}
+\DoxyCodeLine{00074     c = fmt[++i] \& 0xff;}
+\DoxyCodeLine{00075     \textcolor{keywordflow}{if}(c == 0)}
+\DoxyCodeLine{00076       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00077     \textcolor{keywordflow}{switch}(c)\{}
+\DoxyCodeLine{00078     \textcolor{keywordflow}{case} \textcolor{charliteral}{'d'}:}
+\DoxyCodeLine{00079       printint(*argp++, 10, 1);}
+\DoxyCodeLine{00080       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00081     \textcolor{keywordflow}{case} \textcolor{charliteral}{'x'}:}
+\DoxyCodeLine{00082     \textcolor{keywordflow}{case} \textcolor{charliteral}{'p'}:}
+\DoxyCodeLine{00083       printint(*argp++, 16, 0);}
+\DoxyCodeLine{00084       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00085     \textcolor{keywordflow}{case} \textcolor{charliteral}{'s'}:}
+\DoxyCodeLine{00086       \textcolor{keywordflow}{if}((s = (\textcolor{keywordtype}{char}*)*argp++) == 0)}
+\DoxyCodeLine{00087         s = \textcolor{stringliteral}{"{}(null)"{}};}
+\DoxyCodeLine{00088       \textcolor{keywordflow}{for}(; *s; s++)}
+\DoxyCodeLine{00089         consputc(*s);}
+\DoxyCodeLine{00090       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00091     \textcolor{keywordflow}{case} \textcolor{charliteral}{'\%'}:}
+\DoxyCodeLine{00092       consputc(\textcolor{charliteral}{'\%'});}
+\DoxyCodeLine{00093       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00094     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00095       \textcolor{comment}{// Print unknown \% sequence to draw attention.}}
+\DoxyCodeLine{00096       consputc(\textcolor{charliteral}{'\%'});}
+\DoxyCodeLine{00097       consputc(c);}
+\DoxyCodeLine{00098       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00099     \}}
+\DoxyCodeLine{00100   \}}
+\DoxyCodeLine{00101 }
+\DoxyCodeLine{00102   \textcolor{keywordflow}{if}(\mbox{\hyperlink{console_8c_ae51110da3bc13ef49e32d1e2cda5d55c}{locking}})}
+\DoxyCodeLine{00103     \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&cons.lock);}
+\DoxyCodeLine{00104 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d0/d56/console_8c_a90f0742d846503e4ed1804f1df421ec6_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d0/d56/console_8c_a90f0742d846503e4ed1804f1df421ec6_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{console_8c_a95c0aca5d6d7487933984f08b189917a}\label{console_8c_a95c0aca5d6d7487933984f08b189917a}} 
+\index{console.c@{console.c}!panic@{panic}}
+\index{panic@{panic}!console.c@{console.c}}
+\doxysubsubsection{\texorpdfstring{panic()}{panic()}}
+{\footnotesize\ttfamily void panic (\begin{DoxyParamCaption}\item[{char $\ast$}]{s }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{console_8c_source_l00107}{107}} of file \mbox{\hyperlink{console_8c_source}{console.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00108 \{}
+\DoxyCodeLine{00109   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00110   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} pcs[10];}
+\DoxyCodeLine{00111 }
+\DoxyCodeLine{00112   cli();}
+\DoxyCodeLine{00113   cons.locking = 0;}
+\DoxyCodeLine{00114   \textcolor{comment}{// use lapiccpunum so that we can call panic from mycpu()}}
+\DoxyCodeLine{00115   \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{}lapicid \%d: panic: "{}}, \mbox{\hyperlink{defs_8h_a627f7996b64f99d885244a5102c85164}{lapicid}}());}
+\DoxyCodeLine{00116   \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(s);}
+\DoxyCodeLine{00117   \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{00118   \mbox{\hyperlink{defs_8h_a4105de9e2969515d6c6c795c4386f69f}{getcallerpcs}}(\&s, pcs);}
+\DoxyCodeLine{00119   \textcolor{keywordflow}{for}(i=0; i<10; i++)}
+\DoxyCodeLine{00120     \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{} \%p"{}}, pcs[i]);}
+\DoxyCodeLine{00121   panicked = 1; \textcolor{comment}{// freeze other CPU}}
+\DoxyCodeLine{00122   \textcolor{keywordflow}{for}(;;)}
+\DoxyCodeLine{00123     ;}
+\DoxyCodeLine{00124 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d0/d56/console_8c_a95c0aca5d6d7487933984f08b189917a_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{d0/d56/console_8c_a95c0aca5d6d7487933984f08b189917a_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{console_8c_aa427837782b05b05204809dfba33c8f5}\label{console_8c_aa427837782b05b05204809dfba33c8f5}} 
+\index{console.c@{console.c}!buf@{buf}}
+\index{buf@{buf}!console.c@{console.c}}
+\doxysubsubsection{\texorpdfstring{buf}{buf}}
+{\footnotesize\ttfamily char \mbox{\hyperlink{structbuf}{buf}}\mbox{[}\mbox{\hyperlink{console_8c_a5d85434f2a29f6c3048aeac34d0ce41d}{INPUT\+\_\+\+BUF}}\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{console_8c_source_l00183}{183}} of file \mbox{\hyperlink{console_8c_source}{console.\+c}}.
+
+\mbox{\Hypertarget{console_8c_ab56fa7c992b725d84916b987c3d532ea}\label{console_8c_ab56fa7c992b725d84916b987c3d532ea}} 
+\index{console.c@{console.c}!e@{e}}
+\index{e@{e}!console.c@{console.c}}
+\doxysubsubsection{\texorpdfstring{e}{e}}
+{\footnotesize\ttfamily \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} e}
+
+
+
+Definition at line \mbox{\hyperlink{console_8c_source_l00186}{186}} of file \mbox{\hyperlink{console_8c_source}{console.\+c}}.
+
+\mbox{\Hypertarget{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}\label{console_8c_ad4135e5cfd2abbf73cba6fe6cdf2e949}} 
+\index{console.c@{console.c}!input@{input}}
+\index{input@{input}!console.c@{console.c}}
+\doxysubsubsection{\texorpdfstring{}{}}
+{\footnotesize\ttfamily struct  \{ ... \}  input}
+
+\mbox{\Hypertarget{console_8c_ab28e82cd5dda7d960095706a3ea20572}\label{console_8c_ab28e82cd5dda7d960095706a3ea20572}} 
+\index{console.c@{console.c}!lock@{lock}}
+\index{lock@{lock}!console.c@{console.c}}
+\doxysubsubsection{\texorpdfstring{lock}{lock}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structspinlock}{spinlock}} lock}
+
+
+
+Definition at line \mbox{\hyperlink{console_8c_source_l00023}{23}} of file \mbox{\hyperlink{console_8c_source}{console.\+c}}.
+
+\mbox{\Hypertarget{console_8c_ae51110da3bc13ef49e32d1e2cda5d55c}\label{console_8c_ae51110da3bc13ef49e32d1e2cda5d55c}} 
+\index{console.c@{console.c}!locking@{locking}}
+\index{locking@{locking}!console.c@{console.c}}
+\doxysubsubsection{\texorpdfstring{locking}{locking}}
+{\footnotesize\ttfamily int locking}
+
+
+
+Definition at line \mbox{\hyperlink{console_8c_source_l00024}{24}} of file \mbox{\hyperlink{console_8c_source}{console.\+c}}.
+
+\mbox{\Hypertarget{console_8c_af10fa12dd785c91e29528fbdc50cf9af}\label{console_8c_af10fa12dd785c91e29528fbdc50cf9af}} 
+\index{console.c@{console.c}!r@{r}}
+\index{r@{r}!console.c@{console.c}}
+\doxysubsubsection{\texorpdfstring{r}{r}}
+{\footnotesize\ttfamily \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} r}
+
+
+
+Definition at line \mbox{\hyperlink{console_8c_source_l00184}{184}} of file \mbox{\hyperlink{console_8c_source}{console.\+c}}.
+
+\mbox{\Hypertarget{console_8c_afdeff54db9a334718662b709641fdfe1}\label{console_8c_afdeff54db9a334718662b709641fdfe1}} 
+\index{console.c@{console.c}!w@{w}}
+\index{w@{w}!console.c@{console.c}}
+\doxysubsubsection{\texorpdfstring{w}{w}}
+{\footnotesize\ttfamily \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} w}
+
+
+
+Definition at line \mbox{\hyperlink{console_8c_source_l00185}{185}} of file \mbox{\hyperlink{console_8c_source}{console.\+c}}.
+

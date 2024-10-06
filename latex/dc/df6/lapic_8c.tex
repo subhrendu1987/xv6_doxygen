@@ -1,0 +1,791 @@
+\hypertarget{lapic_8c}{}\doxysection{lapic.\+c File Reference}
+\label{lapic_8c}\index{lapic.c@{lapic.c}}
+{\ttfamily \#include \char`\"{}param.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}defs.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}date.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}memlayout.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}traps.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mmu.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}x86.\+h\char`\"{}}\newline
+Include dependency graph for lapic.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d8/dfd/lapic_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a77ceac8d6af195fe72f95f6afd87c45e}{ID}}~(0x0020/4)
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a98ed931f97fef7e06e3ea441d0326c67}{VER}}~(0x0030/4)
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a0d378efcaaff1100c96bff8856bfc036}{TPR}}~(0x0080/4)
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a04c9015da7e7ea45f3b80793809e2d7b}{EOI}}~(0x00\+B0/4)
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a062fc16f4eacb723c76e2c87c8495412}{SVR}}~(0x00\+F0/4)
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a514ad415fb6125ba296793df7d1a468a}{ENABLE}}~0x00000100
+\item 
+\#define \mbox{\hyperlink{lapic_8c_ae4ad5e3805ffa2cbe03b65421edd8f99}{ESR}}~(0x0280/4)
+\item 
+\#define \mbox{\hyperlink{lapic_8c_ae6db3be23c343c0823604670010635f7}{ICRLO}}~(0x0300/4)
+\item 
+\#define \mbox{\hyperlink{lapic_8c_ab5889105dcd019008c9448dff61323f6}{INIT}}~0x00000500
+\item 
+\#define \mbox{\hyperlink{lapic_8c_ad0dd8aa1d9d769cf15609ca108af4af9}{STARTUP}}~0x00000600
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a5f0b856b460d14d6fac161e35cfdb9d1}{DELIVS}}~0x00001000
+\item 
+\#define \mbox{\hyperlink{lapic_8c_af343b20373ba49a92fce523e948f2ab3}{ASSERT}}~0x00004000
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a8b48e10f84b81902cf66c89ac52649b7}{DEASSERT}}~0x00000000
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a73f717b7aae31163c2a85f67883bf0ed}{LEVEL}}~0x00008000
+\item 
+\#define \mbox{\hyperlink{lapic_8c_adc4a14c073a7427003796cbd9d435758}{BCAST}}~0x00080000
+\item 
+\#define \mbox{\hyperlink{lapic_8c_ab5be0aaddb58ffb9cb20c12530d66316}{BUSY}}~0x00001000
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a20207ffc8e6f0bdcefb5c42a5b5c3fb8}{FIXED}}~0x00000000
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a9382474befd66e12c502eb221e4f9a0d}{ICRHI}}~(0x0310/4)
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a599217205dc3092c26567a2bd868ef3a}{TIMER}}~(0x0320/4)
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a1964818ccd90a6173ea48cecb652feeb}{X1}}~0x0000000B
+\item 
+\#define \mbox{\hyperlink{lapic_8c_af36821ad7b93ab31dcfaaa25e134fdf0}{PERIODIC}}~0x00020000
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a5c989e3931132d4a4aca9cacfcb8b075}{PCINT}}~(0x0340/4)
+\item 
+\#define \mbox{\hyperlink{lapic_8c_acec8cff36b5e5b2b4bda262480db2af2}{LINT0}}~(0x0350/4)
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a19035d504c49cf257ef4dc27cd3eb668}{LINT1}}~(0x0360/4)
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a8fe83ac76edc595f6b98cd4a4127aed5}{ERROR}}~(0x0370/4)
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a8fe9c058dcb81f528134d37e741182a3}{MASKED}}~0x00010000
+\item 
+\#define \mbox{\hyperlink{lapic_8c_af1d7a14061b402e4718eff6d9ef7ada4}{TICR}}~(0x0380/4)
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a1a73e99a3dd2d2d7dc6bbf084638e044}{TCCR}}~(0x0390/4)
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a11b0b699f28c2043fcd6da289fff7375}{TDCR}}~(0x03\+E0/4)
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a6ef3cdae7f581dab8f55d73dfa7a49bb}{CMOS\+\_\+\+PORT}}~0x70
+\item 
+\#define \mbox{\hyperlink{lapic_8c_aa08689fc090758a03b691b9909299ddc}{CMOS\+\_\+\+RETURN}}~0x71
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a7961582c4c0d7e087ef0c461b27d2bcb}{CMOS\+\_\+\+STATA}}~0x0a
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a7cacd7bee07e3e7ccb0bf85965d33fa4}{CMOS\+\_\+\+STATB}}~0x0b
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a2c7758749c45a1f6a3ae41bcbdfa72f3}{CMOS\+\_\+\+UIP}}~(1 $<$$<$ 7)
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a512a9ef84990cc5b81d736cb2520a063}{SECS}}~0x00
+\item 
+\#define \mbox{\hyperlink{lapic_8c_afa2fdcd26bbe3ddf0ac9c9487aa59284}{MINS}}~0x02
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a212d0f839f6f7ca43ccde311f93d5892}{HOURS}}~0x04
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a509a01c55cbe47386fe24602b7c7fda1}{DAY}}~0x07
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a3729d06495d9713592f79f3122c9e677}{MONTH}}~0x08
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a5871356500f559add06ea81d60331b1b}{YEAR}}~0x09
+\item 
+\#define \mbox{\hyperlink{lapic_8c_a7d52e480824afb678582f7b21cbd739d}{CONV}}(x)~(t1.\+x = ((t1.\+x $>$$>$ 4) $\ast$ 10) + (t1.\+x \& 0xf))
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{lapic_8c_a6b48a1e50acc73cb3e70a65774c87392}{lapicinit}} (void)
+\item 
+int \mbox{\hyperlink{lapic_8c_a627f7996b64f99d885244a5102c85164}{lapicid}} (void)
+\item 
+void \mbox{\hyperlink{lapic_8c_a42fdd0783bbeb7cdc646d360191cdcac}{lapiceoi}} (void)
+\item 
+void \mbox{\hyperlink{lapic_8c_ae0ac6441d1d76d8ef821cdbbc6b6fc2f}{microdelay}} (int us)
+\item 
+void \mbox{\hyperlink{lapic_8c_a54df00c792282426648d2876835958fa}{lapicstartap}} (\mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} apicid, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} addr)
+\item 
+void \mbox{\hyperlink{lapic_8c_a7247ece9501e31d62cffad46ec33d7af}{cmostime}} (struct \mbox{\hyperlink{structrtcdate}{rtcdate}} $\ast$\mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}})
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+volatile \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} $\ast$ \mbox{\hyperlink{lapic_8c_a4029f3e2439d5912f93543b8addd10ec}{lapic}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{lapic_8c_af343b20373ba49a92fce523e948f2ab3}\label{lapic_8c_af343b20373ba49a92fce523e948f2ab3}} 
+\index{lapic.c@{lapic.c}!ASSERT@{ASSERT}}
+\index{ASSERT@{ASSERT}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{ASSERT}{ASSERT}}
+{\footnotesize\ttfamily \#define ASSERT~0x00004000}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00025}{25}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_adc4a14c073a7427003796cbd9d435758}\label{lapic_8c_adc4a14c073a7427003796cbd9d435758}} 
+\index{lapic.c@{lapic.c}!BCAST@{BCAST}}
+\index{BCAST@{BCAST}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{BCAST}{BCAST}}
+{\footnotesize\ttfamily \#define BCAST~0x00080000}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00028}{28}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_ab5be0aaddb58ffb9cb20c12530d66316}\label{lapic_8c_ab5be0aaddb58ffb9cb20c12530d66316}} 
+\index{lapic.c@{lapic.c}!BUSY@{BUSY}}
+\index{BUSY@{BUSY}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{BUSY}{BUSY}}
+{\footnotesize\ttfamily \#define BUSY~0x00001000}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00029}{29}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a6ef3cdae7f581dab8f55d73dfa7a49bb}\label{lapic_8c_a6ef3cdae7f581dab8f55d73dfa7a49bb}} 
+\index{lapic.c@{lapic.c}!CMOS\_PORT@{CMOS\_PORT}}
+\index{CMOS\_PORT@{CMOS\_PORT}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{CMOS\_PORT}{CMOS\_PORT}}
+{\footnotesize\ttfamily \#define CMOS\+\_\+\+PORT~0x70}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00123}{123}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_aa08689fc090758a03b691b9909299ddc}\label{lapic_8c_aa08689fc090758a03b691b9909299ddc}} 
+\index{lapic.c@{lapic.c}!CMOS\_RETURN@{CMOS\_RETURN}}
+\index{CMOS\_RETURN@{CMOS\_RETURN}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{CMOS\_RETURN}{CMOS\_RETURN}}
+{\footnotesize\ttfamily \#define CMOS\+\_\+\+RETURN~0x71}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00124}{124}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a7961582c4c0d7e087ef0c461b27d2bcb}\label{lapic_8c_a7961582c4c0d7e087ef0c461b27d2bcb}} 
+\index{lapic.c@{lapic.c}!CMOS\_STATA@{CMOS\_STATA}}
+\index{CMOS\_STATA@{CMOS\_STATA}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{CMOS\_STATA}{CMOS\_STATA}}
+{\footnotesize\ttfamily \#define CMOS\+\_\+\+STATA~0x0a}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00163}{163}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a7cacd7bee07e3e7ccb0bf85965d33fa4}\label{lapic_8c_a7cacd7bee07e3e7ccb0bf85965d33fa4}} 
+\index{lapic.c@{lapic.c}!CMOS\_STATB@{CMOS\_STATB}}
+\index{CMOS\_STATB@{CMOS\_STATB}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{CMOS\_STATB}{CMOS\_STATB}}
+{\footnotesize\ttfamily \#define CMOS\+\_\+\+STATB~0x0b}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00164}{164}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a2c7758749c45a1f6a3ae41bcbdfa72f3}\label{lapic_8c_a2c7758749c45a1f6a3ae41bcbdfa72f3}} 
+\index{lapic.c@{lapic.c}!CMOS\_UIP@{CMOS\_UIP}}
+\index{CMOS\_UIP@{CMOS\_UIP}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{CMOS\_UIP}{CMOS\_UIP}}
+{\footnotesize\ttfamily \#define CMOS\+\_\+\+UIP~(1 $<$$<$ 7)}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00165}{165}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a7d52e480824afb678582f7b21cbd739d}\label{lapic_8c_a7d52e480824afb678582f7b21cbd739d}} 
+\index{lapic.c@{lapic.c}!CONV@{CONV}}
+\index{CONV@{CONV}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{CONV}{CONV}}
+{\footnotesize\ttfamily \#define CONV(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})~(t1.\+x = ((t1.\+x $>$$>$ 4) $\ast$ 10) + (t1.\+x \& 0xf))}
+
+\mbox{\Hypertarget{lapic_8c_a509a01c55cbe47386fe24602b7c7fda1}\label{lapic_8c_a509a01c55cbe47386fe24602b7c7fda1}} 
+\index{lapic.c@{lapic.c}!DAY@{DAY}}
+\index{DAY@{DAY}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{DAY}{DAY}}
+{\footnotesize\ttfamily \#define DAY~0x07}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00170}{170}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a8b48e10f84b81902cf66c89ac52649b7}\label{lapic_8c_a8b48e10f84b81902cf66c89ac52649b7}} 
+\index{lapic.c@{lapic.c}!DEASSERT@{DEASSERT}}
+\index{DEASSERT@{DEASSERT}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{DEASSERT}{DEASSERT}}
+{\footnotesize\ttfamily \#define DEASSERT~0x00000000}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00026}{26}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a5f0b856b460d14d6fac161e35cfdb9d1}\label{lapic_8c_a5f0b856b460d14d6fac161e35cfdb9d1}} 
+\index{lapic.c@{lapic.c}!DELIVS@{DELIVS}}
+\index{DELIVS@{DELIVS}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{DELIVS}{DELIVS}}
+{\footnotesize\ttfamily \#define DELIVS~0x00001000}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00024}{24}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a514ad415fb6125ba296793df7d1a468a}\label{lapic_8c_a514ad415fb6125ba296793df7d1a468a}} 
+\index{lapic.c@{lapic.c}!ENABLE@{ENABLE}}
+\index{ENABLE@{ENABLE}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{ENABLE}{ENABLE}}
+{\footnotesize\ttfamily \#define ENABLE~0x00000100}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00019}{19}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a04c9015da7e7ea45f3b80793809e2d7b}\label{lapic_8c_a04c9015da7e7ea45f3b80793809e2d7b}} 
+\index{lapic.c@{lapic.c}!EOI@{EOI}}
+\index{EOI@{EOI}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{EOI}{EOI}}
+{\footnotesize\ttfamily \#define EOI~(0x00\+B0/4)}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00017}{17}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a8fe83ac76edc595f6b98cd4a4127aed5}\label{lapic_8c_a8fe83ac76edc595f6b98cd4a4127aed5}} 
+\index{lapic.c@{lapic.c}!ERROR@{ERROR}}
+\index{ERROR@{ERROR}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{ERROR}{ERROR}}
+{\footnotesize\ttfamily \#define ERROR~(0x0370/4)}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00038}{38}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_ae4ad5e3805ffa2cbe03b65421edd8f99}\label{lapic_8c_ae4ad5e3805ffa2cbe03b65421edd8f99}} 
+\index{lapic.c@{lapic.c}!ESR@{ESR}}
+\index{ESR@{ESR}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{ESR}{ESR}}
+{\footnotesize\ttfamily \#define ESR~(0x0280/4)}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00020}{20}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a20207ffc8e6f0bdcefb5c42a5b5c3fb8}\label{lapic_8c_a20207ffc8e6f0bdcefb5c42a5b5c3fb8}} 
+\index{lapic.c@{lapic.c}!FIXED@{FIXED}}
+\index{FIXED@{FIXED}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{FIXED}{FIXED}}
+{\footnotesize\ttfamily \#define FIXED~0x00000000}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00030}{30}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a212d0f839f6f7ca43ccde311f93d5892}\label{lapic_8c_a212d0f839f6f7ca43ccde311f93d5892}} 
+\index{lapic.c@{lapic.c}!HOURS@{HOURS}}
+\index{HOURS@{HOURS}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{HOURS}{HOURS}}
+{\footnotesize\ttfamily \#define HOURS~0x04}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00169}{169}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a9382474befd66e12c502eb221e4f9a0d}\label{lapic_8c_a9382474befd66e12c502eb221e4f9a0d}} 
+\index{lapic.c@{lapic.c}!ICRHI@{ICRHI}}
+\index{ICRHI@{ICRHI}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{ICRHI}{ICRHI}}
+{\footnotesize\ttfamily \#define ICRHI~(0x0310/4)}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00031}{31}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_ae6db3be23c343c0823604670010635f7}\label{lapic_8c_ae6db3be23c343c0823604670010635f7}} 
+\index{lapic.c@{lapic.c}!ICRLO@{ICRLO}}
+\index{ICRLO@{ICRLO}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{ICRLO}{ICRLO}}
+{\footnotesize\ttfamily \#define ICRLO~(0x0300/4)}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00021}{21}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a77ceac8d6af195fe72f95f6afd87c45e}\label{lapic_8c_a77ceac8d6af195fe72f95f6afd87c45e}} 
+\index{lapic.c@{lapic.c}!ID@{ID}}
+\index{ID@{ID}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{ID}{ID}}
+{\footnotesize\ttfamily \#define ID~(0x0020/4)}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00014}{14}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_ab5889105dcd019008c9448dff61323f6}\label{lapic_8c_ab5889105dcd019008c9448dff61323f6}} 
+\index{lapic.c@{lapic.c}!INIT@{INIT}}
+\index{INIT@{INIT}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{INIT}{INIT}}
+{\footnotesize\ttfamily \#define INIT~0x00000500}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00022}{22}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a73f717b7aae31163c2a85f67883bf0ed}\label{lapic_8c_a73f717b7aae31163c2a85f67883bf0ed}} 
+\index{lapic.c@{lapic.c}!LEVEL@{LEVEL}}
+\index{LEVEL@{LEVEL}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{LEVEL}{LEVEL}}
+{\footnotesize\ttfamily \#define LEVEL~0x00008000}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00027}{27}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_acec8cff36b5e5b2b4bda262480db2af2}\label{lapic_8c_acec8cff36b5e5b2b4bda262480db2af2}} 
+\index{lapic.c@{lapic.c}!LINT0@{LINT0}}
+\index{LINT0@{LINT0}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{LINT0}{LINT0}}
+{\footnotesize\ttfamily \#define LINT0~(0x0350/4)}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00036}{36}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a19035d504c49cf257ef4dc27cd3eb668}\label{lapic_8c_a19035d504c49cf257ef4dc27cd3eb668}} 
+\index{lapic.c@{lapic.c}!LINT1@{LINT1}}
+\index{LINT1@{LINT1}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{LINT1}{LINT1}}
+{\footnotesize\ttfamily \#define LINT1~(0x0360/4)}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00037}{37}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a8fe9c058dcb81f528134d37e741182a3}\label{lapic_8c_a8fe9c058dcb81f528134d37e741182a3}} 
+\index{lapic.c@{lapic.c}!MASKED@{MASKED}}
+\index{MASKED@{MASKED}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{MASKED}{MASKED}}
+{\footnotesize\ttfamily \#define MASKED~0x00010000}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00039}{39}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_afa2fdcd26bbe3ddf0ac9c9487aa59284}\label{lapic_8c_afa2fdcd26bbe3ddf0ac9c9487aa59284}} 
+\index{lapic.c@{lapic.c}!MINS@{MINS}}
+\index{MINS@{MINS}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{MINS}{MINS}}
+{\footnotesize\ttfamily \#define MINS~0x02}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00168}{168}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a3729d06495d9713592f79f3122c9e677}\label{lapic_8c_a3729d06495d9713592f79f3122c9e677}} 
+\index{lapic.c@{lapic.c}!MONTH@{MONTH}}
+\index{MONTH@{MONTH}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{MONTH}{MONTH}}
+{\footnotesize\ttfamily \#define MONTH~0x08}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00171}{171}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a5c989e3931132d4a4aca9cacfcb8b075}\label{lapic_8c_a5c989e3931132d4a4aca9cacfcb8b075}} 
+\index{lapic.c@{lapic.c}!PCINT@{PCINT}}
+\index{PCINT@{PCINT}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{PCINT}{PCINT}}
+{\footnotesize\ttfamily \#define PCINT~(0x0340/4)}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00035}{35}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_af36821ad7b93ab31dcfaaa25e134fdf0}\label{lapic_8c_af36821ad7b93ab31dcfaaa25e134fdf0}} 
+\index{lapic.c@{lapic.c}!PERIODIC@{PERIODIC}}
+\index{PERIODIC@{PERIODIC}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{PERIODIC}{PERIODIC}}
+{\footnotesize\ttfamily \#define PERIODIC~0x00020000}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00034}{34}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a512a9ef84990cc5b81d736cb2520a063}\label{lapic_8c_a512a9ef84990cc5b81d736cb2520a063}} 
+\index{lapic.c@{lapic.c}!SECS@{SECS}}
+\index{SECS@{SECS}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{SECS}{SECS}}
+{\footnotesize\ttfamily \#define SECS~0x00}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00167}{167}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_ad0dd8aa1d9d769cf15609ca108af4af9}\label{lapic_8c_ad0dd8aa1d9d769cf15609ca108af4af9}} 
+\index{lapic.c@{lapic.c}!STARTUP@{STARTUP}}
+\index{STARTUP@{STARTUP}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{STARTUP}{STARTUP}}
+{\footnotesize\ttfamily \#define STARTUP~0x00000600}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00023}{23}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a062fc16f4eacb723c76e2c87c8495412}\label{lapic_8c_a062fc16f4eacb723c76e2c87c8495412}} 
+\index{lapic.c@{lapic.c}!SVR@{SVR}}
+\index{SVR@{SVR}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{SVR}{SVR}}
+{\footnotesize\ttfamily \#define SVR~(0x00\+F0/4)}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00018}{18}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a1a73e99a3dd2d2d7dc6bbf084638e044}\label{lapic_8c_a1a73e99a3dd2d2d7dc6bbf084638e044}} 
+\index{lapic.c@{lapic.c}!TCCR@{TCCR}}
+\index{TCCR@{TCCR}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{TCCR}{TCCR}}
+{\footnotesize\ttfamily \#define TCCR~(0x0390/4)}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00041}{41}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a11b0b699f28c2043fcd6da289fff7375}\label{lapic_8c_a11b0b699f28c2043fcd6da289fff7375}} 
+\index{lapic.c@{lapic.c}!TDCR@{TDCR}}
+\index{TDCR@{TDCR}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{TDCR}{TDCR}}
+{\footnotesize\ttfamily \#define TDCR~(0x03\+E0/4)}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00042}{42}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_af1d7a14061b402e4718eff6d9ef7ada4}\label{lapic_8c_af1d7a14061b402e4718eff6d9ef7ada4}} 
+\index{lapic.c@{lapic.c}!TICR@{TICR}}
+\index{TICR@{TICR}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{TICR}{TICR}}
+{\footnotesize\ttfamily \#define TICR~(0x0380/4)}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00040}{40}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a599217205dc3092c26567a2bd868ef3a}\label{lapic_8c_a599217205dc3092c26567a2bd868ef3a}} 
+\index{lapic.c@{lapic.c}!TIMER@{TIMER}}
+\index{TIMER@{TIMER}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{TIMER}{TIMER}}
+{\footnotesize\ttfamily \#define TIMER~(0x0320/4)}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00032}{32}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a0d378efcaaff1100c96bff8856bfc036}\label{lapic_8c_a0d378efcaaff1100c96bff8856bfc036}} 
+\index{lapic.c@{lapic.c}!TPR@{TPR}}
+\index{TPR@{TPR}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{TPR}{TPR}}
+{\footnotesize\ttfamily \#define TPR~(0x0080/4)}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00016}{16}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a98ed931f97fef7e06e3ea441d0326c67}\label{lapic_8c_a98ed931f97fef7e06e3ea441d0326c67}} 
+\index{lapic.c@{lapic.c}!VER@{VER}}
+\index{VER@{VER}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{VER}{VER}}
+{\footnotesize\ttfamily \#define VER~(0x0030/4)}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00015}{15}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a1964818ccd90a6173ea48cecb652feeb}\label{lapic_8c_a1964818ccd90a6173ea48cecb652feeb}} 
+\index{lapic.c@{lapic.c}!X1@{X1}}
+\index{X1@{X1}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{X1}{X1}}
+{\footnotesize\ttfamily \#define X1~0x0000000B}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00033}{33}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+\mbox{\Hypertarget{lapic_8c_a5871356500f559add06ea81d60331b1b}\label{lapic_8c_a5871356500f559add06ea81d60331b1b}} 
+\index{lapic.c@{lapic.c}!YEAR@{YEAR}}
+\index{YEAR@{YEAR}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{YEAR}{YEAR}}
+{\footnotesize\ttfamily \#define YEAR~0x09}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00172}{172}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{lapic_8c_a7247ece9501e31d62cffad46ec33d7af}\label{lapic_8c_a7247ece9501e31d62cffad46ec33d7af}} 
+\index{lapic.c@{lapic.c}!cmostime@{cmostime}}
+\index{cmostime@{cmostime}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{cmostime()}{cmostime()}}
+{\footnotesize\ttfamily void cmostime (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structrtcdate}{rtcdate}} $\ast$}]{r }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00196}{196}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00197 \{}
+\DoxyCodeLine{00198   \textcolor{keyword}{struct }\mbox{\hyperlink{structrtcdate}{rtcdate}} t1, t2;}
+\DoxyCodeLine{00199   \textcolor{keywordtype}{int} \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}}, bcd;}
+\DoxyCodeLine{00200 }
+\DoxyCodeLine{00201   \mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}} = cmos\_read(\mbox{\hyperlink{lapic_8c_a7cacd7bee07e3e7ccb0bf85965d33fa4}{CMOS\_STATB}});}
+\DoxyCodeLine{00202 }
+\DoxyCodeLine{00203   bcd = (\mbox{\hyperlink{fs_8c_a0248d0bac625de5a1415f2f8c91f3343}{sb}} \& (1 << 2)) == 0;}
+\DoxyCodeLine{00204 }
+\DoxyCodeLine{00205   \textcolor{comment}{// make sure CMOS doesn't modify time while we read it}}
+\DoxyCodeLine{00206   \textcolor{keywordflow}{for}(;;) \{}
+\DoxyCodeLine{00207     fill\_rtcdate(\&t1);}
+\DoxyCodeLine{00208     \textcolor{keywordflow}{if}(cmos\_read(\mbox{\hyperlink{lapic_8c_a7961582c4c0d7e087ef0c461b27d2bcb}{CMOS\_STATA}}) \& \mbox{\hyperlink{lapic_8c_a2c7758749c45a1f6a3ae41bcbdfa72f3}{CMOS\_UIP}})}
+\DoxyCodeLine{00209         \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00210     fill\_rtcdate(\&t2);}
+\DoxyCodeLine{00211     \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_acdb4d3f48d2fb0a834722b1107d2b284}{memcmp}}(\&t1, \&t2, \textcolor{keyword}{sizeof}(t1)) == 0)}
+\DoxyCodeLine{00212       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00213   \}}
+\DoxyCodeLine{00214 }
+\DoxyCodeLine{00215   \textcolor{comment}{// convert}}
+\DoxyCodeLine{00216   \textcolor{keywordflow}{if}(bcd) \{}
+\DoxyCodeLine{00217 \textcolor{preprocessor}{\#define    CONV(x)     (t1.x = ((t1.x >> 4) * 10) + (t1.x \& 0xf))}}
+\DoxyCodeLine{00218     \mbox{\hyperlink{lapic_8c_a7d52e480824afb678582f7b21cbd739d}{CONV}}(\mbox{\hyperlink{structrtcdate_affc39128483c500d77d1a012fe045664}{second}});}
+\DoxyCodeLine{00219     \mbox{\hyperlink{lapic_8c_a7d52e480824afb678582f7b21cbd739d}{CONV}}(\mbox{\hyperlink{structrtcdate_a5984e264f332d7634912db2716472aa7}{minute}});}
+\DoxyCodeLine{00220     \mbox{\hyperlink{lapic_8c_a7d52e480824afb678582f7b21cbd739d}{CONV}}(\mbox{\hyperlink{structrtcdate_ac601418b8ff95c35e8fddb47dd3fc77b}{hour}}  );}
+\DoxyCodeLine{00221     \mbox{\hyperlink{lapic_8c_a7d52e480824afb678582f7b21cbd739d}{CONV}}(\mbox{\hyperlink{structrtcdate_a476a4a04d68d88b1515123aa24af8a4d}{day}}   );}
+\DoxyCodeLine{00222     \mbox{\hyperlink{lapic_8c_a7d52e480824afb678582f7b21cbd739d}{CONV}}(\mbox{\hyperlink{structrtcdate_a3c509170b31d76f828681c2df54bf0b1}{month}} );}
+\DoxyCodeLine{00223     \mbox{\hyperlink{lapic_8c_a7d52e480824afb678582f7b21cbd739d}{CONV}}(\mbox{\hyperlink{structrtcdate_a143aaaa0a5fcaae876c0af5f135ea5c8}{year}}  );}
+\DoxyCodeLine{00224 \textcolor{preprocessor}{\#undef     CONV}}
+\DoxyCodeLine{00225   \}}
+\DoxyCodeLine{00226 }
+\DoxyCodeLine{00227   *\mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}} = t1;}
+\DoxyCodeLine{00228   \mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}}-\/>year += 2000;}
+\DoxyCodeLine{00229 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=232pt]{dc/df6/lapic_8c_a7247ece9501e31d62cffad46ec33d7af_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{lapic_8c_a42fdd0783bbeb7cdc646d360191cdcac}\label{lapic_8c_a42fdd0783bbeb7cdc646d360191cdcac}} 
+\index{lapic.c@{lapic.c}!lapiceoi@{lapiceoi}}
+\index{lapiceoi@{lapiceoi}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{lapiceoi()}{lapiceoi()}}
+{\footnotesize\ttfamily void lapiceoi (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00110}{110}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00111 \{}
+\DoxyCodeLine{00112   \textcolor{keywordflow}{if}(\mbox{\hyperlink{lapic_8c_a4029f3e2439d5912f93543b8addd10ec}{lapic}})}
+\DoxyCodeLine{00113     lapicw(\mbox{\hyperlink{lapic_8c_a04c9015da7e7ea45f3b80793809e2d7b}{EOI}}, 0);}
+\DoxyCodeLine{00114 \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=199pt]{dc/df6/lapic_8c_a42fdd0783bbeb7cdc646d360191cdcac_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{lapic_8c_a627f7996b64f99d885244a5102c85164}\label{lapic_8c_a627f7996b64f99d885244a5102c85164}} 
+\index{lapic.c@{lapic.c}!lapicid@{lapicid}}
+\index{lapicid@{lapicid}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{lapicid()}{lapicid()}}
+{\footnotesize\ttfamily int lapicid (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00101}{101}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00102 \{}
+\DoxyCodeLine{00103   \textcolor{keywordflow}{if} (!\mbox{\hyperlink{lapic_8c_a4029f3e2439d5912f93543b8addd10ec}{lapic}})}
+\DoxyCodeLine{00104     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00105   \textcolor{keywordflow}{return} \mbox{\hyperlink{lapic_8c_a4029f3e2439d5912f93543b8addd10ec}{lapic}}[\mbox{\hyperlink{lapic_8c_a77ceac8d6af195fe72f95f6afd87c45e}{ID}}] >> 24;}
+\DoxyCodeLine{00106 \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{dc/df6/lapic_8c_a627f7996b64f99d885244a5102c85164_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{lapic_8c_a6b48a1e50acc73cb3e70a65774c87392}\label{lapic_8c_a6b48a1e50acc73cb3e70a65774c87392}} 
+\index{lapic.c@{lapic.c}!lapicinit@{lapicinit}}
+\index{lapicinit@{lapicinit}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{lapicinit()}{lapicinit()}}
+{\footnotesize\ttfamily void lapicinit (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00055}{55}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00056 \{}
+\DoxyCodeLine{00057   \textcolor{keywordflow}{if}(!\mbox{\hyperlink{lapic_8c_a4029f3e2439d5912f93543b8addd10ec}{lapic}})}
+\DoxyCodeLine{00058     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00059 }
+\DoxyCodeLine{00060   \textcolor{comment}{// Enable local APIC; set spurious interrupt vector.}}
+\DoxyCodeLine{00061   lapicw(\mbox{\hyperlink{lapic_8c_a062fc16f4eacb723c76e2c87c8495412}{SVR}}, \mbox{\hyperlink{lapic_8c_a514ad415fb6125ba296793df7d1a468a}{ENABLE}} | (\mbox{\hyperlink{traps_8h_a17129100154901eb81be6e438843a0e1}{T\_IRQ0}} + \mbox{\hyperlink{traps_8h_a0e95f09d5e5653670eede10844d73875}{IRQ\_SPURIOUS}}));}
+\DoxyCodeLine{00062 }
+\DoxyCodeLine{00063   \textcolor{comment}{// The timer repeatedly counts down at bus frequency}}
+\DoxyCodeLine{00064   \textcolor{comment}{// from lapic[TICR] and then issues an interrupt.}}
+\DoxyCodeLine{00065   \textcolor{comment}{// If xv6 cared more about precise timekeeping,}}
+\DoxyCodeLine{00066   \textcolor{comment}{// TICR would be calibrated using an external time source.}}
+\DoxyCodeLine{00067   lapicw(\mbox{\hyperlink{lapic_8c_a11b0b699f28c2043fcd6da289fff7375}{TDCR}}, \mbox{\hyperlink{lapic_8c_a1964818ccd90a6173ea48cecb652feeb}{X1}});}
+\DoxyCodeLine{00068   lapicw(\mbox{\hyperlink{lapic_8c_a599217205dc3092c26567a2bd868ef3a}{TIMER}}, \mbox{\hyperlink{lapic_8c_af36821ad7b93ab31dcfaaa25e134fdf0}{PERIODIC}} | (\mbox{\hyperlink{traps_8h_a17129100154901eb81be6e438843a0e1}{T\_IRQ0}} + \mbox{\hyperlink{traps_8h_a85fc66e3edd4ed6a4db6e455feaba8ca}{IRQ\_TIMER}}));}
+\DoxyCodeLine{00069   lapicw(\mbox{\hyperlink{lapic_8c_af1d7a14061b402e4718eff6d9ef7ada4}{TICR}}, 10000000);}
+\DoxyCodeLine{00070 }
+\DoxyCodeLine{00071   \textcolor{comment}{// Disable logical interrupt lines.}}
+\DoxyCodeLine{00072   lapicw(\mbox{\hyperlink{lapic_8c_acec8cff36b5e5b2b4bda262480db2af2}{LINT0}}, \mbox{\hyperlink{lapic_8c_a8fe9c058dcb81f528134d37e741182a3}{MASKED}});}
+\DoxyCodeLine{00073   lapicw(\mbox{\hyperlink{lapic_8c_a19035d504c49cf257ef4dc27cd3eb668}{LINT1}}, \mbox{\hyperlink{lapic_8c_a8fe9c058dcb81f528134d37e741182a3}{MASKED}});}
+\DoxyCodeLine{00074 }
+\DoxyCodeLine{00075   \textcolor{comment}{// Disable performance counter overflow interrupts}}
+\DoxyCodeLine{00076   \textcolor{comment}{// on machines that provide that interrupt entry.}}
+\DoxyCodeLine{00077   \textcolor{keywordflow}{if}(((\mbox{\hyperlink{lapic_8c_a4029f3e2439d5912f93543b8addd10ec}{lapic}}[\mbox{\hyperlink{lapic_8c_a98ed931f97fef7e06e3ea441d0326c67}{VER}}]>>16) \& 0xFF) >= 4)}
+\DoxyCodeLine{00078     lapicw(\mbox{\hyperlink{lapic_8c_a5c989e3931132d4a4aca9cacfcb8b075}{PCINT}}, \mbox{\hyperlink{lapic_8c_a8fe9c058dcb81f528134d37e741182a3}{MASKED}});}
+\DoxyCodeLine{00079 }
+\DoxyCodeLine{00080   \textcolor{comment}{// Map error interrupt to IRQ\_ERROR.}}
+\DoxyCodeLine{00081   lapicw(\mbox{\hyperlink{lapic_8c_a8fe83ac76edc595f6b98cd4a4127aed5}{ERROR}}, \mbox{\hyperlink{traps_8h_a17129100154901eb81be6e438843a0e1}{T\_IRQ0}} + \mbox{\hyperlink{traps_8h_a7546e682900c4558b1f8c4f0633bc7b9}{IRQ\_ERROR}});}
+\DoxyCodeLine{00082 }
+\DoxyCodeLine{00083   \textcolor{comment}{// Clear error status register (requires back-\/to-\/back writes).}}
+\DoxyCodeLine{00084   lapicw(\mbox{\hyperlink{lapic_8c_ae4ad5e3805ffa2cbe03b65421edd8f99}{ESR}}, 0);}
+\DoxyCodeLine{00085   lapicw(\mbox{\hyperlink{lapic_8c_ae4ad5e3805ffa2cbe03b65421edd8f99}{ESR}}, 0);}
+\DoxyCodeLine{00086 }
+\DoxyCodeLine{00087   \textcolor{comment}{// Ack any outstanding interrupts.}}
+\DoxyCodeLine{00088   lapicw(\mbox{\hyperlink{lapic_8c_a04c9015da7e7ea45f3b80793809e2d7b}{EOI}}, 0);}
+\DoxyCodeLine{00089 }
+\DoxyCodeLine{00090   \textcolor{comment}{// Send an Init Level De-\/Assert to synchronise arbitration ID's.}}
+\DoxyCodeLine{00091   lapicw(\mbox{\hyperlink{lapic_8c_a9382474befd66e12c502eb221e4f9a0d}{ICRHI}}, 0);}
+\DoxyCodeLine{00092   lapicw(\mbox{\hyperlink{lapic_8c_ae6db3be23c343c0823604670010635f7}{ICRLO}}, \mbox{\hyperlink{lapic_8c_adc4a14c073a7427003796cbd9d435758}{BCAST}} | \mbox{\hyperlink{lapic_8c_ab5889105dcd019008c9448dff61323f6}{INIT}} | \mbox{\hyperlink{lapic_8c_a73f717b7aae31163c2a85f67883bf0ed}{LEVEL}});}
+\DoxyCodeLine{00093   \textcolor{keywordflow}{while}(\mbox{\hyperlink{lapic_8c_a4029f3e2439d5912f93543b8addd10ec}{lapic}}[\mbox{\hyperlink{lapic_8c_ae6db3be23c343c0823604670010635f7}{ICRLO}}] \& \mbox{\hyperlink{lapic_8c_a5f0b856b460d14d6fac161e35cfdb9d1}{DELIVS}})}
+\DoxyCodeLine{00094     ;}
+\DoxyCodeLine{00095 }
+\DoxyCodeLine{00096   \textcolor{comment}{// Enable interrupts on the APIC (but not on the processor).}}
+\DoxyCodeLine{00097   lapicw(\mbox{\hyperlink{lapic_8c_a0d378efcaaff1100c96bff8856bfc036}{TPR}}, 0);}
+\DoxyCodeLine{00098 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{lapic_8c_a54df00c792282426648d2876835958fa}\label{lapic_8c_a54df00c792282426648d2876835958fa}} 
+\index{lapic.c@{lapic.c}!lapicstartap@{lapicstartap}}
+\index{lapicstartap@{lapicstartap}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{lapicstartap()}{lapicstartap()}}
+{\footnotesize\ttfamily void lapicstartap (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}}}]{apicid,  }\item[{\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}}]{addr }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00129}{129}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00130 \{}
+\DoxyCodeLine{00131   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00132   \mbox{\hyperlink{types_8h_ab95f123a6c9bcfee6a343170ef8c5f69}{ushort}} *wrv;}
+\DoxyCodeLine{00133 }
+\DoxyCodeLine{00134   \textcolor{comment}{// "{}The BSP must initialize CMOS shutdown code to 0AH}}
+\DoxyCodeLine{00135   \textcolor{comment}{// and the warm reset vector (DWORD based at 40:67) to point at}}
+\DoxyCodeLine{00136   \textcolor{comment}{// the AP startup code prior to the [universal startup algorithm]."{}}}
+\DoxyCodeLine{00137   outb(\mbox{\hyperlink{lapic_8c_a6ef3cdae7f581dab8f55d73dfa7a49bb}{CMOS\_PORT}}, 0xF);  \textcolor{comment}{// offset 0xF is shutdown code}}
+\DoxyCodeLine{00138   outb(\mbox{\hyperlink{lapic_8c_a6ef3cdae7f581dab8f55d73dfa7a49bb}{CMOS\_PORT}}+1, 0x0A);}
+\DoxyCodeLine{00139   wrv = (\mbox{\hyperlink{types_8h_ab95f123a6c9bcfee6a343170ef8c5f69}{ushort}}*)\mbox{\hyperlink{memlayout_8h_aefd5e8b62c49bba2cf20309c7dd174e2}{P2V}}((0x40<<4 | 0x67));  \textcolor{comment}{// Warm reset vector}}
+\DoxyCodeLine{00140   wrv[0] = 0;}
+\DoxyCodeLine{00141   wrv[1] = addr >> 4;}
+\DoxyCodeLine{00142 }
+\DoxyCodeLine{00143   \textcolor{comment}{// "{}Universal startup algorithm."{}}}
+\DoxyCodeLine{00144   \textcolor{comment}{// Send INIT (level-\/triggered) interrupt to reset other CPU.}}
+\DoxyCodeLine{00145   lapicw(\mbox{\hyperlink{lapic_8c_a9382474befd66e12c502eb221e4f9a0d}{ICRHI}}, apicid<<24);}
+\DoxyCodeLine{00146   lapicw(\mbox{\hyperlink{lapic_8c_ae6db3be23c343c0823604670010635f7}{ICRLO}}, \mbox{\hyperlink{lapic_8c_ab5889105dcd019008c9448dff61323f6}{INIT}} | \mbox{\hyperlink{lapic_8c_a73f717b7aae31163c2a85f67883bf0ed}{LEVEL}} | \mbox{\hyperlink{lapic_8c_af343b20373ba49a92fce523e948f2ab3}{ASSERT}});}
+\DoxyCodeLine{00147   \mbox{\hyperlink{lapic_8c_ae0ac6441d1d76d8ef821cdbbc6b6fc2f}{microdelay}}(200);}
+\DoxyCodeLine{00148   lapicw(\mbox{\hyperlink{lapic_8c_ae6db3be23c343c0823604670010635f7}{ICRLO}}, \mbox{\hyperlink{lapic_8c_ab5889105dcd019008c9448dff61323f6}{INIT}} | \mbox{\hyperlink{lapic_8c_a73f717b7aae31163c2a85f67883bf0ed}{LEVEL}});}
+\DoxyCodeLine{00149   \mbox{\hyperlink{lapic_8c_ae0ac6441d1d76d8ef821cdbbc6b6fc2f}{microdelay}}(100);    \textcolor{comment}{// should be 10ms, but too slow in Bochs!}}
+\DoxyCodeLine{00150 }
+\DoxyCodeLine{00151   \textcolor{comment}{// Send startup IPI (twice!) to enter code.}}
+\DoxyCodeLine{00152   \textcolor{comment}{// Regular hardware is supposed to only accept a STARTUP}}
+\DoxyCodeLine{00153   \textcolor{comment}{// when it is in the halted state due to an INIT.  So the second}}
+\DoxyCodeLine{00154   \textcolor{comment}{// should be ignored, but it is part of the official Intel algorithm.}}
+\DoxyCodeLine{00155   \textcolor{comment}{// Bochs complains about the second one.  Too bad for Bochs.}}
+\DoxyCodeLine{00156   \textcolor{keywordflow}{for}(i = 0; i < 2; i++)\{}
+\DoxyCodeLine{00157     lapicw(\mbox{\hyperlink{lapic_8c_a9382474befd66e12c502eb221e4f9a0d}{ICRHI}}, apicid<<24);}
+\DoxyCodeLine{00158     lapicw(\mbox{\hyperlink{lapic_8c_ae6db3be23c343c0823604670010635f7}{ICRLO}}, \mbox{\hyperlink{lapic_8c_ad0dd8aa1d9d769cf15609ca108af4af9}{STARTUP}} | (addr>>12));}
+\DoxyCodeLine{00159     \mbox{\hyperlink{lapic_8c_ae0ac6441d1d76d8ef821cdbbc6b6fc2f}{microdelay}}(200);}
+\DoxyCodeLine{00160   \}}
+\DoxyCodeLine{00161 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=247pt]{dc/df6/lapic_8c_a54df00c792282426648d2876835958fa_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{lapic_8c_ae0ac6441d1d76d8ef821cdbbc6b6fc2f}\label{lapic_8c_ae0ac6441d1d76d8ef821cdbbc6b6fc2f}} 
+\index{lapic.c@{lapic.c}!microdelay@{microdelay}}
+\index{microdelay@{microdelay}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{microdelay()}{microdelay()}}
+{\footnotesize\ttfamily void microdelay (\begin{DoxyParamCaption}\item[{int}]{us }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00119}{119}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00120 \{}
+\DoxyCodeLine{00121 \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=329pt]{dc/df6/lapic_8c_ae0ac6441d1d76d8ef821cdbbc6b6fc2f_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{lapic_8c_a4029f3e2439d5912f93543b8addd10ec}\label{lapic_8c_a4029f3e2439d5912f93543b8addd10ec}} 
+\index{lapic.c@{lapic.c}!lapic@{lapic}}
+\index{lapic@{lapic}!lapic.c@{lapic.c}}
+\doxysubsubsection{\texorpdfstring{lapic}{lapic}}
+{\footnotesize\ttfamily volatile \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}$\ast$ lapic}
+
+
+
+Definition at line \mbox{\hyperlink{lapic_8c_source_l00044}{44}} of file \mbox{\hyperlink{lapic_8c_source}{lapic.\+c}}.
+

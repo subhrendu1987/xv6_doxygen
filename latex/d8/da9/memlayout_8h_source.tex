@@ -1,0 +1,20 @@
+\hypertarget{memlayout_8h_source}{}\doxysection{memlayout.\+h}
+\mbox{\hyperlink{memlayout_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{memlayout_8h_source_l00001}00001 \textcolor{comment}{// Memory layout}}
+\DoxyCodeLine{\Hypertarget{memlayout_8h_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{memlayout_8h_source_l00003}\mbox{\hyperlink{memlayout_8h_afa15977c771e531ebd3f3a5c2563ce16}{00003}} \textcolor{preprocessor}{\#define EXTMEM  0x100000            }\textcolor{comment}{// Start of extended memory}}
+\DoxyCodeLine{\Hypertarget{memlayout_8h_source_l00004}\mbox{\hyperlink{memlayout_8h_ad3c557a115f7d82d9ef849846779531c}{00004}} \textcolor{preprocessor}{\#define PHYSTOP 0xE000000           }\textcolor{comment}{// Top physical memory}}
+\DoxyCodeLine{\Hypertarget{memlayout_8h_source_l00005}\mbox{\hyperlink{memlayout_8h_a643ab4c8a98a6f7bfde12c8f52f6aafa}{00005}} \textcolor{preprocessor}{\#define DEVSPACE 0xFE000000         }\textcolor{comment}{// Other devices are at high addresses}}
+\DoxyCodeLine{\Hypertarget{memlayout_8h_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{memlayout_8h_source_l00007}00007 \textcolor{comment}{// Key addresses for address space layout (see kmap in vm.c for layout)}}
+\DoxyCodeLine{\Hypertarget{memlayout_8h_source_l00008}\mbox{\hyperlink{memlayout_8h_a20cbfc19992a40ab9ccf4aa8ab8283d0}{00008}} \textcolor{preprocessor}{\#define KERNBASE 0x80000000         }\textcolor{comment}{// First kernel virtual address}}
+\DoxyCodeLine{\Hypertarget{memlayout_8h_source_l00009}\mbox{\hyperlink{memlayout_8h_aca91837d3500b42e38e6427ca4db4946}{00009}} \textcolor{preprocessor}{\#define KERNLINK (KERNBASE+EXTMEM)  }\textcolor{comment}{// Address where kernel is linked}}
+\DoxyCodeLine{\Hypertarget{memlayout_8h_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{memlayout_8h_source_l00011}\mbox{\hyperlink{memlayout_8h_a5021188bc7da1304f27e913aee183407}{00011}} \textcolor{preprocessor}{\#define V2P(a) (((uint) (a)) -\/ KERNBASE)}}
+\DoxyCodeLine{\Hypertarget{memlayout_8h_source_l00012}\mbox{\hyperlink{memlayout_8h_aefd5e8b62c49bba2cf20309c7dd174e2}{00012}} \textcolor{preprocessor}{\#define P2V(a) ((void *)(((char *) (a)) + KERNBASE))}}
+\DoxyCodeLine{\Hypertarget{memlayout_8h_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{memlayout_8h_source_l00014}\mbox{\hyperlink{memlayout_8h_a07c445cd5425fc1d69188d1e6d511e4b}{00014}} \textcolor{preprocessor}{\#define V2P\_WO(x) ((x) -\/ KERNBASE)    }\textcolor{comment}{// same as V2P, but without casts}}
+\DoxyCodeLine{\Hypertarget{memlayout_8h_source_l00015}\mbox{\hyperlink{memlayout_8h_a6835c6206bedd9fccc1a29205c233309}{00015}} \textcolor{preprocessor}{\#define P2V\_WO(x) ((x) + KERNBASE)    }\textcolor{comment}{// same as P2V, but without casts}}
+
+\end{DoxyCode}

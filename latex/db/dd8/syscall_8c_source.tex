@@ -1,0 +1,158 @@
+\hypertarget{syscall_8c_source}{}\doxysection{syscall.\+c}
+\mbox{\hyperlink{syscall_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00001}00001 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00002}00002 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{defs_8h}{defs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00003}00003 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{param_8h}{param.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00004}00004 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{memlayout_8h}{memlayout.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00005}00005 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{mmu_8h}{mmu.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00006}00006 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{proc_8h}{proc.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00007}00007 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{x86_8h}{x86.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00008}00008 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{syscall_8h}{syscall.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00010}00010 \textcolor{comment}{// User code makes a system call with INT T\_SYSCALL.}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00011}00011 \textcolor{comment}{// System call number in \%eax.}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00012}00012 \textcolor{comment}{// Arguments on the stack, from the user call to the C}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00013}00013 \textcolor{comment}{// library system call function. The saved user \%esp points}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00014}00014 \textcolor{comment}{// to a saved program counter, and then the first argument.}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00016}00016 \textcolor{comment}{// Fetch the int at addr from the current process.}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00017}00017 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00018}\mbox{\hyperlink{defs_8h_ab8c95490fad429ac2701653041f2efcf}{00018}} \mbox{\hyperlink{syscall_8c_a918cadc6c55aa7ac38982659c27a3a75}{fetchint}}(\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} addr, \textcolor{keywordtype}{int} *ip)}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00019}00019 \{}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00020}00020   \textcolor{keyword}{struct }\mbox{\hyperlink{structproc}{proc}} *curproc = \mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}();}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00022}00022   \textcolor{keywordflow}{if}(addr >= curproc-\/>\mbox{\hyperlink{structproc_a6e67042bb361124ff287af88efc33e00}{sz}} || addr+4 > curproc-\/>\mbox{\hyperlink{structproc_a6e67042bb361124ff287af88efc33e00}{sz}})}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00023}00023     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00024}00024   *ip = *(\textcolor{keywordtype}{int}*)(addr);}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00025}00025   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00026}00026 \}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00028}00028 \textcolor{comment}{// Fetch the nul-\/terminated string at addr from the current process.}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00029}00029 \textcolor{comment}{// Doesn't actually copy the string -\/ just sets *pp to point at it.}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00030}00030 \textcolor{comment}{// Returns length of string, not including nul.}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00031}00031 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00032}\mbox{\hyperlink{defs_8h_a386d969a02c926521cf2e1816069a4dc}{00032}} \mbox{\hyperlink{syscall_8c_ace37b4584713ab6bda44a282a298961f}{fetchstr}}(\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} addr, \textcolor{keywordtype}{char} **pp)}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00033}00033 \{}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00034}00034   \textcolor{keywordtype}{char} *s, *ep;}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00035}00035   \textcolor{keyword}{struct }\mbox{\hyperlink{structproc}{proc}} *curproc = \mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}();}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00037}00037   \textcolor{keywordflow}{if}(addr >= curproc-\/>\mbox{\hyperlink{structproc_a6e67042bb361124ff287af88efc33e00}{sz}})}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00038}00038     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00039}00039   *pp = (\textcolor{keywordtype}{char}*)addr;}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00040}00040   ep = (\textcolor{keywordtype}{char}*)curproc-\/>\mbox{\hyperlink{structproc_a6e67042bb361124ff287af88efc33e00}{sz}};}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00041}00041   \textcolor{keywordflow}{for}(s = *pp; s < ep; s++)\{}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00042}00042     \textcolor{keywordflow}{if}(*s == 0)}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00043}00043       \textcolor{keywordflow}{return} s -\/ *pp;}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00044}00044   \}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00045}00045   \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00046}00046 \}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00048}00048 \textcolor{comment}{// Fetch the nth 32-\/bit system call argument.}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00049}00049 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00050}\mbox{\hyperlink{defs_8h_a75bc8d8c7ea0b4b39d4f470e18e0dba7}{00050}} \mbox{\hyperlink{syscall_8c_ade56ef2176f85cd61e7b91b400e7d4d3}{argint}}(\textcolor{keywordtype}{int} n, \textcolor{keywordtype}{int} *ip)}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00051}00051 \{}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00052}00052   \textcolor{keywordflow}{return} \mbox{\hyperlink{syscall_8c_a918cadc6c55aa7ac38982659c27a3a75}{fetchint}}((\mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}()-\/>\mbox{\hyperlink{structproc_a56ec07ac1e10ce42adfc8dd2a366071f}{tf}}-\/>\mbox{\hyperlink{structtrapframe_acd319e2dbd720d217c10f8fb620d73e2}{esp}}) + 4 + 4*n, ip);}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00053}00053 \}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00055}00055 \textcolor{comment}{// Fetch the nth word-\/sized system call argument as a pointer}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00056}00056 \textcolor{comment}{// to a block of memory of size bytes.  Check that the pointer}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00057}00057 \textcolor{comment}{// lies within the process address space.}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00058}00058 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00059}\mbox{\hyperlink{defs_8h_a05c7464938c27eb91540c06ec6137f26}{00059}} \mbox{\hyperlink{syscall_8c_a6ade9205d1f46b759cf93b60513a3421}{argptr}}(\textcolor{keywordtype}{int} n, \textcolor{keywordtype}{char} **pp, \textcolor{keywordtype}{int} size)}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00060}00060 \{}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00061}00061   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00062}00062   \textcolor{keyword}{struct }\mbox{\hyperlink{structproc}{proc}} *curproc = \mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}();}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00063}00063  }
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00064}00064   \textcolor{keywordflow}{if}(\mbox{\hyperlink{syscall_8c_ade56ef2176f85cd61e7b91b400e7d4d3}{argint}}(n, \&i) < 0)}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00065}00065     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00066}00066   \textcolor{keywordflow}{if}(size < 0 || (\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}})i >= curproc-\/>\mbox{\hyperlink{structproc_a6e67042bb361124ff287af88efc33e00}{sz}} || (\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}})i+size > curproc-\/>\mbox{\hyperlink{structproc_a6e67042bb361124ff287af88efc33e00}{sz}})}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00067}00067     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00068}00068   *pp = (\textcolor{keywordtype}{char}*)i;}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00069}00069   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00070}00070 \}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00071}00071 }
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00072}00072 \textcolor{comment}{// Fetch the nth word-\/sized system call argument as a string pointer.}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00073}00073 \textcolor{comment}{// Check that the pointer is valid and the string is nul-\/terminated.}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00074}00074 \textcolor{comment}{// (There is no shared writable memory, so the string can't change}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00075}00075 \textcolor{comment}{// between this check and being used by the kernel.)}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00076}00076 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00077}\mbox{\hyperlink{defs_8h_afc00cb2e6a06b1021f3d82fa4d0eff07}{00077}} \mbox{\hyperlink{syscall_8c_a662eedd65f3e2165093842b80e3bc024}{argstr}}(\textcolor{keywordtype}{int} n, \textcolor{keywordtype}{char} **pp)}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00078}00078 \{}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00079}00079   \textcolor{keywordtype}{int} addr;}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00080}00080   \textcolor{keywordflow}{if}(\mbox{\hyperlink{syscall_8c_ade56ef2176f85cd61e7b91b400e7d4d3}{argint}}(n, \&addr) < 0)}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00081}00081     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00082}00082   \textcolor{keywordflow}{return} \mbox{\hyperlink{syscall_8c_ace37b4584713ab6bda44a282a298961f}{fetchstr}}(addr, pp);}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00083}00083 \}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00084}00084 }
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00085}00085 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_ad1c5f8693cb35b9605fee09eebdda640}{sys\_chdir}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00086}00086 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_a32945488fd39bc405757177b37cd2250}{sys\_close}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00087}00087 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_a8f8b9e2d98e8b444f23a39ae8992feff}{sys\_dup}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00088}00088 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_aeaa813ddeb6a5fac3c45714c7351c526}{sys\_exec}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00089}00089 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_aee72faa31a0c32b410aba558ef1d59f2}{sys\_exit}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00090}00090 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_a3b05102e512b34446a54334f916ba5cd}{sys\_fork}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00091}00091 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_ac243c8f20f5fb2e3e257b5007af2c204}{sys\_fstat}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00092}00092 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_ac81965412a0725574b8c72afda11243e}{sys\_getpid}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00093}00093 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_ad766b54842470b464a6497bb5c514e59}{sys\_kill}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00094}00094 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_a759600870314007ac558871239122fb7}{sys\_link}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00095}00095 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_a057e5bce2de7a87ebfd2dc33967bca4a}{sys\_mkdir}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00096}00096 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_a25697aa3d828b5878d38170d724adb27}{sys\_mknod}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00097}00097 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_a74e45efc661ca17c068bc283b3842e6d}{sys\_open}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00098}00098 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_a9a70db941def46ec25939e6c2d30e399}{sys\_pipe}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00099}00099 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_a54bf714d9e898cbdcbc061b280bbfae0}{sys\_read}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00100}00100 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_ab21d46be776cf6075a997af525a1a628}{sys\_sbrk}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00101}00101 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_a59778ec9bfa6b6f2100b43fbba000573}{sys\_sleep}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00102}00102 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_ae1e58ee11d41f643929520d8c1640da7}{sys\_unlink}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00103}00103 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_ad202e06addda05ba6fe60f05d3f61913}{sys\_wait}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00104}00104 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_a687d939a9e4792af15db96f2c2f34378}{sys\_write}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00105}00105 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_aaf8553903ba8f2776247679d4db0d121}{sys\_uptime}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00106}00106 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_a05c333cee816dc0cb3bf7dbe435dfcef}{sys\_halt}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00107}00107 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_a9eeed93775248f221437260b177591b8}{sys\_cps}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00108}00108 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_abc90a5b53d06206904d099c62efc1696}{sys\_chpr}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00109}00109 \textcolor{keyword}{extern} \textcolor{keywordtype}{int} \mbox{\hyperlink{syscall_8c_a65e52d7f297b2757ffbf46e4deccf188}{sys\_getprocs}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00110}00110 }
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00111}00111 \textcolor{keyword}{static} int (*syscalls[])(void) = \{}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00112}00112 [\mbox{\hyperlink{syscall_8h_a5eba4bd9e19de29f726910510e067d58}{SYS\_fork}}]    \mbox{\hyperlink{syscall_8c_a3b05102e512b34446a54334f916ba5cd}{sys\_fork}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00113}00113 [\mbox{\hyperlink{syscall_8h_a9ffbbdd04d43fb4c0d05d4363d351772}{SYS\_exit}}]    \mbox{\hyperlink{syscall_8c_aee72faa31a0c32b410aba558ef1d59f2}{sys\_exit}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00114}00114 [\mbox{\hyperlink{syscall_8h_ad8fac614fe5ff393700eba18c0a1e75a}{SYS\_wait}}]    \mbox{\hyperlink{syscall_8c_ad202e06addda05ba6fe60f05d3f61913}{sys\_wait}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00115}00115 [\mbox{\hyperlink{syscall_8h_a780e0cccccb5dc0b1a6145c878c5004d}{SYS\_pipe}}]    \mbox{\hyperlink{syscall_8c_a9a70db941def46ec25939e6c2d30e399}{sys\_pipe}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00116}00116 [\mbox{\hyperlink{syscall_8h_a4481bc3f0d65944cd6a9ecd6c5b93a55}{SYS\_read}}]    \mbox{\hyperlink{syscall_8c_a54bf714d9e898cbdcbc061b280bbfae0}{sys\_read}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00117}00117 [\mbox{\hyperlink{syscall_8h_ae72be7145975bab983df852500f507f4}{SYS\_kill}}]    \mbox{\hyperlink{syscall_8c_ad766b54842470b464a6497bb5c514e59}{sys\_kill}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00118}00118 [\mbox{\hyperlink{syscall_8h_a3672b4a5863177cfdf4989e1f3a634b5}{SYS\_exec}}]    \mbox{\hyperlink{syscall_8c_aeaa813ddeb6a5fac3c45714c7351c526}{sys\_exec}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00119}00119 [\mbox{\hyperlink{syscall_8h_a71105a873ad172a54a16aa2f2d85534a}{SYS\_fstat}}]   \mbox{\hyperlink{syscall_8c_ac243c8f20f5fb2e3e257b5007af2c204}{sys\_fstat}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00120}00120 [\mbox{\hyperlink{syscall_8h_a02542ea0a822502c309e22863d71b849}{SYS\_chdir}}]   \mbox{\hyperlink{syscall_8c_ad1c5f8693cb35b9605fee09eebdda640}{sys\_chdir}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00121}00121 [\mbox{\hyperlink{syscall_8h_a6e98a8f905993a259782ac57a85dbcfc}{SYS\_dup}}]     \mbox{\hyperlink{syscall_8c_a8f8b9e2d98e8b444f23a39ae8992feff}{sys\_dup}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00122}00122 [\mbox{\hyperlink{syscall_8h_a7e0844c7709356d697013151cf51c69e}{SYS\_getpid}}]  \mbox{\hyperlink{syscall_8c_ac81965412a0725574b8c72afda11243e}{sys\_getpid}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00123}00123 [\mbox{\hyperlink{syscall_8h_acceb23729a731ccd9c3ebd6f887b7256}{SYS\_sbrk}}]    \mbox{\hyperlink{syscall_8c_ab21d46be776cf6075a997af525a1a628}{sys\_sbrk}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00124}00124 [\mbox{\hyperlink{syscall_8h_a77eac7fe66c659f7731cda964a7ce3dc}{SYS\_sleep}}]   \mbox{\hyperlink{syscall_8c_a59778ec9bfa6b6f2100b43fbba000573}{sys\_sleep}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00125}00125 [\mbox{\hyperlink{syscall_8h_aafb554720ef5628c963c542258b1f639}{SYS\_uptime}}]  \mbox{\hyperlink{syscall_8c_aaf8553903ba8f2776247679d4db0d121}{sys\_uptime}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00126}00126 [\mbox{\hyperlink{syscall_8h_a3ba1dfe32baa7a51d8d45fd412d08b91}{SYS\_open}}]    \mbox{\hyperlink{syscall_8c_a74e45efc661ca17c068bc283b3842e6d}{sys\_open}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00127}00127 [\mbox{\hyperlink{syscall_8h_aa7425a6f80dc9c0ec789079cb6547542}{SYS\_write}}]   \mbox{\hyperlink{syscall_8c_a687d939a9e4792af15db96f2c2f34378}{sys\_write}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00128}00128 [\mbox{\hyperlink{syscall_8h_a8da465de7045beb2e558bd601e946c1e}{SYS\_mknod}}]   \mbox{\hyperlink{syscall_8c_a25697aa3d828b5878d38170d724adb27}{sys\_mknod}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00129}00129 [\mbox{\hyperlink{syscall_8h_aa968942341544d4bb806d11c7763e227}{SYS\_unlink}}]  \mbox{\hyperlink{syscall_8c_ae1e58ee11d41f643929520d8c1640da7}{sys\_unlink}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00130}00130 [\mbox{\hyperlink{syscall_8h_a83209641ae7dbc27802761fde434ae5b}{SYS\_link}}]    \mbox{\hyperlink{syscall_8c_a759600870314007ac558871239122fb7}{sys\_link}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00131}00131 [\mbox{\hyperlink{syscall_8h_a0b150013ad6fdc06e94a89c44cc4e780}{SYS\_mkdir}}]   \mbox{\hyperlink{syscall_8c_a057e5bce2de7a87ebfd2dc33967bca4a}{sys\_mkdir}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00132}00132 [\mbox{\hyperlink{syscall_8h_a8ac7ddcf0e4789f3e705f35b8da40af3}{SYS\_close}}]   \mbox{\hyperlink{syscall_8c_a32945488fd39bc405757177b37cd2250}{sys\_close}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00133}00133 [\mbox{\hyperlink{syscall_8h_a7e80f37f28238d3f8cceb3805bb3390b}{SYS\_halt}}]    \mbox{\hyperlink{syscall_8c_a05c333cee816dc0cb3bf7dbe435dfcef}{sys\_halt}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00134}00134 [\mbox{\hyperlink{syscall_8h_a3b2872c75c5dc048b644bed63d09b79a}{SYS\_cps}}]     \mbox{\hyperlink{syscall_8c_a9eeed93775248f221437260b177591b8}{sys\_cps}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00135}00135 [\mbox{\hyperlink{syscall_8h_a78a13c0ddc3eccaf9cbfc619ae6d905e}{SYS\_chpr}}]    \mbox{\hyperlink{syscall_8c_abc90a5b53d06206904d099c62efc1696}{sys\_chpr}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00136}00136 [\mbox{\hyperlink{syscall_8h_afe5541dfe45c506a1cd6233f9a79f57c}{SYS\_getprocs}}] \mbox{\hyperlink{syscall_8c_a65e52d7f297b2757ffbf46e4deccf188}{sys\_getprocs}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00137}00137 \};}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00138}00138 }
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00139}00139 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00140}\mbox{\hyperlink{defs_8h_acd6bcafe6626fe8e7d00cacdbc3cc4f1}{00140}} \mbox{\hyperlink{syscall_8c_acd6bcafe6626fe8e7d00cacdbc3cc4f1}{syscall}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00141}00141 \{}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00142}00142   \textcolor{keywordtype}{int} num;}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00143}00143   \textcolor{keyword}{struct }\mbox{\hyperlink{structproc}{proc}} *curproc = \mbox{\hyperlink{defs_8h_a3d2327db1e34643f4a9e6a07c8cc62c6}{myproc}}();}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00144}00144 }
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00145}00145   num = curproc-\/>\mbox{\hyperlink{structproc_a56ec07ac1e10ce42adfc8dd2a366071f}{tf}}-\/>\mbox{\hyperlink{structtrapframe_ab1dd3a10936b61129d7395c3a21bc2fe}{eax}};}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00146}00146   \textcolor{keywordflow}{if}(num > 0 \&\& num < \mbox{\hyperlink{defs_8h_afacd331296c10f360da7640e0d68429f}{NELEM}}(syscalls) \&\& syscalls[num]) \{}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00147}00147     curproc-\/>\mbox{\hyperlink{structproc_a56ec07ac1e10ce42adfc8dd2a366071f}{tf}}-\/>\mbox{\hyperlink{structtrapframe_ab1dd3a10936b61129d7395c3a21bc2fe}{eax}} = syscalls[num]();}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00148}00148   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00149}00149     \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{}\%d \%s: unknown sys call \%d\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00150}00150             curproc-\/>\mbox{\hyperlink{structproc_acf2bdf54d1f957ccbcdc987007029944}{pid}}, curproc-\/>\mbox{\hyperlink{structproc_ac04af53e17d24b90c3cbfab56d658d62}{name}}, num);}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00151}00151     curproc-\/>\mbox{\hyperlink{structproc_a56ec07ac1e10ce42adfc8dd2a366071f}{tf}}-\/>\mbox{\hyperlink{structtrapframe_ab1dd3a10936b61129d7395c3a21bc2fe}{eax}} = -\/1;}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00152}00152   \}}
+\DoxyCodeLine{\Hypertarget{syscall_8c_source_l00153}00153 \}}
+
+\end{DoxyCode}

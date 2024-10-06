@@ -1,0 +1,13 @@
+<map id="sysproc.c" name="sysproc.c">
+<area shape="rect" id="node1" title=" " alt="" coords="388,5,467,31"/>
+<area shape="rect" id="node2" href="$d9/d49/types_8h.html" title=" " alt="" coords="5,79,71,104"/>
+<area shape="rect" id="node3" href="$d5/d39/x86_8h.html" title=" " alt="" coords="95,79,149,104"/>
+<area shape="rect" id="node4" href="$d5/d64/defs_8h.html" title=" " alt="" coords="174,79,233,104"/>
+<area shape="rect" id="node5" href="$db/d96/date_8h.html" title=" " alt="" coords="257,79,315,104"/>
+<area shape="rect" id="node6" href="$d5/d33/param_8h.html" title=" " alt="" coords="339,79,409,104"/>
+<area shape="rect" id="node7" href="$d8/da9/memlayout_8h.html" title=" " alt="" coords="433,79,531,104"/>
+<area shape="rect" id="node8" href="$d2/df1/mmu_8h.html" title=" " alt="" coords="555,79,617,104"/>
+<area shape="rect" id="node9" href="$df/d03/proc_8h.html" title=" " alt="" coords="642,79,701,104"/>
+<area shape="rect" id="node10" href="$d0/d1f/uproc_8h.html" title=" " alt="" coords="725,79,791,104"/>
+<area shape="rect" id="node11" href="$df/d63/spinlock_8h.html" title=" " alt="" coords="815,79,896,104"/>
+</map>

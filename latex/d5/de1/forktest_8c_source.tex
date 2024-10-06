@@ -1,0 +1,61 @@
+\hypertarget{forktest_8c_source}{}\doxysection{forktest.\+c}
+\mbox{\hyperlink{forktest_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00001}00001 \textcolor{comment}{// Test that fork fails gracefully.}}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00002}00002 \textcolor{comment}{// Tiny executable so that the limit can be filling the proc table.}}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00004}00004 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00005}00005 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{stat_8h}{stat.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00006}00006 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{user_8h}{user.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00008}\mbox{\hyperlink{forktest_8c_a0240ac851181b84ac374872dc5434ee4}{00008}} \textcolor{preprocessor}{\#define N  1000}}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00010}00010 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00011}\mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{00011}} \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(\textcolor{keywordtype}{int} fd, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *s, ...)}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00012}00012 \{}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00013}00013   \mbox{\hyperlink{user_8h_ae57e95d717eb7386cd8b935a0c136abe}{write}}(fd, s, \mbox{\hyperlink{defs_8h_a5e5172aa1be36b8210c6dfd86800b44c}{strlen}}(s));}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00014}00014 \}}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00016}00016 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00017}\mbox{\hyperlink{forktest_8c_a0ef8ccf57bc8c491407ec513b234f83c}{00017}} \mbox{\hyperlink{forktest_8c_a0ef8ccf57bc8c491407ec513b234f83c}{forktest}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00018}00018 \{}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00019}00019   \textcolor{keywordtype}{int} n, pid;}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00021}00021   \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}fork test\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00023}00023   \textcolor{keywordflow}{for}(n=0; n<\mbox{\hyperlink{forktest_8c_a0240ac851181b84ac374872dc5434ee4}{N}}; n++)\{}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00024}00024     pid = \mbox{\hyperlink{defs_8h_acd2e1ded4bb6fce4500438bf928330f4}{fork}}();}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00025}00025     \textcolor{keywordflow}{if}(pid < 0)}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00026}00026       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00027}00027     \textcolor{keywordflow}{if}(pid == 0)}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00028}00028       \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00029}00029   \}}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00031}00031   \textcolor{keywordflow}{if}(n == \mbox{\hyperlink{forktest_8c_a0240ac851181b84ac374872dc5434ee4}{N}})\{}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00032}00032     \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}fork claimed to work N times!\(\backslash\)n"{}}, \mbox{\hyperlink{forktest_8c_a0240ac851181b84ac374872dc5434ee4}{N}});}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00033}00033     \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00034}00034   \}}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00036}00036   \textcolor{keywordflow}{for}(; n > 0; n-\/-\/)\{}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00037}00037     \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_af6f31822f7e737b4e414bdac1ccb59a4}{wait}}() < 0)\{}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00038}00038       \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}wait stopped early\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00039}00039       \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00040}00040     \}}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00041}00041   \}}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00043}00043   \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_af6f31822f7e737b4e414bdac1ccb59a4}{wait}}() != -\/1)\{}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00044}00044     \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}wait got too many\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00045}00045     \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00046}00046   \}}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00048}00048   \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}fork test OK\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00049}00049 \}}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00050}00050 }
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00051}00051 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00052}\mbox{\hyperlink{forktest_8c_a840291bc02cba5474a4cb46a9b9566fe}{00052}} \mbox{\hyperlink{forktest_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00053}00053 \{}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00054}00054   \mbox{\hyperlink{forktest_8c_a0ef8ccf57bc8c491407ec513b234f83c}{forktest}}();}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00055}00055   \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{\Hypertarget{forktest_8c_source_l00056}00056 \}}
+
+\end{DoxyCode}

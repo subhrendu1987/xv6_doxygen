@@ -1,0 +1,59 @@
+\hypertarget{nice_8c}{}\doxysection{nice.\+c File Reference}
+\label{nice_8c}\index{nice.c@{nice.c}}
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stat.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}user.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}fcntl.\+h\char`\"{}}\newline
+Include dependency graph for nice.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=312pt]{d8/db9/nice_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{nice_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$\mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{nice_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{nice_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{nice.c@{nice.c}!main@{main}}
+\index{main@{main}!nice.c@{nice.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{nice_8c_source_l00007}{7}} of file \mbox{\hyperlink{nice_8c_source}{nice.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00008 \{}
+\DoxyCodeLine{00009   \textcolor{keywordtype}{int} priority, pid;}
+\DoxyCodeLine{00010   \textcolor{keywordflow}{if}(argc < 3)\{}
+\DoxyCodeLine{00011     \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(2,\textcolor{stringliteral}{"{}Usage: nice pid priority\(\backslash\)n"{}});}
+\DoxyCodeLine{00012     \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00013   \}}
+\DoxyCodeLine{00014   pid = \mbox{\hyperlink{ulib_8c_a30670a60464f77af17dfb353353d6df8}{atoi}}(\mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}[1]);}
+\DoxyCodeLine{00015   priority = \mbox{\hyperlink{ulib_8c_a30670a60464f77af17dfb353353d6df8}{atoi}}(\mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}}[2]);}
+\DoxyCodeLine{00016   \textcolor{keywordflow}{if} (priority < 0 || priority > 20)\{}
+\DoxyCodeLine{00017     \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(2,\textcolor{stringliteral}{"{}Invalid priority (0-\/20)!\(\backslash\)n"{}});}
+\DoxyCodeLine{00018     \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00019   \}}
+\DoxyCodeLine{00020   \mbox{\hyperlink{defs_8h_a2ca17a3161c80e3e4894ec6a96e0a281}{chpr}}(pid, priority);}
+\DoxyCodeLine{00021   \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00022 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d0/d26/nice_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph}
+\end{center}
+\end{figure}

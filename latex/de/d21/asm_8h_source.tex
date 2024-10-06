@@ -1,0 +1,23 @@
+\hypertarget{asm_8h_source}{}\doxysection{asm.\+h}
+\mbox{\hyperlink{asm_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{asm_8h_source_l00001}00001 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{asm_8h_source_l00002}00002 \textcolor{comment}{// assembler macros to create x86 segments}}
+\DoxyCodeLine{\Hypertarget{asm_8h_source_l00003}00003 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{asm_8h_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{asm_8h_source_l00005}\mbox{\hyperlink{asm_8h_a0281b83dd2d5c19c39be963761f26e4f}{00005}} \textcolor{preprocessor}{\#define SEG\_NULLASM                                             \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{asm_8h_source_l00006}00006 \textcolor{preprocessor}{        .word 0, 0;                                             \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{asm_8h_source_l00007}00007 \textcolor{preprocessor}{        .byte 0, 0, 0, 0}}
+\DoxyCodeLine{\Hypertarget{asm_8h_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{asm_8h_source_l00009}00009 \textcolor{comment}{// The 0xC0 means the limit is in 4096-\/byte units}}
+\DoxyCodeLine{\Hypertarget{asm_8h_source_l00010}00010 \textcolor{comment}{// and (for executable segments) 32-\/bit mode.}}
+\DoxyCodeLine{\Hypertarget{asm_8h_source_l00011}\mbox{\hyperlink{asm_8h_a56761ae3b4f4c70da4f433b9867e4e87}{00011}} \textcolor{preprocessor}{\#define SEG\_ASM(type,base,lim)                                  \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{asm_8h_source_l00012}00012 \textcolor{preprocessor}{        .word (((lim) >> 12) \& 0xffff), ((base) \& 0xffff);      \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{asm_8h_source_l00013}00013 \textcolor{preprocessor}{        .byte (((base) >> 16) \& 0xff), (0x90 | (type)),         \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{asm_8h_source_l00014}00014 \textcolor{preprocessor}{                (0xC0 | (((lim) >> 28) \& 0xf)), (((base) >> 24) \& 0xff)}}
+\DoxyCodeLine{\Hypertarget{asm_8h_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{asm_8h_source_l00016}\mbox{\hyperlink{asm_8h_af30c683a434e0712fd83781307239cb9}{00016}} \textcolor{preprocessor}{\#define STA\_X     0x8       }\textcolor{comment}{// Executable segment}}
+\DoxyCodeLine{\Hypertarget{asm_8h_source_l00017}\mbox{\hyperlink{asm_8h_a9321b5b232838b8b230c6b681be9a882}{00017}} \textcolor{preprocessor}{\#define STA\_W     0x2       }\textcolor{comment}{// Writeable (non-\/executable segments)}}
+\DoxyCodeLine{\Hypertarget{asm_8h_source_l00018}\mbox{\hyperlink{asm_8h_a6545a48f34a3fae1b04cf265f13bc8f3}{00018}} \textcolor{preprocessor}{\#define STA\_R     0x2       }\textcolor{comment}{// Readable (executable segments)}}
+
+\end{DoxyCode}

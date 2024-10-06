@@ -1,0 +1,12 @@
+<map id="traps.h" name="traps.h">
+<area shape="rect" id="node1" title=" " alt="" coords="367,5,429,31"/>
+<area shape="rect" id="node2" href="$d0/d56/console_8c.html" title=" " alt="" coords="5,79,84,104"/>
+<area shape="rect" id="node3" href="$d9/d2f/ide_8c.html" title=" " alt="" coords="109,79,159,104"/>
+<area shape="rect" id="node4" href="$dd/d61/ioapic_8c.html" title=" " alt="" coords="183,79,250,104"/>
+<area shape="rect" id="node5" href="$dc/df6/lapic_8c.html" title=" " alt="" coords="275,79,335,104"/>
+<area shape="rect" id="node6" href="$da/d9b/memide_8c.html" title=" " alt="" coords="359,79,437,104"/>
+<area shape="rect" id="node7" href="$d5/da8/picirq_8c.html" title=" " alt="" coords="462,79,526,104"/>
+<area shape="rect" id="node8" href="$dc/d6f/trap_8c.html" title=" " alt="" coords="551,79,605,104"/>
+<area shape="rect" id="node9" href="$d1/d87/uart_8c.html" title=" " alt="" coords="629,79,684,104"/>
+<area shape="rect" id="node10" href="$de/dc0/usertests_8c.html" title=" " alt="" coords="708,79,795,104"/>
+</map>

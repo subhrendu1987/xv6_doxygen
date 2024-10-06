@@ -1,0 +1,82 @@
+\hypertarget{uart_8c_source}{}\doxysection{uart.\+c}
+\mbox{\hyperlink{uart_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00001}00001 \textcolor{comment}{// Intel 8250 serial port (UART).}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00003}00003 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00004}00004 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{defs_8h}{defs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00005}00005 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{param_8h}{param.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00006}00006 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{traps_8h}{traps.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00007}00007 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{spinlock_8h}{spinlock.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00008}00008 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{sleeplock_8h}{sleeplock.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00009}00009 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{fs_8h}{fs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00010}00010 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{file_8h}{file.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00011}00011 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{mmu_8h}{mmu.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00012}00012 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{proc_8h}{proc.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00013}00013 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{x86_8h}{x86.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00015}\mbox{\hyperlink{uart_8c_a00dbb3ab1c59e14699be9393693e2248}{00015}} \textcolor{preprocessor}{\#define COM1    0x3f8}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00017}00017 \textcolor{keyword}{static} \textcolor{keywordtype}{int} uart;    \textcolor{comment}{// is there a uart?}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00018}00018 }
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00019}00019 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00020}\mbox{\hyperlink{defs_8h_a79fa7b73d0d61fdd15d30768a395437d}{00020}} \mbox{\hyperlink{uart_8c_a79fa7b73d0d61fdd15d30768a395437d}{uartinit}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00021}00021 \{}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00022}00022   \textcolor{keywordtype}{char} *p;}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00024}00024   \textcolor{comment}{// Turn off the FIFO}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00025}00025   outb(\mbox{\hyperlink{uart_8c_a00dbb3ab1c59e14699be9393693e2248}{COM1}}+2, 0);}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00027}00027   \textcolor{comment}{// 9600 baud, 8 data bits, 1 stop bit, parity off.}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00028}00028   outb(\mbox{\hyperlink{uart_8c_a00dbb3ab1c59e14699be9393693e2248}{COM1}}+3, 0x80);    \textcolor{comment}{// Unlock divisor}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00029}00029   outb(\mbox{\hyperlink{uart_8c_a00dbb3ab1c59e14699be9393693e2248}{COM1}}+0, 115200/9600);}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00030}00030   outb(\mbox{\hyperlink{uart_8c_a00dbb3ab1c59e14699be9393693e2248}{COM1}}+1, 0);}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00031}00031   outb(\mbox{\hyperlink{uart_8c_a00dbb3ab1c59e14699be9393693e2248}{COM1}}+3, 0x03);    \textcolor{comment}{// Lock divisor, 8 data bits.}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00032}00032   outb(\mbox{\hyperlink{uart_8c_a00dbb3ab1c59e14699be9393693e2248}{COM1}}+4, 0);}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00033}00033   outb(\mbox{\hyperlink{uart_8c_a00dbb3ab1c59e14699be9393693e2248}{COM1}}+1, 0x01);    \textcolor{comment}{// Enable receive interrupts.}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00035}00035   \textcolor{comment}{// If status is 0xFF, no serial port.}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00036}00036   \textcolor{keywordflow}{if}(inb(\mbox{\hyperlink{uart_8c_a00dbb3ab1c59e14699be9393693e2248}{COM1}}+5) == 0xFF)}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00037}00037     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00038}00038   uart = 1;}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00040}00040   \textcolor{comment}{// Acknowledge pre-\/existing interrupt conditions;}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00041}00041   \textcolor{comment}{// enable interrupts.}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00042}00042   inb(\mbox{\hyperlink{uart_8c_a00dbb3ab1c59e14699be9393693e2248}{COM1}}+2);}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00043}00043   inb(\mbox{\hyperlink{uart_8c_a00dbb3ab1c59e14699be9393693e2248}{COM1}}+0);}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00044}00044   \mbox{\hyperlink{defs_8h_a63da75c0c2f0b051f2c790aea2116b63}{ioapicenable}}(\mbox{\hyperlink{traps_8h_a603b478f70a928f442e33fefba73494a}{IRQ\_COM1}}, 0);}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00046}00046   \textcolor{comment}{// Announce that we're here.}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00047}00047   \textcolor{keywordflow}{for}(p=\textcolor{stringliteral}{"{}xv6...\(\backslash\)n"{}}; *p; p++)}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00048}00048     \mbox{\hyperlink{uart_8c_a55840fa098ac21df6535d6ac91956d07}{uartputc}}(*p);}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00049}00049 \}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00050}00050 }
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00051}00051 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00052}\mbox{\hyperlink{defs_8h_a571626618a1f05ff6854802e936845d6}{00052}} \mbox{\hyperlink{uart_8c_a55840fa098ac21df6535d6ac91956d07}{uartputc}}(\textcolor{keywordtype}{int} c)}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00053}00053 \{}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00054}00054   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00056}00056   \textcolor{keywordflow}{if}(!uart)}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00057}00057     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00058}00058   \textcolor{keywordflow}{for}(i = 0; i < 128 \&\& !(inb(\mbox{\hyperlink{uart_8c_a00dbb3ab1c59e14699be9393693e2248}{COM1}}+5) \& 0x20); i++)}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00059}00059     \mbox{\hyperlink{defs_8h_ada0e72e8d0a1a48090829fd03a0b76ba}{microdelay}}(10);}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00060}00060   outb(\mbox{\hyperlink{uart_8c_a00dbb3ab1c59e14699be9393693e2248}{COM1}}+0, c);}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00061}00061 \}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00062}00062 }
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00063}00063 \textcolor{keyword}{static} \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00064}00064 uartgetc(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00065}00065 \{}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00066}00066   \textcolor{keywordflow}{if}(!uart)}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00067}00067     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00068}00068   \textcolor{keywordflow}{if}(!(inb(\mbox{\hyperlink{uart_8c_a00dbb3ab1c59e14699be9393693e2248}{COM1}}+5) \& 0x01))}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00069}00069     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00070}00070   \textcolor{keywordflow}{return} inb(\mbox{\hyperlink{uart_8c_a00dbb3ab1c59e14699be9393693e2248}{COM1}}+0);}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00071}00071 \}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00072}00072 }
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00073}00073 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00074}\mbox{\hyperlink{defs_8h_aa64047002b0e84e2611ebf7dc46b7c99}{00074}} \mbox{\hyperlink{uart_8c_aa64047002b0e84e2611ebf7dc46b7c99}{uartintr}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00075}00075 \{}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00076}00076   \mbox{\hyperlink{console_8c_aad3d6ca39f23bb6d2686d2967e415193}{consoleintr}}(uartgetc);}
+\DoxyCodeLine{\Hypertarget{uart_8c_source_l00077}00077 \}}
+
+\end{DoxyCode}

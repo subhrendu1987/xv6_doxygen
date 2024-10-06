@@ -1,0 +1,3374 @@
+\begin{theindex}
+
+  \item {\_\_attribute\_\_}
+    \subitem {main.c}, \hyperpage{271}
+  \item {\_binary\_fs\_img\_size}
+    \subitem {memide.c}, \hyperpage{276}
+  \item {\_binary\_fs\_img\_start}
+    \subitem {memide.c}, \hyperpage{276}
+
+  \indexspace
+
+  \item {acquire}
+    \subitem {defs.h}, \hyperpage{110}
+    \subitem {spinlock.c}, \hyperpage{371}
+  \item {acquiresleep}
+    \subitem {defs.h}, \hyperpage{111}
+    \subitem {sleeplock.c}, \hyperpage{368}
+  \item {addr}
+    \subitem {mpioapic}, \hyperpage{43}
+  \item {addrs}
+    \subitem {dinode}, \hyperpage{17}
+    \subitem {inode}, \hyperpage{30}
+  \item {Align}
+    \subitem {umalloc.c}, \hyperpage{446}
+  \item {align}
+    \subitem {proghdr}, \hyperpage{52}
+  \item {allocproc}
+    \subitem {proc.c}, \hyperpage{325}
+  \item {allocuvm}
+    \subitem {defs.h}, \hyperpage{111}
+    \subitem {vm.c}, \hyperpage{515}
+  \item {ALT}
+    \subitem {kbd.h}, \hyperpage{235}
+  \item {apicid}
+    \subitem {cpu}, \hyperpage{14}
+    \subitem {mpproc}, \hyperpage{45}
+  \item {apicno}
+    \subitem {mpioapic}, \hyperpage{43}
+  \item {argfd}
+    \subitem {sysfile.c}, \hyperpage{404}
+  \item {argint}
+    \subitem {defs.h}, \hyperpage{112}
+    \subitem {syscall.c}, \hyperpage{384}
+  \item {argptest}
+    \subitem {usertests.c}, \hyperpage{465}
+  \item {argptr}
+    \subitem {defs.h}, \hyperpage{112}
+    \subitem {syscall.c}, \hyperpage{384}
+  \item {args}
+    \subitem {gatedesc}, \hyperpage{27}
+  \item {argstr}
+    \subitem {defs.h}, \hyperpage{112}
+    \subitem {syscall.c}, \hyperpage{385}
+  \item {argv}
+    \subitem {execcmd}, \hyperpage{23}
+    \subitem {init.c}, \hyperpage{222}
+  \item {asm.h}, \hyperpage{81}
+    \subitem {SEG\_ASM}, \hyperpage{81}
+    \subitem {SEG\_NULLASM}, \hyperpage{81}
+    \subitem {STA\_R}, \hyperpage{81}
+    \subitem {STA\_W}, \hyperpage{82}
+    \subitem {STA\_X}, \hyperpage{82}
+  \item {ASSERT}
+    \subitem {lapic.c}, \hyperpage{245}
+  \item {atoi}
+    \subitem {ulib.c}, \hyperpage{440}
+    \subitem {user.h}, \hyperpage{450}
+  \item {avl}
+    \subitem {segdesc}, \hyperpage{59}
+
+  \indexspace
+
+  \item {B\_DIRTY}
+    \subitem {buf.h}, \hyperpage{92}
+  \item {B\_VALID}
+    \subitem {buf.h}, \hyperpage{92}
+  \item {BACK}
+    \subitem {sh.c}, \hyperpage{350}
+  \item {backcmd}, \hyperpage{9}
+    \subitem {cmd}, \hyperpage{9}
+    \subitem {sh.c}, \hyperpage{352}
+    \subitem {type}, \hyperpage{9}
+  \item {BACKSPACE}
+    \subitem {console.c}, \hyperpage{96}
+  \item {balloc}
+    \subitem {fs.c}, \hyperpage{186}
+    \subitem {mkfs.c}, \hyperpage{283}
+  \item {base}
+    \subitem {umalloc.c}, \hyperpage{447}
+  \item {base\_15\_0}
+    \subitem {segdesc}, \hyperpage{59}
+  \item {base\_23\_16}
+    \subitem {segdesc}, \hyperpage{59}
+  \item {base\_31\_24}
+    \subitem {segdesc}, \hyperpage{59}
+  \item {BBLOCK}
+    \subitem {fs.h}, \hyperpage{207}
+  \item {bcache}
+    \subitem {bio.c}, \hyperpage{85}
+  \item {BCAST}
+    \subitem {lapic.c}, \hyperpage{245}
+  \item {begin\_op}
+    \subitem {defs.h}, \hyperpage{113}
+    \subitem {log.c}, \hyperpage{260}
+  \item {bfree}
+    \subitem {fs.c}, \hyperpage{186}
+  \item {bget}
+    \subitem {bio.c}, \hyperpage{83}
+  \item {BIG}
+    \subitem {usertests.c}, \hyperpage{464}
+  \item {bigargtest}
+    \subitem {usertests.c}, \hyperpage{465}
+  \item {bigdir}
+    \subitem {usertests.c}, \hyperpage{466}
+  \item {bigfile}
+    \subitem {usertests.c}, \hyperpage{466}
+  \item {bigwrite}
+    \subitem {usertests.c}, \hyperpage{467}
+  \item {binit}
+    \subitem {bio.c}, \hyperpage{83}
+    \subitem {defs.h}, \hyperpage{113}
+  \item {bio.c}, \hyperpage{82}
+    \subitem {bcache}, \hyperpage{85}
+    \subitem {bget}, \hyperpage{83}
+    \subitem {binit}, \hyperpage{83}
+    \subitem {bread}, \hyperpage{84}
+    \subitem {brelse}, \hyperpage{84}
+    \subitem {buf}, \hyperpage{85}
+    \subitem {bwrite}, \hyperpage{85}
+    \subitem {head}, \hyperpage{85}
+    \subitem {lock}, \hyperpage{85}
+  \item {bio.d}, \hyperpage{88}
+  \item {block}
+    \subitem {logheader}, \hyperpage{38}
+  \item {blockno}
+    \subitem {buf}, \hyperpage{10}
+  \item {bmap}
+    \subitem {fs.c}, \hyperpage{187}
+  \item {bmapstart}
+    \subitem {superblock}, \hyperpage{65}
+  \item {bootasm.d}, \hyperpage{88}
+  \item {bootmain}
+    \subitem {bootmain.c}, \hyperpage{89}
+  \item {bootmain.c}, \hyperpage{88}
+    \subitem {bootmain}, \hyperpage{89}
+    \subitem {readsect}, \hyperpage{89}
+    \subitem {readseg}, \hyperpage{89}
+    \subitem {SECTSIZE}, \hyperpage{88}
+    \subitem {waitdisk}, \hyperpage{90}
+  \item {bootmain.d}, \hyperpage{91}
+  \item {BPB}
+    \subitem {fs.h}, \hyperpage{207}
+  \item {bread}
+    \subitem {bio.c}, \hyperpage{84}
+    \subitem {defs.h}, \hyperpage{113}
+  \item {brelse}
+    \subitem {bio.c}, \hyperpage{84}
+    \subitem {defs.h}, \hyperpage{114}
+  \item {BSIZE}
+    \subitem {fs.h}, \hyperpage{207}
+  \item {bsstest}
+    \subitem {usertests.c}, \hyperpage{468}
+  \item {buf}, \hyperpage{10}
+    \subitem {bio.c}, \hyperpage{85}
+    \subitem {blockno}, \hyperpage{10}
+    \subitem {cat.c}, \hyperpage{94}
+    \subitem {console.c}, \hyperpage{101}
+    \subitem {data}, \hyperpage{10}
+    \subitem {dev}, \hyperpage{10}
+    \subitem {flags}, \hyperpage{11}
+    \subitem {grep.c}, \hyperpage{212}
+    \subitem {lock}, \hyperpage{11}
+    \subitem {next}, \hyperpage{11}
+    \subitem {prev}, \hyperpage{11}
+    \subitem {qnext}, \hyperpage{11}
+    \subitem {refcnt}, \hyperpage{12}
+    \subitem {usertests.c}, \hyperpage{492}
+    \subitem {wc.c}, \hyperpage{529}
+  \item {buf.h}, \hyperpage{92}
+    \subitem {B\_DIRTY}, \hyperpage{92}
+    \subitem {B\_VALID}, \hyperpage{92}
+  \item {BUSY}
+    \subitem {lapic.c}, \hyperpage{245}
+  \item {bwrite}
+    \subitem {bio.c}, \hyperpage{85}
+    \subitem {defs.h}, \hyperpage{114}
+  \item {bzero}
+    \subitem {fs.c}, \hyperpage{187}
+
+  \indexspace
+
+  \item {C}
+    \subitem {console.c}, \hyperpage{96}
+    \subitem {kbd.h}, \hyperpage{235}
+  \item {CAPSLOCK}
+    \subitem {kbd.h}, \hyperpage{235}
+  \item {cat}
+    \subitem {cat.c}, \hyperpage{93}
+  \item {cat.c}, \hyperpage{93}
+    \subitem {buf}, \hyperpage{94}
+    \subitem {cat}, \hyperpage{93}
+    \subitem {main}, \hyperpage{93}
+  \item {cat.d}, \hyperpage{95}
+  \item {cgaputc}
+    \subitem {console.c}, \hyperpage{97}
+  \item {chan}
+    \subitem {proc}, \hyperpage{49}
+  \item {chdir}
+    \subitem {user.h}, \hyperpage{451}
+  \item {checksum}
+    \subitem {mp}, \hyperpage{39}
+    \subitem {mpconf}, \hyperpage{41}
+  \item {chpr}
+    \subitem {defs.h}, \hyperpage{114}
+    \subitem {proc.c}, \hyperpage{326}
+    \subitem {user.h}, \hyperpage{451}
+  \item {clearpteu}
+    \subitem {defs.h}, \hyperpage{115}
+    \subitem {vm.c}, \hyperpage{516}
+  \item {cli}
+    \subitem {x86.h}, \hyperpage{531}
+  \item {close}
+    \subitem {user.h}, \hyperpage{451}
+  \item {cmd}, \hyperpage{12}
+    \subitem {backcmd}, \hyperpage{9}
+    \subitem {redircmd}, \hyperpage{54}
+    \subitem {type}, \hyperpage{12}
+  \item {CMOS\_PORT}
+    \subitem {lapic.c}, \hyperpage{246}
+  \item {cmos\_read}
+    \subitem {lapic.c}, \hyperpage{252}
+  \item {CMOS\_RETURN}
+    \subitem {lapic.c}, \hyperpage{246}
+  \item {CMOS\_STATA}
+    \subitem {lapic.c}, \hyperpage{246}
+  \item {CMOS\_STATB}
+    \subitem {lapic.c}, \hyperpage{246}
+  \item {CMOS\_UIP}
+    \subitem {lapic.c}, \hyperpage{246}
+  \item {cmostime}
+    \subitem {defs.h}, \hyperpage{115}
+    \subitem {lapic.c}, \hyperpage{252}
+  \item {COM1}
+    \subitem {uart.c}, \hyperpage{437}
+  \item {commit}
+    \subitem {log.c}, \hyperpage{261}
+  \item {committing}
+    \subitem {log}, \hyperpage{36}
+  \item {concreate}
+    \subitem {usertests.c}, \hyperpage{468}
+  \item {cons}
+    \subitem {console.c}, \hyperpage{101}
+  \item {CONSOLE}
+    \subitem {file.h}, \hyperpage{179}
+  \item {console.c}, \hyperpage{95}
+    \subitem {BACKSPACE}, \hyperpage{96}
+    \subitem {buf}, \hyperpage{101}
+    \subitem {C}, \hyperpage{96}
+    \subitem {cgaputc}, \hyperpage{97}
+    \subitem {cons}, \hyperpage{101}
+    \subitem {consoleinit}, \hyperpage{97}
+    \subitem {consoleintr}, \hyperpage{97}
+    \subitem {consoleread}, \hyperpage{98}
+    \subitem {consolewrite}, \hyperpage{99}
+    \subitem {consputc}, \hyperpage{99}
+    \subitem {cprintf}, \hyperpage{99}
+    \subitem {crt}, \hyperpage{102}
+    \subitem {CRTPORT}, \hyperpage{96}
+    \subitem {e}, \hyperpage{102}
+    \subitem {input}, \hyperpage{102}
+    \subitem {INPUT\_BUF}, \hyperpage{96}
+    \subitem {lock}, \hyperpage{102}
+    \subitem {locking}, \hyperpage{102}
+    \subitem {panic}, \hyperpage{100}
+    \subitem {panicked}, \hyperpage{102}
+    \subitem {printint}, \hyperpage{101}
+    \subitem {r}, \hyperpage{103}
+    \subitem {w}, \hyperpage{103}
+  \item {console.d}, \hyperpage{107}
+  \item {consoleinit}
+    \subitem {console.c}, \hyperpage{97}
+    \subitem {defs.h}, \hyperpage{116}
+  \item {consoleintr}
+    \subitem {console.c}, \hyperpage{97}
+    \subitem {defs.h}, \hyperpage{116}
+  \item {consoleread}
+    \subitem {console.c}, \hyperpage{98}
+  \item {consolewrite}
+    \subitem {console.c}, \hyperpage{99}
+  \item {consputc}
+    \subitem {console.c}, \hyperpage{99}
+  \item {context}, \hyperpage{13}
+    \subitem {ebp}, \hyperpage{13}
+    \subitem {ebx}, \hyperpage{13}
+    \subitem {edi}, \hyperpage{13}
+    \subitem {eip}, \hyperpage{13}
+    \subitem {esi}, \hyperpage{14}
+    \subitem {proc}, \hyperpage{49}
+  \item {CONV}
+    \subitem {lapic.c}, \hyperpage{246}
+  \item {copyout}
+    \subitem {defs.h}, \hyperpage{117}
+    \subitem {vm.c}, \hyperpage{516}
+  \item {copyuvm}
+    \subitem {defs.h}, \hyperpage{117}
+    \subitem {vm.c}, \hyperpage{517}
+  \item {cprintf}
+    \subitem {console.c}, \hyperpage{99}
+    \subitem {defs.h}, \hyperpage{118}
+  \item {cps}
+    \subitem {defs.h}, \hyperpage{118}
+    \subitem {proc.c}, \hyperpage{326}
+    \subitem {user.h}, \hyperpage{451}
+  \item {cpu}, \hyperpage{14}
+    \subitem {apicid}, \hyperpage{14}
+    \subitem {gdt}, \hyperpage{15}
+    \subitem {intena}, \hyperpage{15}
+    \subitem {ncli}, \hyperpage{15}
+    \subitem {proc}, \hyperpage{15}
+    \subitem {scheduler}, \hyperpage{15}
+    \subitem {spinlock}, \hyperpage{63}
+    \subitem {started}, \hyperpage{16}
+    \subitem {ts}, \hyperpage{16}
+  \item {cpuid}
+    \subitem {defs.h}, \hyperpage{119}
+    \subitem {proc.c}, \hyperpage{327}
+  \item {cpus}
+    \subitem {mp.c}, \hyperpage{306}
+    \subitem {proc.h}, \hyperpage{344}
+  \item {CR0\_PE}
+    \subitem {mmu.h}, \hyperpage{294}
+  \item {CR0\_PG}
+    \subitem {mmu.h}, \hyperpage{294}
+  \item {CR0\_WP}
+    \subitem {mmu.h}, \hyperpage{294}
+  \item {cr3}
+    \subitem {taskstate}, \hyperpage{68}
+  \item {CR4\_PSE}
+    \subitem {mmu.h}, \hyperpage{295}
+  \item {create}
+    \subitem {sysfile.c}, \hyperpage{405}
+  \item {createdelete}
+    \subitem {usertests.c}, \hyperpage{469}
+  \item {createtest}
+    \subitem {usertests.c}, \hyperpage{470}
+  \item {crt}
+    \subitem {console.c}, \hyperpage{102}
+  \item {CRTPORT}
+    \subitem {console.c}, \hyperpage{96}
+  \item {cs}
+    \subitem {gatedesc}, \hyperpage{27}
+    \subitem {taskstate}, \hyperpage{68}
+    \subitem {trapframe}, \hyperpage{75}
+  \item {CTL}
+    \subitem {kbd.h}, \hyperpage{236}
+  \item {ctlmap}
+    \subitem {kbd.h}, \hyperpage{239}
+  \item {cwd}
+    \subitem {proc}, \hyperpage{49}
+
+  \indexspace
+
+  \item {data}
+    \subitem {buf}, \hyperpage{10}
+    \subitem {ioapic}, \hyperpage{33}
+    \subitem {pipe}, \hyperpage{46}
+    \subitem {vm.c}, \hyperpage{522}
+  \item {date.h}, \hyperpage{107}
+  \item {DAY}
+    \subitem {lapic.c}, \hyperpage{247}
+  \item {day}
+    \subitem {rtcdate}, \hyperpage{56}
+  \item {db}
+    \subitem {segdesc}, \hyperpage{59}
+  \item {deallocuvm}
+    \subitem {defs.h}, \hyperpage{119}
+    \subitem {vm.c}, \hyperpage{517}
+  \item {DEASSERT}
+    \subitem {lapic.c}, \hyperpage{247}
+  \item {defs.h}, \hyperpage{107}
+    \subitem {acquire}, \hyperpage{110}
+    \subitem {acquiresleep}, \hyperpage{111}
+    \subitem {allocuvm}, \hyperpage{111}
+    \subitem {argint}, \hyperpage{112}
+    \subitem {argptr}, \hyperpage{112}
+    \subitem {argstr}, \hyperpage{112}
+    \subitem {begin\_op}, \hyperpage{113}
+    \subitem {binit}, \hyperpage{113}
+    \subitem {bread}, \hyperpage{113}
+    \subitem {brelse}, \hyperpage{114}
+    \subitem {bwrite}, \hyperpage{114}
+    \subitem {chpr}, \hyperpage{114}
+    \subitem {clearpteu}, \hyperpage{115}
+    \subitem {cmostime}, \hyperpage{115}
+    \subitem {consoleinit}, \hyperpage{116}
+    \subitem {consoleintr}, \hyperpage{116}
+    \subitem {copyout}, \hyperpage{117}
+    \subitem {copyuvm}, \hyperpage{117}
+    \subitem {cprintf}, \hyperpage{118}
+    \subitem {cps}, \hyperpage{118}
+    \subitem {cpuid}, \hyperpage{119}
+    \subitem {deallocuvm}, \hyperpage{119}
+    \subitem {dirlink}, \hyperpage{120}
+    \subitem {dirlookup}, \hyperpage{120}
+    \subitem {end\_op}, \hyperpage{121}
+    \subitem {exec}, \hyperpage{121}
+    \subitem {exit}, \hyperpage{123}
+    \subitem {fetchint}, \hyperpage{123}
+    \subitem {fetchstr}, \hyperpage{124}
+    \subitem {filealloc}, \hyperpage{124}
+    \subitem {fileclose}, \hyperpage{124}
+    \subitem {filedup}, \hyperpage{125}
+    \subitem {fileinit}, \hyperpage{125}
+    \subitem {fileread}, \hyperpage{125}
+    \subitem {filestat}, \hyperpage{126}
+    \subitem {filewrite}, \hyperpage{126}
+    \subitem {fork}, \hyperpage{127}
+    \subitem {freevm}, \hyperpage{128}
+    \subitem {getcallerpcs}, \hyperpage{128}
+    \subitem {getprocs}, \hyperpage{128}
+    \subitem {growproc}, \hyperpage{128}
+    \subitem {holding}, \hyperpage{129}
+    \subitem {holdingsleep}, \hyperpage{129}
+    \subitem {ialloc}, \hyperpage{129}
+    \subitem {ideinit}, \hyperpage{130}
+    \subitem {ideintr}, \hyperpage{130}
+    \subitem {iderw}, \hyperpage{131}
+    \subitem {idtinit}, \hyperpage{131}
+    \subitem {idup}, \hyperpage{132}
+    \subitem {iinit}, \hyperpage{132}
+    \subitem {ilock}, \hyperpage{132}
+    \subitem {initlock}, \hyperpage{133}
+    \subitem {initlog}, \hyperpage{133}
+    \subitem {initsleeplock}, \hyperpage{133}
+    \subitem {inituvm}, \hyperpage{134}
+    \subitem {ioapicenable}, \hyperpage{134}
+    \subitem {ioapicid}, \hyperpage{160}
+    \subitem {ioapicinit}, \hyperpage{134}
+    \subitem {iput}, \hyperpage{135}
+    \subitem {ismp}, \hyperpage{161}
+    \subitem {iunlock}, \hyperpage{135}
+    \subitem {iunlockput}, \hyperpage{135}
+    \subitem {iupdate}, \hyperpage{136}
+    \subitem {kalloc}, \hyperpage{136}
+    \subitem {kbdintr}, \hyperpage{136}
+    \subitem {kfree}, \hyperpage{137}
+    \subitem {kill}, \hyperpage{137}
+    \subitem {kinit1}, \hyperpage{137}
+    \subitem {kinit2}, \hyperpage{138}
+    \subitem {kvmalloc}, \hyperpage{138}
+    \subitem {lapic}, \hyperpage{161}
+    \subitem {lapiceoi}, \hyperpage{138}
+    \subitem {lapicid}, \hyperpage{138}
+    \subitem {lapicinit}, \hyperpage{139}
+    \subitem {lapicstartap}, \hyperpage{139}
+    \subitem {loaduvm}, \hyperpage{140}
+    \subitem {log\_write}, \hyperpage{140}
+    \subitem {memcmp}, \hyperpage{141}
+    \subitem {memmove}, \hyperpage{141}
+    \subitem {memset}, \hyperpage{142}
+    \subitem {microdelay}, \hyperpage{142}
+    \subitem {mpinit}, \hyperpage{142}
+    \subitem {mycpu}, \hyperpage{143}
+    \subitem {myproc}, \hyperpage{143}
+    \subitem {namecmp}, \hyperpage{144}
+    \subitem {namei}, \hyperpage{144}
+    \subitem {nameiparent}, \hyperpage{144}
+    \subitem {NELEM}, \hyperpage{110}
+    \subitem {panic}, \hyperpage{144}
+    \subitem {picenable}, \hyperpage{145}
+    \subitem {picinit}, \hyperpage{145}
+    \subitem {pinit}, \hyperpage{145}
+    \subitem {pipealloc}, \hyperpage{145}
+    \subitem {pipeclose}, \hyperpage{146}
+    \subitem {piperead}, \hyperpage{146}
+    \subitem {pipewrite}, \hyperpage{147}
+    \subitem {popcli}, \hyperpage{147}
+    \subitem {procdump}, \hyperpage{148}
+    \subitem {pushcli}, \hyperpage{148}
+    \subitem {readi}, \hyperpage{148}
+    \subitem {readsb}, \hyperpage{149}
+    \subitem {release}, \hyperpage{149}
+    \subitem {releasesleep}, \hyperpage{150}
+    \subitem {safestrcpy}, \hyperpage{150}
+    \subitem {sched}, \hyperpage{150}
+    \subitem {scheduler}, \hyperpage{151}
+    \subitem {seginit}, \hyperpage{151}
+    \subitem {setproc}, \hyperpage{152}
+    \subitem {setupkvm}, \hyperpage{152}
+    \subitem {sleep}, \hyperpage{152}
+    \subitem {stati}, \hyperpage{153}
+    \subitem {strlen}, \hyperpage{153}
+    \subitem {strncmp}, \hyperpage{154}
+    \subitem {strncpy}, \hyperpage{154}
+    \subitem {switchkvm}, \hyperpage{154}
+    \subitem {switchuvm}, \hyperpage{155}
+    \subitem {swtch}, \hyperpage{155}
+    \subitem {syscall}, \hyperpage{155}
+    \subitem {ticks}, \hyperpage{161}
+    \subitem {tickslock}, \hyperpage{161}
+    \subitem {timerinit}, \hyperpage{156}
+    \subitem {tvinit}, \hyperpage{156}
+    \subitem {uartinit}, \hyperpage{156}
+    \subitem {uartintr}, \hyperpage{157}
+    \subitem {uartputc}, \hyperpage{157}
+    \subitem {userinit}, \hyperpage{157}
+    \subitem {uva2ka}, \hyperpage{158}
+    \subitem {wait}, \hyperpage{158}
+    \subitem {wakeup}, \hyperpage{159}
+    \subitem {writei}, \hyperpage{159}
+    \subitem {yield}, \hyperpage{160}
+  \item {DELIVS}
+    \subitem {lapic.c}, \hyperpage{247}
+  \item {dev}
+    \subitem {buf}, \hyperpage{10}
+    \subitem {inode}, \hyperpage{30}
+    \subitem {log}, \hyperpage{36}
+    \subitem {stat}, \hyperpage{64}
+  \item {DEVSPACE}
+    \subitem {memlayout.h}, \hyperpage{278}
+  \item {devsw}, \hyperpage{16}
+    \subitem {file.c}, \hyperpage{176}
+    \subitem {file.h}, \hyperpage{180}
+    \subitem {read}, \hyperpage{17}
+    \subitem {write}, \hyperpage{17}
+  \item {dinode}, \hyperpage{17}
+    \subitem {addrs}, \hyperpage{17}
+    \subitem {major}, \hyperpage{18}
+    \subitem {minor}, \hyperpage{18}
+    \subitem {nlink}, \hyperpage{18}
+    \subitem {size}, \hyperpage{18}
+    \subitem {type}, \hyperpage{18}
+  \item {dirent}, \hyperpage{19}
+    \subitem {inum}, \hyperpage{19}
+    \subitem {name}, \hyperpage{19}
+  \item {dirfile}
+    \subitem {usertests.c}, \hyperpage{471}
+  \item {dirlink}
+    \subitem {defs.h}, \hyperpage{120}
+    \subitem {fs.c}, \hyperpage{188}
+  \item {dirlookup}
+    \subitem {defs.h}, \hyperpage{120}
+    \subitem {fs.c}, \hyperpage{188}
+  \item {DIRSIZ}
+    \subitem {fs.h}, \hyperpage{207}
+  \item {dirtest}
+    \subitem {usertests.c}, \hyperpage{472}
+  \item {disksize}
+    \subitem {memide.c}, \hyperpage{277}
+  \item {dpl}
+    \subitem {gatedesc}, \hyperpage{27}
+    \subitem {segdesc}, \hyperpage{59}
+  \item {DPL\_USER}
+    \subitem {mmu.h}, \hyperpage{295}
+  \item {ds}
+    \subitem {taskstate}, \hyperpage{68}
+    \subitem {trapframe}, \hyperpage{75}
+  \item {dup}
+    \subitem {user.h}, \hyperpage{452}
+
+  \indexspace
+
+  \item {e}
+    \subitem {console.c}, \hyperpage{102}
+  \item {E0ESC}
+    \subitem {kbd.h}, \hyperpage{236}
+  \item {eargv}
+    \subitem {execcmd}, \hyperpage{23}
+  \item {eax}
+    \subitem {taskstate}, \hyperpage{68}
+    \subitem {trapframe}, \hyperpage{76}
+  \item {ebp}
+    \subitem {context}, \hyperpage{13}
+    \subitem {taskstate}, \hyperpage{69}
+    \subitem {trapframe}, \hyperpage{76}
+  \item {ebx}
+    \subitem {context}, \hyperpage{13}
+    \subitem {taskstate}, \hyperpage{69}
+    \subitem {trapframe}, \hyperpage{76}
+  \item {echo.c}, \hyperpage{164}
+    \subitem {main}, \hyperpage{164}
+  \item {echo.d}, \hyperpage{165}
+  \item {echoargv}
+    \subitem {usertests.c}, \hyperpage{492}
+  \item {ecx}
+    \subitem {taskstate}, \hyperpage{69}
+    \subitem {trapframe}, \hyperpage{76}
+  \item {edi}
+    \subitem {context}, \hyperpage{13}
+    \subitem {taskstate}, \hyperpage{69}
+    \subitem {trapframe}, \hyperpage{76}
+  \item {edx}
+    \subitem {taskstate}, \hyperpage{69}
+    \subitem {trapframe}, \hyperpage{76}
+  \item {efile}
+    \subitem {redircmd}, \hyperpage{55}
+  \item {eflags}
+    \subitem {taskstate}, \hyperpage{69}
+    \subitem {trapframe}, \hyperpage{77}
+  \item {ehsize}
+    \subitem {elfhdr}, \hyperpage{20}
+  \item {eip}
+    \subitem {context}, \hyperpage{13}
+    \subitem {taskstate}, \hyperpage{70}
+    \subitem {trapframe}, \hyperpage{77}
+  \item {elf}
+    \subitem {elfhdr}, \hyperpage{20}
+  \item {elf.h}, \hyperpage{165}
+    \subitem {ELF\_MAGIC}, \hyperpage{165}
+    \subitem {ELF\_PROG\_FLAG\_EXEC}, \hyperpage{165}
+    \subitem {ELF\_PROG\_FLAG\_READ}, \hyperpage{166}
+    \subitem {ELF\_PROG\_FLAG\_WRITE}, \hyperpage{166}
+    \subitem {ELF\_PROG\_LOAD}, \hyperpage{166}
+  \item {ELF\_MAGIC}
+    \subitem {elf.h}, \hyperpage{165}
+  \item {ELF\_PROG\_FLAG\_EXEC}
+    \subitem {elf.h}, \hyperpage{165}
+  \item {ELF\_PROG\_FLAG\_READ}
+    \subitem {elf.h}, \hyperpage{166}
+  \item {ELF\_PROG\_FLAG\_WRITE}
+    \subitem {elf.h}, \hyperpage{166}
+  \item {ELF\_PROG\_LOAD}
+    \subitem {elf.h}, \hyperpage{166}
+  \item {elfhdr}, \hyperpage{20}
+    \subitem {ehsize}, \hyperpage{20}
+    \subitem {elf}, \hyperpage{20}
+    \subitem {entry}, \hyperpage{20}
+    \subitem {flags}, \hyperpage{21}
+    \subitem {machine}, \hyperpage{21}
+    \subitem {magic}, \hyperpage{21}
+    \subitem {phentsize}, \hyperpage{21}
+    \subitem {phnum}, \hyperpage{21}
+    \subitem {phoff}, \hyperpage{21}
+    \subitem {shentsize}, \hyperpage{22}
+    \subitem {shnum}, \hyperpage{22}
+    \subitem {shoff}, \hyperpage{22}
+    \subitem {shstrndx}, \hyperpage{22}
+    \subitem {type}, \hyperpage{22}
+    \subitem {version}, \hyperpage{22}
+  \item {EMBRYO}
+    \subitem {proc.h}, \hyperpage{344}
+  \item {ENABLE}
+    \subitem {lapic.c}, \hyperpage{247}
+  \item {end}
+    \subitem {kalloc.c}, \hyperpage{230}
+  \item {end\_op}
+    \subitem {defs.h}, \hyperpage{121}
+    \subitem {log.c}, \hyperpage{261}
+  \item {entry}
+    \subitem {elfhdr}, \hyperpage{20}
+    \subitem {mpconf}, \hyperpage{41}
+  \item {entryother.d}, \hyperpage{167}
+  \item {entrypgdir}
+    \subitem {main.c}, \hyperpage{273}
+  \item {EOI}
+    \subitem {lapic.c}, \hyperpage{247}
+  \item {err}
+    \subitem {trapframe}, \hyperpage{77}
+  \item {ERROR}
+    \subitem {lapic.c}, \hyperpage{247}
+  \item {es}
+    \subitem {taskstate}, \hyperpage{70}
+    \subitem {trapframe}, \hyperpage{77}
+  \item {esi}
+    \subitem {context}, \hyperpage{14}
+    \subitem {taskstate}, \hyperpage{70}
+    \subitem {trapframe}, \hyperpage{77}
+  \item {esp}
+    \subitem {taskstate}, \hyperpage{70}
+    \subitem {trapframe}, \hyperpage{78}
+  \item {esp0}
+    \subitem {taskstate}, \hyperpage{70}
+  \item {esp1}
+    \subitem {taskstate}, \hyperpage{70}
+  \item {esp2}
+    \subitem {taskstate}, \hyperpage{71}
+  \item {ESR}
+    \subitem {lapic.c}, \hyperpage{248}
+  \item {EXEC}
+    \subitem {sh.c}, \hyperpage{351}
+  \item {exec}
+    \subitem {defs.h}, \hyperpage{121}
+    \subitem {exec.c}, \hyperpage{167}
+    \subitem {user.h}, \hyperpage{452}
+  \item {exec.c}, \hyperpage{167}
+    \subitem {exec}, \hyperpage{167}
+  \item {exec.d}, \hyperpage{170}
+  \item {execcmd}, \hyperpage{23}
+    \subitem {argv}, \hyperpage{23}
+    \subitem {eargv}, \hyperpage{23}
+    \subitem {sh.c}, \hyperpage{352}
+    \subitem {type}, \hyperpage{23}
+  \item {exectest}
+    \subitem {usertests.c}, \hyperpage{472}
+  \item {exit}
+    \subitem {defs.h}, \hyperpage{123}
+    \subitem {proc.c}, \hyperpage{327}
+    \subitem {user.h}, \hyperpage{453}
+  \item {exit.c}, \hyperpage{171}
+    \subitem {main}, \hyperpage{171}
+  \item {exit.d}, \hyperpage{171}
+  \item {exitiputtest}
+    \subitem {usertests.c}, \hyperpage{472}
+  \item {exitwait}
+    \subitem {usertests.c}, \hyperpage{473}
+  \item {EXTMEM}
+    \subitem {memlayout.h}, \hyperpage{278}
+
+  \indexspace
+
+  \item {fcntl.h}, \hyperpage{172}
+    \subitem {O\_CREATE}, \hyperpage{172}
+    \subitem {O\_RDONLY}, \hyperpage{172}
+    \subitem {O\_RDWR}, \hyperpage{172}
+    \subitem {O\_WRONLY}, \hyperpage{172}
+  \item {fd}
+    \subitem {redircmd}, \hyperpage{55}
+  \item {FD\_INODE}
+    \subitem {file}, \hyperpage{24}
+  \item {FD\_NONE}
+    \subitem {file}, \hyperpage{24}
+  \item {FD\_PIPE}
+    \subitem {file}, \hyperpage{24}
+  \item {fdalloc}
+    \subitem {sysfile.c}, \hyperpage{405}
+  \item {feature}
+    \subitem {mpproc}, \hyperpage{45}
+  \item {fetchint}
+    \subitem {defs.h}, \hyperpage{123}
+    \subitem {syscall.c}, \hyperpage{385}
+  \item {fetchstr}
+    \subitem {defs.h}, \hyperpage{124}
+    \subitem {syscall.c}, \hyperpage{385}
+  \item {file}, \hyperpage{24}
+    \subitem {FD\_INODE}, \hyperpage{24}
+    \subitem {FD\_NONE}, \hyperpage{24}
+    \subitem {FD\_PIPE}, \hyperpage{24}
+    \subitem {file.c}, \hyperpage{176}
+    \subitem {ip}, \hyperpage{25}
+    \subitem {off}, \hyperpage{25}
+    \subitem {pipe}, \hyperpage{25}
+    \subitem {readable}, \hyperpage{25}
+    \subitem {redircmd}, \hyperpage{55}
+    \subitem {ref}, \hyperpage{25}
+    \subitem {type}, \hyperpage{26}
+    \subitem {writable}, \hyperpage{26}
+  \item {file.c}, \hyperpage{173}
+    \subitem {devsw}, \hyperpage{176}
+    \subitem {file}, \hyperpage{176}
+    \subitem {filealloc}, \hyperpage{173}
+    \subitem {fileclose}, \hyperpage{174}
+    \subitem {filedup}, \hyperpage{174}
+    \subitem {fileinit}, \hyperpage{174}
+    \subitem {fileread}, \hyperpage{175}
+    \subitem {filestat}, \hyperpage{175}
+    \subitem {filewrite}, \hyperpage{175}
+    \subitem {ftable}, \hyperpage{176}
+    \subitem {lock}, \hyperpage{177}
+  \item {file.d}, \hyperpage{179}
+  \item {file.h}, \hyperpage{179}
+    \subitem {CONSOLE}, \hyperpage{179}
+    \subitem {devsw}, \hyperpage{180}
+  \item {filealloc}
+    \subitem {defs.h}, \hyperpage{124}
+    \subitem {file.c}, \hyperpage{173}
+  \item {fileclose}
+    \subitem {defs.h}, \hyperpage{124}
+    \subitem {file.c}, \hyperpage{174}
+  \item {filedup}
+    \subitem {defs.h}, \hyperpage{125}
+    \subitem {file.c}, \hyperpage{174}
+  \item {fileinit}
+    \subitem {defs.h}, \hyperpage{125}
+    \subitem {file.c}, \hyperpage{174}
+  \item {fileread}
+    \subitem {defs.h}, \hyperpage{125}
+    \subitem {file.c}, \hyperpage{175}
+  \item {filestat}
+    \subitem {defs.h}, \hyperpage{126}
+    \subitem {file.c}, \hyperpage{175}
+  \item {filesz}
+    \subitem {proghdr}, \hyperpage{53}
+  \item {filewrite}
+    \subitem {defs.h}, \hyperpage{126}
+    \subitem {file.c}, \hyperpage{175}
+  \item {fill\_rtcdate}
+    \subitem {lapic.c}, \hyperpage{253}
+  \item {FIXED}
+    \subitem {lapic.c}, \hyperpage{248}
+  \item {FL\_IF}
+    \subitem {mmu.h}, \hyperpage{295}
+  \item {flags}
+    \subitem {buf}, \hyperpage{11}
+    \subitem {elfhdr}, \hyperpage{21}
+    \subitem {mpioapic}, \hyperpage{44}
+    \subitem {mpproc}, \hyperpage{45}
+    \subitem {proghdr}, \hyperpage{53}
+  \item {fmtname}
+    \subitem {ls.c}, \hyperpage{268}
+  \item {foo.c}, \hyperpage{180}
+    \subitem {main}, \hyperpage{181}
+  \item {foo.d}, \hyperpage{182}
+  \item {fork}
+    \subitem {defs.h}, \hyperpage{127}
+    \subitem {proc.c}, \hyperpage{328}
+    \subitem {user.h}, \hyperpage{454}
+  \item {fork1}
+    \subitem {sh.c}, \hyperpage{352}
+  \item {forkret}
+    \subitem {proc.c}, \hyperpage{329}
+  \item {forktest}
+    \subitem {forktest.c}, \hyperpage{183}
+    \subitem {usertests.c}, \hyperpage{473}
+  \item {forktest.c}, \hyperpage{182}
+    \subitem {forktest}, \hyperpage{183}
+    \subitem {main}, \hyperpage{183}
+    \subitem {N}, \hyperpage{182}
+    \subitem {printf}, \hyperpage{183}
+  \item {forktest.d}, \hyperpage{185}
+  \item {fourfiles}
+    \subitem {usertests.c}, \hyperpage{474}
+  \item {fourteen}
+    \subitem {usertests.c}, \hyperpage{475}
+  \item {free}
+    \subitem {umalloc.c}, \hyperpage{446}
+    \subitem {user.h}, \hyperpage{455}
+  \item {freeblock}
+    \subitem {mkfs.c}, \hyperpage{287}
+  \item {freeinode}
+    \subitem {mkfs.c}, \hyperpage{288}
+  \item {freelist}
+    \subitem {kalloc.c}, \hyperpage{230}
+  \item {freep}
+    \subitem {umalloc.c}, \hyperpage{448}
+  \item {freerange}
+    \subitem {kalloc.c}, \hyperpage{228}
+  \item {freevm}
+    \subitem {defs.h}, \hyperpage{128}
+    \subitem {vm.c}, \hyperpage{518}
+  \item {fs}
+    \subitem {taskstate}, \hyperpage{71}
+    \subitem {trapframe}, \hyperpage{78}
+  \item {fs.c}, \hyperpage{185}
+    \subitem {balloc}, \hyperpage{186}
+    \subitem {bfree}, \hyperpage{186}
+    \subitem {bmap}, \hyperpage{187}
+    \subitem {bzero}, \hyperpage{187}
+    \subitem {dirlink}, \hyperpage{188}
+    \subitem {dirlookup}, \hyperpage{188}
+    \subitem {ialloc}, \hyperpage{189}
+    \subitem {icache}, \hyperpage{197}
+    \subitem {idup}, \hyperpage{189}
+    \subitem {iget}, \hyperpage{190}
+    \subitem {iinit}, \hyperpage{190}
+    \subitem {ilock}, \hyperpage{191}
+    \subitem {inode}, \hyperpage{198}
+    \subitem {iput}, \hyperpage{191}
+    \subitem {itrunc}, \hyperpage{192}
+    \subitem {iunlock}, \hyperpage{192}
+    \subitem {iunlockput}, \hyperpage{193}
+    \subitem {iupdate}, \hyperpage{193}
+    \subitem {lock}, \hyperpage{198}
+    \subitem {min}, \hyperpage{186}
+    \subitem {namecmp}, \hyperpage{193}
+    \subitem {namei}, \hyperpage{194}
+    \subitem {nameiparent}, \hyperpage{194}
+    \subitem {namex}, \hyperpage{194}
+    \subitem {readi}, \hyperpage{195}
+    \subitem {readsb}, \hyperpage{196}
+    \subitem {sb}, \hyperpage{198}
+    \subitem {skipelem}, \hyperpage{196}
+    \subitem {stati}, \hyperpage{196}
+    \subitem {writei}, \hyperpage{197}
+  \item {fs.d}, \hyperpage{206}
+  \item {fs.h}, \hyperpage{206}
+    \subitem {BBLOCK}, \hyperpage{207}
+    \subitem {BPB}, \hyperpage{207}
+    \subitem {BSIZE}, \hyperpage{207}
+    \subitem {DIRSIZ}, \hyperpage{207}
+    \subitem {IBLOCK}, \hyperpage{207}
+    \subitem {IPB}, \hyperpage{207}
+    \subitem {MAXFILE}, \hyperpage{208}
+    \subitem {NDIRECT}, \hyperpage{208}
+    \subitem {NINDIRECT}, \hyperpage{208}
+    \subitem {ROOTINO}, \hyperpage{208}
+  \item {fsfd}
+    \subitem {mkfs.c}, \hyperpage{288}
+  \item {fsfull}
+    \subitem {usertests.c}, \hyperpage{476}
+  \item {FSSIZE}
+    \subitem {param.h}, \hyperpage{312}
+  \item {fstat}
+    \subitem {user.h}, \hyperpage{455}
+  \item {ftable}
+    \subitem {file.c}, \hyperpage{176}
+
+  \indexspace
+
+  \item {g}
+    \subitem {segdesc}, \hyperpage{60}
+  \item {gatedesc}, \hyperpage{26}
+    \subitem {args}, \hyperpage{27}
+    \subitem {cs}, \hyperpage{27}
+    \subitem {dpl}, \hyperpage{27}
+    \subitem {off\_15\_0}, \hyperpage{27}
+    \subitem {off\_31\_16}, \hyperpage{27}
+    \subitem {p}, \hyperpage{27}
+    \subitem {rsv1}, \hyperpage{28}
+    \subitem {s}, \hyperpage{28}
+    \subitem {type}, \hyperpage{28}
+  \item {gdt}
+    \subitem {cpu}, \hyperpage{15}
+  \item {getcallerpcs}
+    \subitem {defs.h}, \hyperpage{128}
+    \subitem {spinlock.c}, \hyperpage{371}
+  \item {getcmd}
+    \subitem {sh.c}, \hyperpage{352}
+  \item {getpid}
+    \subitem {user.h}, \hyperpage{455}
+  \item {getprocs}
+    \subitem {defs.h}, \hyperpage{128}
+    \subitem {user.h}, \hyperpage{455}
+  \item {gets}
+    \subitem {ulib.c}, \hyperpage{441}
+    \subitem {user.h}, \hyperpage{456}
+  \item {gettoken}
+    \subitem {sh.c}, \hyperpage{353}
+  \item {grep}
+    \subitem {grep.c}, \hyperpage{210}
+  \item {grep.c}, \hyperpage{209}
+    \subitem {buf}, \hyperpage{212}
+    \subitem {grep}, \hyperpage{210}
+    \subitem {main}, \hyperpage{210}
+    \subitem {match}, \hyperpage{211}
+    \subitem {matchhere}, \hyperpage{211}
+    \subitem {matchstar}, \hyperpage{211}
+  \item {grep.d}, \hyperpage{213}
+  \item {growproc}
+    \subitem {defs.h}, \hyperpage{128}
+    \subitem {proc.c}, \hyperpage{329}
+  \item {gs}
+    \subitem {taskstate}, \hyperpage{71}
+    \subitem {trapframe}, \hyperpage{78}
+
+  \indexspace
+
+  \item {halt}
+    \subitem {user.h}, \hyperpage{456}
+  \item {havedisk1}
+    \subitem {ide.c}, \hyperpage{218}
+  \item {head}
+    \subitem {bio.c}, \hyperpage{85}
+  \item {Header}
+    \subitem {umalloc.c}, \hyperpage{446}
+  \item {header}, \hyperpage{28}
+    \subitem {ptr}, \hyperpage{29}
+    \subitem {s}, \hyperpage{29}
+    \subitem {size}, \hyperpage{29}
+    \subitem {x}, \hyperpage{29}
+  \item {holding}
+    \subitem {defs.h}, \hyperpage{129}
+    \subitem {spinlock.c}, \hyperpage{371}
+  \item {holdingsleep}
+    \subitem {defs.h}, \hyperpage{129}
+    \subitem {sleeplock.c}, \hyperpage{368}
+  \item {hour}
+    \subitem {rtcdate}, \hyperpage{56}
+  \item {HOURS}
+    \subitem {lapic.c}, \hyperpage{248}
+
+  \indexspace
+
+  \item {ialloc}
+    \subitem {defs.h}, \hyperpage{129}
+    \subitem {fs.c}, \hyperpage{189}
+    \subitem {mkfs.c}, \hyperpage{283}
+  \item {iappend}
+    \subitem {mkfs.c}, \hyperpage{283}
+  \item {IBLOCK}
+    \subitem {fs.h}, \hyperpage{207}
+  \item {icache}
+    \subitem {fs.c}, \hyperpage{197}
+  \item {ICRHI}
+    \subitem {lapic.c}, \hyperpage{248}
+  \item {ICRLO}
+    \subitem {lapic.c}, \hyperpage{248}
+  \item {ID}
+    \subitem {lapic.c}, \hyperpage{248}
+  \item {ide.c}, \hyperpage{214}
+    \subitem {havedisk1}, \hyperpage{218}
+    \subitem {IDE\_BSY}, \hyperpage{214}
+    \subitem {IDE\_CMD\_RDMUL}, \hyperpage{215}
+    \subitem {IDE\_CMD\_READ}, \hyperpage{215}
+    \subitem {IDE\_CMD\_WRITE}, \hyperpage{215}
+    \subitem {IDE\_CMD\_WRMUL}, \hyperpage{215}
+    \subitem {IDE\_DF}, \hyperpage{215}
+    \subitem {IDE\_DRDY}, \hyperpage{215}
+    \subitem {IDE\_ERR}, \hyperpage{216}
+    \subitem {ideinit}, \hyperpage{216}
+    \subitem {ideintr}, \hyperpage{216}
+    \subitem {idelock}, \hyperpage{218}
+    \subitem {idequeue}, \hyperpage{219}
+    \subitem {iderw}, \hyperpage{217}
+    \subitem {idestart}, \hyperpage{217}
+    \subitem {idewait}, \hyperpage{218}
+    \subitem {SECTOR\_SIZE}, \hyperpage{216}
+  \item {ide.d}, \hyperpage{221}
+  \item {IDE\_BSY}
+    \subitem {ide.c}, \hyperpage{214}
+  \item {IDE\_CMD\_RDMUL}
+    \subitem {ide.c}, \hyperpage{215}
+  \item {IDE\_CMD\_READ}
+    \subitem {ide.c}, \hyperpage{215}
+  \item {IDE\_CMD\_WRITE}
+    \subitem {ide.c}, \hyperpage{215}
+  \item {IDE\_CMD\_WRMUL}
+    \subitem {ide.c}, \hyperpage{215}
+  \item {IDE\_DF}
+    \subitem {ide.c}, \hyperpage{215}
+  \item {IDE\_DRDY}
+    \subitem {ide.c}, \hyperpage{215}
+  \item {IDE\_ERR}
+    \subitem {ide.c}, \hyperpage{216}
+  \item {ideinit}
+    \subitem {defs.h}, \hyperpage{130}
+    \subitem {ide.c}, \hyperpage{216}
+    \subitem {memide.c}, \hyperpage{275}
+  \item {ideintr}
+    \subitem {defs.h}, \hyperpage{130}
+    \subitem {ide.c}, \hyperpage{216}
+    \subitem {memide.c}, \hyperpage{275}
+  \item {idelock}
+    \subitem {ide.c}, \hyperpage{218}
+  \item {idequeue}
+    \subitem {ide.c}, \hyperpage{219}
+  \item {iderw}
+    \subitem {defs.h}, \hyperpage{131}
+    \subitem {ide.c}, \hyperpage{217}
+    \subitem {memide.c}, \hyperpage{276}
+  \item {idestart}
+    \subitem {ide.c}, \hyperpage{217}
+  \item {idewait}
+    \subitem {ide.c}, \hyperpage{218}
+  \item {idt}
+    \subitem {trap.c}, \hyperpage{426}
+  \item {idtinit}
+    \subitem {defs.h}, \hyperpage{131}
+    \subitem {trap.c}, \hyperpage{425}
+  \item {idup}
+    \subitem {defs.h}, \hyperpage{132}
+    \subitem {fs.c}, \hyperpage{189}
+  \item {iget}
+    \subitem {fs.c}, \hyperpage{190}
+  \item {iinit}
+    \subitem {defs.h}, \hyperpage{132}
+    \subitem {fs.c}, \hyperpage{190}
+  \item {ilock}
+    \subitem {defs.h}, \hyperpage{132}
+    \subitem {fs.c}, \hyperpage{191}
+  \item {imcrp}
+    \subitem {mp}, \hyperpage{39}
+  \item {inb}
+    \subitem {x86.h}, \hyperpage{531}
+  \item {INIT}
+    \subitem {lapic.c}, \hyperpage{249}
+  \item {init.c}, \hyperpage{221}
+    \subitem {argv}, \hyperpage{222}
+    \subitem {main}, \hyperpage{221}
+  \item {init.d}, \hyperpage{223}
+  \item {initcode.d}, \hyperpage{223}
+  \item {initlock}
+    \subitem {defs.h}, \hyperpage{133}
+    \subitem {spinlock.c}, \hyperpage{372}
+  \item {initlog}
+    \subitem {defs.h}, \hyperpage{133}
+    \subitem {log.c}, \hyperpage{262}
+  \item {initproc}
+    \subitem {proc.c}, \hyperpage{335}
+  \item {initsleeplock}
+    \subitem {defs.h}, \hyperpage{133}
+    \subitem {sleeplock.c}, \hyperpage{368}
+  \item {inituvm}
+    \subitem {defs.h}, \hyperpage{134}
+    \subitem {vm.c}, \hyperpage{518}
+  \item {ino}
+    \subitem {stat}, \hyperpage{64}
+  \item {inode}, \hyperpage{30}
+    \subitem {addrs}, \hyperpage{30}
+    \subitem {dev}, \hyperpage{30}
+    \subitem {fs.c}, \hyperpage{198}
+    \subitem {inum}, \hyperpage{30}
+    \subitem {lock}, \hyperpage{31}
+    \subitem {major}, \hyperpage{31}
+    \subitem {minor}, \hyperpage{31}
+    \subitem {nlink}, \hyperpage{31}
+    \subitem {ref}, \hyperpage{31}
+    \subitem {size}, \hyperpage{32}
+    \subitem {type}, \hyperpage{32}
+    \subitem {valid}, \hyperpage{32}
+  \item {inodestart}
+    \subitem {superblock}, \hyperpage{66}
+  \item {input}
+    \subitem {console.c}, \hyperpage{102}
+  \item {INPUT\_BUF}
+    \subitem {console.c}, \hyperpage{96}
+  \item {insl}
+    \subitem {x86.h}, \hyperpage{531}
+  \item {install\_trans}
+    \subitem {log.c}, \hyperpage{262}
+  \item {INT\_ACTIVELOW}
+    \subitem {ioapic.c}, \hyperpage{224}
+  \item {INT\_DISABLED}
+    \subitem {ioapic.c}, \hyperpage{224}
+  \item {INT\_LEVEL}
+    \subitem {ioapic.c}, \hyperpage{224}
+  \item {INT\_LOGICAL}
+    \subitem {ioapic.c}, \hyperpage{224}
+  \item {intena}
+    \subitem {cpu}, \hyperpage{15}
+  \item {inum}
+    \subitem {dirent}, \hyperpage{19}
+    \subitem {inode}, \hyperpage{30}
+  \item {IO\_PIC1}
+    \subitem {picirq.c}, \hyperpage{315}
+  \item {IO\_PIC2}
+    \subitem {picirq.c}, \hyperpage{315}
+  \item {IOAPIC}
+    \subitem {ioapic.c}, \hyperpage{224}
+  \item {ioapic}, \hyperpage{32}
+    \subitem {data}, \hyperpage{33}
+    \subitem {ioapic.c}, \hyperpage{226}
+    \subitem {pad}, \hyperpage{33}
+    \subitem {reg}, \hyperpage{33}
+  \item {ioapic.c}, \hyperpage{223}
+    \subitem {INT\_ACTIVELOW}, \hyperpage{224}
+    \subitem {INT\_DISABLED}, \hyperpage{224}
+    \subitem {INT\_LEVEL}, \hyperpage{224}
+    \subitem {INT\_LOGICAL}, \hyperpage{224}
+    \subitem {IOAPIC}, \hyperpage{224}
+    \subitem {ioapic}, \hyperpage{226}
+    \subitem {ioapicenable}, \hyperpage{225}
+    \subitem {ioapicinit}, \hyperpage{225}
+    \subitem {ioapicread}, \hyperpage{226}
+    \subitem {ioapicwrite}, \hyperpage{226}
+    \subitem {REG\_ID}, \hyperpage{225}
+    \subitem {REG\_TABLE}, \hyperpage{225}
+    \subitem {REG\_VER}, \hyperpage{225}
+  \item {ioapic.d}, \hyperpage{228}
+  \item {ioapicenable}
+    \subitem {defs.h}, \hyperpage{134}
+    \subitem {ioapic.c}, \hyperpage{225}
+  \item {ioapicid}
+    \subitem {defs.h}, \hyperpage{160}
+    \subitem {mp.c}, \hyperpage{306}
+  \item {ioapicinit}
+    \subitem {defs.h}, \hyperpage{134}
+    \subitem {ioapic.c}, \hyperpage{225}
+  \item {ioapicread}
+    \subitem {ioapic.c}, \hyperpage{226}
+  \item {ioapicwrite}
+    \subitem {ioapic.c}, \hyperpage{226}
+  \item {iomb}
+    \subitem {taskstate}, \hyperpage{71}
+  \item {ip}
+    \subitem {file}, \hyperpage{25}
+  \item {IPB}
+    \subitem {fs.h}, \hyperpage{207}
+  \item {iput}
+    \subitem {defs.h}, \hyperpage{135}
+    \subitem {fs.c}, \hyperpage{191}
+  \item {iputtest}
+    \subitem {usertests.c}, \hyperpage{476}
+  \item {iref}
+    \subitem {usertests.c}, \hyperpage{477}
+  \item {IRQ\_COM1}
+    \subitem {traps.h}, \hyperpage{430}
+  \item {IRQ\_ERROR}
+    \subitem {traps.h}, \hyperpage{430}
+  \item {IRQ\_IDE}
+    \subitem {traps.h}, \hyperpage{430}
+  \item {IRQ\_KBD}
+    \subitem {traps.h}, \hyperpage{430}
+  \item {IRQ\_SPURIOUS}
+    \subitem {traps.h}, \hyperpage{430}
+  \item {IRQ\_TIMER}
+    \subitem {traps.h}, \hyperpage{431}
+  \item {isdirempty}
+    \subitem {sysfile.c}, \hyperpage{406}
+  \item {ismp}
+    \subitem {defs.h}, \hyperpage{161}
+  \item {itrunc}
+    \subitem {fs.c}, \hyperpage{192}
+  \item {iunlock}
+    \subitem {defs.h}, \hyperpage{135}
+    \subitem {fs.c}, \hyperpage{192}
+  \item {iunlockput}
+    \subitem {defs.h}, \hyperpage{135}
+    \subitem {fs.c}, \hyperpage{193}
+  \item {iupdate}
+    \subitem {defs.h}, \hyperpage{136}
+    \subitem {fs.c}, \hyperpage{193}
+
+  \indexspace
+
+  \item {kalloc}
+    \subitem {defs.h}, \hyperpage{136}
+    \subitem {kalloc.c}, \hyperpage{229}
+  \item {kalloc.c}, \hyperpage{228}
+    \subitem {end}, \hyperpage{230}
+    \subitem {freelist}, \hyperpage{230}
+    \subitem {freerange}, \hyperpage{228}
+    \subitem {kalloc}, \hyperpage{229}
+    \subitem {kfree}, \hyperpage{229}
+    \subitem {kinit1}, \hyperpage{229}
+    \subitem {kinit2}, \hyperpage{230}
+    \subitem {kmem}, \hyperpage{230}
+    \subitem {lock}, \hyperpage{230}
+    \subitem {use\_lock}, \hyperpage{231}
+  \item {kalloc.d}, \hyperpage{232}
+  \item {kbd.c}, \hyperpage{232}
+    \subitem {kbdgetc}, \hyperpage{233}
+    \subitem {kbdintr}, \hyperpage{233}
+  \item {kbd.d}, \hyperpage{234}
+  \item {kbd.h}, \hyperpage{234}
+    \subitem {ALT}, \hyperpage{235}
+    \subitem {C}, \hyperpage{235}
+    \subitem {CAPSLOCK}, \hyperpage{235}
+    \subitem {CTL}, \hyperpage{236}
+    \subitem {ctlmap}, \hyperpage{239}
+    \subitem {E0ESC}, \hyperpage{236}
+    \subitem {KBDATAP}, \hyperpage{236}
+    \subitem {KBS\_DIB}, \hyperpage{236}
+    \subitem {KBSTATP}, \hyperpage{236}
+    \subitem {KEY\_DEL}, \hyperpage{236}
+    \subitem {KEY\_DN}, \hyperpage{237}
+    \subitem {KEY\_END}, \hyperpage{237}
+    \subitem {KEY\_HOME}, \hyperpage{237}
+    \subitem {KEY\_INS}, \hyperpage{237}
+    \subitem {KEY\_LF}, \hyperpage{237}
+    \subitem {KEY\_PGDN}, \hyperpage{237}
+    \subitem {KEY\_PGUP}, \hyperpage{238}
+    \subitem {KEY\_RT}, \hyperpage{238}
+    \subitem {KEY\_UP}, \hyperpage{238}
+    \subitem {NO}, \hyperpage{238}
+    \subitem {normalmap}, \hyperpage{239}
+    \subitem {NUMLOCK}, \hyperpage{238}
+    \subitem {SCROLLLOCK}, \hyperpage{238}
+    \subitem {SHIFT}, \hyperpage{239}
+    \subitem {shiftcode}, \hyperpage{240}
+    \subitem {shiftmap}, \hyperpage{240}
+    \subitem {togglecode}, \hyperpage{241}
+  \item {KBDATAP}
+    \subitem {kbd.h}, \hyperpage{236}
+  \item {kbdgetc}
+    \subitem {kbd.c}, \hyperpage{233}
+  \item {kbdintr}
+    \subitem {defs.h}, \hyperpage{136}
+    \subitem {kbd.c}, \hyperpage{233}
+  \item {KBS\_DIB}
+    \subitem {kbd.h}, \hyperpage{236}
+  \item {KBSTATP}
+    \subitem {kbd.h}, \hyperpage{236}
+  \item {KERNBASE}
+    \subitem {memlayout.h}, \hyperpage{278}
+  \item {KERNLINK}
+    \subitem {memlayout.h}, \hyperpage{279}
+  \item {KEY\_DEL}
+    \subitem {kbd.h}, \hyperpage{236}
+  \item {KEY\_DN}
+    \subitem {kbd.h}, \hyperpage{237}
+  \item {KEY\_END}
+    \subitem {kbd.h}, \hyperpage{237}
+  \item {KEY\_HOME}
+    \subitem {kbd.h}, \hyperpage{237}
+  \item {KEY\_INS}
+    \subitem {kbd.h}, \hyperpage{237}
+  \item {KEY\_LF}
+    \subitem {kbd.h}, \hyperpage{237}
+  \item {KEY\_PGDN}
+    \subitem {kbd.h}, \hyperpage{237}
+  \item {KEY\_PGUP}
+    \subitem {kbd.h}, \hyperpage{238}
+  \item {KEY\_RT}
+    \subitem {kbd.h}, \hyperpage{238}
+  \item {KEY\_UP}
+    \subitem {kbd.h}, \hyperpage{238}
+  \item {kfree}
+    \subitem {defs.h}, \hyperpage{137}
+    \subitem {kalloc.c}, \hyperpage{229}
+  \item {kill}
+    \subitem {defs.h}, \hyperpage{137}
+    \subitem {proc.c}, \hyperpage{329}
+    \subitem {user.h}, \hyperpage{456}
+  \item {kill.c}, \hyperpage{243}
+    \subitem {main}, \hyperpage{243}
+  \item {kill.d}, \hyperpage{244}
+  \item {killed}
+    \subitem {proc}, \hyperpage{50}
+  \item {kinit1}
+    \subitem {defs.h}, \hyperpage{137}
+    \subitem {kalloc.c}, \hyperpage{229}
+  \item {kinit2}
+    \subitem {defs.h}, \hyperpage{138}
+    \subitem {kalloc.c}, \hyperpage{230}
+  \item {kmap}, \hyperpage{33}
+    \subitem {perm}, \hyperpage{34}
+    \subitem {phys\_end}, \hyperpage{34}
+    \subitem {phys\_start}, \hyperpage{34}
+    \subitem {virt}, \hyperpage{34}
+    \subitem {vm.c}, \hyperpage{522}
+  \item {kmem}
+    \subitem {kalloc.c}, \hyperpage{230}
+  \item {kpgdir}
+    \subitem {vm.c}, \hyperpage{523}
+  \item {kstack}
+    \subitem {proc}, \hyperpage{50}
+  \item {KSTACKSIZE}
+    \subitem {param.h}, \hyperpage{313}
+  \item {kvmalloc}
+    \subitem {defs.h}, \hyperpage{138}
+    \subitem {vm.c}, \hyperpage{519}
+
+  \indexspace
+
+  \item {lapic}
+    \subitem {defs.h}, \hyperpage{161}
+    \subitem {lapic.c}, \hyperpage{256}
+  \item {lapic.c}, \hyperpage{244}
+    \subitem {ASSERT}, \hyperpage{245}
+    \subitem {BCAST}, \hyperpage{245}
+    \subitem {BUSY}, \hyperpage{245}
+    \subitem {CMOS\_PORT}, \hyperpage{246}
+    \subitem {cmos\_read}, \hyperpage{252}
+    \subitem {CMOS\_RETURN}, \hyperpage{246}
+    \subitem {CMOS\_STATA}, \hyperpage{246}
+    \subitem {CMOS\_STATB}, \hyperpage{246}
+    \subitem {CMOS\_UIP}, \hyperpage{246}
+    \subitem {cmostime}, \hyperpage{252}
+    \subitem {CONV}, \hyperpage{246}
+    \subitem {DAY}, \hyperpage{247}
+    \subitem {DEASSERT}, \hyperpage{247}
+    \subitem {DELIVS}, \hyperpage{247}
+    \subitem {ENABLE}, \hyperpage{247}
+    \subitem {EOI}, \hyperpage{247}
+    \subitem {ERROR}, \hyperpage{247}
+    \subitem {ESR}, \hyperpage{248}
+    \subitem {fill\_rtcdate}, \hyperpage{253}
+    \subitem {FIXED}, \hyperpage{248}
+    \subitem {HOURS}, \hyperpage{248}
+    \subitem {ICRHI}, \hyperpage{248}
+    \subitem {ICRLO}, \hyperpage{248}
+    \subitem {ID}, \hyperpage{248}
+    \subitem {INIT}, \hyperpage{249}
+    \subitem {lapic}, \hyperpage{256}
+    \subitem {lapiceoi}, \hyperpage{253}
+    \subitem {lapicid}, \hyperpage{253}
+    \subitem {lapicinit}, \hyperpage{254}
+    \subitem {lapicstartap}, \hyperpage{254}
+    \subitem {lapicw}, \hyperpage{255}
+    \subitem {LEVEL}, \hyperpage{249}
+    \subitem {LINT0}, \hyperpage{249}
+    \subitem {LINT1}, \hyperpage{249}
+    \subitem {MASKED}, \hyperpage{249}
+    \subitem {microdelay}, \hyperpage{255}
+    \subitem {MINS}, \hyperpage{249}
+    \subitem {MONTH}, \hyperpage{250}
+    \subitem {PCINT}, \hyperpage{250}
+    \subitem {PERIODIC}, \hyperpage{250}
+    \subitem {SECS}, \hyperpage{250}
+    \subitem {STARTUP}, \hyperpage{250}
+    \subitem {SVR}, \hyperpage{250}
+    \subitem {TCCR}, \hyperpage{251}
+    \subitem {TDCR}, \hyperpage{251}
+    \subitem {TICR}, \hyperpage{251}
+    \subitem {TIMER}, \hyperpage{251}
+    \subitem {TPR}, \hyperpage{251}
+    \subitem {VER}, \hyperpage{251}
+    \subitem {X1}, \hyperpage{252}
+    \subitem {YEAR}, \hyperpage{252}
+  \item {lapic.d}, \hyperpage{259}
+  \item {lapicaddr}
+    \subitem {mpconf}, \hyperpage{41}
+  \item {lapiceoi}
+    \subitem {defs.h}, \hyperpage{138}
+    \subitem {lapic.c}, \hyperpage{253}
+  \item {lapicid}
+    \subitem {defs.h}, \hyperpage{138}
+    \subitem {lapic.c}, \hyperpage{253}
+  \item {lapicinit}
+    \subitem {defs.h}, \hyperpage{139}
+    \subitem {lapic.c}, \hyperpage{254}
+  \item {lapicstartap}
+    \subitem {defs.h}, \hyperpage{139}
+    \subitem {lapic.c}, \hyperpage{254}
+  \item {lapicw}
+    \subitem {lapic.c}, \hyperpage{255}
+  \item {lcr3}
+    \subitem {x86.h}, \hyperpage{531}
+  \item {ldt}
+    \subitem {taskstate}, \hyperpage{71}
+  \item {left}
+    \subitem {listcmd}, \hyperpage{35}
+    \subitem {pipecmd}, \hyperpage{48}
+  \item {length}
+    \subitem {mp}, \hyperpage{39}
+    \subitem {mpconf}, \hyperpage{41}
+  \item {LEVEL}
+    \subitem {lapic.c}, \hyperpage{249}
+  \item {lgdt}
+    \subitem {x86.h}, \hyperpage{532}
+  \item {lh}
+    \subitem {log}, \hyperpage{36}
+  \item {lidt}
+    \subitem {x86.h}, \hyperpage{532}
+  \item {lim\_15\_0}
+    \subitem {segdesc}, \hyperpage{60}
+  \item {lim\_19\_16}
+    \subitem {segdesc}, \hyperpage{60}
+  \item {link}
+    \subitem {taskstate}, \hyperpage{71}
+    \subitem {user.h}, \hyperpage{456}
+  \item {linktest}
+    \subitem {usertests.c}, \hyperpage{477}
+  \item {linkunlink}
+    \subitem {usertests.c}, \hyperpage{478}
+  \item {LINT0}
+    \subitem {lapic.c}, \hyperpage{249}
+  \item {LINT1}
+    \subitem {lapic.c}, \hyperpage{249}
+  \item {LIST}
+    \subitem {sh.c}, \hyperpage{351}
+  \item {listcmd}, \hyperpage{35}
+    \subitem {left}, \hyperpage{35}
+    \subitem {right}, \hyperpage{35}
+    \subitem {sh.c}, \hyperpage{353}
+    \subitem {type}, \hyperpage{35}
+  \item {lk}
+    \subitem {sleeplock}, \hyperpage{61}
+  \item {ln.c}, \hyperpage{259}
+    \subitem {main}, \hyperpage{259}
+  \item {ln.d}, \hyperpage{260}
+  \item {loadgs}
+    \subitem {x86.h}, \hyperpage{532}
+  \item {loaduvm}
+    \subitem {defs.h}, \hyperpage{140}
+    \subitem {vm.c}, \hyperpage{519}
+  \item {lock}
+    \subitem {bio.c}, \hyperpage{85}
+    \subitem {buf}, \hyperpage{11}
+    \subitem {console.c}, \hyperpage{102}
+    \subitem {file.c}, \hyperpage{177}
+    \subitem {fs.c}, \hyperpage{198}
+    \subitem {inode}, \hyperpage{31}
+    \subitem {kalloc.c}, \hyperpage{230}
+    \subitem {log}, \hyperpage{36}
+    \subitem {pipe}, \hyperpage{46}
+    \subitem {proc.c}, \hyperpage{335}
+    \subitem {sysproc.c}, \hyperpage{421}
+  \item {locked}
+    \subitem {sleeplock}, \hyperpage{61}
+    \subitem {spinlock}, \hyperpage{63}
+  \item {locking}
+    \subitem {console.c}, \hyperpage{102}
+  \item {log}, \hyperpage{36}
+    \subitem {committing}, \hyperpage{36}
+    \subitem {dev}, \hyperpage{36}
+    \subitem {lh}, \hyperpage{36}
+    \subitem {lock}, \hyperpage{36}
+    \subitem {log.c}, \hyperpage{264}
+    \subitem {outstanding}, \hyperpage{37}
+    \subitem {size}, \hyperpage{37}
+    \subitem {start}, \hyperpage{37}
+  \item {log.c}, \hyperpage{260}
+    \subitem {begin\_op}, \hyperpage{260}
+    \subitem {commit}, \hyperpage{261}
+    \subitem {end\_op}, \hyperpage{261}
+    \subitem {initlog}, \hyperpage{262}
+    \subitem {install\_trans}, \hyperpage{262}
+    \subitem {log}, \hyperpage{264}
+    \subitem {log\_write}, \hyperpage{262}
+    \subitem {read\_head}, \hyperpage{263}
+    \subitem {recover\_from\_log}, \hyperpage{263}
+    \subitem {write\_head}, \hyperpage{263}
+    \subitem {write\_log}, \hyperpage{264}
+  \item {log.d}, \hyperpage{267}
+  \item {log\_write}
+    \subitem {defs.h}, \hyperpage{140}
+    \subitem {log.c}, \hyperpage{262}
+  \item {logheader}, \hyperpage{37}
+    \subitem {block}, \hyperpage{38}
+    \subitem {n}, \hyperpage{38}
+  \item {LOGSIZE}
+    \subitem {param.h}, \hyperpage{313}
+  \item {logstart}
+    \subitem {superblock}, \hyperpage{66}
+  \item {ls}
+    \subitem {ls.c}, \hyperpage{268}
+  \item {ls.c}, \hyperpage{268}
+    \subitem {fmtname}, \hyperpage{268}
+    \subitem {ls}, \hyperpage{268}
+    \subitem {main}, \hyperpage{269}
+  \item {ls.d}, \hyperpage{271}
+  \item {ltr}
+    \subitem {x86.h}, \hyperpage{533}
+
+  \indexspace
+
+  \item {machine}
+    \subitem {elfhdr}, \hyperpage{21}
+  \item {magic}
+    \subitem {elfhdr}, \hyperpage{21}
+  \item {main}
+    \subitem {cat.c}, \hyperpage{93}
+    \subitem {echo.c}, \hyperpage{164}
+    \subitem {exit.c}, \hyperpage{171}
+    \subitem {foo.c}, \hyperpage{181}
+    \subitem {forktest.c}, \hyperpage{183}
+    \subitem {grep.c}, \hyperpage{210}
+    \subitem {init.c}, \hyperpage{221}
+    \subitem {kill.c}, \hyperpage{243}
+    \subitem {ln.c}, \hyperpage{259}
+    \subitem {ls.c}, \hyperpage{269}
+    \subitem {mkdir.c}, \hyperpage{280}
+    \subitem {mkfs.c}, \hyperpage{284}
+    \subitem {nice.c}, \hyperpage{311}
+    \subitem {ps.c}, \hyperpage{345}
+    \subitem {pstree.c}, \hyperpage{347}
+    \subitem {rm.c}, \hyperpage{348}
+    \subitem {sh.c}, \hyperpage{354}
+    \subitem {shutdown.c}, \hyperpage{367}
+    \subitem {stressfs.c}, \hyperpage{377}
+    \subitem {usertests.c}, \hyperpage{479}
+    \subitem {wc.c}, \hyperpage{528}
+    \subitem {zombie.c}, \hyperpage{538}
+  \item {main.c}, \hyperpage{271}
+    \subitem {\_\_attribute\_\_}, \hyperpage{271}
+    \subitem {entrypgdir}, \hyperpage{273}
+    \subitem {mpenter}, \hyperpage{271}
+    \subitem {mpmain}, \hyperpage{272}
+    \subitem {startothers}, \hyperpage{272}
+  \item {main.d}, \hyperpage{275}
+  \item {major}
+    \subitem {dinode}, \hyperpage{18}
+    \subitem {inode}, \hyperpage{31}
+  \item {malloc}
+    \subitem {umalloc.c}, \hyperpage{446}
+    \subitem {user.h}, \hyperpage{457}
+  \item {mappages}
+    \subitem {vm.c}, \hyperpage{519}
+  \item {MASKED}
+    \subitem {lapic.c}, \hyperpage{249}
+  \item {match}
+    \subitem {grep.c}, \hyperpage{211}
+  \item {matchhere}
+    \subitem {grep.c}, \hyperpage{211}
+  \item {matchstar}
+    \subitem {grep.c}, \hyperpage{211}
+  \item {MAXARG}
+    \subitem {param.h}, \hyperpage{313}
+  \item {MAXARGS}
+    \subitem {sh.c}, \hyperpage{351}
+  \item {MAXFILE}
+    \subitem {fs.h}, \hyperpage{208}
+  \item {MAXOPBLOCKS}
+    \subitem {param.h}, \hyperpage{313}
+  \item {MAXPROC}
+    \subitem {pstree.c}, \hyperpage{346}
+  \item {mem}
+    \subitem {usertests.c}, \hyperpage{480}
+  \item {memcmp}
+    \subitem {defs.h}, \hyperpage{141}
+    \subitem {string.c}, \hyperpage{379}
+  \item {memcpy}
+    \subitem {string.c}, \hyperpage{379}
+  \item {memdisk}
+    \subitem {memide.c}, \hyperpage{277}
+  \item {memide.c}, \hyperpage{275}
+    \subitem {\_binary\_fs\_img\_size}, \hyperpage{276}
+    \subitem {\_binary\_fs\_img\_start}, \hyperpage{276}
+    \subitem {disksize}, \hyperpage{277}
+    \subitem {ideinit}, \hyperpage{275}
+    \subitem {ideintr}, \hyperpage{275}
+    \subitem {iderw}, \hyperpage{276}
+    \subitem {memdisk}, \hyperpage{277}
+  \item {memlayout.h}, \hyperpage{278}
+    \subitem {DEVSPACE}, \hyperpage{278}
+    \subitem {EXTMEM}, \hyperpage{278}
+    \subitem {KERNBASE}, \hyperpage{278}
+    \subitem {KERNLINK}, \hyperpage{279}
+    \subitem {P2V}, \hyperpage{279}
+    \subitem {P2V\_WO}, \hyperpage{279}
+    \subitem {PHYSTOP}, \hyperpage{279}
+    \subitem {V2P}, \hyperpage{279}
+    \subitem {V2P\_WO}, \hyperpage{279}
+  \item {memmove}
+    \subitem {defs.h}, \hyperpage{141}
+    \subitem {string.c}, \hyperpage{379}
+    \subitem {ulib.c}, \hyperpage{441}
+    \subitem {user.h}, \hyperpage{457}
+  \item {memset}
+    \subitem {defs.h}, \hyperpage{142}
+    \subitem {string.c}, \hyperpage{380}
+    \subitem {ulib.c}, \hyperpage{441}
+    \subitem {user.h}, \hyperpage{457}
+  \item {memsz}
+    \subitem {proghdr}, \hyperpage{53}
+  \item {microdelay}
+    \subitem {defs.h}, \hyperpage{142}
+    \subitem {lapic.c}, \hyperpage{255}
+  \item {min}
+    \subitem {fs.c}, \hyperpage{186}
+    \subitem {mkfs.c}, \hyperpage{282}
+  \item {minor}
+    \subitem {dinode}, \hyperpage{18}
+    \subitem {inode}, \hyperpage{31}
+  \item {MINS}
+    \subitem {lapic.c}, \hyperpage{249}
+  \item {minute}
+    \subitem {rtcdate}, \hyperpage{57}
+  \item {mkdir}
+    \subitem {user.h}, \hyperpage{458}
+  \item {mkdir.c}, \hyperpage{280}
+    \subitem {main}, \hyperpage{280}
+  \item {mkdir.d}, \hyperpage{281}
+  \item {mkfs.c}, \hyperpage{281}
+    \subitem {balloc}, \hyperpage{283}
+    \subitem {freeblock}, \hyperpage{287}
+    \subitem {freeinode}, \hyperpage{288}
+    \subitem {fsfd}, \hyperpage{288}
+    \subitem {ialloc}, \hyperpage{283}
+    \subitem {iappend}, \hyperpage{283}
+    \subitem {main}, \hyperpage{284}
+    \subitem {min}, \hyperpage{282}
+    \subitem {nbitmap}, \hyperpage{288}
+    \subitem {nblocks}, \hyperpage{288}
+    \subitem {ninodeblocks}, \hyperpage{288}
+    \subitem {NINODES}, \hyperpage{282}
+    \subitem {nlog}, \hyperpage{289}
+    \subitem {nmeta}, \hyperpage{289}
+    \subitem {rinode}, \hyperpage{286}
+    \subitem {rsect}, \hyperpage{286}
+    \subitem {sb}, \hyperpage{289}
+    \subitem {stat}, \hyperpage{282}
+    \subitem {static\_assert}, \hyperpage{283}
+    \subitem {winode}, \hyperpage{286}
+    \subitem {wsect}, \hyperpage{286}
+    \subitem {xint}, \hyperpage{287}
+    \subitem {xshort}, \hyperpage{287}
+    \subitem {zeroes}, \hyperpage{289}
+  \item {mknod}
+    \subitem {user.h}, \hyperpage{458}
+  \item {mmu.h}, \hyperpage{293}
+    \subitem {CR0\_PE}, \hyperpage{294}
+    \subitem {CR0\_PG}, \hyperpage{294}
+    \subitem {CR0\_WP}, \hyperpage{294}
+    \subitem {CR4\_PSE}, \hyperpage{295}
+    \subitem {DPL\_USER}, \hyperpage{295}
+    \subitem {FL\_IF}, \hyperpage{295}
+    \subitem {NPDENTRIES}, \hyperpage{295}
+    \subitem {NPTENTRIES}, \hyperpage{295}
+    \subitem {NSEGS}, \hyperpage{295}
+    \subitem {PDX}, \hyperpage{296}
+    \subitem {PDXSHIFT}, \hyperpage{296}
+    \subitem {PGADDR}, \hyperpage{296}
+    \subitem {PGROUNDDOWN}, \hyperpage{296}
+    \subitem {PGROUNDUP}, \hyperpage{296}
+    \subitem {PGSIZE}, \hyperpage{296}
+    \subitem {PTE\_ADDR}, \hyperpage{297}
+    \subitem {PTE\_FLAGS}, \hyperpage{297}
+    \subitem {PTE\_P}, \hyperpage{297}
+    \subitem {PTE\_PS}, \hyperpage{297}
+    \subitem {pte\_t}, \hyperpage{301}
+    \subitem {PTE\_U}, \hyperpage{297}
+    \subitem {PTE\_W}, \hyperpage{297}
+    \subitem {PTX}, \hyperpage{298}
+    \subitem {PTXSHIFT}, \hyperpage{298}
+    \subitem {SEG}, \hyperpage{298}
+    \subitem {SEG16}, \hyperpage{298}
+    \subitem {SEG\_KCODE}, \hyperpage{298}
+    \subitem {SEG\_KDATA}, \hyperpage{299}
+    \subitem {SEG\_TSS}, \hyperpage{299}
+    \subitem {SEG\_UCODE}, \hyperpage{299}
+    \subitem {SEG\_UDATA}, \hyperpage{299}
+    \subitem {SETGATE}, \hyperpage{299}
+    \subitem {STA\_R}, \hyperpage{300}
+    \subitem {STA\_W}, \hyperpage{300}
+    \subitem {STA\_X}, \hyperpage{300}
+    \subitem {STS\_IG32}, \hyperpage{300}
+    \subitem {STS\_T32A}, \hyperpage{300}
+    \subitem {STS\_TG32}, \hyperpage{301}
+  \item {mode}
+    \subitem {redircmd}, \hyperpage{55}
+  \item {MONTH}
+    \subitem {lapic.c}, \hyperpage{250}
+  \item {month}
+    \subitem {rtcdate}, \hyperpage{57}
+  \item {morecore}
+    \subitem {umalloc.c}, \hyperpage{447}
+  \item {mp}, \hyperpage{38}
+    \subitem {checksum}, \hyperpage{39}
+    \subitem {imcrp}, \hyperpage{39}
+    \subitem {length}, \hyperpage{39}
+    \subitem {physaddr}, \hyperpage{39}
+    \subitem {reserved}, \hyperpage{39}
+    \subitem {signature}, \hyperpage{40}
+    \subitem {specrev}, \hyperpage{40}
+    \subitem {type}, \hyperpage{40}
+  \item {mp.c}, \hyperpage{303}
+    \subitem {cpus}, \hyperpage{306}
+    \subitem {ioapicid}, \hyperpage{306}
+    \subitem {mpconfig}, \hyperpage{304}
+    \subitem {mpinit}, \hyperpage{304}
+    \subitem {mpsearch}, \hyperpage{305}
+    \subitem {mpsearch1}, \hyperpage{305}
+    \subitem {ncpu}, \hyperpage{306}
+    \subitem {sum}, \hyperpage{306}
+  \item {mp.d}, \hyperpage{308}
+  \item {mp.h}, \hyperpage{309}
+    \subitem {MPBOOT}, \hyperpage{309}
+    \subitem {MPBUS}, \hyperpage{309}
+    \subitem {MPIOAPIC}, \hyperpage{309}
+    \subitem {MPIOINTR}, \hyperpage{309}
+    \subitem {MPLINTR}, \hyperpage{310}
+    \subitem {MPPROC}, \hyperpage{310}
+  \item {MPBOOT}
+    \subitem {mp.h}, \hyperpage{309}
+  \item {MPBUS}
+    \subitem {mp.h}, \hyperpage{309}
+  \item {mpconf}, \hyperpage{40}
+    \subitem {checksum}, \hyperpage{41}
+    \subitem {entry}, \hyperpage{41}
+    \subitem {lapicaddr}, \hyperpage{41}
+    \subitem {length}, \hyperpage{41}
+    \subitem {oemlength}, \hyperpage{41}
+    \subitem {oemtable}, \hyperpage{42}
+    \subitem {product}, \hyperpage{42}
+    \subitem {reserved}, \hyperpage{42}
+    \subitem {signature}, \hyperpage{42}
+    \subitem {version}, \hyperpage{42}
+    \subitem {xchecksum}, \hyperpage{42}
+    \subitem {xlength}, \hyperpage{43}
+  \item {mpconfig}
+    \subitem {mp.c}, \hyperpage{304}
+  \item {mpenter}
+    \subitem {main.c}, \hyperpage{271}
+  \item {mpinit}
+    \subitem {defs.h}, \hyperpage{142}
+    \subitem {mp.c}, \hyperpage{304}
+  \item {MPIOAPIC}
+    \subitem {mp.h}, \hyperpage{309}
+  \item {mpioapic}, \hyperpage{43}
+    \subitem {addr}, \hyperpage{43}
+    \subitem {apicno}, \hyperpage{43}
+    \subitem {flags}, \hyperpage{44}
+    \subitem {type}, \hyperpage{44}
+    \subitem {version}, \hyperpage{44}
+  \item {MPIOINTR}
+    \subitem {mp.h}, \hyperpage{309}
+  \item {MPLINTR}
+    \subitem {mp.h}, \hyperpage{310}
+  \item {mpmain}
+    \subitem {main.c}, \hyperpage{272}
+  \item {MPPROC}
+    \subitem {mp.h}, \hyperpage{310}
+  \item {mpproc}, \hyperpage{44}
+    \subitem {apicid}, \hyperpage{45}
+    \subitem {feature}, \hyperpage{45}
+    \subitem {flags}, \hyperpage{45}
+    \subitem {reserved}, \hyperpage{45}
+    \subitem {signature}, \hyperpage{45}
+    \subitem {type}, \hyperpage{45}
+    \subitem {version}, \hyperpage{46}
+  \item {mpsearch}
+    \subitem {mp.c}, \hyperpage{305}
+  \item {mpsearch1}
+    \subitem {mp.c}, \hyperpage{305}
+  \item {mycpu}
+    \subitem {defs.h}, \hyperpage{143}
+    \subitem {proc.c}, \hyperpage{330}
+  \item {myproc}
+    \subitem {defs.h}, \hyperpage{143}
+    \subitem {proc.c}, \hyperpage{330}
+
+  \indexspace
+
+  \item {N}
+    \subitem {forktest.c}, \hyperpage{182}
+  \item {n}
+    \subitem {logheader}, \hyperpage{38}
+  \item {name}
+    \subitem {dirent}, \hyperpage{19}
+    \subitem {proc}, \hyperpage{50}
+    \subitem {sleeplock}, \hyperpage{62}
+    \subitem {spinlock}, \hyperpage{63}
+    \subitem {uproc}, \hyperpage{80}
+    \subitem {usertests.c}, \hyperpage{492}
+  \item {namecmp}
+    \subitem {defs.h}, \hyperpage{144}
+    \subitem {fs.c}, \hyperpage{193}
+  \item {namei}
+    \subitem {defs.h}, \hyperpage{144}
+    \subitem {fs.c}, \hyperpage{194}
+  \item {nameiparent}
+    \subitem {defs.h}, \hyperpage{144}
+    \subitem {fs.c}, \hyperpage{194}
+  \item {namex}
+    \subitem {fs.c}, \hyperpage{194}
+  \item {nbitmap}
+    \subitem {mkfs.c}, \hyperpage{288}
+  \item {nblocks}
+    \subitem {mkfs.c}, \hyperpage{288}
+    \subitem {superblock}, \hyperpage{66}
+  \item {NBUF}
+    \subitem {param.h}, \hyperpage{313}
+  \item {ncli}
+    \subitem {cpu}, \hyperpage{15}
+  \item {NCPU}
+    \subitem {param.h}, \hyperpage{313}
+  \item {ncpu}
+    \subitem {mp.c}, \hyperpage{306}
+    \subitem {proc.h}, \hyperpage{344}
+  \item {NDEV}
+    \subitem {param.h}, \hyperpage{314}
+  \item {NDIRECT}
+    \subitem {fs.h}, \hyperpage{208}
+  \item {NELEM}
+    \subitem {defs.h}, \hyperpage{110}
+  \item {next}
+    \subitem {buf}, \hyperpage{11}
+    \subitem {run}, \hyperpage{58}
+  \item {nextpid}
+    \subitem {proc.c}, \hyperpage{335}
+  \item {NFILE}
+    \subitem {param.h}, \hyperpage{314}
+  \item {nice.c}, \hyperpage{311}
+    \subitem {main}, \hyperpage{311}
+  \item {nice.d}, \hyperpage{312}
+  \item {NINDIRECT}
+    \subitem {fs.h}, \hyperpage{208}
+  \item {NINODE}
+    \subitem {param.h}, \hyperpage{314}
+  \item {ninodeblocks}
+    \subitem {mkfs.c}, \hyperpage{288}
+  \item {NINODES}
+    \subitem {mkfs.c}, \hyperpage{282}
+  \item {ninodes}
+    \subitem {superblock}, \hyperpage{66}
+  \item {nlink}
+    \subitem {dinode}, \hyperpage{18}
+    \subitem {inode}, \hyperpage{31}
+    \subitem {stat}, \hyperpage{64}
+  \item {nlog}
+    \subitem {mkfs.c}, \hyperpage{289}
+    \subitem {superblock}, \hyperpage{66}
+  \item {nmeta}
+    \subitem {mkfs.c}, \hyperpage{289}
+  \item {NO}
+    \subitem {kbd.h}, \hyperpage{238}
+  \item {NOFILE}
+    \subitem {param.h}, \hyperpage{314}
+  \item {normalmap}
+    \subitem {kbd.h}, \hyperpage{239}
+  \item {NPDENTRIES}
+    \subitem {mmu.h}, \hyperpage{295}
+  \item {NPROC}
+    \subitem {param.h}, \hyperpage{314}
+  \item {NPTENTRIES}
+    \subitem {mmu.h}, \hyperpage{295}
+  \item {nread}
+    \subitem {pipe}, \hyperpage{47}
+  \item {NSEGS}
+    \subitem {mmu.h}, \hyperpage{295}
+  \item {nulterminate}
+    \subitem {sh.c}, \hyperpage{354}
+  \item {NUMLOCK}
+    \subitem {kbd.h}, \hyperpage{238}
+  \item {nwrite}
+    \subitem {pipe}, \hyperpage{47}
+
+  \indexspace
+
+  \item {O\_CREATE}
+    \subitem {fcntl.h}, \hyperpage{172}
+  \item {O\_RDONLY}
+    \subitem {fcntl.h}, \hyperpage{172}
+  \item {O\_RDWR}
+    \subitem {fcntl.h}, \hyperpage{172}
+  \item {O\_WRONLY}
+    \subitem {fcntl.h}, \hyperpage{172}
+  \item {oemlength}
+    \subitem {mpconf}, \hyperpage{41}
+  \item {oemtable}
+    \subitem {mpconf}, \hyperpage{42}
+  \item {oesp}
+    \subitem {trapframe}, \hyperpage{78}
+  \item {off}
+    \subitem {file}, \hyperpage{25}
+    \subitem {proghdr}, \hyperpage{53}
+  \item {off\_15\_0}
+    \subitem {gatedesc}, \hyperpage{27}
+  \item {off\_31\_16}
+    \subitem {gatedesc}, \hyperpage{27}
+  \item {ofile}
+    \subitem {proc}, \hyperpage{50}
+  \item {open}
+    \subitem {user.h}, \hyperpage{458}
+  \item {openiputtest}
+    \subitem {usertests.c}, \hyperpage{480}
+  \item {opentest}
+    \subitem {usertests.c}, \hyperpage{481}
+  \item {outb}
+    \subitem {x86.h}, \hyperpage{533}
+  \item {outsl}
+    \subitem {x86.h}, \hyperpage{533}
+  \item {outstanding}
+    \subitem {log}, \hyperpage{37}
+  \item {outw}
+    \subitem {x86.h}, \hyperpage{533}
+
+  \indexspace
+
+  \item {p}
+    \subitem {gatedesc}, \hyperpage{27}
+    \subitem {segdesc}, \hyperpage{60}
+  \item {P2V}
+    \subitem {memlayout.h}, \hyperpage{279}
+  \item {P2V\_WO}
+    \subitem {memlayout.h}, \hyperpage{279}
+  \item {pad}
+    \subitem {ioapic}, \hyperpage{33}
+  \item {padding1}
+    \subitem {taskstate}, \hyperpage{72}
+    \subitem {trapframe}, \hyperpage{78}
+  \item {padding10}
+    \subitem {taskstate}, \hyperpage{72}
+  \item {padding2}
+    \subitem {taskstate}, \hyperpage{72}
+    \subitem {trapframe}, \hyperpage{78}
+  \item {padding3}
+    \subitem {taskstate}, \hyperpage{72}
+    \subitem {trapframe}, \hyperpage{79}
+  \item {padding4}
+    \subitem {taskstate}, \hyperpage{72}
+    \subitem {trapframe}, \hyperpage{79}
+  \item {padding5}
+    \subitem {taskstate}, \hyperpage{72}
+    \subitem {trapframe}, \hyperpage{79}
+  \item {padding6}
+    \subitem {taskstate}, \hyperpage{73}
+    \subitem {trapframe}, \hyperpage{79}
+  \item {padding7}
+    \subitem {taskstate}, \hyperpage{73}
+  \item {padding8}
+    \subitem {taskstate}, \hyperpage{73}
+  \item {padding9}
+    \subitem {taskstate}, \hyperpage{73}
+  \item {paddr}
+    \subitem {proghdr}, \hyperpage{53}
+  \item {panic}
+    \subitem {console.c}, \hyperpage{100}
+    \subitem {defs.h}, \hyperpage{144}
+    \subitem {sh.c}, \hyperpage{355}
+  \item {panicked}
+    \subitem {console.c}, \hyperpage{102}
+  \item {param.h}, \hyperpage{312}
+    \subitem {FSSIZE}, \hyperpage{312}
+    \subitem {KSTACKSIZE}, \hyperpage{313}
+    \subitem {LOGSIZE}, \hyperpage{313}
+    \subitem {MAXARG}, \hyperpage{313}
+    \subitem {MAXOPBLOCKS}, \hyperpage{313}
+    \subitem {NBUF}, \hyperpage{313}
+    \subitem {NCPU}, \hyperpage{313}
+    \subitem {NDEV}, \hyperpage{314}
+    \subitem {NFILE}, \hyperpage{314}
+    \subitem {NINODE}, \hyperpage{314}
+    \subitem {NOFILE}, \hyperpage{314}
+    \subitem {NPROC}, \hyperpage{314}
+    \subitem {ROOTDEV}, \hyperpage{314}
+  \item {parent}
+    \subitem {proc}, \hyperpage{50}
+  \item {parseblock}
+    \subitem {sh.c}, \hyperpage{355}
+  \item {parsecmd}
+    \subitem {sh.c}, \hyperpage{355}
+  \item {parseexec}
+    \subitem {sh.c}, \hyperpage{356}
+  \item {parseline}
+    \subitem {sh.c}, \hyperpage{356}
+  \item {parsepipe}
+    \subitem {sh.c}, \hyperpage{357}
+  \item {parseredirs}
+    \subitem {sh.c}, \hyperpage{357}
+  \item {PCINT}
+    \subitem {lapic.c}, \hyperpage{250}
+  \item {pcs}
+    \subitem {spinlock}, \hyperpage{63}
+  \item {pde\_t}
+    \subitem {types.h}, \hyperpage{435}
+  \item {PDX}
+    \subitem {mmu.h}, \hyperpage{296}
+  \item {PDXSHIFT}
+    \subitem {mmu.h}, \hyperpage{296}
+  \item {peek}
+    \subitem {sh.c}, \hyperpage{358}
+  \item {PERIODIC}
+    \subitem {lapic.c}, \hyperpage{250}
+  \item {perm}
+    \subitem {kmap}, \hyperpage{34}
+  \item {PGADDR}
+    \subitem {mmu.h}, \hyperpage{296}
+  \item {pgdir}
+    \subitem {proc}, \hyperpage{51}
+  \item {PGROUNDDOWN}
+    \subitem {mmu.h}, \hyperpage{296}
+  \item {PGROUNDUP}
+    \subitem {mmu.h}, \hyperpage{296}
+  \item {PGSIZE}
+    \subitem {mmu.h}, \hyperpage{296}
+  \item {phentsize}
+    \subitem {elfhdr}, \hyperpage{21}
+  \item {phnum}
+    \subitem {elfhdr}, \hyperpage{21}
+  \item {phoff}
+    \subitem {elfhdr}, \hyperpage{21}
+  \item {phys\_end}
+    \subitem {kmap}, \hyperpage{34}
+  \item {phys\_start}
+    \subitem {kmap}, \hyperpage{34}
+  \item {physaddr}
+    \subitem {mp}, \hyperpage{39}
+  \item {PHYSTOP}
+    \subitem {memlayout.h}, \hyperpage{279}
+  \item {picenable}
+    \subitem {defs.h}, \hyperpage{145}
+  \item {picinit}
+    \subitem {defs.h}, \hyperpage{145}
+    \subitem {picirq.c}, \hyperpage{316}
+  \item {picirq.c}, \hyperpage{315}
+    \subitem {IO\_PIC1}, \hyperpage{315}
+    \subitem {IO\_PIC2}, \hyperpage{315}
+    \subitem {picinit}, \hyperpage{316}
+  \item {picirq.d}, \hyperpage{316}
+  \item {pid}
+    \subitem {proc}, \hyperpage{51}
+    \subitem {sleeplock}, \hyperpage{62}
+    \subitem {uproc}, \hyperpage{80}
+  \item {pinit}
+    \subitem {defs.h}, \hyperpage{145}
+    \subitem {proc.c}, \hyperpage{330}
+  \item {PIPE}
+    \subitem {sh.c}, \hyperpage{351}
+  \item {pipe}, \hyperpage{46}
+    \subitem {data}, \hyperpage{46}
+    \subitem {file}, \hyperpage{25}
+    \subitem {lock}, \hyperpage{46}
+    \subitem {nread}, \hyperpage{47}
+    \subitem {nwrite}, \hyperpage{47}
+    \subitem {readopen}, \hyperpage{47}
+    \subitem {user.h}, \hyperpage{458}
+    \subitem {writeopen}, \hyperpage{47}
+  \item {pipe.c}, \hyperpage{317}
+    \subitem {pipealloc}, \hyperpage{317}
+    \subitem {pipeclose}, \hyperpage{318}
+    \subitem {piperead}, \hyperpage{318}
+    \subitem {PIPESIZE}, \hyperpage{317}
+    \subitem {pipewrite}, \hyperpage{319}
+  \item {pipe.d}, \hyperpage{321}
+  \item {pipe1}
+    \subitem {usertests.c}, \hyperpage{481}
+  \item {pipealloc}
+    \subitem {defs.h}, \hyperpage{145}
+    \subitem {pipe.c}, \hyperpage{317}
+  \item {pipeclose}
+    \subitem {defs.h}, \hyperpage{146}
+    \subitem {pipe.c}, \hyperpage{318}
+  \item {pipecmd}, \hyperpage{48}
+    \subitem {left}, \hyperpage{48}
+    \subitem {right}, \hyperpage{48}
+    \subitem {sh.c}, \hyperpage{358}
+    \subitem {type}, \hyperpage{48}
+  \item {piperead}
+    \subitem {defs.h}, \hyperpage{146}
+    \subitem {pipe.c}, \hyperpage{318}
+  \item {PIPESIZE}
+    \subitem {pipe.c}, \hyperpage{317}
+  \item {pipewrite}
+    \subitem {defs.h}, \hyperpage{147}
+    \subitem {pipe.c}, \hyperpage{319}
+  \item {popcli}
+    \subitem {defs.h}, \hyperpage{147}
+    \subitem {spinlock.c}, \hyperpage{372}
+  \item {ppid}
+    \subitem {uproc}, \hyperpage{80}
+  \item {preempt}
+    \subitem {usertests.c}, \hyperpage{482}
+  \item {prev}
+    \subitem {buf}, \hyperpage{11}
+  \item {printf}
+    \subitem {forktest.c}, \hyperpage{183}
+    \subitem {printf.c}, \hyperpage{322}
+    \subitem {user.h}, \hyperpage{459}
+  \item {printf.c}, \hyperpage{321}
+    \subitem {printf}, \hyperpage{322}
+    \subitem {printint}, \hyperpage{322}
+    \subitem {putc}, \hyperpage{323}
+  \item {printf.d}, \hyperpage{324}
+  \item {printint}
+    \subitem {console.c}, \hyperpage{101}
+    \subitem {printf.c}, \hyperpage{322}
+  \item {priority}
+    \subitem {proc}, \hyperpage{51}
+  \item {proc}, \hyperpage{49}
+    \subitem {chan}, \hyperpage{49}
+    \subitem {context}, \hyperpage{49}
+    \subitem {cpu}, \hyperpage{15}
+    \subitem {cwd}, \hyperpage{49}
+    \subitem {killed}, \hyperpage{50}
+    \subitem {kstack}, \hyperpage{50}
+    \subitem {name}, \hyperpage{50}
+    \subitem {ofile}, \hyperpage{50}
+    \subitem {parent}, \hyperpage{50}
+    \subitem {pgdir}, \hyperpage{51}
+    \subitem {pid}, \hyperpage{51}
+    \subitem {priority}, \hyperpage{51}
+    \subitem {proc.c}, \hyperpage{336}
+    \subitem {state}, \hyperpage{51}
+    \subitem {sysproc.c}, \hyperpage{422}
+    \subitem {sz}, \hyperpage{51}
+    \subitem {tf}, \hyperpage{52}
+  \item {proc.c}, \hyperpage{324}
+    \subitem {allocproc}, \hyperpage{325}
+    \subitem {chpr}, \hyperpage{326}
+    \subitem {cps}, \hyperpage{326}
+    \subitem {cpuid}, \hyperpage{327}
+    \subitem {exit}, \hyperpage{327}
+    \subitem {fork}, \hyperpage{328}
+    \subitem {forkret}, \hyperpage{329}
+    \subitem {growproc}, \hyperpage{329}
+    \subitem {initproc}, \hyperpage{335}
+    \subitem {kill}, \hyperpage{329}
+    \subitem {lock}, \hyperpage{335}
+    \subitem {mycpu}, \hyperpage{330}
+    \subitem {myproc}, \hyperpage{330}
+    \subitem {nextpid}, \hyperpage{335}
+    \subitem {pinit}, \hyperpage{330}
+    \subitem {proc}, \hyperpage{336}
+    \subitem {procdump}, \hyperpage{331}
+    \subitem {ptable}, \hyperpage{336}
+    \subitem {sched}, \hyperpage{331}
+    \subitem {scheduler}, \hyperpage{331}
+    \subitem {sleep}, \hyperpage{332}
+    \subitem {trapret}, \hyperpage{333}
+    \subitem {userinit}, \hyperpage{333}
+    \subitem {wait}, \hyperpage{333}
+    \subitem {wakeup}, \hyperpage{334}
+    \subitem {wakeup1}, \hyperpage{334}
+    \subitem {yield}, \hyperpage{335}
+  \item {proc.d}, \hyperpage{343}
+  \item {proc.h}, \hyperpage{343}
+    \subitem {cpus}, \hyperpage{344}
+    \subitem {EMBRYO}, \hyperpage{344}
+    \subitem {ncpu}, \hyperpage{344}
+    \subitem {procstate}, \hyperpage{343}
+    \subitem {RUNNABLE}, \hyperpage{344}
+    \subitem {RUNNING}, \hyperpage{344}
+    \subitem {SLEEPING}, \hyperpage{344}
+    \subitem {UNUSED}, \hyperpage{344}
+    \subitem {ZOMBIE}, \hyperpage{344}
+  \item {procdump}
+    \subitem {defs.h}, \hyperpage{148}
+    \subitem {proc.c}, \hyperpage{331}
+  \item {procstate}
+    \subitem {proc.h}, \hyperpage{343}
+  \item {product}
+    \subitem {mpconf}, \hyperpage{42}
+  \item {proghdr}, \hyperpage{52}
+    \subitem {align}, \hyperpage{52}
+    \subitem {filesz}, \hyperpage{53}
+    \subitem {flags}, \hyperpage{53}
+    \subitem {memsz}, \hyperpage{53}
+    \subitem {off}, \hyperpage{53}
+    \subitem {paddr}, \hyperpage{53}
+    \subitem {type}, \hyperpage{54}
+    \subitem {vaddr}, \hyperpage{54}
+  \item {ps.c}, \hyperpage{345}
+    \subitem {main}, \hyperpage{345}
+  \item {ps.d}, \hyperpage{346}
+  \item {pstree.c}, \hyperpage{346}
+    \subitem {main}, \hyperpage{347}
+    \subitem {MAXPROC}, \hyperpage{346}
+  \item {pstree.d}, \hyperpage{348}
+  \item {ptable}
+    \subitem {proc.c}, \hyperpage{336}
+    \subitem {sysproc.c}, \hyperpage{422}
+  \item {PTE\_ADDR}
+    \subitem {mmu.h}, \hyperpage{297}
+  \item {PTE\_FLAGS}
+    \subitem {mmu.h}, \hyperpage{297}
+  \item {PTE\_P}
+    \subitem {mmu.h}, \hyperpage{297}
+  \item {PTE\_PS}
+    \subitem {mmu.h}, \hyperpage{297}
+  \item {pte\_t}
+    \subitem {mmu.h}, \hyperpage{301}
+  \item {PTE\_U}
+    \subitem {mmu.h}, \hyperpage{297}
+  \item {PTE\_W}
+    \subitem {mmu.h}, \hyperpage{297}
+  \item {ptr}
+    \subitem {header}, \hyperpage{29}
+  \item {PTX}
+    \subitem {mmu.h}, \hyperpage{298}
+  \item {PTXSHIFT}
+    \subitem {mmu.h}, \hyperpage{298}
+  \item {pushcli}
+    \subitem {defs.h}, \hyperpage{148}
+    \subitem {spinlock.c}, \hyperpage{372}
+  \item {putc}
+    \subitem {printf.c}, \hyperpage{323}
+
+  \indexspace
+
+  \item {qnext}
+    \subitem {buf}, \hyperpage{11}
+
+  \indexspace
+
+  \item {r}
+    \subitem {console.c}, \hyperpage{103}
+  \item {rand}
+    \subitem {usertests.c}, \hyperpage{483}
+  \item {randstate}
+    \subitem {usertests.c}, \hyperpage{493}
+  \item {rcr2}
+    \subitem {x86.h}, \hyperpage{534}
+  \item {read}
+    \subitem {devsw}, \hyperpage{17}
+    \subitem {user.h}, \hyperpage{459}
+  \item {read\_head}
+    \subitem {log.c}, \hyperpage{263}
+  \item {readable}
+    \subitem {file}, \hyperpage{25}
+  \item {readeflags}
+    \subitem {x86.h}, \hyperpage{534}
+  \item {readi}
+    \subitem {defs.h}, \hyperpage{148}
+    \subitem {fs.c}, \hyperpage{195}
+  \item {README.md}, \hyperpage{348}
+  \item {readopen}
+    \subitem {pipe}, \hyperpage{47}
+  \item {readsb}
+    \subitem {defs.h}, \hyperpage{149}
+    \subitem {fs.c}, \hyperpage{196}
+  \item {readsect}
+    \subitem {bootmain.c}, \hyperpage{89}
+  \item {readseg}
+    \subitem {bootmain.c}, \hyperpage{89}
+  \item {recover\_from\_log}
+    \subitem {log.c}, \hyperpage{263}
+  \item {REDIR}
+    \subitem {sh.c}, \hyperpage{351}
+  \item {redircmd}, \hyperpage{54}
+    \subitem {cmd}, \hyperpage{54}
+    \subitem {efile}, \hyperpage{55}
+    \subitem {fd}, \hyperpage{55}
+    \subitem {file}, \hyperpage{55}
+    \subitem {mode}, \hyperpage{55}
+    \subitem {sh.c}, \hyperpage{358}
+    \subitem {type}, \hyperpage{55}
+  \item {ref}
+    \subitem {file}, \hyperpage{25}
+    \subitem {inode}, \hyperpage{31}
+  \item {refcnt}
+    \subitem {buf}, \hyperpage{12}
+  \item {reg}
+    \subitem {ioapic}, \hyperpage{33}
+  \item {REG\_ID}
+    \subitem {ioapic.c}, \hyperpage{225}
+  \item {REG\_TABLE}
+    \subitem {ioapic.c}, \hyperpage{225}
+  \item {REG\_VER}
+    \subitem {ioapic.c}, \hyperpage{225}
+  \item {release}
+    \subitem {defs.h}, \hyperpage{149}
+    \subitem {spinlock.c}, \hyperpage{373}
+  \item {releasesleep}
+    \subitem {defs.h}, \hyperpage{150}
+    \subitem {sleeplock.c}, \hyperpage{369}
+  \item {reserved}
+    \subitem {mp}, \hyperpage{39}
+    \subitem {mpconf}, \hyperpage{42}
+    \subitem {mpproc}, \hyperpage{45}
+  \item {right}
+    \subitem {listcmd}, \hyperpage{35}
+    \subitem {pipecmd}, \hyperpage{48}
+  \item {rinode}
+    \subitem {mkfs.c}, \hyperpage{286}
+  \item {rm.c}, \hyperpage{348}
+    \subitem {main}, \hyperpage{348}
+  \item {rm.d}, \hyperpage{349}
+  \item {rmdot}
+    \subitem {usertests.c}, \hyperpage{483}
+  \item {ROOTDEV}
+    \subitem {param.h}, \hyperpage{314}
+  \item {ROOTINO}
+    \subitem {fs.h}, \hyperpage{208}
+  \item {rsect}
+    \subitem {mkfs.c}, \hyperpage{286}
+  \item {rsv1}
+    \subitem {gatedesc}, \hyperpage{28}
+    \subitem {segdesc}, \hyperpage{60}
+  \item {RTC\_ADDR}
+    \subitem {usertests.c}, \hyperpage{464}
+  \item {RTC\_DATA}
+    \subitem {usertests.c}, \hyperpage{465}
+  \item {rtcdate}, \hyperpage{56}
+    \subitem {day}, \hyperpage{56}
+    \subitem {hour}, \hyperpage{56}
+    \subitem {minute}, \hyperpage{57}
+    \subitem {month}, \hyperpage{57}
+    \subitem {second}, \hyperpage{57}
+    \subitem {year}, \hyperpage{57}
+  \item {run}, \hyperpage{58}
+    \subitem {next}, \hyperpage{58}
+  \item {runcmd}
+    \subitem {sh.c}, \hyperpage{359}
+  \item {RUNNABLE}
+    \subitem {proc.h}, \hyperpage{344}
+  \item {RUNNING}
+    \subitem {proc.h}, \hyperpage{344}
+
+  \indexspace
+
+  \item {s}
+    \subitem {gatedesc}, \hyperpage{28}
+    \subitem {header}, \hyperpage{29}
+    \subitem {segdesc}, \hyperpage{60}
+  \item {safestrcpy}
+    \subitem {defs.h}, \hyperpage{150}
+    \subitem {string.c}, \hyperpage{380}
+  \item {sb}
+    \subitem {fs.c}, \hyperpage{198}
+    \subitem {mkfs.c}, \hyperpage{289}
+  \item {sbrk}
+    \subitem {user.h}, \hyperpage{459}
+  \item {sbrktest}
+    \subitem {usertests.c}, \hyperpage{483}
+  \item {sched}
+    \subitem {defs.h}, \hyperpage{150}
+    \subitem {proc.c}, \hyperpage{331}
+  \item {scheduler}
+    \subitem {cpu}, \hyperpage{15}
+    \subitem {defs.h}, \hyperpage{151}
+    \subitem {proc.c}, \hyperpage{331}
+  \item {SCROLLLOCK}
+    \subitem {kbd.h}, \hyperpage{238}
+  \item {second}
+    \subitem {rtcdate}, \hyperpage{57}
+  \item {SECS}
+    \subitem {lapic.c}, \hyperpage{250}
+  \item {SECTOR\_SIZE}
+    \subitem {ide.c}, \hyperpage{216}
+  \item {SECTSIZE}
+    \subitem {bootmain.c}, \hyperpage{88}
+  \item {SEG}
+    \subitem {mmu.h}, \hyperpage{298}
+  \item {SEG16}
+    \subitem {mmu.h}, \hyperpage{298}
+  \item {SEG\_ASM}
+    \subitem {asm.h}, \hyperpage{81}
+  \item {SEG\_KCODE}
+    \subitem {mmu.h}, \hyperpage{298}
+  \item {SEG\_KDATA}
+    \subitem {mmu.h}, \hyperpage{299}
+  \item {SEG\_NULLASM}
+    \subitem {asm.h}, \hyperpage{81}
+  \item {SEG\_TSS}
+    \subitem {mmu.h}, \hyperpage{299}
+  \item {SEG\_UCODE}
+    \subitem {mmu.h}, \hyperpage{299}
+  \item {SEG\_UDATA}
+    \subitem {mmu.h}, \hyperpage{299}
+  \item {segdesc}, \hyperpage{58}
+    \subitem {avl}, \hyperpage{59}
+    \subitem {base\_15\_0}, \hyperpage{59}
+    \subitem {base\_23\_16}, \hyperpage{59}
+    \subitem {base\_31\_24}, \hyperpage{59}
+    \subitem {db}, \hyperpage{59}
+    \subitem {dpl}, \hyperpage{59}
+    \subitem {g}, \hyperpage{60}
+    \subitem {lim\_15\_0}, \hyperpage{60}
+    \subitem {lim\_19\_16}, \hyperpage{60}
+    \subitem {p}, \hyperpage{60}
+    \subitem {rsv1}, \hyperpage{60}
+    \subitem {s}, \hyperpage{60}
+    \subitem {type}, \hyperpage{61}
+  \item {seginit}
+    \subitem {defs.h}, \hyperpage{151}
+    \subitem {vm.c}, \hyperpage{520}
+  \item {SETGATE}
+    \subitem {mmu.h}, \hyperpage{299}
+  \item {setproc}
+    \subitem {defs.h}, \hyperpage{152}
+  \item {setupkvm}
+    \subitem {defs.h}, \hyperpage{152}
+    \subitem {vm.c}, \hyperpage{520}
+  \item {sh.c}, \hyperpage{349}
+    \subitem {BACK}, \hyperpage{350}
+    \subitem {backcmd}, \hyperpage{352}
+    \subitem {EXEC}, \hyperpage{351}
+    \subitem {execcmd}, \hyperpage{352}
+    \subitem {fork1}, \hyperpage{352}
+    \subitem {getcmd}, \hyperpage{352}
+    \subitem {gettoken}, \hyperpage{353}
+    \subitem {LIST}, \hyperpage{351}
+    \subitem {listcmd}, \hyperpage{353}
+    \subitem {main}, \hyperpage{354}
+    \subitem {MAXARGS}, \hyperpage{351}
+    \subitem {nulterminate}, \hyperpage{354}
+    \subitem {panic}, \hyperpage{355}
+    \subitem {parseblock}, \hyperpage{355}
+    \subitem {parsecmd}, \hyperpage{355}
+    \subitem {parseexec}, \hyperpage{356}
+    \subitem {parseline}, \hyperpage{356}
+    \subitem {parsepipe}, \hyperpage{357}
+    \subitem {parseredirs}, \hyperpage{357}
+    \subitem {peek}, \hyperpage{358}
+    \subitem {PIPE}, \hyperpage{351}
+    \subitem {pipecmd}, \hyperpage{358}
+    \subitem {REDIR}, \hyperpage{351}
+    \subitem {redircmd}, \hyperpage{358}
+    \subitem {runcmd}, \hyperpage{359}
+    \subitem {symbols}, \hyperpage{360}
+    \subitem {whitespace}, \hyperpage{360}
+  \item {sh.d}, \hyperpage{366}
+  \item {sharedfd}
+    \subitem {usertests.c}, \hyperpage{485}
+  \item {shentsize}
+    \subitem {elfhdr}, \hyperpage{22}
+  \item {SHIFT}
+    \subitem {kbd.h}, \hyperpage{239}
+  \item {shiftcode}
+    \subitem {kbd.h}, \hyperpage{240}
+  \item {shiftmap}
+    \subitem {kbd.h}, \hyperpage{240}
+  \item {shnum}
+    \subitem {elfhdr}, \hyperpage{22}
+  \item {shoff}
+    \subitem {elfhdr}, \hyperpage{22}
+  \item {shstrndx}
+    \subitem {elfhdr}, \hyperpage{22}
+  \item {shutdown.c}, \hyperpage{366}
+    \subitem {main}, \hyperpage{367}
+  \item {shutdown.d}, \hyperpage{367}
+  \item {signature}
+    \subitem {mp}, \hyperpage{40}
+    \subitem {mpconf}, \hyperpage{42}
+    \subitem {mpproc}, \hyperpage{45}
+  \item {size}
+    \subitem {dinode}, \hyperpage{18}
+    \subitem {header}, \hyperpage{29}
+    \subitem {inode}, \hyperpage{32}
+    \subitem {log}, \hyperpage{37}
+    \subitem {stat}, \hyperpage{64}
+    \subitem {superblock}, \hyperpage{67}
+  \item {skipelem}
+    \subitem {fs.c}, \hyperpage{196}
+  \item {sleep}
+    \subitem {defs.h}, \hyperpage{152}
+    \subitem {proc.c}, \hyperpage{332}
+    \subitem {user.h}, \hyperpage{459}
+  \item {SLEEPING}
+    \subitem {proc.h}, \hyperpage{344}
+  \item {sleeplock}, \hyperpage{61}
+    \subitem {lk}, \hyperpage{61}
+    \subitem {locked}, \hyperpage{61}
+    \subitem {name}, \hyperpage{62}
+    \subitem {pid}, \hyperpage{62}
+  \item {sleeplock.c}, \hyperpage{368}
+    \subitem {acquiresleep}, \hyperpage{368}
+    \subitem {holdingsleep}, \hyperpage{368}
+    \subitem {initsleeplock}, \hyperpage{368}
+    \subitem {releasesleep}, \hyperpage{369}
+  \item {sleeplock.d}, \hyperpage{370}
+  \item {sleeplock.h}, \hyperpage{370}
+  \item {specrev}
+    \subitem {mp}, \hyperpage{40}
+  \item {spinlock}, \hyperpage{62}
+    \subitem {cpu}, \hyperpage{63}
+    \subitem {locked}, \hyperpage{63}
+    \subitem {name}, \hyperpage{63}
+    \subitem {pcs}, \hyperpage{63}
+  \item {spinlock.c}, \hyperpage{370}
+    \subitem {acquire}, \hyperpage{371}
+    \subitem {getcallerpcs}, \hyperpage{371}
+    \subitem {holding}, \hyperpage{371}
+    \subitem {initlock}, \hyperpage{372}
+    \subitem {popcli}, \hyperpage{372}
+    \subitem {pushcli}, \hyperpage{372}
+    \subitem {release}, \hyperpage{373}
+  \item {spinlock.d}, \hyperpage{375}
+  \item {spinlock.h}, \hyperpage{375}
+  \item {ss}
+    \subitem {taskstate}, \hyperpage{73}
+    \subitem {trapframe}, \hyperpage{79}
+  \item {ss0}
+    \subitem {taskstate}, \hyperpage{73}
+  \item {ss1}
+    \subitem {taskstate}, \hyperpage{74}
+  \item {ss2}
+    \subitem {taskstate}, \hyperpage{74}
+  \item {STA\_R}
+    \subitem {asm.h}, \hyperpage{81}
+    \subitem {mmu.h}, \hyperpage{300}
+  \item {STA\_W}
+    \subitem {asm.h}, \hyperpage{82}
+    \subitem {mmu.h}, \hyperpage{300}
+  \item {STA\_X}
+    \subitem {asm.h}, \hyperpage{82}
+    \subitem {mmu.h}, \hyperpage{300}
+  \item {start}
+    \subitem {log}, \hyperpage{37}
+  \item {started}
+    \subitem {cpu}, \hyperpage{16}
+  \item {startothers}
+    \subitem {main.c}, \hyperpage{272}
+  \item {STARTUP}
+    \subitem {lapic.c}, \hyperpage{250}
+  \item {stat}, \hyperpage{63}
+    \subitem {dev}, \hyperpage{64}
+    \subitem {ino}, \hyperpage{64}
+    \subitem {mkfs.c}, \hyperpage{282}
+    \subitem {nlink}, \hyperpage{64}
+    \subitem {size}, \hyperpage{64}
+    \subitem {type}, \hyperpage{65}
+    \subitem {ulib.c}, \hyperpage{442}
+    \subitem {user.h}, \hyperpage{459}
+  \item {stat.h}, \hyperpage{375}
+    \subitem {T\_DEV}, \hyperpage{376}
+    \subitem {T\_DIR}, \hyperpage{376}
+    \subitem {T\_FILE}, \hyperpage{376}
+  \item {state}
+    \subitem {proc}, \hyperpage{51}
+  \item {stati}
+    \subitem {defs.h}, \hyperpage{153}
+    \subitem {fs.c}, \hyperpage{196}
+  \item {static\_assert}
+    \subitem {mkfs.c}, \hyperpage{283}
+  \item {stdout}
+    \subitem {usertests.c}, \hyperpage{493}
+  \item {sti}
+    \subitem {x86.h}, \hyperpage{534}
+  \item {stosb}
+    \subitem {x86.h}, \hyperpage{534}
+  \item {stosl}
+    \subitem {x86.h}, \hyperpage{535}
+  \item {strchr}
+    \subitem {ulib.c}, \hyperpage{442}
+    \subitem {user.h}, \hyperpage{460}
+  \item {strcmp}
+    \subitem {ulib.c}, \hyperpage{442}
+    \subitem {user.h}, \hyperpage{460}
+  \item {strcpy}
+    \subitem {ulib.c}, \hyperpage{443}
+    \subitem {user.h}, \hyperpage{460}
+  \item {stressfs.c}, \hyperpage{377}
+    \subitem {main}, \hyperpage{377}
+  \item {stressfs.d}, \hyperpage{378}
+  \item {string.c}, \hyperpage{378}
+    \subitem {memcmp}, \hyperpage{379}
+    \subitem {memcpy}, \hyperpage{379}
+    \subitem {memmove}, \hyperpage{379}
+    \subitem {memset}, \hyperpage{380}
+    \subitem {safestrcpy}, \hyperpage{380}
+    \subitem {strlen}, \hyperpage{380}
+    \subitem {strncmp}, \hyperpage{381}
+    \subitem {strncpy}, \hyperpage{381}
+  \item {string.d}, \hyperpage{383}
+  \item {strlen}
+    \subitem {defs.h}, \hyperpage{153}
+    \subitem {string.c}, \hyperpage{380}
+    \subitem {ulib.c}, \hyperpage{443}
+    \subitem {user.h}, \hyperpage{461}
+  \item {strncmp}
+    \subitem {defs.h}, \hyperpage{154}
+    \subitem {string.c}, \hyperpage{381}
+  \item {strncpy}
+    \subitem {defs.h}, \hyperpage{154}
+    \subitem {string.c}, \hyperpage{381}
+  \item {STS\_IG32}
+    \subitem {mmu.h}, \hyperpage{300}
+  \item {STS\_T32A}
+    \subitem {mmu.h}, \hyperpage{300}
+  \item {STS\_TG32}
+    \subitem {mmu.h}, \hyperpage{301}
+  \item {subdir}
+    \subitem {usertests.c}, \hyperpage{486}
+  \item {sum}
+    \subitem {mp.c}, \hyperpage{306}
+  \item {superblock}, \hyperpage{65}
+    \subitem {bmapstart}, \hyperpage{65}
+    \subitem {inodestart}, \hyperpage{66}
+    \subitem {logstart}, \hyperpage{66}
+    \subitem {nblocks}, \hyperpage{66}
+    \subitem {ninodes}, \hyperpage{66}
+    \subitem {nlog}, \hyperpage{66}
+    \subitem {size}, \hyperpage{67}
+  \item {SVR}
+    \subitem {lapic.c}, \hyperpage{250}
+  \item {switchkvm}
+    \subitem {defs.h}, \hyperpage{154}
+    \subitem {vm.c}, \hyperpage{521}
+  \item {switchuvm}
+    \subitem {defs.h}, \hyperpage{155}
+    \subitem {vm.c}, \hyperpage{521}
+  \item {swtch}
+    \subitem {defs.h}, \hyperpage{155}
+  \item {symbols}
+    \subitem {sh.c}, \hyperpage{360}
+  \item {SYS\_chdir}
+    \subitem {syscall.h}, \hyperpage{399}
+  \item {sys\_chdir}
+    \subitem {syscall.c}, \hyperpage{386}
+    \subitem {sysfile.c}, \hyperpage{406}
+  \item {SYS\_chpr}
+    \subitem {syscall.h}, \hyperpage{399}
+  \item {sys\_chpr}
+    \subitem {syscall.c}, \hyperpage{386}
+    \subitem {sysproc.c}, \hyperpage{418}
+  \item {SYS\_close}
+    \subitem {syscall.h}, \hyperpage{399}
+  \item {sys\_close}
+    \subitem {syscall.c}, \hyperpage{386}
+    \subitem {sysfile.c}, \hyperpage{406}
+  \item {SYS\_cps}
+    \subitem {syscall.h}, \hyperpage{399}
+  \item {sys\_cps}
+    \subitem {syscall.c}, \hyperpage{387}
+    \subitem {sysproc.c}, \hyperpage{418}
+  \item {SYS\_dup}
+    \subitem {syscall.h}, \hyperpage{399}
+  \item {sys\_dup}
+    \subitem {syscall.c}, \hyperpage{387}
+    \subitem {sysfile.c}, \hyperpage{407}
+  \item {SYS\_exec}
+    \subitem {syscall.h}, \hyperpage{400}
+  \item {sys\_exec}
+    \subitem {syscall.c}, \hyperpage{387}
+    \subitem {sysfile.c}, \hyperpage{407}
+  \item {SYS\_exit}
+    \subitem {syscall.h}, \hyperpage{400}
+  \item {sys\_exit}
+    \subitem {syscall.c}, \hyperpage{388}
+    \subitem {sysproc.c}, \hyperpage{418}
+  \item {SYS\_fork}
+    \subitem {syscall.h}, \hyperpage{400}
+  \item {sys\_fork}
+    \subitem {syscall.c}, \hyperpage{388}
+    \subitem {sysproc.c}, \hyperpage{419}
+  \item {SYS\_fstat}
+    \subitem {syscall.h}, \hyperpage{400}
+  \item {sys\_fstat}
+    \subitem {syscall.c}, \hyperpage{388}
+    \subitem {sysfile.c}, \hyperpage{407}
+  \item {SYS\_getpid}
+    \subitem {syscall.h}, \hyperpage{400}
+  \item {sys\_getpid}
+    \subitem {syscall.c}, \hyperpage{388}
+    \subitem {sysproc.c}, \hyperpage{419}
+  \item {SYS\_getprocs}
+    \subitem {syscall.h}, \hyperpage{400}
+  \item {sys\_getprocs}
+    \subitem {syscall.c}, \hyperpage{389}
+    \subitem {sysproc.c}, \hyperpage{419}
+  \item {SYS\_halt}
+    \subitem {syscall.h}, \hyperpage{401}
+  \item {sys\_halt}
+    \subitem {syscall.c}, \hyperpage{389}
+    \subitem {sysproc.c}, \hyperpage{420}
+  \item {SYS\_kill}
+    \subitem {syscall.h}, \hyperpage{401}
+  \item {sys\_kill}
+    \subitem {syscall.c}, \hyperpage{389}
+    \subitem {sysproc.c}, \hyperpage{420}
+  \item {SYS\_link}
+    \subitem {syscall.h}, \hyperpage{401}
+  \item {sys\_link}
+    \subitem {syscall.c}, \hyperpage{390}
+    \subitem {sysfile.c}, \hyperpage{408}
+  \item {SYS\_mkdir}
+    \subitem {syscall.h}, \hyperpage{401}
+  \item {sys\_mkdir}
+    \subitem {syscall.c}, \hyperpage{390}
+    \subitem {sysfile.c}, \hyperpage{408}
+  \item {SYS\_mknod}
+    \subitem {syscall.h}, \hyperpage{401}
+  \item {sys\_mknod}
+    \subitem {syscall.c}, \hyperpage{391}
+    \subitem {sysfile.c}, \hyperpage{409}
+  \item {SYS\_open}
+    \subitem {syscall.h}, \hyperpage{401}
+  \item {sys\_open}
+    \subitem {syscall.c}, \hyperpage{391}
+    \subitem {sysfile.c}, \hyperpage{409}
+  \item {SYS\_pipe}
+    \subitem {syscall.h}, \hyperpage{402}
+  \item {sys\_pipe}
+    \subitem {syscall.c}, \hyperpage{392}
+    \subitem {sysfile.c}, \hyperpage{410}
+  \item {SYS\_read}
+    \subitem {syscall.h}, \hyperpage{402}
+  \item {sys\_read}
+    \subitem {syscall.c}, \hyperpage{392}
+    \subitem {sysfile.c}, \hyperpage{410}
+  \item {SYS\_sbrk}
+    \subitem {syscall.h}, \hyperpage{402}
+  \item {sys\_sbrk}
+    \subitem {syscall.c}, \hyperpage{393}
+    \subitem {sysproc.c}, \hyperpage{420}
+  \item {SYS\_sleep}
+    \subitem {syscall.h}, \hyperpage{402}
+  \item {sys\_sleep}
+    \subitem {syscall.c}, \hyperpage{393}
+    \subitem {sysproc.c}, \hyperpage{420}
+  \item {SYS\_unlink}
+    \subitem {syscall.h}, \hyperpage{402}
+  \item {sys\_unlink}
+    \subitem {syscall.c}, \hyperpage{393}
+    \subitem {sysfile.c}, \hyperpage{411}
+  \item {SYS\_uptime}
+    \subitem {syscall.h}, \hyperpage{402}
+  \item {sys\_uptime}
+    \subitem {syscall.c}, \hyperpage{394}
+    \subitem {sysproc.c}, \hyperpage{421}
+  \item {SYS\_wait}
+    \subitem {syscall.h}, \hyperpage{403}
+  \item {sys\_wait}
+    \subitem {syscall.c}, \hyperpage{394}
+    \subitem {sysproc.c}, \hyperpage{421}
+  \item {SYS\_write}
+    \subitem {syscall.h}, \hyperpage{403}
+  \item {sys\_write}
+    \subitem {syscall.c}, \hyperpage{395}
+    \subitem {sysfile.c}, \hyperpage{411}
+  \item {syscall}
+    \subitem {defs.h}, \hyperpage{155}
+    \subitem {syscall.c}, \hyperpage{395}
+  \item {syscall.c}, \hyperpage{383}
+    \subitem {argint}, \hyperpage{384}
+    \subitem {argptr}, \hyperpage{384}
+    \subitem {argstr}, \hyperpage{385}
+    \subitem {fetchint}, \hyperpage{385}
+    \subitem {fetchstr}, \hyperpage{385}
+    \subitem {sys\_chdir}, \hyperpage{386}
+    \subitem {sys\_chpr}, \hyperpage{386}
+    \subitem {sys\_close}, \hyperpage{386}
+    \subitem {sys\_cps}, \hyperpage{387}
+    \subitem {sys\_dup}, \hyperpage{387}
+    \subitem {sys\_exec}, \hyperpage{387}
+    \subitem {sys\_exit}, \hyperpage{388}
+    \subitem {sys\_fork}, \hyperpage{388}
+    \subitem {sys\_fstat}, \hyperpage{388}
+    \subitem {sys\_getpid}, \hyperpage{388}
+    \subitem {sys\_getprocs}, \hyperpage{389}
+    \subitem {sys\_halt}, \hyperpage{389}
+    \subitem {sys\_kill}, \hyperpage{389}
+    \subitem {sys\_link}, \hyperpage{390}
+    \subitem {sys\_mkdir}, \hyperpage{390}
+    \subitem {sys\_mknod}, \hyperpage{391}
+    \subitem {sys\_open}, \hyperpage{391}
+    \subitem {sys\_pipe}, \hyperpage{392}
+    \subitem {sys\_read}, \hyperpage{392}
+    \subitem {sys\_sbrk}, \hyperpage{393}
+    \subitem {sys\_sleep}, \hyperpage{393}
+    \subitem {sys\_unlink}, \hyperpage{393}
+    \subitem {sys\_uptime}, \hyperpage{394}
+    \subitem {sys\_wait}, \hyperpage{394}
+    \subitem {sys\_write}, \hyperpage{395}
+    \subitem {syscall}, \hyperpage{395}
+    \subitem {syscalls}, \hyperpage{395}
+  \item {syscall.d}, \hyperpage{398}
+  \item {syscall.h}, \hyperpage{398}
+    \subitem {SYS\_chdir}, \hyperpage{399}
+    \subitem {SYS\_chpr}, \hyperpage{399}
+    \subitem {SYS\_close}, \hyperpage{399}
+    \subitem {SYS\_cps}, \hyperpage{399}
+    \subitem {SYS\_dup}, \hyperpage{399}
+    \subitem {SYS\_exec}, \hyperpage{400}
+    \subitem {SYS\_exit}, \hyperpage{400}
+    \subitem {SYS\_fork}, \hyperpage{400}
+    \subitem {SYS\_fstat}, \hyperpage{400}
+    \subitem {SYS\_getpid}, \hyperpage{400}
+    \subitem {SYS\_getprocs}, \hyperpage{400}
+    \subitem {SYS\_halt}, \hyperpage{401}
+    \subitem {SYS\_kill}, \hyperpage{401}
+    \subitem {SYS\_link}, \hyperpage{401}
+    \subitem {SYS\_mkdir}, \hyperpage{401}
+    \subitem {SYS\_mknod}, \hyperpage{401}
+    \subitem {SYS\_open}, \hyperpage{401}
+    \subitem {SYS\_pipe}, \hyperpage{402}
+    \subitem {SYS\_read}, \hyperpage{402}
+    \subitem {SYS\_sbrk}, \hyperpage{402}
+    \subitem {SYS\_sleep}, \hyperpage{402}
+    \subitem {SYS\_unlink}, \hyperpage{402}
+    \subitem {SYS\_uptime}, \hyperpage{402}
+    \subitem {SYS\_wait}, \hyperpage{403}
+    \subitem {SYS\_write}, \hyperpage{403}
+  \item {syscalls}
+    \subitem {syscall.c}, \hyperpage{395}
+  \item {sysfile.c}, \hyperpage{404}
+    \subitem {argfd}, \hyperpage{404}
+    \subitem {create}, \hyperpage{405}
+    \subitem {fdalloc}, \hyperpage{405}
+    \subitem {isdirempty}, \hyperpage{406}
+    \subitem {sys\_chdir}, \hyperpage{406}
+    \subitem {sys\_close}, \hyperpage{406}
+    \subitem {sys\_dup}, \hyperpage{407}
+    \subitem {sys\_exec}, \hyperpage{407}
+    \subitem {sys\_fstat}, \hyperpage{407}
+    \subitem {sys\_link}, \hyperpage{408}
+    \subitem {sys\_mkdir}, \hyperpage{408}
+    \subitem {sys\_mknod}, \hyperpage{409}
+    \subitem {sys\_open}, \hyperpage{409}
+    \subitem {sys\_pipe}, \hyperpage{410}
+    \subitem {sys\_read}, \hyperpage{410}
+    \subitem {sys\_unlink}, \hyperpage{411}
+    \subitem {sys\_write}, \hyperpage{411}
+  \item {sysfile.d}, \hyperpage{417}
+  \item {sysproc.c}, \hyperpage{417}
+    \subitem {lock}, \hyperpage{421}
+    \subitem {proc}, \hyperpage{422}
+    \subitem {ptable}, \hyperpage{422}
+    \subitem {sys\_chpr}, \hyperpage{418}
+    \subitem {sys\_cps}, \hyperpage{418}
+    \subitem {sys\_exit}, \hyperpage{418}
+    \subitem {sys\_fork}, \hyperpage{419}
+    \subitem {sys\_getpid}, \hyperpage{419}
+    \subitem {sys\_getprocs}, \hyperpage{419}
+    \subitem {sys\_halt}, \hyperpage{420}
+    \subitem {sys\_kill}, \hyperpage{420}
+    \subitem {sys\_sbrk}, \hyperpage{420}
+    \subitem {sys\_sleep}, \hyperpage{420}
+    \subitem {sys\_uptime}, \hyperpage{421}
+    \subitem {sys\_wait}, \hyperpage{421}
+  \item {sysproc.d}, \hyperpage{424}
+  \item {sz}
+    \subitem {proc}, \hyperpage{51}
+
+  \indexspace
+
+  \item {t}
+    \subitem {taskstate}, \hyperpage{74}
+  \item {T\_ALIGN}
+    \subitem {traps.h}, \hyperpage{431}
+  \item {T\_BOUND}
+    \subitem {traps.h}, \hyperpage{431}
+  \item {T\_BRKPT}
+    \subitem {traps.h}, \hyperpage{431}
+  \item {T\_DBLFLT}
+    \subitem {traps.h}, \hyperpage{431}
+  \item {T\_DEBUG}
+    \subitem {traps.h}, \hyperpage{431}
+  \item {T\_DEFAULT}
+    \subitem {traps.h}, \hyperpage{432}
+  \item {T\_DEV}
+    \subitem {stat.h}, \hyperpage{376}
+  \item {T\_DEVICE}
+    \subitem {traps.h}, \hyperpage{432}
+  \item {T\_DIR}
+    \subitem {stat.h}, \hyperpage{376}
+  \item {T\_DIVIDE}
+    \subitem {traps.h}, \hyperpage{432}
+  \item {T\_FILE}
+    \subitem {stat.h}, \hyperpage{376}
+  \item {T\_FPERR}
+    \subitem {traps.h}, \hyperpage{432}
+  \item {T\_GPFLT}
+    \subitem {traps.h}, \hyperpage{432}
+  \item {T\_ILLOP}
+    \subitem {traps.h}, \hyperpage{432}
+  \item {T\_IRQ0}
+    \subitem {traps.h}, \hyperpage{433}
+  \item {T\_MCHK}
+    \subitem {traps.h}, \hyperpage{433}
+  \item {T\_NMI}
+    \subitem {traps.h}, \hyperpage{433}
+  \item {T\_OFLOW}
+    \subitem {traps.h}, \hyperpage{433}
+  \item {T\_PGFLT}
+    \subitem {traps.h}, \hyperpage{433}
+  \item {T\_SEGNP}
+    \subitem {traps.h}, \hyperpage{433}
+  \item {T\_SIMDERR}
+    \subitem {traps.h}, \hyperpage{434}
+  \item {T\_STACK}
+    \subitem {traps.h}, \hyperpage{434}
+  \item {T\_SYSCALL}
+    \subitem {traps.h}, \hyperpage{434}
+  \item {T\_TSS}
+    \subitem {traps.h}, \hyperpage{434}
+  \item {taskstate}, \hyperpage{67}
+    \subitem {cr3}, \hyperpage{68}
+    \subitem {cs}, \hyperpage{68}
+    \subitem {ds}, \hyperpage{68}
+    \subitem {eax}, \hyperpage{68}
+    \subitem {ebp}, \hyperpage{69}
+    \subitem {ebx}, \hyperpage{69}
+    \subitem {ecx}, \hyperpage{69}
+    \subitem {edi}, \hyperpage{69}
+    \subitem {edx}, \hyperpage{69}
+    \subitem {eflags}, \hyperpage{69}
+    \subitem {eip}, \hyperpage{70}
+    \subitem {es}, \hyperpage{70}
+    \subitem {esi}, \hyperpage{70}
+    \subitem {esp}, \hyperpage{70}
+    \subitem {esp0}, \hyperpage{70}
+    \subitem {esp1}, \hyperpage{70}
+    \subitem {esp2}, \hyperpage{71}
+    \subitem {fs}, \hyperpage{71}
+    \subitem {gs}, \hyperpage{71}
+    \subitem {iomb}, \hyperpage{71}
+    \subitem {ldt}, \hyperpage{71}
+    \subitem {link}, \hyperpage{71}
+    \subitem {padding1}, \hyperpage{72}
+    \subitem {padding10}, \hyperpage{72}
+    \subitem {padding2}, \hyperpage{72}
+    \subitem {padding3}, \hyperpage{72}
+    \subitem {padding4}, \hyperpage{72}
+    \subitem {padding5}, \hyperpage{72}
+    \subitem {padding6}, \hyperpage{73}
+    \subitem {padding7}, \hyperpage{73}
+    \subitem {padding8}, \hyperpage{73}
+    \subitem {padding9}, \hyperpage{73}
+    \subitem {ss}, \hyperpage{73}
+    \subitem {ss0}, \hyperpage{73}
+    \subitem {ss1}, \hyperpage{74}
+    \subitem {ss2}, \hyperpage{74}
+    \subitem {t}, \hyperpage{74}
+  \item {TCCR}
+    \subitem {lapic.c}, \hyperpage{251}
+  \item {TDCR}
+    \subitem {lapic.c}, \hyperpage{251}
+  \item {tf}
+    \subitem {proc}, \hyperpage{52}
+  \item {ticks}
+    \subitem {defs.h}, \hyperpage{161}
+    \subitem {trap.c}, \hyperpage{427}
+  \item {tickslock}
+    \subitem {defs.h}, \hyperpage{161}
+    \subitem {trap.c}, \hyperpage{427}
+  \item {TICR}
+    \subitem {lapic.c}, \hyperpage{251}
+  \item {TIMER}
+    \subitem {lapic.c}, \hyperpage{251}
+  \item {timerinit}
+    \subitem {defs.h}, \hyperpage{156}
+  \item {togglecode}
+    \subitem {kbd.h}, \hyperpage{241}
+  \item {TPR}
+    \subitem {lapic.c}, \hyperpage{251}
+  \item {trap}
+    \subitem {trap.c}, \hyperpage{425}
+  \item {trap.c}, \hyperpage{424}
+    \subitem {idt}, \hyperpage{426}
+    \subitem {idtinit}, \hyperpage{425}
+    \subitem {ticks}, \hyperpage{427}
+    \subitem {tickslock}, \hyperpage{427}
+    \subitem {trap}, \hyperpage{425}
+    \subitem {tvinit}, \hyperpage{426}
+    \subitem {vectors}, \hyperpage{427}
+  \item {trap.d}, \hyperpage{429}
+  \item {trapframe}, \hyperpage{74}
+    \subitem {cs}, \hyperpage{75}
+    \subitem {ds}, \hyperpage{75}
+    \subitem {eax}, \hyperpage{76}
+    \subitem {ebp}, \hyperpage{76}
+    \subitem {ebx}, \hyperpage{76}
+    \subitem {ecx}, \hyperpage{76}
+    \subitem {edi}, \hyperpage{76}
+    \subitem {edx}, \hyperpage{76}
+    \subitem {eflags}, \hyperpage{77}
+    \subitem {eip}, \hyperpage{77}
+    \subitem {err}, \hyperpage{77}
+    \subitem {es}, \hyperpage{77}
+    \subitem {esi}, \hyperpage{77}
+    \subitem {esp}, \hyperpage{78}
+    \subitem {fs}, \hyperpage{78}
+    \subitem {gs}, \hyperpage{78}
+    \subitem {oesp}, \hyperpage{78}
+    \subitem {padding1}, \hyperpage{78}
+    \subitem {padding2}, \hyperpage{78}
+    \subitem {padding3}, \hyperpage{79}
+    \subitem {padding4}, \hyperpage{79}
+    \subitem {padding5}, \hyperpage{79}
+    \subitem {padding6}, \hyperpage{79}
+    \subitem {ss}, \hyperpage{79}
+    \subitem {trapno}, \hyperpage{79}
+  \item {trapno}
+    \subitem {trapframe}, \hyperpage{79}
+  \item {trapret}
+    \subitem {proc.c}, \hyperpage{333}
+  \item {traps.h}, \hyperpage{429}
+    \subitem {IRQ\_COM1}, \hyperpage{430}
+    \subitem {IRQ\_ERROR}, \hyperpage{430}
+    \subitem {IRQ\_IDE}, \hyperpage{430}
+    \subitem {IRQ\_KBD}, \hyperpage{430}
+    \subitem {IRQ\_SPURIOUS}, \hyperpage{430}
+    \subitem {IRQ\_TIMER}, \hyperpage{431}
+    \subitem {T\_ALIGN}, \hyperpage{431}
+    \subitem {T\_BOUND}, \hyperpage{431}
+    \subitem {T\_BRKPT}, \hyperpage{431}
+    \subitem {T\_DBLFLT}, \hyperpage{431}
+    \subitem {T\_DEBUG}, \hyperpage{431}
+    \subitem {T\_DEFAULT}, \hyperpage{432}
+    \subitem {T\_DEVICE}, \hyperpage{432}
+    \subitem {T\_DIVIDE}, \hyperpage{432}
+    \subitem {T\_FPERR}, \hyperpage{432}
+    \subitem {T\_GPFLT}, \hyperpage{432}
+    \subitem {T\_ILLOP}, \hyperpage{432}
+    \subitem {T\_IRQ0}, \hyperpage{433}
+    \subitem {T\_MCHK}, \hyperpage{433}
+    \subitem {T\_NMI}, \hyperpage{433}
+    \subitem {T\_OFLOW}, \hyperpage{433}
+    \subitem {T\_PGFLT}, \hyperpage{433}
+    \subitem {T\_SEGNP}, \hyperpage{433}
+    \subitem {T\_SIMDERR}, \hyperpage{434}
+    \subitem {T\_STACK}, \hyperpage{434}
+    \subitem {T\_SYSCALL}, \hyperpage{434}
+    \subitem {T\_TSS}, \hyperpage{434}
+  \item {ts}
+    \subitem {cpu}, \hyperpage{16}
+  \item {tvinit}
+    \subitem {defs.h}, \hyperpage{156}
+    \subitem {trap.c}, \hyperpage{426}
+  \item {type}
+    \subitem {backcmd}, \hyperpage{9}
+    \subitem {cmd}, \hyperpage{12}
+    \subitem {dinode}, \hyperpage{18}
+    \subitem {elfhdr}, \hyperpage{22}
+    \subitem {execcmd}, \hyperpage{23}
+    \subitem {file}, \hyperpage{26}
+    \subitem {gatedesc}, \hyperpage{28}
+    \subitem {inode}, \hyperpage{32}
+    \subitem {listcmd}, \hyperpage{35}
+    \subitem {mp}, \hyperpage{40}
+    \subitem {mpioapic}, \hyperpage{44}
+    \subitem {mpproc}, \hyperpage{45}
+    \subitem {pipecmd}, \hyperpage{48}
+    \subitem {proghdr}, \hyperpage{54}
+    \subitem {redircmd}, \hyperpage{55}
+    \subitem {segdesc}, \hyperpage{61}
+    \subitem {stat}, \hyperpage{65}
+  \item {types.h}, \hyperpage{435}
+    \subitem {pde\_t}, \hyperpage{435}
+    \subitem {uchar}, \hyperpage{435}
+    \subitem {uint}, \hyperpage{436}
+    \subitem {ushort}, \hyperpage{436}
+
+  \indexspace
+
+  \item {uart}
+    \subitem {uart.c}, \hyperpage{439}
+  \item {uart.c}, \hyperpage{436}
+    \subitem {COM1}, \hyperpage{437}
+    \subitem {uart}, \hyperpage{439}
+    \subitem {uartgetc}, \hyperpage{437}
+    \subitem {uartinit}, \hyperpage{437}
+    \subitem {uartintr}, \hyperpage{438}
+    \subitem {uartputc}, \hyperpage{438}
+  \item {uart.d}, \hyperpage{440}
+  \item {uartgetc}
+    \subitem {uart.c}, \hyperpage{437}
+  \item {uartinit}
+    \subitem {defs.h}, \hyperpage{156}
+    \subitem {uart.c}, \hyperpage{437}
+  \item {uartintr}
+    \subitem {defs.h}, \hyperpage{157}
+    \subitem {uart.c}, \hyperpage{438}
+  \item {uartputc}
+    \subitem {defs.h}, \hyperpage{157}
+    \subitem {uart.c}, \hyperpage{438}
+  \item {uchar}
+    \subitem {types.h}, \hyperpage{435}
+  \item {uint}
+    \subitem {types.h}, \hyperpage{436}
+  \item {uio}
+    \subitem {usertests.c}, \hyperpage{488}
+  \item {ulib.c}, \hyperpage{440}
+    \subitem {atoi}, \hyperpage{440}
+    \subitem {gets}, \hyperpage{441}
+    \subitem {memmove}, \hyperpage{441}
+    \subitem {memset}, \hyperpage{441}
+    \subitem {stat}, \hyperpage{442}
+    \subitem {strchr}, \hyperpage{442}
+    \subitem {strcmp}, \hyperpage{442}
+    \subitem {strcpy}, \hyperpage{443}
+    \subitem {strlen}, \hyperpage{443}
+  \item {ulib.d}, \hyperpage{445}
+  \item {umalloc.c}, \hyperpage{445}
+    \subitem {Align}, \hyperpage{446}
+    \subitem {base}, \hyperpage{447}
+    \subitem {free}, \hyperpage{446}
+    \subitem {freep}, \hyperpage{448}
+    \subitem {Header}, \hyperpage{446}
+    \subitem {malloc}, \hyperpage{446}
+    \subitem {morecore}, \hyperpage{447}
+  \item {umalloc.d}, \hyperpage{449}
+  \item {uninit}
+    \subitem {usertests.c}, \hyperpage{493}
+  \item {unlink}
+    \subitem {user.h}, \hyperpage{461}
+  \item {unlinkread}
+    \subitem {usertests.c}, \hyperpage{489}
+  \item {UNUSED}
+    \subitem {proc.h}, \hyperpage{344}
+  \item {uproc}, \hyperpage{80}
+    \subitem {name}, \hyperpage{80}
+    \subitem {pid}, \hyperpage{80}
+    \subitem {ppid}, \hyperpage{80}
+  \item {uproc.h}, \hyperpage{449}
+  \item {uptime}
+    \subitem {user.h}, \hyperpage{461}
+  \item {use\_lock}
+    \subitem {kalloc.c}, \hyperpage{231}
+  \item {user.h}, \hyperpage{450}
+    \subitem {atoi}, \hyperpage{450}
+    \subitem {chdir}, \hyperpage{451}
+    \subitem {chpr}, \hyperpage{451}
+    \subitem {close}, \hyperpage{451}
+    \subitem {cps}, \hyperpage{451}
+    \subitem {dup}, \hyperpage{452}
+    \subitem {exec}, \hyperpage{452}
+    \subitem {exit}, \hyperpage{453}
+    \subitem {fork}, \hyperpage{454}
+    \subitem {free}, \hyperpage{455}
+    \subitem {fstat}, \hyperpage{455}
+    \subitem {getpid}, \hyperpage{455}
+    \subitem {getprocs}, \hyperpage{455}
+    \subitem {gets}, \hyperpage{456}
+    \subitem {halt}, \hyperpage{456}
+    \subitem {kill}, \hyperpage{456}
+    \subitem {link}, \hyperpage{456}
+    \subitem {malloc}, \hyperpage{457}
+    \subitem {memmove}, \hyperpage{457}
+    \subitem {memset}, \hyperpage{457}
+    \subitem {mkdir}, \hyperpage{458}
+    \subitem {mknod}, \hyperpage{458}
+    \subitem {open}, \hyperpage{458}
+    \subitem {pipe}, \hyperpage{458}
+    \subitem {printf}, \hyperpage{459}
+    \subitem {read}, \hyperpage{459}
+    \subitem {sbrk}, \hyperpage{459}
+    \subitem {sleep}, \hyperpage{459}
+    \subitem {stat}, \hyperpage{459}
+    \subitem {strchr}, \hyperpage{460}
+    \subitem {strcmp}, \hyperpage{460}
+    \subitem {strcpy}, \hyperpage{460}
+    \subitem {strlen}, \hyperpage{461}
+    \subitem {unlink}, \hyperpage{461}
+    \subitem {uptime}, \hyperpage{461}
+    \subitem {wait}, \hyperpage{461}
+    \subitem {write}, \hyperpage{462}
+  \item {userinit}
+    \subitem {defs.h}, \hyperpage{157}
+    \subitem {proc.c}, \hyperpage{333}
+  \item {usertests.c}, \hyperpage{463}
+    \subitem {argptest}, \hyperpage{465}
+    \subitem {BIG}, \hyperpage{464}
+    \subitem {bigargtest}, \hyperpage{465}
+    \subitem {bigdir}, \hyperpage{466}
+    \subitem {bigfile}, \hyperpage{466}
+    \subitem {bigwrite}, \hyperpage{467}
+    \subitem {bsstest}, \hyperpage{468}
+    \subitem {buf}, \hyperpage{492}
+    \subitem {concreate}, \hyperpage{468}
+    \subitem {createdelete}, \hyperpage{469}
+    \subitem {createtest}, \hyperpage{470}
+    \subitem {dirfile}, \hyperpage{471}
+    \subitem {dirtest}, \hyperpage{472}
+    \subitem {echoargv}, \hyperpage{492}
+    \subitem {exectest}, \hyperpage{472}
+    \subitem {exitiputtest}, \hyperpage{472}
+    \subitem {exitwait}, \hyperpage{473}
+    \subitem {forktest}, \hyperpage{473}
+    \subitem {fourfiles}, \hyperpage{474}
+    \subitem {fourteen}, \hyperpage{475}
+    \subitem {fsfull}, \hyperpage{476}
+    \subitem {iputtest}, \hyperpage{476}
+    \subitem {iref}, \hyperpage{477}
+    \subitem {linktest}, \hyperpage{477}
+    \subitem {linkunlink}, \hyperpage{478}
+    \subitem {main}, \hyperpage{479}
+    \subitem {mem}, \hyperpage{480}
+    \subitem {name}, \hyperpage{492}
+    \subitem {openiputtest}, \hyperpage{480}
+    \subitem {opentest}, \hyperpage{481}
+    \subitem {pipe1}, \hyperpage{481}
+    \subitem {preempt}, \hyperpage{482}
+    \subitem {rand}, \hyperpage{483}
+    \subitem {randstate}, \hyperpage{493}
+    \subitem {rmdot}, \hyperpage{483}
+    \subitem {RTC\_ADDR}, \hyperpage{464}
+    \subitem {RTC\_DATA}, \hyperpage{465}
+    \subitem {sbrktest}, \hyperpage{483}
+    \subitem {sharedfd}, \hyperpage{485}
+    \subitem {stdout}, \hyperpage{493}
+    \subitem {subdir}, \hyperpage{486}
+    \subitem {uio}, \hyperpage{488}
+    \subitem {uninit}, \hyperpage{493}
+    \subitem {unlinkread}, \hyperpage{489}
+    \subitem {validateint}, \hyperpage{489}
+    \subitem {validatetest}, \hyperpage{490}
+    \subitem {writetest}, \hyperpage{490}
+    \subitem {writetest1}, \hyperpage{491}
+  \item {usertests.d}, \hyperpage{514}
+  \item {ushort}
+    \subitem {types.h}, \hyperpage{436}
+  \item {uva2ka}
+    \subitem {defs.h}, \hyperpage{158}
+    \subitem {vm.c}, \hyperpage{521}
+
+  \indexspace
+
+  \item {V2P}
+    \subitem {memlayout.h}, \hyperpage{279}
+  \item {V2P\_WO}
+    \subitem {memlayout.h}, \hyperpage{279}
+  \item {vaddr}
+    \subitem {proghdr}, \hyperpage{54}
+  \item {valid}
+    \subitem {inode}, \hyperpage{32}
+  \item {validateint}
+    \subitem {usertests.c}, \hyperpage{489}
+  \item {validatetest}
+    \subitem {usertests.c}, \hyperpage{490}
+  \item {vectors}
+    \subitem {trap.c}, \hyperpage{427}
+  \item {VER}
+    \subitem {lapic.c}, \hyperpage{251}
+  \item {version}
+    \subitem {elfhdr}, \hyperpage{22}
+    \subitem {mpconf}, \hyperpage{42}
+    \subitem {mpioapic}, \hyperpage{44}
+    \subitem {mpproc}, \hyperpage{46}
+  \item {virt}
+    \subitem {kmap}, \hyperpage{34}
+  \item {vm.c}, \hyperpage{515}
+    \subitem {allocuvm}, \hyperpage{515}
+    \subitem {clearpteu}, \hyperpage{516}
+    \subitem {copyout}, \hyperpage{516}
+    \subitem {copyuvm}, \hyperpage{517}
+    \subitem {data}, \hyperpage{522}
+    \subitem {deallocuvm}, \hyperpage{517}
+    \subitem {freevm}, \hyperpage{518}
+    \subitem {inituvm}, \hyperpage{518}
+    \subitem {kmap}, \hyperpage{522}
+    \subitem {kpgdir}, \hyperpage{523}
+    \subitem {kvmalloc}, \hyperpage{519}
+    \subitem {loaduvm}, \hyperpage{519}
+    \subitem {mappages}, \hyperpage{519}
+    \subitem {seginit}, \hyperpage{520}
+    \subitem {setupkvm}, \hyperpage{520}
+    \subitem {switchkvm}, \hyperpage{521}
+    \subitem {switchuvm}, \hyperpage{521}
+    \subitem {uva2ka}, \hyperpage{521}
+    \subitem {walkpgdir}, \hyperpage{522}
+  \item {vm.d}, \hyperpage{528}
+
+  \indexspace
+
+  \item {w}
+    \subitem {console.c}, \hyperpage{103}
+  \item {wait}
+    \subitem {defs.h}, \hyperpage{158}
+    \subitem {proc.c}, \hyperpage{333}
+    \subitem {user.h}, \hyperpage{461}
+  \item {waitdisk}
+    \subitem {bootmain.c}, \hyperpage{90}
+  \item {wakeup}
+    \subitem {defs.h}, \hyperpage{159}
+    \subitem {proc.c}, \hyperpage{334}
+  \item {wakeup1}
+    \subitem {proc.c}, \hyperpage{334}
+  \item {walkpgdir}
+    \subitem {vm.c}, \hyperpage{522}
+  \item {wc}
+    \subitem {wc.c}, \hyperpage{528}
+  \item {wc.c}, \hyperpage{528}
+    \subitem {buf}, \hyperpage{529}
+    \subitem {main}, \hyperpage{528}
+    \subitem {wc}, \hyperpage{528}
+  \item {wc.d}, \hyperpage{530}
+  \item {whitespace}
+    \subitem {sh.c}, \hyperpage{360}
+  \item {winode}
+    \subitem {mkfs.c}, \hyperpage{286}
+  \item {writable}
+    \subitem {file}, \hyperpage{26}
+  \item {write}
+    \subitem {devsw}, \hyperpage{17}
+    \subitem {user.h}, \hyperpage{462}
+  \item {write\_head}
+    \subitem {log.c}, \hyperpage{263}
+  \item {write\_log}
+    \subitem {log.c}, \hyperpage{264}
+  \item {writei}
+    \subitem {defs.h}, \hyperpage{159}
+    \subitem {fs.c}, \hyperpage{197}
+  \item {writeopen}
+    \subitem {pipe}, \hyperpage{47}
+  \item {writetest}
+    \subitem {usertests.c}, \hyperpage{490}
+  \item {writetest1}
+    \subitem {usertests.c}, \hyperpage{491}
+  \item {wsect}
+    \subitem {mkfs.c}, \hyperpage{286}
+
+  \indexspace
+
+  \item {x}
+    \subitem {header}, \hyperpage{29}
+  \item {X1}
+    \subitem {lapic.c}, \hyperpage{252}
+  \item {x86.h}, \hyperpage{530}
+    \subitem {cli}, \hyperpage{531}
+    \subitem {inb}, \hyperpage{531}
+    \subitem {insl}, \hyperpage{531}
+    \subitem {lcr3}, \hyperpage{531}
+    \subitem {lgdt}, \hyperpage{532}
+    \subitem {lidt}, \hyperpage{532}
+    \subitem {loadgs}, \hyperpage{532}
+    \subitem {ltr}, \hyperpage{533}
+    \subitem {outb}, \hyperpage{533}
+    \subitem {outsl}, \hyperpage{533}
+    \subitem {outw}, \hyperpage{533}
+    \subitem {rcr2}, \hyperpage{534}
+    \subitem {readeflags}, \hyperpage{534}
+    \subitem {sti}, \hyperpage{534}
+    \subitem {stosb}, \hyperpage{534}
+    \subitem {stosl}, \hyperpage{535}
+    \subitem {xchg}, \hyperpage{535}
+  \item {xchecksum}
+    \subitem {mpconf}, \hyperpage{42}
+  \item {xchg}
+    \subitem {x86.h}, \hyperpage{535}
+  \item {xint}
+    \subitem {mkfs.c}, \hyperpage{287}
+  \item {xlength}
+    \subitem {mpconf}, \hyperpage{43}
+  \item {xshort}
+    \subitem {mkfs.c}, \hyperpage{287}
+  \item {xv6.dox}, \hyperpage{538}
+
+  \indexspace
+
+  \item {YEAR}
+    \subitem {lapic.c}, \hyperpage{252}
+  \item {year}
+    \subitem {rtcdate}, \hyperpage{57}
+  \item {yield}
+    \subitem {defs.h}, \hyperpage{160}
+    \subitem {proc.c}, \hyperpage{335}
+
+  \indexspace
+
+  \item {zeroes}
+    \subitem {mkfs.c}, \hyperpage{289}
+  \item {ZOMBIE}
+    \subitem {proc.h}, \hyperpage{344}
+  \item {zombie.c}, \hyperpage{538}
+    \subitem {main}, \hyperpage{538}
+  \item {zombie.d}, \hyperpage{539}
+
+\end{theindex}

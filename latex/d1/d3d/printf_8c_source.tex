@@ -1,0 +1,90 @@
+\hypertarget{printf_8c_source}{}\doxysection{printf.\+c}
+\mbox{\hyperlink{printf_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00001}00001 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00002}00002 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{stat_8h}{stat.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00003}00003 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{user_8h}{user.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00005}00005 \textcolor{keyword}{static} \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00006}00006 putc(\textcolor{keywordtype}{int} fd, \textcolor{keywordtype}{char} c)}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00007}00007 \{}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00008}00008   \mbox{\hyperlink{user_8h_ae57e95d717eb7386cd8b935a0c136abe}{write}}(fd, \&c, 1);}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00009}00009 \}}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00011}00011 \textcolor{keyword}{static} \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00012}00012 printint(\textcolor{keywordtype}{int} fd, \textcolor{keywordtype}{int} xx, \textcolor{keywordtype}{int} base, \textcolor{keywordtype}{int} sgn)}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00013}00013 \{}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00014}00014   \textcolor{keyword}{static} \textcolor{keywordtype}{char} digits[] = \textcolor{stringliteral}{"{}0123456789ABCDEF"{}};}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00015}00015   \textcolor{keywordtype}{char} \mbox{\hyperlink{structbuf}{buf}}[16];}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00016}00016   \textcolor{keywordtype}{int} i, neg;}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00017}00017   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} x;}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00018}00018 }
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00019}00019   neg = 0;}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00020}00020   \textcolor{keywordflow}{if}(sgn \&\& xx < 0)\{}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00021}00021     neg = 1;}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00022}00022     x = -\/xx;}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00023}00023   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00024}00024     x = xx;}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00025}00025   \}}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00027}00027   i = 0;}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00028}00028   \textcolor{keywordflow}{do}\{}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00029}00029     \mbox{\hyperlink{structbuf}{buf}}[i++] = digits[x \% base];}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00030}00030   \}\textcolor{keywordflow}{while}((x /= base) != 0);}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00031}00031   \textcolor{keywordflow}{if}(neg)}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00032}00032     \mbox{\hyperlink{structbuf}{buf}}[i++] = \textcolor{charliteral}{'-\/'};}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00034}00034   \textcolor{keywordflow}{while}(-\/-\/i >= 0)}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00035}00035     putc(fd, \mbox{\hyperlink{structbuf}{buf}}[i]);}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00036}00036 \}}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00038}00038 \textcolor{comment}{// Print to the given fd. Only understands \%d, \%x, \%p, \%s.}}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00039}00039 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00040}\mbox{\hyperlink{printf_8c_ab07b7ad521d2a232b3f161c25e12fbaa}{00040}} \mbox{\hyperlink{printf_8c_ab07b7ad521d2a232b3f161c25e12fbaa}{printf}}(\textcolor{keywordtype}{int} fd, \textcolor{keyword}{const} \textcolor{keywordtype}{char} *fmt, ...)}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00041}00041 \{}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00042}00042   \textcolor{keywordtype}{char} *s;}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00043}00043   \textcolor{keywordtype}{int} c, i, state;}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00044}00044   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} *ap;}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00046}00046   state = 0;}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00047}00047   ap = (\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}*)(\textcolor{keywordtype}{void}*)\&fmt + 1;}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00048}00048   \textcolor{keywordflow}{for}(i = 0; fmt[i]; i++)\{}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00049}00049     c = fmt[i] \& 0xff;}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00050}00050     \textcolor{keywordflow}{if}(state == 0)\{}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00051}00051       \textcolor{keywordflow}{if}(c == \textcolor{charliteral}{'\%'})\{}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00052}00052         state = \textcolor{charliteral}{'\%'};}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00053}00053       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00054}00054         putc(fd, c);}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00055}00055       \}}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00056}00056     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(state == \textcolor{charliteral}{'\%'})\{}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00057}00057       \textcolor{keywordflow}{if}(c == \textcolor{charliteral}{'d'})\{}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00058}00058         printint(fd, *ap, 10, 1);}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00059}00059         ap++;}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00060}00060       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(c == \textcolor{charliteral}{'x'} || c == \textcolor{charliteral}{'p'})\{}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00061}00061         printint(fd, *ap, 16, 0);}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00062}00062         ap++;}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00063}00063       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(c == \textcolor{charliteral}{'s'})\{}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00064}00064         s = (\textcolor{keywordtype}{char}*)*ap;}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00065}00065         ap++;}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00066}00066         \textcolor{keywordflow}{if}(s == 0)}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00067}00067           s = \textcolor{stringliteral}{"{}(null)"{}};}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00068}00068         \textcolor{keywordflow}{while}(*s != 0)\{}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00069}00069           putc(fd, *s);}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00070}00070           s++;}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00071}00071         \}}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00072}00072       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(c == \textcolor{charliteral}{'c'})\{}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00073}00073         putc(fd, *ap);}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00074}00074         ap++;}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00075}00075       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(c == \textcolor{charliteral}{'\%'})\{}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00076}00076         putc(fd, c);}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00077}00077       \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00078}00078         \textcolor{comment}{// Unknown \% sequence.  Print it to draw attention.}}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00079}00079         putc(fd, \textcolor{charliteral}{'\%'});}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00080}00080         putc(fd, c);}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00081}00081       \}}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00082}00082       state = 0;}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00083}00083     \}}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00084}00084   \}}
+\DoxyCodeLine{\Hypertarget{printf_8c_source_l00085}00085 \}}
+
+\end{DoxyCode}

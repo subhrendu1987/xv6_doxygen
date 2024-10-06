@@ -1,0 +1,399 @@
+\hypertarget{vm_8c_source}{}\doxysection{vm.\+c}
+\mbox{\hyperlink{vm_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00001}00001 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{param_8h}{param.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00002}00002 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00003}00003 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{defs_8h}{defs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00004}00004 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{x86_8h}{x86.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00005}00005 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{memlayout_8h}{memlayout.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00006}00006 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{mmu_8h}{mmu.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00007}00007 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{proc_8h}{proc.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00008}00008 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{elf_8h}{elf.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00010}00010 \textcolor{keyword}{extern} \textcolor{keywordtype}{char} \mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}}[];  \textcolor{comment}{// defined by kernel.ld}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00011}\mbox{\hyperlink{vm_8c_aff01f9f000432fd4171b7edee6c85855}{00011}} \mbox{\hyperlink{types_8h_ac131849542282b2c95dfeaf1f26dc010}{pde\_t}} *\mbox{\hyperlink{vm_8c_aff01f9f000432fd4171b7edee6c85855}{kpgdir}};  \textcolor{comment}{// for use in scheduler()}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00013}00013 \textcolor{comment}{// Set up CPU's kernel segment descriptors.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00014}00014 \textcolor{comment}{// Run once on entry on each CPU.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00015}00015 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00016}\mbox{\hyperlink{defs_8h_aaf5b2814a1dbf3ef0803dff58e0a76dc}{00016}} \mbox{\hyperlink{vm_8c_aaf5b2814a1dbf3ef0803dff58e0a76dc}{seginit}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00017}00017 \{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00018}00018   \textcolor{keyword}{struct }\mbox{\hyperlink{structcpu}{cpu}} *c;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00020}00020   \textcolor{comment}{// Map "{}logical"{} addresses to virtual addresses using identity map.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00021}00021   \textcolor{comment}{// Cannot share a CODE descriptor for both kernel and user}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00022}00022   \textcolor{comment}{// because it would have to have DPL\_USR, but the CPU forbids}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00023}00023   \textcolor{comment}{// an interrupt from CPL=0 to DPL=3.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00024}00024   c = \&\mbox{\hyperlink{mp_8c_a6d2633e73724907b582dfe6938ed7bb9}{cpus}}[\mbox{\hyperlink{defs_8h_a1444de2903d3d2624a50de058d19c635}{cpuid}}()];}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00025}00025   c-\/>\mbox{\hyperlink{structcpu_aee38fb8832f8e728538b2cee877d1c09}{gdt}}[\mbox{\hyperlink{mmu_8h_a0d4e0c4c738af60d6092941469642429}{SEG\_KCODE}}] = \mbox{\hyperlink{mmu_8h_a1594ac4688d9f212e835fd38ff63e83f}{SEG}}(\mbox{\hyperlink{asm_8h_af30c683a434e0712fd83781307239cb9}{STA\_X}}|\mbox{\hyperlink{asm_8h_a6545a48f34a3fae1b04cf265f13bc8f3}{STA\_R}}, 0, 0xffffffff, 0);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00026}00026   c-\/>\mbox{\hyperlink{structcpu_aee38fb8832f8e728538b2cee877d1c09}{gdt}}[\mbox{\hyperlink{mmu_8h_ad523d10217ef0ff5e75b7831f251d2b1}{SEG\_KDATA}}] = \mbox{\hyperlink{mmu_8h_a1594ac4688d9f212e835fd38ff63e83f}{SEG}}(\mbox{\hyperlink{asm_8h_a9321b5b232838b8b230c6b681be9a882}{STA\_W}}, 0, 0xffffffff, 0);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00027}00027   c-\/>\mbox{\hyperlink{structcpu_aee38fb8832f8e728538b2cee877d1c09}{gdt}}[\mbox{\hyperlink{mmu_8h_a85b694d969eb01e547197c21db219f4b}{SEG\_UCODE}}] = \mbox{\hyperlink{mmu_8h_a1594ac4688d9f212e835fd38ff63e83f}{SEG}}(\mbox{\hyperlink{asm_8h_af30c683a434e0712fd83781307239cb9}{STA\_X}}|\mbox{\hyperlink{asm_8h_a6545a48f34a3fae1b04cf265f13bc8f3}{STA\_R}}, 0, 0xffffffff, \mbox{\hyperlink{mmu_8h_a060d4d4e32af81cab881fe77e58d7b78}{DPL\_USER}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00028}00028   c-\/>\mbox{\hyperlink{structcpu_aee38fb8832f8e728538b2cee877d1c09}{gdt}}[\mbox{\hyperlink{mmu_8h_aba0495696b4c656fda31704782648461}{SEG\_UDATA}}] = \mbox{\hyperlink{mmu_8h_a1594ac4688d9f212e835fd38ff63e83f}{SEG}}(\mbox{\hyperlink{asm_8h_a9321b5b232838b8b230c6b681be9a882}{STA\_W}}, 0, 0xffffffff, \mbox{\hyperlink{mmu_8h_a060d4d4e32af81cab881fe77e58d7b78}{DPL\_USER}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00029}00029   lgdt(c-\/>\mbox{\hyperlink{structcpu_aee38fb8832f8e728538b2cee877d1c09}{gdt}}, \textcolor{keyword}{sizeof}(c-\/>\mbox{\hyperlink{structcpu_aee38fb8832f8e728538b2cee877d1c09}{gdt}}));}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00030}00030 \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00032}00032 \textcolor{comment}{// Return the address of the PTE in page table pgdir}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00033}00033 \textcolor{comment}{// that corresponds to virtual address va.  If alloc!=0,}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00034}00034 \textcolor{comment}{// create any required page table pages.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00035}00035 \textcolor{keyword}{static} \mbox{\hyperlink{mmu_8h_ab23e75f764f8314a83eaff23508c2ae5}{pte\_t}} *}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00036}00036 walkpgdir(\mbox{\hyperlink{types_8h_ac131849542282b2c95dfeaf1f26dc010}{pde\_t}} *pgdir, \textcolor{keyword}{const} \textcolor{keywordtype}{void} *va, \textcolor{keywordtype}{int} alloc)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00037}00037 \{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00038}00038   \mbox{\hyperlink{types_8h_ac131849542282b2c95dfeaf1f26dc010}{pde\_t}} *pde;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00039}00039   \mbox{\hyperlink{mmu_8h_ab23e75f764f8314a83eaff23508c2ae5}{pte\_t}} *pgtab;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00041}00041   pde = \&pgdir[\mbox{\hyperlink{mmu_8h_a110662636733266a8820e15fd32995b7}{PDX}}(va)];}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00042}00042   \textcolor{keywordflow}{if}(*pde \& \mbox{\hyperlink{mmu_8h_a89bd860de64c44cd8ebaca8dc311b5ac}{PTE\_P}})\{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00043}00043     pgtab = (\mbox{\hyperlink{mmu_8h_ab23e75f764f8314a83eaff23508c2ae5}{pte\_t}}*)\mbox{\hyperlink{memlayout_8h_aefd5e8b62c49bba2cf20309c7dd174e2}{P2V}}(\mbox{\hyperlink{mmu_8h_a74b24f9b091875a5313370892e3f37a5}{PTE\_ADDR}}(*pde));}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00044}00044   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00045}00045     \textcolor{keywordflow}{if}(!alloc || (pgtab = (\mbox{\hyperlink{mmu_8h_ab23e75f764f8314a83eaff23508c2ae5}{pte\_t}}*)\mbox{\hyperlink{defs_8h_a5e965f6365c721b5b23c12d16d45c3dc}{kalloc}}()) == 0)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00046}00046       \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00047}00047     \textcolor{comment}{// Make sure all those PTE\_P bits are zero.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00048}00048     \mbox{\hyperlink{defs_8h_a0098886a849eef10803e9f35ceec61b9}{memset}}(pgtab, 0, \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00049}00049     \textcolor{comment}{// The permissions here are overly generous, but they can}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00050}00050     \textcolor{comment}{// be further restricted by the permissions in the page table}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00051}00051     \textcolor{comment}{// entries, if necessary.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00052}00052     *pde = \mbox{\hyperlink{memlayout_8h_a5021188bc7da1304f27e913aee183407}{V2P}}(pgtab) | \mbox{\hyperlink{mmu_8h_a89bd860de64c44cd8ebaca8dc311b5ac}{PTE\_P}} | \mbox{\hyperlink{mmu_8h_a058fcbcc3e1eab2c09c68b3e5221c545}{PTE\_W}} | \mbox{\hyperlink{mmu_8h_adced9836a1dc98d72849361e6ab03cda}{PTE\_U}};}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00053}00053   \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00054}00054   \textcolor{keywordflow}{return} \&pgtab[\mbox{\hyperlink{mmu_8h_a6430b46123b475c465d6af22a51336fb}{PTX}}(va)];}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00055}00055 \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00056}00056 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00057}00057 \textcolor{comment}{// Create PTEs for virtual addresses starting at va that refer to}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00058}00058 \textcolor{comment}{// physical addresses starting at pa. va and size might not}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00059}00059 \textcolor{comment}{// be page-\/aligned.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00060}00060 \textcolor{keyword}{static} \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00061}00061 mappages(\mbox{\hyperlink{types_8h_ac131849542282b2c95dfeaf1f26dc010}{pde\_t}} *pgdir, \textcolor{keywordtype}{void} *va, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} size, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} pa, \textcolor{keywordtype}{int} perm)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00062}00062 \{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00063}00063   \textcolor{keywordtype}{char} *a, *last;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00064}00064   \mbox{\hyperlink{mmu_8h_ab23e75f764f8314a83eaff23508c2ae5}{pte\_t}} *pte;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00066}00066   a = (\textcolor{keywordtype}{char}*)\mbox{\hyperlink{mmu_8h_a687e91750055553dd2788386c6a512fb}{PGROUNDDOWN}}((\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}})va);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00067}00067   last = (\textcolor{keywordtype}{char}*)\mbox{\hyperlink{mmu_8h_a687e91750055553dd2788386c6a512fb}{PGROUNDDOWN}}(((\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}})va) + size -\/ 1);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00068}00068   \textcolor{keywordflow}{for}(;;)\{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00069}00069     \textcolor{keywordflow}{if}((pte = walkpgdir(pgdir, a, 1)) == 0)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00070}00070       \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00071}00071     \textcolor{keywordflow}{if}(*pte \& \mbox{\hyperlink{mmu_8h_a89bd860de64c44cd8ebaca8dc311b5ac}{PTE\_P}})}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00072}00072       \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}remap"{}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00073}00073     *pte = pa | perm | \mbox{\hyperlink{mmu_8h_a89bd860de64c44cd8ebaca8dc311b5ac}{PTE\_P}};}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00074}00074     \textcolor{keywordflow}{if}(a == last)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00075}00075       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00076}00076     a += \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}};}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00077}00077     pa += \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}};}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00078}00078   \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00079}00079   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00080}00080 \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00081}00081 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00082}00082 \textcolor{comment}{// There is one page table per process, plus one that's used when}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00083}00083 \textcolor{comment}{// a CPU is not running any process (kpgdir). The kernel uses the}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00084}00084 \textcolor{comment}{// current process's page table during system calls and interrupts;}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00085}00085 \textcolor{comment}{// page protection bits prevent user code from using the kernel's}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00086}00086 \textcolor{comment}{// mappings.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00087}00087 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00088}00088 \textcolor{comment}{// setupkvm() and exec() set up every page table like this:}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00089}00089 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00090}00090 \textcolor{comment}{//   0..KERNBASE: user memory (text+data+stack+heap), mapped to}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00091}00091 \textcolor{comment}{//                phys memory allocated by the kernel}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00092}00092 \textcolor{comment}{//   KERNBASE..KERNBASE+EXTMEM: mapped to 0..EXTMEM (for I/O space)}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00093}00093 \textcolor{comment}{//   KERNBASE+EXTMEM..data: mapped to EXTMEM..V2P(data)}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00094}00094 \textcolor{comment}{//                for the kernel's instructions and r/o data}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00095}00095 \textcolor{comment}{//   data..KERNBASE+PHYSTOP: mapped to V2P(data)..PHYSTOP,}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00096}00096 \textcolor{comment}{//                                  rw data + free physical memory}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00097}00097 \textcolor{comment}{//   0xfe000000..0: mapped direct (devices such as ioapic)}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00098}00098 \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00099}00099 \textcolor{comment}{// The kernel allocates physical memory for its heap and for user memory}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00100}00100 \textcolor{comment}{// between V2P(end) and the end of physical memory (PHYSTOP)}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00101}00101 \textcolor{comment}{// (directly addressable from end..P2V(PHYSTOP)).}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00102}00102 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00103}00103 \textcolor{comment}{// This table defines the kernel's mappings, which are present in}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00104}00104 \textcolor{comment}{// every process's page table.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00105}00105 \textcolor{keyword}{static} \textcolor{keyword}{struct }kmap \{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00106}00106   \textcolor{keywordtype}{void} *virt;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00107}00107   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} phys\_start;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00108}00108   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} phys\_end;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00109}00109   \textcolor{keywordtype}{int} perm;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00110}00110 \} kmap[] = \{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00111}00111  \{ (\textcolor{keywordtype}{void}*)\mbox{\hyperlink{memlayout_8h_a20cbfc19992a40ab9ccf4aa8ab8283d0}{KERNBASE}}, 0,             \mbox{\hyperlink{memlayout_8h_afa15977c771e531ebd3f3a5c2563ce16}{EXTMEM}},    \mbox{\hyperlink{mmu_8h_a058fcbcc3e1eab2c09c68b3e5221c545}{PTE\_W}}\}, \textcolor{comment}{// I/O space}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00112}00112  \{ (\textcolor{keywordtype}{void}*)\mbox{\hyperlink{memlayout_8h_aca91837d3500b42e38e6427ca4db4946}{KERNLINK}}, \mbox{\hyperlink{memlayout_8h_a5021188bc7da1304f27e913aee183407}{V2P}}(\mbox{\hyperlink{memlayout_8h_aca91837d3500b42e38e6427ca4db4946}{KERNLINK}}), \mbox{\hyperlink{memlayout_8h_a5021188bc7da1304f27e913aee183407}{V2P}}(\mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}}), 0\},     \textcolor{comment}{// kern text+rodata}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00113}00113  \{ (\textcolor{keywordtype}{void}*)\mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}},     \mbox{\hyperlink{memlayout_8h_a5021188bc7da1304f27e913aee183407}{V2P}}(\mbox{\hyperlink{vm_8c_a923b2158227405b9f7a6eceb6c7104c8}{data}}),     \mbox{\hyperlink{memlayout_8h_ad3c557a115f7d82d9ef849846779531c}{PHYSTOP}},   \mbox{\hyperlink{mmu_8h_a058fcbcc3e1eab2c09c68b3e5221c545}{PTE\_W}}\}, \textcolor{comment}{// kern data+memory}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00114}00114  \{ (\textcolor{keywordtype}{void}*)\mbox{\hyperlink{memlayout_8h_a643ab4c8a98a6f7bfde12c8f52f6aafa}{DEVSPACE}}, \mbox{\hyperlink{memlayout_8h_a643ab4c8a98a6f7bfde12c8f52f6aafa}{DEVSPACE}},      0,         \mbox{\hyperlink{mmu_8h_a058fcbcc3e1eab2c09c68b3e5221c545}{PTE\_W}}\}, \textcolor{comment}{// more devices}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00115}00115 \};}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00116}00116 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00117}00117 \textcolor{comment}{// Set up kernel part of a page table.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00118}00118 \mbox{\hyperlink{types_8h_ac131849542282b2c95dfeaf1f26dc010}{pde\_t}}*}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00119}\mbox{\hyperlink{defs_8h_a1c8a7a02e9391b5cf0984388216695c0}{00119}} \mbox{\hyperlink{vm_8c_a1c8a7a02e9391b5cf0984388216695c0}{setupkvm}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00120}00120 \{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00121}00121   \mbox{\hyperlink{types_8h_ac131849542282b2c95dfeaf1f26dc010}{pde\_t}} *pgdir;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00122}00122   \textcolor{keyword}{struct }kmap *k;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00123}00123 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00124}00124   \textcolor{keywordflow}{if}((pgdir = (\mbox{\hyperlink{types_8h_ac131849542282b2c95dfeaf1f26dc010}{pde\_t}}*)\mbox{\hyperlink{defs_8h_a5e965f6365c721b5b23c12d16d45c3dc}{kalloc}}()) == 0)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00125}00125     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00126}00126   \mbox{\hyperlink{defs_8h_a0098886a849eef10803e9f35ceec61b9}{memset}}(pgdir, 0, \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00127}00127   \textcolor{keywordflow}{if} (\mbox{\hyperlink{memlayout_8h_aefd5e8b62c49bba2cf20309c7dd174e2}{P2V}}(\mbox{\hyperlink{memlayout_8h_ad3c557a115f7d82d9ef849846779531c}{PHYSTOP}}) > (\textcolor{keywordtype}{void}*)\mbox{\hyperlink{memlayout_8h_a643ab4c8a98a6f7bfde12c8f52f6aafa}{DEVSPACE}})}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00128}00128     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}PHYSTOP too high"{}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00129}00129   \textcolor{keywordflow}{for}(k = kmap; k < \&kmap[\mbox{\hyperlink{defs_8h_afacd331296c10f360da7640e0d68429f}{NELEM}}(kmap)]; k++)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00130}00130     \textcolor{keywordflow}{if}(mappages(pgdir, k-\/>virt, k-\/>phys\_end -\/ k-\/>phys\_start,}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00131}00131                 (\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}})k-\/>phys\_start, k-\/>perm) < 0) \{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00132}00132       \mbox{\hyperlink{vm_8c_aa883924e2f068c520b695cdc168e1603}{freevm}}(pgdir);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00133}00133       \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00134}00134     \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00135}00135   \textcolor{keywordflow}{return} pgdir;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00136}00136 \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00137}00137 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00138}00138 \textcolor{comment}{// Allocate one page table for the machine for the kernel address}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00139}00139 \textcolor{comment}{// space for scheduler processes.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00140}00140 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00141}\mbox{\hyperlink{defs_8h_a893bf6891e427f310b43981bf8e737ea}{00141}} \mbox{\hyperlink{vm_8c_a893bf6891e427f310b43981bf8e737ea}{kvmalloc}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00142}00142 \{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00143}00143   \mbox{\hyperlink{vm_8c_aff01f9f000432fd4171b7edee6c85855}{kpgdir}} = \mbox{\hyperlink{vm_8c_a1c8a7a02e9391b5cf0984388216695c0}{setupkvm}}();}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00144}00144   \mbox{\hyperlink{vm_8c_a02ca0670bc1fe12e38453082631ff360}{switchkvm}}();}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00145}00145 \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00146}00146 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00147}00147 \textcolor{comment}{// Switch h/w page table register to the kernel-\/only page table,}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00148}00148 \textcolor{comment}{// for when no process is running.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00149}00149 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00150}\mbox{\hyperlink{defs_8h_a02ca0670bc1fe12e38453082631ff360}{00150}} \mbox{\hyperlink{vm_8c_a02ca0670bc1fe12e38453082631ff360}{switchkvm}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00151}00151 \{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00152}00152   lcr3(\mbox{\hyperlink{memlayout_8h_a5021188bc7da1304f27e913aee183407}{V2P}}(\mbox{\hyperlink{vm_8c_aff01f9f000432fd4171b7edee6c85855}{kpgdir}}));   \textcolor{comment}{// switch to the kernel page table}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00153}00153 \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00154}00154 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00155}00155 \textcolor{comment}{// Switch TSS and h/w page table to correspond to process p.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00156}00156 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00157}\mbox{\hyperlink{defs_8h_ad43d81fa3edec39a200abd0853bc84b1}{00157}} \mbox{\hyperlink{vm_8c_a87c90f0ab2a1b11c2b55f4e483bb8493}{switchuvm}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structproc}{proc}} *p)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00158}00158 \{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00159}00159   \textcolor{keywordflow}{if}(p == 0)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00160}00160     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}switchuvm: no process"{}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00161}00161   \textcolor{keywordflow}{if}(p-\/>\mbox{\hyperlink{structproc_a9f556df98482bff6c9216013d7581ae4}{kstack}} == 0)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00162}00162     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}switchuvm: no kstack"{}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00163}00163   \textcolor{keywordflow}{if}(p-\/>\mbox{\hyperlink{structproc_ad430afc653e9eb6cee33954d5545b79d}{pgdir}} == 0)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00164}00164     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}switchuvm: no pgdir"{}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00165}00165 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00166}00166   \mbox{\hyperlink{defs_8h_a206b749d1b7768dadce61cbcde7e0f1c}{pushcli}}();}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00167}00167   \mbox{\hyperlink{defs_8h_ad427959ad025dabd8cd393b27ec39160}{mycpu}}()-\/>\mbox{\hyperlink{structcpu_aee38fb8832f8e728538b2cee877d1c09}{gdt}}[\mbox{\hyperlink{mmu_8h_a51332450caa8201ecc42fce428288e6f}{SEG\_TSS}}] = \mbox{\hyperlink{mmu_8h_abe69a1dd6290e2be017d58309495adb7}{SEG16}}(\mbox{\hyperlink{mmu_8h_a1b27d53cef04c198f3b048345d28016c}{STS\_T32A}}, \&\mbox{\hyperlink{defs_8h_ad427959ad025dabd8cd393b27ec39160}{mycpu}}()-\/>ts,}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00168}00168                                 \textcolor{keyword}{sizeof}(\mbox{\hyperlink{defs_8h_ad427959ad025dabd8cd393b27ec39160}{mycpu}}()-\/>ts)-\/1, 0);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00169}00169   \mbox{\hyperlink{defs_8h_ad427959ad025dabd8cd393b27ec39160}{mycpu}}()-\/>\mbox{\hyperlink{structcpu_aee38fb8832f8e728538b2cee877d1c09}{gdt}}[\mbox{\hyperlink{mmu_8h_a51332450caa8201ecc42fce428288e6f}{SEG\_TSS}}].\mbox{\hyperlink{structsegdesc_aacc67bb0857f0c77c1f8a5c9b8a1ac09}{s}} = 0;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00170}00170   \mbox{\hyperlink{defs_8h_ad427959ad025dabd8cd393b27ec39160}{mycpu}}()-\/>\mbox{\hyperlink{structcpu_a32e7b5aa877171c943d47038e818a159}{ts}}.\mbox{\hyperlink{structtaskstate_a574e97ea3fd87f314da88afec3c6f574}{ss0}} = \mbox{\hyperlink{mmu_8h_ad523d10217ef0ff5e75b7831f251d2b1}{SEG\_KDATA}} << 3;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00171}00171   \mbox{\hyperlink{defs_8h_ad427959ad025dabd8cd393b27ec39160}{mycpu}}()-\/>\mbox{\hyperlink{structcpu_a32e7b5aa877171c943d47038e818a159}{ts}}.\mbox{\hyperlink{structtaskstate_a41b3e1d46a5068485eb6714974a979d6}{esp0}} = (\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}})p-\/>\mbox{\hyperlink{structproc_a9f556df98482bff6c9216013d7581ae4}{kstack}} + \mbox{\hyperlink{param_8h_a7735dc19a8cdc3fcafd4241184be4b41}{KSTACKSIZE}};}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00172}00172   \textcolor{comment}{// setting IOPL=0 in eflags *and* iomb beyond the tss segment limit}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00173}00173   \textcolor{comment}{// forbids I/O instructions (e.g., inb and outb) from user space}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00174}00174   \mbox{\hyperlink{defs_8h_ad427959ad025dabd8cd393b27ec39160}{mycpu}}()-\/>\mbox{\hyperlink{structcpu_a32e7b5aa877171c943d47038e818a159}{ts}}.\mbox{\hyperlink{structtaskstate_a5ee57b190324239a5d88f7c02039901f}{iomb}} = (\mbox{\hyperlink{types_8h_ab95f123a6c9bcfee6a343170ef8c5f69}{ushort}}) 0xFFFF;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00175}00175   ltr(\mbox{\hyperlink{mmu_8h_a51332450caa8201ecc42fce428288e6f}{SEG\_TSS}} << 3);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00176}00176   lcr3(\mbox{\hyperlink{memlayout_8h_a5021188bc7da1304f27e913aee183407}{V2P}}(p-\/>\mbox{\hyperlink{structproc_ad430afc653e9eb6cee33954d5545b79d}{pgdir}}));  \textcolor{comment}{// switch to process's address space}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00177}00177   \mbox{\hyperlink{defs_8h_ae3424f669269fef400ce29c3aeb43fdb}{popcli}}();}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00178}00178 \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00179}00179 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00180}00180 \textcolor{comment}{// Load the initcode into address 0 of pgdir.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00181}00181 \textcolor{comment}{// sz must be less than a page.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00182}00182 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00183}\mbox{\hyperlink{defs_8h_a7b3410bde4005e848e1748f2b0f0a084}{00183}} \mbox{\hyperlink{vm_8c_ac96c231d4053eaf4322c27d1f2cd9d49}{inituvm}}(\mbox{\hyperlink{types_8h_ac131849542282b2c95dfeaf1f26dc010}{pde\_t}} *pgdir, \textcolor{keywordtype}{char} *init, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} sz)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00184}00184 \{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00185}00185   \textcolor{keywordtype}{char} *\mbox{\hyperlink{usertests_8c_aa1c6e6e76813ccb29a29bb119dba668a}{mem}};}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00186}00186 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00187}00187   \textcolor{keywordflow}{if}(sz >= \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}})}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00188}00188     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}inituvm: more than a page"{}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00189}00189   \mbox{\hyperlink{usertests_8c_aa1c6e6e76813ccb29a29bb119dba668a}{mem}} = \mbox{\hyperlink{defs_8h_a5e965f6365c721b5b23c12d16d45c3dc}{kalloc}}();}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00190}00190   \mbox{\hyperlink{defs_8h_a0098886a849eef10803e9f35ceec61b9}{memset}}(\mbox{\hyperlink{usertests_8c_aa1c6e6e76813ccb29a29bb119dba668a}{mem}}, 0, \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00191}00191   mappages(pgdir, 0, \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}}, \mbox{\hyperlink{memlayout_8h_a5021188bc7da1304f27e913aee183407}{V2P}}(\mbox{\hyperlink{usertests_8c_aa1c6e6e76813ccb29a29bb119dba668a}{mem}}), \mbox{\hyperlink{mmu_8h_a058fcbcc3e1eab2c09c68b3e5221c545}{PTE\_W}}|\mbox{\hyperlink{mmu_8h_adced9836a1dc98d72849361e6ab03cda}{PTE\_U}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00192}00192   \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(\mbox{\hyperlink{usertests_8c_aa1c6e6e76813ccb29a29bb119dba668a}{mem}}, init, sz);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00193}00193 \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00194}00194 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00195}00195 \textcolor{comment}{// Load a program segment into pgdir.  addr must be page-\/aligned}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00196}00196 \textcolor{comment}{// and the pages from addr to addr+sz must already be mapped.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00197}00197 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00198}\mbox{\hyperlink{defs_8h_a8a149272578e00e0ce70480004640679}{00198}} \mbox{\hyperlink{vm_8c_a201acc8337a2893268b61ea5a1ee0d53}{loaduvm}}(\mbox{\hyperlink{types_8h_ac131849542282b2c95dfeaf1f26dc010}{pde\_t}} *pgdir, \textcolor{keywordtype}{char} *addr, \textcolor{keyword}{struct} \mbox{\hyperlink{structinode}{inode}} *ip, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} offset, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} sz)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00199}00199 \{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00200}00200   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} i, pa, n;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00201}00201   \mbox{\hyperlink{mmu_8h_ab23e75f764f8314a83eaff23508c2ae5}{pte\_t}} *pte;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00202}00202 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00203}00203   \textcolor{keywordflow}{if}((\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}) addr \% \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}} != 0)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00204}00204     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}loaduvm: addr must be page aligned"{}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00205}00205   \textcolor{keywordflow}{for}(i = 0; i < sz; i += \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}})\{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00206}00206     \textcolor{keywordflow}{if}((pte = walkpgdir(pgdir, addr+i, 0)) == 0)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00207}00207       \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}loaduvm: address should exist"{}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00208}00208     pa = \mbox{\hyperlink{mmu_8h_a74b24f9b091875a5313370892e3f37a5}{PTE\_ADDR}}(*pte);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00209}00209     \textcolor{keywordflow}{if}(sz -\/ i < \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}})}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00210}00210       n = sz -\/ i;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00211}00211     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00212}00212       n = \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}};}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00213}00213     \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_a2415273b06f31f0f2587b7325588a7e4}{readi}}(ip, \mbox{\hyperlink{memlayout_8h_aefd5e8b62c49bba2cf20309c7dd174e2}{P2V}}(pa), offset+i, n) != n)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00214}00214       \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00215}00215   \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00216}00216   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00217}00217 \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00218}00218 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00219}00219 \textcolor{comment}{// Allocate page tables and physical memory to grow process from oldsz to}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00220}00220 \textcolor{comment}{// newsz, which need not be page aligned.  Returns new size or 0 on error.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00221}00221 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00222}\mbox{\hyperlink{defs_8h_a67f50b6f85756f02b5acdcb084d51b9f}{00222}} \mbox{\hyperlink{vm_8c_afea0f0a82a9f9c7aae26f90b5e0836c6}{allocuvm}}(\mbox{\hyperlink{types_8h_ac131849542282b2c95dfeaf1f26dc010}{pde\_t}} *pgdir, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} oldsz, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} newsz)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00223}00223 \{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00224}00224   \textcolor{keywordtype}{char} *\mbox{\hyperlink{usertests_8c_aa1c6e6e76813ccb29a29bb119dba668a}{mem}};}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00225}00225   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} a;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00226}00226 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00227}00227   \textcolor{keywordflow}{if}(newsz >= \mbox{\hyperlink{memlayout_8h_a20cbfc19992a40ab9ccf4aa8ab8283d0}{KERNBASE}})}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00228}00228     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00229}00229   \textcolor{keywordflow}{if}(newsz < oldsz)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00230}00230     \textcolor{keywordflow}{return} oldsz;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00231}00231 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00232}00232   a = \mbox{\hyperlink{mmu_8h_affa8cdfbd1c15dafc9f3af3a7b641f80}{PGROUNDUP}}(oldsz);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00233}00233   \textcolor{keywordflow}{for}(; a < newsz; a += \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}})\{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00234}00234     \mbox{\hyperlink{usertests_8c_aa1c6e6e76813ccb29a29bb119dba668a}{mem}} = \mbox{\hyperlink{defs_8h_a5e965f6365c721b5b23c12d16d45c3dc}{kalloc}}();}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00235}00235     \textcolor{keywordflow}{if}(\mbox{\hyperlink{usertests_8c_aa1c6e6e76813ccb29a29bb119dba668a}{mem}} == 0)\{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00236}00236       \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{}allocuvm out of memory\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00237}00237       \mbox{\hyperlink{vm_8c_a6d3019ea15a9bfdc5131ae97f3623c49}{deallocuvm}}(pgdir, newsz, oldsz);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00238}00238       \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00239}00239     \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00240}00240     \mbox{\hyperlink{defs_8h_a0098886a849eef10803e9f35ceec61b9}{memset}}(\mbox{\hyperlink{usertests_8c_aa1c6e6e76813ccb29a29bb119dba668a}{mem}}, 0, \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00241}00241     \textcolor{keywordflow}{if}(mappages(pgdir, (\textcolor{keywordtype}{char}*)a, \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}}, \mbox{\hyperlink{memlayout_8h_a5021188bc7da1304f27e913aee183407}{V2P}}(\mbox{\hyperlink{usertests_8c_aa1c6e6e76813ccb29a29bb119dba668a}{mem}}), \mbox{\hyperlink{mmu_8h_a058fcbcc3e1eab2c09c68b3e5221c545}{PTE\_W}}|\mbox{\hyperlink{mmu_8h_adced9836a1dc98d72849361e6ab03cda}{PTE\_U}}) < 0)\{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00242}00242       \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{}allocuvm out of memory (2)\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00243}00243       \mbox{\hyperlink{vm_8c_a6d3019ea15a9bfdc5131ae97f3623c49}{deallocuvm}}(pgdir, newsz, oldsz);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00244}00244       \mbox{\hyperlink{defs_8h_ae79d6a7d0901b7c081cfded3f916d5bd}{kfree}}(\mbox{\hyperlink{usertests_8c_aa1c6e6e76813ccb29a29bb119dba668a}{mem}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00245}00245       \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00246}00246     \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00247}00247   \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00248}00248   \textcolor{keywordflow}{return} newsz;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00249}00249 \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00250}00250 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00251}00251 \textcolor{comment}{// Deallocate user pages to bring the process size from oldsz to}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00252}00252 \textcolor{comment}{// newsz.  oldsz and newsz need not be page-\/aligned, nor does newsz}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00253}00253 \textcolor{comment}{// need to be less than oldsz.  oldsz can be larger than the actual}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00254}00254 \textcolor{comment}{// process size.  Returns the new process size.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00255}00255 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00256}\mbox{\hyperlink{defs_8h_ac45969a8875b6dc87245e0a642aa2d8d}{00256}} \mbox{\hyperlink{vm_8c_a6d3019ea15a9bfdc5131ae97f3623c49}{deallocuvm}}(\mbox{\hyperlink{types_8h_ac131849542282b2c95dfeaf1f26dc010}{pde\_t}} *pgdir, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} oldsz, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} newsz)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00257}00257 \{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00258}00258   \mbox{\hyperlink{mmu_8h_ab23e75f764f8314a83eaff23508c2ae5}{pte\_t}} *pte;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00259}00259   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} a, pa;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00260}00260 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00261}00261   \textcolor{keywordflow}{if}(newsz >= oldsz)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00262}00262     \textcolor{keywordflow}{return} oldsz;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00263}00263 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00264}00264   a = \mbox{\hyperlink{mmu_8h_affa8cdfbd1c15dafc9f3af3a7b641f80}{PGROUNDUP}}(newsz);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00265}00265   \textcolor{keywordflow}{for}(; a  < oldsz; a += \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}})\{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00266}00266     pte = walkpgdir(pgdir, (\textcolor{keywordtype}{char}*)a, 0);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00267}00267     \textcolor{keywordflow}{if}(!pte)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00268}00268       a = \mbox{\hyperlink{mmu_8h_a2e162e8ad6bc81877dd299db9fc87664}{PGADDR}}(\mbox{\hyperlink{mmu_8h_a110662636733266a8820e15fd32995b7}{PDX}}(a) + 1, 0, 0) -\/ \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}};}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00269}00269     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}((*pte \& \mbox{\hyperlink{mmu_8h_a89bd860de64c44cd8ebaca8dc311b5ac}{PTE\_P}}) != 0)\{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00270}00270       pa = \mbox{\hyperlink{mmu_8h_a74b24f9b091875a5313370892e3f37a5}{PTE\_ADDR}}(*pte);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00271}00271       \textcolor{keywordflow}{if}(pa == 0)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00272}00272         \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}kfree"{}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00273}00273       \textcolor{keywordtype}{char} *v = \mbox{\hyperlink{memlayout_8h_aefd5e8b62c49bba2cf20309c7dd174e2}{P2V}}(pa);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00274}00274       \mbox{\hyperlink{defs_8h_ae79d6a7d0901b7c081cfded3f916d5bd}{kfree}}(v);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00275}00275       *pte = 0;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00276}00276     \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00277}00277   \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00278}00278   \textcolor{keywordflow}{return} newsz;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00279}00279 \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00280}00280 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00281}00281 \textcolor{comment}{// Free a page table and all the physical memory pages}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00282}00282 \textcolor{comment}{// in the user part.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00283}00283 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00284}\mbox{\hyperlink{defs_8h_af24cf1756e19afd8be8c95d02262cf3a}{00284}} \mbox{\hyperlink{vm_8c_aa883924e2f068c520b695cdc168e1603}{freevm}}(\mbox{\hyperlink{types_8h_ac131849542282b2c95dfeaf1f26dc010}{pde\_t}} *pgdir)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00285}00285 \{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00286}00286   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} i;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00287}00287 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00288}00288   \textcolor{keywordflow}{if}(pgdir == 0)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00289}00289     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}freevm: no pgdir"{}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00290}00290   \mbox{\hyperlink{vm_8c_a6d3019ea15a9bfdc5131ae97f3623c49}{deallocuvm}}(pgdir, \mbox{\hyperlink{memlayout_8h_a20cbfc19992a40ab9ccf4aa8ab8283d0}{KERNBASE}}, 0);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00291}00291   \textcolor{keywordflow}{for}(i = 0; i < \mbox{\hyperlink{mmu_8h_af60ee3ecbf249497d0378c97201edfe8}{NPDENTRIES}}; i++)\{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00292}00292     \textcolor{keywordflow}{if}(pgdir[i] \& \mbox{\hyperlink{mmu_8h_a89bd860de64c44cd8ebaca8dc311b5ac}{PTE\_P}})\{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00293}00293       \textcolor{keywordtype}{char} * v = \mbox{\hyperlink{memlayout_8h_aefd5e8b62c49bba2cf20309c7dd174e2}{P2V}}(\mbox{\hyperlink{mmu_8h_a74b24f9b091875a5313370892e3f37a5}{PTE\_ADDR}}(pgdir[i]));}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00294}00294       \mbox{\hyperlink{defs_8h_ae79d6a7d0901b7c081cfded3f916d5bd}{kfree}}(v);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00295}00295     \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00296}00296   \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00297}00297   \mbox{\hyperlink{defs_8h_ae79d6a7d0901b7c081cfded3f916d5bd}{kfree}}((\textcolor{keywordtype}{char}*)pgdir);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00298}00298 \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00299}00299 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00300}00300 \textcolor{comment}{// Clear PTE\_U on a page. Used to create an inaccessible}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00301}00301 \textcolor{comment}{// page beneath the user stack.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00302}00302 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00303}\mbox{\hyperlink{defs_8h_a795e27a0cb916cfb41411ebbb9669ddf}{00303}} \mbox{\hyperlink{vm_8c_a795e27a0cb916cfb41411ebbb9669ddf}{clearpteu}}(\mbox{\hyperlink{types_8h_ac131849542282b2c95dfeaf1f26dc010}{pde\_t}} *pgdir, \textcolor{keywordtype}{char} *uva)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00304}00304 \{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00305}00305   \mbox{\hyperlink{mmu_8h_ab23e75f764f8314a83eaff23508c2ae5}{pte\_t}} *pte;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00306}00306 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00307}00307   pte = walkpgdir(pgdir, uva, 0);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00308}00308   \textcolor{keywordflow}{if}(pte == 0)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00309}00309     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}clearpteu"{}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00310}00310   *pte \&= \string~PTE\_U;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00311}00311 \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00312}00312 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00313}00313 \textcolor{comment}{// Given a parent process's page table, create a copy}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00314}00314 \textcolor{comment}{// of it for a child.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00315}00315 \mbox{\hyperlink{types_8h_ac131849542282b2c95dfeaf1f26dc010}{pde\_t}}*}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00316}\mbox{\hyperlink{defs_8h_a8caec506ffa8f9386b0434e4cd5aa2b8}{00316}} \mbox{\hyperlink{vm_8c_a1b57bfa0091c9be3ccc16dbb85ce3acf}{copyuvm}}(\mbox{\hyperlink{types_8h_ac131849542282b2c95dfeaf1f26dc010}{pde\_t}} *pgdir, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} sz)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00317}00317 \{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00318}00318   \mbox{\hyperlink{types_8h_ac131849542282b2c95dfeaf1f26dc010}{pde\_t}} *d;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00319}00319   \mbox{\hyperlink{mmu_8h_ab23e75f764f8314a83eaff23508c2ae5}{pte\_t}} *pte;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00320}00320   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} pa, i, flags;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00321}00321   \textcolor{keywordtype}{char} *\mbox{\hyperlink{usertests_8c_aa1c6e6e76813ccb29a29bb119dba668a}{mem}};}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00322}00322 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00323}00323   \textcolor{keywordflow}{if}((d = \mbox{\hyperlink{vm_8c_a1c8a7a02e9391b5cf0984388216695c0}{setupkvm}}()) == 0)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00324}00324     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00325}00325   \textcolor{keywordflow}{for}(i = 0; i < sz; i += \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}})\{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00326}00326     \textcolor{keywordflow}{if}((pte = walkpgdir(pgdir, (\textcolor{keywordtype}{void} *) i, 0)) == 0)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00327}00327       \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}copyuvm: pte should exist"{}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00328}00328     \textcolor{keywordflow}{if}(!(*pte \& \mbox{\hyperlink{mmu_8h_a89bd860de64c44cd8ebaca8dc311b5ac}{PTE\_P}}))}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00329}00329       \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}copyuvm: page not present"{}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00330}00330     pa = \mbox{\hyperlink{mmu_8h_a74b24f9b091875a5313370892e3f37a5}{PTE\_ADDR}}(*pte);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00331}00331     flags = \mbox{\hyperlink{mmu_8h_a8842a288646d28dda80a0544002f6941}{PTE\_FLAGS}}(*pte);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00332}00332     \textcolor{keywordflow}{if}((\mbox{\hyperlink{usertests_8c_aa1c6e6e76813ccb29a29bb119dba668a}{mem}} = \mbox{\hyperlink{defs_8h_a5e965f6365c721b5b23c12d16d45c3dc}{kalloc}}()) == 0)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00333}00333       \textcolor{keywordflow}{goto} bad;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00334}00334     \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(\mbox{\hyperlink{usertests_8c_aa1c6e6e76813ccb29a29bb119dba668a}{mem}}, (\textcolor{keywordtype}{char}*)\mbox{\hyperlink{memlayout_8h_aefd5e8b62c49bba2cf20309c7dd174e2}{P2V}}(pa), \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00335}00335     \textcolor{keywordflow}{if}(mappages(d, (\textcolor{keywordtype}{void}*)i, \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}}, \mbox{\hyperlink{memlayout_8h_a5021188bc7da1304f27e913aee183407}{V2P}}(\mbox{\hyperlink{usertests_8c_aa1c6e6e76813ccb29a29bb119dba668a}{mem}}), flags) < 0) \{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00336}00336       \mbox{\hyperlink{defs_8h_ae79d6a7d0901b7c081cfded3f916d5bd}{kfree}}(\mbox{\hyperlink{usertests_8c_aa1c6e6e76813ccb29a29bb119dba668a}{mem}});}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00337}00337       \textcolor{keywordflow}{goto} bad;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00338}00338     \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00339}00339   \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00340}00340   \textcolor{keywordflow}{return} d;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00341}00341 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00342}00342 bad:}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00343}00343   \mbox{\hyperlink{vm_8c_aa883924e2f068c520b695cdc168e1603}{freevm}}(d);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00344}00344   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00345}00345 \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00346}00346 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00347}00347 \textcolor{comment}{//PAGEBREAK!}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00348}00348 \textcolor{comment}{// Map user virtual address to kernel address.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00349}00349 \textcolor{keywordtype}{char}*}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00350}\mbox{\hyperlink{defs_8h_a082f50617d3c87d732157c60daed00ce}{00350}} \mbox{\hyperlink{vm_8c_a3436a3bf222c074c4ed4d985f0c1ecef}{uva2ka}}(\mbox{\hyperlink{types_8h_ac131849542282b2c95dfeaf1f26dc010}{pde\_t}} *pgdir, \textcolor{keywordtype}{char} *uva)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00351}00351 \{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00352}00352   \mbox{\hyperlink{mmu_8h_ab23e75f764f8314a83eaff23508c2ae5}{pte\_t}} *pte;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00353}00353 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00354}00354   pte = walkpgdir(pgdir, uva, 0);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00355}00355   \textcolor{keywordflow}{if}((*pte \& \mbox{\hyperlink{mmu_8h_a89bd860de64c44cd8ebaca8dc311b5ac}{PTE\_P}}) == 0)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00356}00356     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00357}00357   \textcolor{keywordflow}{if}((*pte \& \mbox{\hyperlink{mmu_8h_adced9836a1dc98d72849361e6ab03cda}{PTE\_U}}) == 0)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00358}00358     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00359}00359   \textcolor{keywordflow}{return} (\textcolor{keywordtype}{char}*)\mbox{\hyperlink{memlayout_8h_aefd5e8b62c49bba2cf20309c7dd174e2}{P2V}}(\mbox{\hyperlink{mmu_8h_a74b24f9b091875a5313370892e3f37a5}{PTE\_ADDR}}(*pte));}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00360}00360 \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00361}00361 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00362}00362 \textcolor{comment}{// Copy len bytes from p to user address va in page table pgdir.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00363}00363 \textcolor{comment}{// Most useful when pgdir is not the current page table.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00364}00364 \textcolor{comment}{// uva2ka ensures this only works for PTE\_U pages.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00365}00365 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00366}\mbox{\hyperlink{defs_8h_a11f5ff2e5bcd16968a88fcbb30db5a10}{00366}} \mbox{\hyperlink{vm_8c_a532bc3f3e39942c20a471a11cff1a582}{copyout}}(\mbox{\hyperlink{types_8h_ac131849542282b2c95dfeaf1f26dc010}{pde\_t}} *pgdir, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} va, \textcolor{keywordtype}{void} *p, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} len)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00367}00367 \{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00368}00368   \textcolor{keywordtype}{char} *\mbox{\hyperlink{structbuf}{buf}}, *pa0;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00369}00369   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} n, va0;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00370}00370 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00371}00371   \mbox{\hyperlink{structbuf}{buf}} = (\textcolor{keywordtype}{char}*)p;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00372}00372   \textcolor{keywordflow}{while}(len > 0)\{}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00373}00373     va0 = (\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}})\mbox{\hyperlink{mmu_8h_a687e91750055553dd2788386c6a512fb}{PGROUNDDOWN}}(va);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00374}00374     pa0 = \mbox{\hyperlink{vm_8c_a3436a3bf222c074c4ed4d985f0c1ecef}{uva2ka}}(pgdir, (\textcolor{keywordtype}{char}*)va0);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00375}00375     \textcolor{keywordflow}{if}(pa0 == 0)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00376}00376       \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00377}00377     n = \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}} -\/ (va -\/ va0);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00378}00378     \textcolor{keywordflow}{if}(n > len)}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00379}00379       n = len;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00380}00380     \mbox{\hyperlink{defs_8h_ac152fff34fe03e497d35b1d4c47f1445}{memmove}}(pa0 + (va -\/ va0), \mbox{\hyperlink{structbuf}{buf}}, n);}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00381}00381     len -\/= n;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00382}00382     \mbox{\hyperlink{structbuf}{buf}} += n;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00383}00383     va = va0 + \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}};}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00384}00384   \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00385}00385   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00386}00386 \}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00387}00387 }
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00388}00388 \textcolor{comment}{//PAGEBREAK!}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00389}00389 \textcolor{comment}{// Blank page.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00390}00390 \textcolor{comment}{//PAGEBREAK!}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00391}00391 \textcolor{comment}{// Blank page.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00392}00392 \textcolor{comment}{//PAGEBREAK!}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00393}00393 \textcolor{comment}{// Blank page.}}
+\DoxyCodeLine{\Hypertarget{vm_8c_source_l00394}00394 }
+
+\end{DoxyCode}

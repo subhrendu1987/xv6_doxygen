@@ -1,0 +1,88 @@
+\hypertarget{init_8c}{}\doxysection{init.\+c File Reference}
+\label{init_8c}\index{init.c@{init.c}}
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}stat.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}user.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}fcntl.\+h\char`\"{}}\newline
+Include dependency graph for init.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=312pt]{d6/da7/init_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{init_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}} \mbox{[}$\,$\mbox{]} = \{ \char`\"{}sh\char`\"{}, 0 \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{init_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{init_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+\index{init.c@{init.c}!main@{main}}
+\index{main@{main}!init.c@{init.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{init_8c_source_l00011}{11}} of file \mbox{\hyperlink{init_8c_source}{init.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00012 \{}
+\DoxyCodeLine{00013   \textcolor{keywordtype}{int} pid, wpid;}
+\DoxyCodeLine{00014 }
+\DoxyCodeLine{00015   \textcolor{keywordflow}{if}(\mbox{\hyperlink{user_8h_a2c4414339f388561554c2deab11a1a07}{open}}(\textcolor{stringliteral}{"{}console"{}}, \mbox{\hyperlink{fcntl_8h_abb0586253488ee61072b73557eeb873b}{O\_RDWR}}) < 0)\{}
+\DoxyCodeLine{00016     \mbox{\hyperlink{user_8h_a3b9ff823fbf509b3d200bd3d5c238365}{mknod}}(\textcolor{stringliteral}{"{}console"{}}, 1, 1);}
+\DoxyCodeLine{00017     \mbox{\hyperlink{user_8h_a2c4414339f388561554c2deab11a1a07}{open}}(\textcolor{stringliteral}{"{}console"{}}, \mbox{\hyperlink{fcntl_8h_abb0586253488ee61072b73557eeb873b}{O\_RDWR}});}
+\DoxyCodeLine{00018   \}}
+\DoxyCodeLine{00019   \mbox{\hyperlink{user_8h_a530ea95b243a1bf148adaf399e2a6292}{dup}}(0);  \textcolor{comment}{// stdout}}
+\DoxyCodeLine{00020   \mbox{\hyperlink{user_8h_a530ea95b243a1bf148adaf399e2a6292}{dup}}(0);  \textcolor{comment}{// stderr}}
+\DoxyCodeLine{00021 }
+\DoxyCodeLine{00022   \textcolor{keywordflow}{for}(;;)\{}
+\DoxyCodeLine{00023     \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}init: starting sh\(\backslash\)n"{}});}
+\DoxyCodeLine{00024     pid = \mbox{\hyperlink{defs_8h_acd2e1ded4bb6fce4500438bf928330f4}{fork}}();}
+\DoxyCodeLine{00025     \textcolor{keywordflow}{if}(pid < 0)\{}
+\DoxyCodeLine{00026       \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}init: fork failed\(\backslash\)n"{}});}
+\DoxyCodeLine{00027       \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00028     \}}
+\DoxyCodeLine{00029     \textcolor{keywordflow}{if}(pid == 0)\{}
+\DoxyCodeLine{00030       \mbox{\hyperlink{defs_8h_aa7b4aae4a12acd187e23396214aeca47}{exec}}(\textcolor{stringliteral}{"{}sh"{}}, \mbox{\hyperlink{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}{argv}});}
+\DoxyCodeLine{00031       \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}init: exec sh failed\(\backslash\)n"{}});}
+\DoxyCodeLine{00032       \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00033     \}}
+\DoxyCodeLine{00034     \textcolor{keywordflow}{while}((wpid=\mbox{\hyperlink{defs_8h_af6f31822f7e737b4e414bdac1ccb59a4}{wait}}()) >= 0 \&\& wpid != pid)}
+\DoxyCodeLine{00035       \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(1, \textcolor{stringliteral}{"{}zombie!\(\backslash\)n"{}});}
+\DoxyCodeLine{00036   \}}
+\DoxyCodeLine{00037 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{d8/d60/init_8c_a840291bc02cba5474a4cb46a9b9566fe_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}\label{init_8c_abd1a2cf54950f450187ef24c1cdcac0c}} 
+\index{init.c@{init.c}!argv@{argv}}
+\index{argv@{argv}!init.c@{init.c}}
+\doxysubsubsection{\texorpdfstring{argv}{argv}}
+{\footnotesize\ttfamily char$\ast$ argv\mbox{[}$\,$\mbox{]} = \{ \char`\"{}sh\char`\"{}, 0 \}}
+
+
+
+Definition at line \mbox{\hyperlink{init_8c_source_l00008}{8}} of file \mbox{\hyperlink{init_8c_source}{init.\+c}}.
+

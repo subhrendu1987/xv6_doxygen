@@ -1,0 +1,1069 @@
+\hypertarget{sh_8c}{}\doxysection{sh.\+c File Reference}
+\label{sh_8c}\index{sh.c@{sh.c}}
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}user.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}fcntl.\+h\char`\"{}}\newline
+Include dependency graph for sh.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=253pt]{d6/d07/sh_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structcmd}{cmd}}
+\item 
+struct \mbox{\hyperlink{structexeccmd}{execcmd}}
+\item 
+struct \mbox{\hyperlink{structredircmd}{redircmd}}
+\item 
+struct \mbox{\hyperlink{structpipecmd}{pipecmd}}
+\item 
+struct \mbox{\hyperlink{structlistcmd}{listcmd}}
+\item 
+struct \mbox{\hyperlink{structbackcmd}{backcmd}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{sh_8c_a7d636ac897898fcd988797e4ada044b9}{EXEC}}~1
+\item 
+\#define \mbox{\hyperlink{sh_8c_ae1749b6682612a761fc83e79c38386b1}{REDIR}}~2
+\item 
+\#define \mbox{\hyperlink{sh_8c_a67bc87cdcc5724cf8e8e4ae278d0133f}{PIPE}}~3
+\item 
+\#define \mbox{\hyperlink{sh_8c_aed0a8f83088c41d721066cd5b3b9a00c}{LIST}}~4
+\item 
+\#define \mbox{\hyperlink{sh_8c_ab303ee384877c80cb8855bf0113faf88}{BACK}}~5
+\item 
+\#define \mbox{\hyperlink{sh_8c_a41101847771d39a4f0a7f9395061c629}{MAXARGS}}~10
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{sh_8c_a7ae98824a008ffbc5506060227b6faa0}{fork1}} (void)
+\item 
+void \mbox{\hyperlink{sh_8c_ada38fdb2913f040f6eeb6189eeb42d32}{panic}} (char $\ast$)
+\item 
+struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ \mbox{\hyperlink{sh_8c_ab08793db282d79295235e593dc4cac82}{parsecmd}} (char $\ast$)
+\item 
+void \mbox{\hyperlink{sh_8c_aedbeff6afe5d4e22330c7e6b5e6df893}{runcmd}} (struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$\mbox{\hyperlink{structcmd}{cmd}})
+\item 
+int \mbox{\hyperlink{sh_8c_a0ee5a9418fea2f92036f5367a4101fe8}{getcmd}} (char $\ast$\mbox{\hyperlink{structbuf}{buf}}, int nbuf)
+\item 
+int \mbox{\hyperlink{sh_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\item 
+struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ \mbox{\hyperlink{sh_8c_a2d41b4e10301b6da6504cb0cc0940eae}{execcmd}} (void)
+\item 
+struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ \mbox{\hyperlink{sh_8c_ab60825940b584b5de3adbbebb268b9ac}{redircmd}} (struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$subcmd, char $\ast$\mbox{\hyperlink{structfile}{file}}, char $\ast$efile, int mode, int fd)
+\item 
+struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ \mbox{\hyperlink{sh_8c_a15cd1cb35cba711dc240d28dac0e8d0c}{pipecmd}} (struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$left, struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$right)
+\item 
+struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ \mbox{\hyperlink{sh_8c_ab7f6ee47c6aa12d1222cd2626afd3af6}{listcmd}} (struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$left, struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$right)
+\item 
+struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ \mbox{\hyperlink{sh_8c_a35f9169f2feb5b3752e1e9c839520166}{backcmd}} (struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$subcmd)
+\item 
+int \mbox{\hyperlink{sh_8c_aaf1dedac6db801eab8d23f2acb3b1272}{gettoken}} (char $\ast$$\ast$ps, char $\ast$es, char $\ast$$\ast$q, char $\ast$$\ast$eq)
+\item 
+int \mbox{\hyperlink{sh_8c_ae0a03d29adb5d9fa678bd53e749f1546}{peek}} (char $\ast$$\ast$ps, char $\ast$es, char $\ast$toks)
+\item 
+struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ \mbox{\hyperlink{sh_8c_a4593dc7728db0ff4bb5fb29c31ab8cba}{parseline}} (char $\ast$$\ast$, char $\ast$)
+\item 
+struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ \mbox{\hyperlink{sh_8c_a4789e9e629e810d291c1dd5ece4d3a71}{parsepipe}} (char $\ast$$\ast$, char $\ast$)
+\item 
+struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ \mbox{\hyperlink{sh_8c_add82543cc6953d0173086d06bfcf76c7}{parseexec}} (char $\ast$$\ast$, char $\ast$)
+\item 
+struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ \mbox{\hyperlink{sh_8c_a116fd6ef63a4f3a15340502d15ec1ce1}{nulterminate}} (struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$)
+\item 
+struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ \mbox{\hyperlink{sh_8c_a234ef6b6053ff23ff31ea66a611f92d6}{parseredirs}} (struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$\mbox{\hyperlink{structcmd}{cmd}}, char $\ast$$\ast$ps, char $\ast$es)
+\item 
+struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ \mbox{\hyperlink{sh_8c_a5bfb2661767bf2cc05982adeb9aaf227}{parseblock}} (char $\ast$$\ast$ps, char $\ast$es)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+char \mbox{\hyperlink{sh_8c_ab8474337bbc7c7d316b75b5c00d79947}{whitespace}} \mbox{[}$\,$\mbox{]} = \char`\"{} \textbackslash{}t\textbackslash{}r\textbackslash{}n\textbackslash{}v\char`\"{}
+\item 
+char \mbox{\hyperlink{sh_8c_ab385d981fc73a48a1b732173200f46e5}{symbols}} \mbox{[}$\,$\mbox{]} = \char`\"{}$<$$\vert$$>$\&;()\char`\"{}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{sh_8c_ab303ee384877c80cb8855bf0113faf88}\label{sh_8c_ab303ee384877c80cb8855bf0113faf88}} 
+\index{sh.c@{sh.c}!BACK@{BACK}}
+\index{BACK@{BACK}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{BACK}{BACK}}
+{\footnotesize\ttfamily \#define BACK~5}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00012}{12}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+\mbox{\Hypertarget{sh_8c_a7d636ac897898fcd988797e4ada044b9}\label{sh_8c_a7d636ac897898fcd988797e4ada044b9}} 
+\index{sh.c@{sh.c}!EXEC@{EXEC}}
+\index{EXEC@{EXEC}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{EXEC}{EXEC}}
+{\footnotesize\ttfamily \#define EXEC~1}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00008}{8}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+\mbox{\Hypertarget{sh_8c_aed0a8f83088c41d721066cd5b3b9a00c}\label{sh_8c_aed0a8f83088c41d721066cd5b3b9a00c}} 
+\index{sh.c@{sh.c}!LIST@{LIST}}
+\index{LIST@{LIST}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{LIST}{LIST}}
+{\footnotesize\ttfamily \#define LIST~4}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00011}{11}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+\mbox{\Hypertarget{sh_8c_a41101847771d39a4f0a7f9395061c629}\label{sh_8c_a41101847771d39a4f0a7f9395061c629}} 
+\index{sh.c@{sh.c}!MAXARGS@{MAXARGS}}
+\index{MAXARGS@{MAXARGS}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{MAXARGS}{MAXARGS}}
+{\footnotesize\ttfamily \#define MAXARGS~10}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00014}{14}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+\mbox{\Hypertarget{sh_8c_a67bc87cdcc5724cf8e8e4ae278d0133f}\label{sh_8c_a67bc87cdcc5724cf8e8e4ae278d0133f}} 
+\index{sh.c@{sh.c}!PIPE@{PIPE}}
+\index{PIPE@{PIPE}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{PIPE}{PIPE}}
+{\footnotesize\ttfamily \#define PIPE~3}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00010}{10}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+\mbox{\Hypertarget{sh_8c_ae1749b6682612a761fc83e79c38386b1}\label{sh_8c_ae1749b6682612a761fc83e79c38386b1}} 
+\index{sh.c@{sh.c}!REDIR@{REDIR}}
+\index{REDIR@{REDIR}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{REDIR}{REDIR}}
+{\footnotesize\ttfamily \#define REDIR~2}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00009}{9}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{sh_8c_a35f9169f2feb5b3752e1e9c839520166}\label{sh_8c_a35f9169f2feb5b3752e1e9c839520166}} 
+\index{sh.c@{sh.c}!backcmd@{backcmd}}
+\index{backcmd@{backcmd}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{backcmd()}{backcmd()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ \mbox{\hyperlink{structbackcmd}{backcmd}} (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$}]{subcmd }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00249}{249}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00250 \{}
+\DoxyCodeLine{00251   \textcolor{keyword}{struct }\mbox{\hyperlink{structbackcmd}{backcmd}} *\mbox{\hyperlink{structbackcmd_a74a697014e2d3a17710e530fca0e8432}{cmd}};}
+\DoxyCodeLine{00252 }
+\DoxyCodeLine{00253   \mbox{\hyperlink{structcmd}{cmd}} = \mbox{\hyperlink{umalloc_8c_ac131c16d1dcb6bea908d0237c82e981d}{malloc}}(\textcolor{keyword}{sizeof}(*\mbox{\hyperlink{structcmd}{cmd}}));}
+\DoxyCodeLine{00254   \mbox{\hyperlink{defs_8h_a0098886a849eef10803e9f35ceec61b9}{memset}}(\mbox{\hyperlink{structcmd}{cmd}}, 0, \textcolor{keyword}{sizeof}(*\mbox{\hyperlink{structcmd}{cmd}}));}
+\DoxyCodeLine{00255   \mbox{\hyperlink{structcmd}{cmd}}-\/>\mbox{\hyperlink{structcmd_a9b861866e1dec63e694247fb4d976423}{type}} = \mbox{\hyperlink{sh_8c_ab303ee384877c80cb8855bf0113faf88}{BACK}};}
+\DoxyCodeLine{00256   \mbox{\hyperlink{structcmd}{cmd}}-\/>cmd = subcmd;}
+\DoxyCodeLine{00257   \textcolor{keywordflow}{return} (\textcolor{keyword}{struct} \mbox{\hyperlink{structcmd}{cmd}}*)\mbox{\hyperlink{structbackcmd_a74a697014e2d3a17710e530fca0e8432}{cmd}};}
+\DoxyCodeLine{00258 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=224pt]{dd/da3/sh_8c_a35f9169f2feb5b3752e1e9c839520166_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{sh_8c_a2d41b4e10301b6da6504cb0cc0940eae}\label{sh_8c_a2d41b4e10301b6da6504cb0cc0940eae}} 
+\index{sh.c@{sh.c}!execcmd@{execcmd}}
+\index{execcmd@{execcmd}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{execcmd()}{execcmd()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ \mbox{\hyperlink{structexeccmd}{execcmd}} (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00196}{196}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00197 \{}
+\DoxyCodeLine{00198   \textcolor{keyword}{struct }\mbox{\hyperlink{structexeccmd}{execcmd}} *\mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00199 }
+\DoxyCodeLine{00200   \mbox{\hyperlink{structcmd}{cmd}} = \mbox{\hyperlink{umalloc_8c_ac131c16d1dcb6bea908d0237c82e981d}{malloc}}(\textcolor{keyword}{sizeof}(*\mbox{\hyperlink{structcmd}{cmd}}));}
+\DoxyCodeLine{00201   \mbox{\hyperlink{defs_8h_a0098886a849eef10803e9f35ceec61b9}{memset}}(\mbox{\hyperlink{structcmd}{cmd}}, 0, \textcolor{keyword}{sizeof}(*\mbox{\hyperlink{structcmd}{cmd}}));}
+\DoxyCodeLine{00202   \mbox{\hyperlink{structcmd}{cmd}}-\/>\mbox{\hyperlink{structcmd_a9b861866e1dec63e694247fb4d976423}{type}} = \mbox{\hyperlink{sh_8c_a7d636ac897898fcd988797e4ada044b9}{EXEC}};}
+\DoxyCodeLine{00203   \textcolor{keywordflow}{return} (\textcolor{keyword}{struct} \mbox{\hyperlink{structcmd}{cmd}}*)\mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00204 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=224pt]{dd/da3/sh_8c_a2d41b4e10301b6da6504cb0cc0940eae_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{sh_8c_a7ae98824a008ffbc5506060227b6faa0}\label{sh_8c_a7ae98824a008ffbc5506060227b6faa0}} 
+\index{sh.c@{sh.c}!fork1@{fork1}}
+\index{fork1@{fork1}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{fork1()}{fork1()}}
+{\footnotesize\ttfamily int fork1 (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00182}{182}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00183 \{}
+\DoxyCodeLine{00184   \textcolor{keywordtype}{int} pid;}
+\DoxyCodeLine{00185 }
+\DoxyCodeLine{00186   pid = \mbox{\hyperlink{defs_8h_acd2e1ded4bb6fce4500438bf928330f4}{fork}}();}
+\DoxyCodeLine{00187   \textcolor{keywordflow}{if}(pid == -\/1)}
+\DoxyCodeLine{00188     \mbox{\hyperlink{sh_8c_ada38fdb2913f040f6eeb6189eeb42d32}{panic}}(\textcolor{stringliteral}{"{}fork"{}});}
+\DoxyCodeLine{00189   \textcolor{keywordflow}{return} pid;}
+\DoxyCodeLine{00190 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da3/sh_8c_a7ae98824a008ffbc5506060227b6faa0_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=277pt]{dd/da3/sh_8c_a7ae98824a008ffbc5506060227b6faa0_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{sh_8c_a0ee5a9418fea2f92036f5367a4101fe8}\label{sh_8c_a0ee5a9418fea2f92036f5367a4101fe8}} 
+\index{sh.c@{sh.c}!getcmd@{getcmd}}
+\index{getcmd@{getcmd}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{getcmd()}{getcmd()}}
+{\footnotesize\ttfamily int getcmd (\begin{DoxyParamCaption}\item[{char $\ast$}]{buf,  }\item[{int}]{nbuf }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00134}{134}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00135 \{}
+\DoxyCodeLine{00136   \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(2, \textcolor{stringliteral}{"{}\$ "{}});}
+\DoxyCodeLine{00137   \mbox{\hyperlink{defs_8h_a0098886a849eef10803e9f35ceec61b9}{memset}}(\mbox{\hyperlink{structbuf}{buf}}, 0, nbuf);}
+\DoxyCodeLine{00138   \mbox{\hyperlink{ulib_8c_a5d99411ae3770ce242b82a1d01b47164}{gets}}(\mbox{\hyperlink{structbuf}{buf}}, nbuf);}
+\DoxyCodeLine{00139   \textcolor{keywordflow}{if}(\mbox{\hyperlink{structbuf}{buf}}[0] == 0) \textcolor{comment}{// EOF}}
+\DoxyCodeLine{00140     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00141   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00142 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=294pt]{dd/da3/sh_8c_a0ee5a9418fea2f92036f5367a4101fe8_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=203pt]{dd/da3/sh_8c_a0ee5a9418fea2f92036f5367a4101fe8_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{sh_8c_aaf1dedac6db801eab8d23f2acb3b1272}\label{sh_8c_aaf1dedac6db801eab8d23f2acb3b1272}} 
+\index{sh.c@{sh.c}!gettoken@{gettoken}}
+\index{gettoken@{gettoken}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{gettoken()}{gettoken()}}
+{\footnotesize\ttfamily int gettoken (\begin{DoxyParamCaption}\item[{char $\ast$$\ast$}]{ps,  }\item[{char $\ast$}]{es,  }\item[{char $\ast$$\ast$}]{q,  }\item[{char $\ast$$\ast$}]{eq }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00266}{266}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00267 \{}
+\DoxyCodeLine{00268   \textcolor{keywordtype}{char} *s;}
+\DoxyCodeLine{00269   \textcolor{keywordtype}{int} ret;}
+\DoxyCodeLine{00270 }
+\DoxyCodeLine{00271   s = *ps;}
+\DoxyCodeLine{00272   \textcolor{keywordflow}{while}(s < es \&\& \mbox{\hyperlink{ulib_8c_a34704df9bf598dd9b477bafe5642cfe7}{strchr}}(\mbox{\hyperlink{sh_8c_ab8474337bbc7c7d316b75b5c00d79947}{whitespace}}, *s))}
+\DoxyCodeLine{00273     s++;}
+\DoxyCodeLine{00274   \textcolor{keywordflow}{if}(q)}
+\DoxyCodeLine{00275     *q = s;}
+\DoxyCodeLine{00276   ret = *s;}
+\DoxyCodeLine{00277   \textcolor{keywordflow}{switch}(*s)\{}
+\DoxyCodeLine{00278   \textcolor{keywordflow}{case} 0:}
+\DoxyCodeLine{00279     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00280   \textcolor{keywordflow}{case} \textcolor{charliteral}{'|'}:}
+\DoxyCodeLine{00281   \textcolor{keywordflow}{case} \textcolor{charliteral}{'('}:}
+\DoxyCodeLine{00282   \textcolor{keywordflow}{case} \textcolor{charliteral}{')'}:}
+\DoxyCodeLine{00283   \textcolor{keywordflow}{case} \textcolor{charliteral}{';'}:}
+\DoxyCodeLine{00284   \textcolor{keywordflow}{case} \textcolor{charliteral}{'\&'}:}
+\DoxyCodeLine{00285   \textcolor{keywordflow}{case} \textcolor{charliteral}{'<'}:}
+\DoxyCodeLine{00286     s++;}
+\DoxyCodeLine{00287     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00288   \textcolor{keywordflow}{case} \textcolor{charliteral}{'>'}:}
+\DoxyCodeLine{00289     s++;}
+\DoxyCodeLine{00290     \textcolor{keywordflow}{if}(*s == \textcolor{charliteral}{'>'})\{}
+\DoxyCodeLine{00291       ret = \textcolor{charliteral}{'+'};}
+\DoxyCodeLine{00292       s++;}
+\DoxyCodeLine{00293     \}}
+\DoxyCodeLine{00294     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00295   \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00296     ret = \textcolor{charliteral}{'a'};}
+\DoxyCodeLine{00297     \textcolor{keywordflow}{while}(s < es \&\& !\mbox{\hyperlink{ulib_8c_a34704df9bf598dd9b477bafe5642cfe7}{strchr}}(\mbox{\hyperlink{sh_8c_ab8474337bbc7c7d316b75b5c00d79947}{whitespace}}, *s) \&\& !\mbox{\hyperlink{ulib_8c_a34704df9bf598dd9b477bafe5642cfe7}{strchr}}(\mbox{\hyperlink{sh_8c_ab385d981fc73a48a1b732173200f46e5}{symbols}}, *s))}
+\DoxyCodeLine{00298       s++;}
+\DoxyCodeLine{00299     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00300   \}}
+\DoxyCodeLine{00301   \textcolor{keywordflow}{if}(eq)}
+\DoxyCodeLine{00302     *eq = s;}
+\DoxyCodeLine{00303 }
+\DoxyCodeLine{00304   \textcolor{keywordflow}{while}(s < es \&\& \mbox{\hyperlink{ulib_8c_a34704df9bf598dd9b477bafe5642cfe7}{strchr}}(\mbox{\hyperlink{sh_8c_ab8474337bbc7c7d316b75b5c00d79947}{whitespace}}, *s))}
+\DoxyCodeLine{00305     s++;}
+\DoxyCodeLine{00306   *ps = s;}
+\DoxyCodeLine{00307   \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{00308 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=211pt]{dd/da3/sh_8c_aaf1dedac6db801eab8d23f2acb3b1272_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da3/sh_8c_aaf1dedac6db801eab8d23f2acb3b1272_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{sh_8c_ab7f6ee47c6aa12d1222cd2626afd3af6}\label{sh_8c_ab7f6ee47c6aa12d1222cd2626afd3af6}} 
+\index{sh.c@{sh.c}!listcmd@{listcmd}}
+\index{listcmd@{listcmd}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{listcmd()}{listcmd()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ \mbox{\hyperlink{structlistcmd}{listcmd}} (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$}]{left,  }\item[{struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$}]{right }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00236}{236}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00237 \{}
+\DoxyCodeLine{00238   \textcolor{keyword}{struct }\mbox{\hyperlink{structlistcmd}{listcmd}} *\mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00239 }
+\DoxyCodeLine{00240   \mbox{\hyperlink{structcmd}{cmd}} = \mbox{\hyperlink{umalloc_8c_ac131c16d1dcb6bea908d0237c82e981d}{malloc}}(\textcolor{keyword}{sizeof}(*\mbox{\hyperlink{structcmd}{cmd}}));}
+\DoxyCodeLine{00241   \mbox{\hyperlink{defs_8h_a0098886a849eef10803e9f35ceec61b9}{memset}}(\mbox{\hyperlink{structcmd}{cmd}}, 0, \textcolor{keyword}{sizeof}(*\mbox{\hyperlink{structcmd}{cmd}}));}
+\DoxyCodeLine{00242   \mbox{\hyperlink{structcmd}{cmd}}-\/>\mbox{\hyperlink{structcmd_a9b861866e1dec63e694247fb4d976423}{type}} = \mbox{\hyperlink{sh_8c_aed0a8f83088c41d721066cd5b3b9a00c}{LIST}};}
+\DoxyCodeLine{00243   \mbox{\hyperlink{structcmd}{cmd}}-\/>left = \mbox{\hyperlink{structlistcmd_a3058dfa06817a015f821d38f1e1edc3b}{left}};}
+\DoxyCodeLine{00244   \mbox{\hyperlink{structcmd}{cmd}}-\/>right = \mbox{\hyperlink{structlistcmd_a063a3a59362ddfafb7c0e4c848d4e8c5}{right}};}
+\DoxyCodeLine{00245   \textcolor{keywordflow}{return} (\textcolor{keyword}{struct} \mbox{\hyperlink{structcmd}{cmd}}*)\mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00246 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=216pt]{dd/da3/sh_8c_ab7f6ee47c6aa12d1222cd2626afd3af6_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{sh_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{sh_8c_a840291bc02cba5474a4cb46a9b9566fe}} 
+\index{sh.c@{sh.c}!main@{main}}
+\index{main@{main}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00145}{145}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00146 \{}
+\DoxyCodeLine{00147   \textcolor{keyword}{static} \textcolor{keywordtype}{char} \mbox{\hyperlink{structbuf}{buf}}[100];}
+\DoxyCodeLine{00148   \textcolor{keywordtype}{int} fd;}
+\DoxyCodeLine{00149 }
+\DoxyCodeLine{00150   \textcolor{comment}{// Ensure that three file descriptors are open.}}
+\DoxyCodeLine{00151   \textcolor{keywordflow}{while}((fd = \mbox{\hyperlink{user_8h_a2c4414339f388561554c2deab11a1a07}{open}}(\textcolor{stringliteral}{"{}console"{}}, \mbox{\hyperlink{fcntl_8h_abb0586253488ee61072b73557eeb873b}{O\_RDWR}})) >= 0)\{}
+\DoxyCodeLine{00152     \textcolor{keywordflow}{if}(fd >= 3)\{}
+\DoxyCodeLine{00153       \mbox{\hyperlink{user_8h_ae152484c890a24e4d9b4980e7b965be0}{close}}(fd);}
+\DoxyCodeLine{00154       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00155     \}}
+\DoxyCodeLine{00156   \}}
+\DoxyCodeLine{00157 }
+\DoxyCodeLine{00158   \textcolor{comment}{// Read and run input commands.}}
+\DoxyCodeLine{00159   \textcolor{keywordflow}{while}(\mbox{\hyperlink{sh_8c_a0ee5a9418fea2f92036f5367a4101fe8}{getcmd}}(\mbox{\hyperlink{structbuf}{buf}}, \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structbuf}{buf}})) >= 0)\{}
+\DoxyCodeLine{00160     \textcolor{keywordflow}{if}(\mbox{\hyperlink{structbuf}{buf}}[0] == \textcolor{charliteral}{'c'} \&\& \mbox{\hyperlink{structbuf}{buf}}[1] == \textcolor{charliteral}{'d'} \&\& \mbox{\hyperlink{structbuf}{buf}}[2] == \textcolor{charliteral}{' '})\{}
+\DoxyCodeLine{00161       \textcolor{comment}{// Chdir must be called by the parent, not the child.}}
+\DoxyCodeLine{00162       \mbox{\hyperlink{structbuf}{buf}}[\mbox{\hyperlink{defs_8h_a5e5172aa1be36b8210c6dfd86800b44c}{strlen}}(\mbox{\hyperlink{structbuf}{buf}})-\/1] = 0;  \textcolor{comment}{// chop \(\backslash\)n}}
+\DoxyCodeLine{00163       \textcolor{keywordflow}{if}(\mbox{\hyperlink{user_8h_aebe305544f2eb0cf2c4a4f8b4c12bc0f}{chdir}}(\mbox{\hyperlink{structbuf}{buf}}+3) < 0)}
+\DoxyCodeLine{00164         \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(2, \textcolor{stringliteral}{"{}cannot cd \%s\(\backslash\)n"{}}, \mbox{\hyperlink{structbuf}{buf}}+3);}
+\DoxyCodeLine{00165       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00166     \}}
+\DoxyCodeLine{00167     \textcolor{keywordflow}{if}(\mbox{\hyperlink{sh_8c_a7ae98824a008ffbc5506060227b6faa0}{fork1}}() == 0)}
+\DoxyCodeLine{00168       \mbox{\hyperlink{sh_8c_aedbeff6afe5d4e22330c7e6b5e6df893}{runcmd}}(\mbox{\hyperlink{sh_8c_ab08793db282d79295235e593dc4cac82}{parsecmd}}(\mbox{\hyperlink{structbuf}{buf}}));}
+\DoxyCodeLine{00169     \mbox{\hyperlink{defs_8h_af6f31822f7e737b4e414bdac1ccb59a4}{wait}}();}
+\DoxyCodeLine{00170   \}}
+\DoxyCodeLine{00171   \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00172 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da3/sh_8c_a840291bc02cba5474a4cb46a9b9566fe_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{sh_8c_a116fd6ef63a4f3a15340502d15ec1ce1}\label{sh_8c_a116fd6ef63a4f3a15340502d15ec1ce1}} 
+\index{sh.c@{sh.c}!nulterminate@{nulterminate}}
+\index{nulterminate@{nulterminate}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{nulterminate()}{nulterminate()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ nulterminate (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$}]{cmd }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00450}{450}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00451 \{}
+\DoxyCodeLine{00452   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00453   \textcolor{keyword}{struct }\mbox{\hyperlink{structbackcmd}{backcmd}} *bcmd;}
+\DoxyCodeLine{00454   \textcolor{keyword}{struct }\mbox{\hyperlink{structexeccmd}{execcmd}} *ecmd;}
+\DoxyCodeLine{00455   \textcolor{keyword}{struct }\mbox{\hyperlink{structlistcmd}{listcmd}} *lcmd;}
+\DoxyCodeLine{00456   \textcolor{keyword}{struct }\mbox{\hyperlink{structpipecmd}{pipecmd}} *pcmd;}
+\DoxyCodeLine{00457   \textcolor{keyword}{struct }\mbox{\hyperlink{structredircmd}{redircmd}} *rcmd;}
+\DoxyCodeLine{00458 }
+\DoxyCodeLine{00459   \textcolor{keywordflow}{if}(\mbox{\hyperlink{structcmd}{cmd}} == 0)}
+\DoxyCodeLine{00460     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00461 }
+\DoxyCodeLine{00462   \textcolor{keywordflow}{switch}(\mbox{\hyperlink{structcmd}{cmd}}-\/>\mbox{\hyperlink{structcmd_a9b861866e1dec63e694247fb4d976423}{type}})\{}
+\DoxyCodeLine{00463   \textcolor{keywordflow}{case} \mbox{\hyperlink{sh_8c_a7d636ac897898fcd988797e4ada044b9}{EXEC}}:}
+\DoxyCodeLine{00464     ecmd = (\textcolor{keyword}{struct }\mbox{\hyperlink{structexeccmd}{execcmd}}*)\mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00465     \textcolor{keywordflow}{for}(i=0; ecmd-\/>\mbox{\hyperlink{structexeccmd_a00e53af4bc0e28bbd6842bdceaee1ea9}{argv}}[i]; i++)}
+\DoxyCodeLine{00466       *ecmd-\/>\mbox{\hyperlink{structexeccmd_ab3444b3d0c478e5338f55b7dffe70521}{eargv}}[i] = 0;}
+\DoxyCodeLine{00467     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00468 }
+\DoxyCodeLine{00469   \textcolor{keywordflow}{case} \mbox{\hyperlink{sh_8c_ae1749b6682612a761fc83e79c38386b1}{REDIR}}:}
+\DoxyCodeLine{00470     rcmd = (\textcolor{keyword}{struct} \mbox{\hyperlink{structredircmd}{redircmd}}*)\mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00471     \mbox{\hyperlink{sh_8c_a116fd6ef63a4f3a15340502d15ec1ce1}{nulterminate}}(rcmd-\/>\mbox{\hyperlink{structredircmd_ad0e2824b83cc8a1da99b2922025011dc}{cmd}});}
+\DoxyCodeLine{00472     *rcmd-\/>\mbox{\hyperlink{structredircmd_a7bd00698c6fbc539415332f187d78317}{efile}} = 0;}
+\DoxyCodeLine{00473     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00474 }
+\DoxyCodeLine{00475   \textcolor{keywordflow}{case} \mbox{\hyperlink{sh_8c_a67bc87cdcc5724cf8e8e4ae278d0133f}{PIPE}}:}
+\DoxyCodeLine{00476     pcmd = (\textcolor{keyword}{struct }\mbox{\hyperlink{structpipecmd}{pipecmd}}*)\mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00477     \mbox{\hyperlink{sh_8c_a116fd6ef63a4f3a15340502d15ec1ce1}{nulterminate}}(pcmd-\/>\mbox{\hyperlink{structpipecmd_a8922b7eac1f12f729cc7226b8b120f6f}{left}});}
+\DoxyCodeLine{00478     \mbox{\hyperlink{sh_8c_a116fd6ef63a4f3a15340502d15ec1ce1}{nulterminate}}(pcmd-\/>\mbox{\hyperlink{structpipecmd_a882e2847aa340ae4e201d2e49921b47e}{right}});}
+\DoxyCodeLine{00479     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00480 }
+\DoxyCodeLine{00481   \textcolor{keywordflow}{case} \mbox{\hyperlink{sh_8c_aed0a8f83088c41d721066cd5b3b9a00c}{LIST}}:}
+\DoxyCodeLine{00482     lcmd = (\textcolor{keyword}{struct }\mbox{\hyperlink{structlistcmd}{listcmd}}*)\mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00483     \mbox{\hyperlink{sh_8c_a116fd6ef63a4f3a15340502d15ec1ce1}{nulterminate}}(lcmd-\/>\mbox{\hyperlink{structlistcmd_a3058dfa06817a015f821d38f1e1edc3b}{left}});}
+\DoxyCodeLine{00484     \mbox{\hyperlink{sh_8c_a116fd6ef63a4f3a15340502d15ec1ce1}{nulterminate}}(lcmd-\/>\mbox{\hyperlink{structlistcmd_a063a3a59362ddfafb7c0e4c848d4e8c5}{right}});}
+\DoxyCodeLine{00485     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00486 }
+\DoxyCodeLine{00487   \textcolor{keywordflow}{case} \mbox{\hyperlink{sh_8c_ab303ee384877c80cb8855bf0113faf88}{BACK}}:}
+\DoxyCodeLine{00488     bcmd = (\textcolor{keyword}{struct }\mbox{\hyperlink{structbackcmd}{backcmd}}*)\mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00489     \mbox{\hyperlink{sh_8c_a116fd6ef63a4f3a15340502d15ec1ce1}{nulterminate}}(bcmd-\/>\mbox{\hyperlink{structbackcmd_a74a697014e2d3a17710e530fca0e8432}{cmd}});}
+\DoxyCodeLine{00490     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00491   \}}
+\DoxyCodeLine{00492   \textcolor{keywordflow}{return} \mbox{\hyperlink{structbackcmd_a74a697014e2d3a17710e530fca0e8432}{cmd}};}
+\DoxyCodeLine{00493 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=150pt]{dd/da3/sh_8c_a116fd6ef63a4f3a15340502d15ec1ce1_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=319pt]{dd/da3/sh_8c_a116fd6ef63a4f3a15340502d15ec1ce1_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{sh_8c_ada38fdb2913f040f6eeb6189eeb42d32}\label{sh_8c_ada38fdb2913f040f6eeb6189eeb42d32}} 
+\index{sh.c@{sh.c}!panic@{panic}}
+\index{panic@{panic}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{panic()}{panic()}}
+{\footnotesize\ttfamily void panic (\begin{DoxyParamCaption}\item[{char $\ast$}]{s }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00175}{175}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00176 \{}
+\DoxyCodeLine{00177   \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(2, \textcolor{stringliteral}{"{}\%s\(\backslash\)n"{}}, s);}
+\DoxyCodeLine{00178   \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00179 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da3/sh_8c_ada38fdb2913f040f6eeb6189eeb42d32_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da3/sh_8c_ada38fdb2913f040f6eeb6189eeb42d32_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{sh_8c_a5bfb2661767bf2cc05982adeb9aaf227}\label{sh_8c_a5bfb2661767bf2cc05982adeb9aaf227}} 
+\index{sh.c@{sh.c}!parseblock@{parseblock}}
+\index{parseblock@{parseblock}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{parseblock()}{parseblock()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ parseblock (\begin{DoxyParamCaption}\item[{char $\ast$$\ast$}]{ps,  }\item[{char $\ast$}]{es }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00400}{400}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00401 \{}
+\DoxyCodeLine{00402   \textcolor{keyword}{struct }\mbox{\hyperlink{structcmd}{cmd}} *\mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00403 }
+\DoxyCodeLine{00404   \textcolor{keywordflow}{if}(!\mbox{\hyperlink{sh_8c_ae0a03d29adb5d9fa678bd53e749f1546}{peek}}(ps, es, \textcolor{stringliteral}{"{}("{}}))}
+\DoxyCodeLine{00405     \mbox{\hyperlink{sh_8c_ada38fdb2913f040f6eeb6189eeb42d32}{panic}}(\textcolor{stringliteral}{"{}parseblock"{}});}
+\DoxyCodeLine{00406   \mbox{\hyperlink{sh_8c_aaf1dedac6db801eab8d23f2acb3b1272}{gettoken}}(ps, es, 0, 0);}
+\DoxyCodeLine{00407   \mbox{\hyperlink{structcmd}{cmd}} = \mbox{\hyperlink{sh_8c_a4593dc7728db0ff4bb5fb29c31ab8cba}{parseline}}(ps, es);}
+\DoxyCodeLine{00408   \textcolor{keywordflow}{if}(!\mbox{\hyperlink{sh_8c_ae0a03d29adb5d9fa678bd53e749f1546}{peek}}(ps, es, \textcolor{stringliteral}{"{})"{}}))}
+\DoxyCodeLine{00409     \mbox{\hyperlink{sh_8c_ada38fdb2913f040f6eeb6189eeb42d32}{panic}}(\textcolor{stringliteral}{"{}syntax -\/ missing )"{}});}
+\DoxyCodeLine{00410   \mbox{\hyperlink{sh_8c_aaf1dedac6db801eab8d23f2acb3b1272}{gettoken}}(ps, es, 0, 0);}
+\DoxyCodeLine{00411   \mbox{\hyperlink{structcmd}{cmd}} = \mbox{\hyperlink{sh_8c_a234ef6b6053ff23ff31ea66a611f92d6}{parseredirs}}(\mbox{\hyperlink{structcmd}{cmd}}, ps, es);}
+\DoxyCodeLine{00412   \textcolor{keywordflow}{return} \mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00413 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da3/sh_8c_a5bfb2661767bf2cc05982adeb9aaf227_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da3/sh_8c_a5bfb2661767bf2cc05982adeb9aaf227_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{sh_8c_ab08793db282d79295235e593dc4cac82}\label{sh_8c_ab08793db282d79295235e593dc4cac82}} 
+\index{sh.c@{sh.c}!parsecmd@{parsecmd}}
+\index{parsecmd@{parsecmd}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{parsecmd()}{parsecmd()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ parsecmd (\begin{DoxyParamCaption}\item[{char $\ast$}]{s }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00328}{328}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00329 \{}
+\DoxyCodeLine{00330   \textcolor{keywordtype}{char} *es;}
+\DoxyCodeLine{00331   \textcolor{keyword}{struct }\mbox{\hyperlink{structcmd}{cmd}} *\mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00332 }
+\DoxyCodeLine{00333   es = s + \mbox{\hyperlink{defs_8h_a5e5172aa1be36b8210c6dfd86800b44c}{strlen}}(s);}
+\DoxyCodeLine{00334   \mbox{\hyperlink{structcmd}{cmd}} = \mbox{\hyperlink{sh_8c_a4593dc7728db0ff4bb5fb29c31ab8cba}{parseline}}(\&s, es);}
+\DoxyCodeLine{00335   \mbox{\hyperlink{sh_8c_ae0a03d29adb5d9fa678bd53e749f1546}{peek}}(\&s, es, \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00336   \textcolor{keywordflow}{if}(s != es)\{}
+\DoxyCodeLine{00337     \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(2, \textcolor{stringliteral}{"{}leftovers: \%s\(\backslash\)n"{}}, s);}
+\DoxyCodeLine{00338     \mbox{\hyperlink{sh_8c_ada38fdb2913f040f6eeb6189eeb42d32}{panic}}(\textcolor{stringliteral}{"{}syntax"{}});}
+\DoxyCodeLine{00339   \}}
+\DoxyCodeLine{00340   \mbox{\hyperlink{sh_8c_a116fd6ef63a4f3a15340502d15ec1ce1}{nulterminate}}(\mbox{\hyperlink{structcmd}{cmd}});}
+\DoxyCodeLine{00341   \textcolor{keywordflow}{return} \mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00342 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da3/sh_8c_ab08793db282d79295235e593dc4cac82_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=213pt]{dd/da3/sh_8c_ab08793db282d79295235e593dc4cac82_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{sh_8c_add82543cc6953d0173086d06bfcf76c7}\label{sh_8c_add82543cc6953d0173086d06bfcf76c7}} 
+\index{sh.c@{sh.c}!parseexec@{parseexec}}
+\index{parseexec@{parseexec}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{parseexec()}{parseexec()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ parseexec (\begin{DoxyParamCaption}\item[{char $\ast$$\ast$}]{ps,  }\item[{char $\ast$}]{es }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00416}{416}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00417 \{}
+\DoxyCodeLine{00418   \textcolor{keywordtype}{char} *q, *eq;}
+\DoxyCodeLine{00419   \textcolor{keywordtype}{int} tok, argc;}
+\DoxyCodeLine{00420   \textcolor{keyword}{struct }\mbox{\hyperlink{structexeccmd}{execcmd}} *\mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00421   \textcolor{keyword}{struct }\mbox{\hyperlink{structcmd}{cmd}} *ret;}
+\DoxyCodeLine{00422 }
+\DoxyCodeLine{00423   \textcolor{keywordflow}{if}(\mbox{\hyperlink{sh_8c_ae0a03d29adb5d9fa678bd53e749f1546}{peek}}(ps, es, \textcolor{stringliteral}{"{}("{}}))}
+\DoxyCodeLine{00424     \textcolor{keywordflow}{return} \mbox{\hyperlink{sh_8c_a5bfb2661767bf2cc05982adeb9aaf227}{parseblock}}(ps, es);}
+\DoxyCodeLine{00425 }
+\DoxyCodeLine{00426   ret = \mbox{\hyperlink{structexeccmd}{execcmd}}();}
+\DoxyCodeLine{00427   \mbox{\hyperlink{structcmd}{cmd}} = (\textcolor{keyword}{struct }\mbox{\hyperlink{structexeccmd}{execcmd}}*)ret;}
+\DoxyCodeLine{00428 }
+\DoxyCodeLine{00429   argc = 0;}
+\DoxyCodeLine{00430   ret = \mbox{\hyperlink{sh_8c_a234ef6b6053ff23ff31ea66a611f92d6}{parseredirs}}(ret, ps, es);}
+\DoxyCodeLine{00431   \textcolor{keywordflow}{while}(!\mbox{\hyperlink{sh_8c_ae0a03d29adb5d9fa678bd53e749f1546}{peek}}(ps, es, \textcolor{stringliteral}{"{}|)\&;"{}}))\{}
+\DoxyCodeLine{00432     \textcolor{keywordflow}{if}((tok=\mbox{\hyperlink{sh_8c_aaf1dedac6db801eab8d23f2acb3b1272}{gettoken}}(ps, es, \&q, \&eq)) == 0)}
+\DoxyCodeLine{00433       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00434     \textcolor{keywordflow}{if}(tok != \textcolor{charliteral}{'a'})}
+\DoxyCodeLine{00435       \mbox{\hyperlink{sh_8c_ada38fdb2913f040f6eeb6189eeb42d32}{panic}}(\textcolor{stringliteral}{"{}syntax"{}});}
+\DoxyCodeLine{00436     \mbox{\hyperlink{structcmd}{cmd}}-\/>argv[argc] = q;}
+\DoxyCodeLine{00437     \mbox{\hyperlink{structcmd}{cmd}}-\/>eargv[argc] = eq;}
+\DoxyCodeLine{00438     argc++;}
+\DoxyCodeLine{00439     \textcolor{keywordflow}{if}(argc >= \mbox{\hyperlink{sh_8c_a41101847771d39a4f0a7f9395061c629}{MAXARGS}})}
+\DoxyCodeLine{00440       \mbox{\hyperlink{sh_8c_ada38fdb2913f040f6eeb6189eeb42d32}{panic}}(\textcolor{stringliteral}{"{}too many args"{}});}
+\DoxyCodeLine{00441     ret = \mbox{\hyperlink{sh_8c_a234ef6b6053ff23ff31ea66a611f92d6}{parseredirs}}(ret, ps, es);}
+\DoxyCodeLine{00442   \}}
+\DoxyCodeLine{00443   \mbox{\hyperlink{structcmd}{cmd}}-\/>argv[argc] = 0;}
+\DoxyCodeLine{00444   \mbox{\hyperlink{structcmd}{cmd}}-\/>eargv[argc] = 0;}
+\DoxyCodeLine{00445   \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{00446 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da3/sh_8c_add82543cc6953d0173086d06bfcf76c7_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da3/sh_8c_add82543cc6953d0173086d06bfcf76c7_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{sh_8c_a4593dc7728db0ff4bb5fb29c31ab8cba}\label{sh_8c_a4593dc7728db0ff4bb5fb29c31ab8cba}} 
+\index{sh.c@{sh.c}!parseline@{parseline}}
+\index{parseline@{parseline}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{parseline()}{parseline()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ parseline (\begin{DoxyParamCaption}\item[{char $\ast$$\ast$}]{ps,  }\item[{char $\ast$}]{es }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00345}{345}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00346 \{}
+\DoxyCodeLine{00347   \textcolor{keyword}{struct }\mbox{\hyperlink{structcmd}{cmd}} *\mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00348 }
+\DoxyCodeLine{00349   \mbox{\hyperlink{structcmd}{cmd}} = \mbox{\hyperlink{sh_8c_a4789e9e629e810d291c1dd5ece4d3a71}{parsepipe}}(ps, es);}
+\DoxyCodeLine{00350   \textcolor{keywordflow}{while}(\mbox{\hyperlink{sh_8c_ae0a03d29adb5d9fa678bd53e749f1546}{peek}}(ps, es, \textcolor{stringliteral}{"{}\&"{}}))\{}
+\DoxyCodeLine{00351     \mbox{\hyperlink{sh_8c_aaf1dedac6db801eab8d23f2acb3b1272}{gettoken}}(ps, es, 0, 0);}
+\DoxyCodeLine{00352     \mbox{\hyperlink{structcmd}{cmd}} = \mbox{\hyperlink{structbackcmd}{backcmd}}(\mbox{\hyperlink{structcmd}{cmd}});}
+\DoxyCodeLine{00353   \}}
+\DoxyCodeLine{00354   \textcolor{keywordflow}{if}(\mbox{\hyperlink{sh_8c_ae0a03d29adb5d9fa678bd53e749f1546}{peek}}(ps, es, \textcolor{stringliteral}{"{};"{}}))\{}
+\DoxyCodeLine{00355     \mbox{\hyperlink{sh_8c_aaf1dedac6db801eab8d23f2acb3b1272}{gettoken}}(ps, es, 0, 0);}
+\DoxyCodeLine{00356     \mbox{\hyperlink{structcmd}{cmd}} = \mbox{\hyperlink{structlistcmd}{listcmd}}(\mbox{\hyperlink{structcmd}{cmd}}, \mbox{\hyperlink{sh_8c_a4593dc7728db0ff4bb5fb29c31ab8cba}{parseline}}(ps, es));}
+\DoxyCodeLine{00357   \}}
+\DoxyCodeLine{00358   \textcolor{keywordflow}{return} \mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00359 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da3/sh_8c_a4593dc7728db0ff4bb5fb29c31ab8cba_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da3/sh_8c_a4593dc7728db0ff4bb5fb29c31ab8cba_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{sh_8c_a4789e9e629e810d291c1dd5ece4d3a71}\label{sh_8c_a4789e9e629e810d291c1dd5ece4d3a71}} 
+\index{sh.c@{sh.c}!parsepipe@{parsepipe}}
+\index{parsepipe@{parsepipe}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{parsepipe()}{parsepipe()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ parsepipe (\begin{DoxyParamCaption}\item[{char $\ast$$\ast$}]{ps,  }\item[{char $\ast$}]{es }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00362}{362}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00363 \{}
+\DoxyCodeLine{00364   \textcolor{keyword}{struct }\mbox{\hyperlink{structcmd}{cmd}} *\mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00365 }
+\DoxyCodeLine{00366   \mbox{\hyperlink{structcmd}{cmd}} = \mbox{\hyperlink{sh_8c_add82543cc6953d0173086d06bfcf76c7}{parseexec}}(ps, es);}
+\DoxyCodeLine{00367   \textcolor{keywordflow}{if}(\mbox{\hyperlink{sh_8c_ae0a03d29adb5d9fa678bd53e749f1546}{peek}}(ps, es, \textcolor{stringliteral}{"{}|"{}}))\{}
+\DoxyCodeLine{00368     \mbox{\hyperlink{sh_8c_aaf1dedac6db801eab8d23f2acb3b1272}{gettoken}}(ps, es, 0, 0);}
+\DoxyCodeLine{00369     \mbox{\hyperlink{structcmd}{cmd}} = \mbox{\hyperlink{structpipecmd}{pipecmd}}(\mbox{\hyperlink{structcmd}{cmd}}, \mbox{\hyperlink{sh_8c_a4789e9e629e810d291c1dd5ece4d3a71}{parsepipe}}(ps, es));}
+\DoxyCodeLine{00370   \}}
+\DoxyCodeLine{00371   \textcolor{keywordflow}{return} \mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00372 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da3/sh_8c_a4789e9e629e810d291c1dd5ece4d3a71_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da3/sh_8c_a4789e9e629e810d291c1dd5ece4d3a71_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{sh_8c_a234ef6b6053ff23ff31ea66a611f92d6}\label{sh_8c_a234ef6b6053ff23ff31ea66a611f92d6}} 
+\index{sh.c@{sh.c}!parseredirs@{parseredirs}}
+\index{parseredirs@{parseredirs}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{parseredirs()}{parseredirs()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ parseredirs (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$}]{cmd,  }\item[{char $\ast$$\ast$}]{ps,  }\item[{char $\ast$}]{es }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00375}{375}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00376 \{}
+\DoxyCodeLine{00377   \textcolor{keywordtype}{int} tok;}
+\DoxyCodeLine{00378   \textcolor{keywordtype}{char} *q, *eq;}
+\DoxyCodeLine{00379 }
+\DoxyCodeLine{00380   \textcolor{keywordflow}{while}(\mbox{\hyperlink{sh_8c_ae0a03d29adb5d9fa678bd53e749f1546}{peek}}(ps, es, \textcolor{stringliteral}{"{}<>"{}}))\{}
+\DoxyCodeLine{00381     tok = \mbox{\hyperlink{sh_8c_aaf1dedac6db801eab8d23f2acb3b1272}{gettoken}}(ps, es, 0, 0);}
+\DoxyCodeLine{00382     \textcolor{keywordflow}{if}(\mbox{\hyperlink{sh_8c_aaf1dedac6db801eab8d23f2acb3b1272}{gettoken}}(ps, es, \&q, \&eq) != \textcolor{charliteral}{'a'})}
+\DoxyCodeLine{00383       \mbox{\hyperlink{sh_8c_ada38fdb2913f040f6eeb6189eeb42d32}{panic}}(\textcolor{stringliteral}{"{}missing file for redirection"{}});}
+\DoxyCodeLine{00384     \textcolor{keywordflow}{switch}(tok)\{}
+\DoxyCodeLine{00385     \textcolor{keywordflow}{case} \textcolor{charliteral}{'<'}:}
+\DoxyCodeLine{00386       \mbox{\hyperlink{structcmd}{cmd}} = \mbox{\hyperlink{structredircmd}{redircmd}}(\mbox{\hyperlink{structcmd}{cmd}}, q, eq, \mbox{\hyperlink{fcntl_8h_a7a68c9ffaac7dbcd652225dd7c06a54b}{O\_RDONLY}}, 0);}
+\DoxyCodeLine{00387       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00388     \textcolor{keywordflow}{case} \textcolor{charliteral}{'>'}:}
+\DoxyCodeLine{00389       \mbox{\hyperlink{structcmd}{cmd}} = \mbox{\hyperlink{structredircmd}{redircmd}}(\mbox{\hyperlink{structcmd}{cmd}}, q, eq, \mbox{\hyperlink{fcntl_8h_a11b644a8526139c4cc1850dac1271ced}{O\_WRONLY}}|\mbox{\hyperlink{fcntl_8h_ab40a23079c3b9a7e25ffdc8108c7fb02}{O\_CREATE}}, 1);}
+\DoxyCodeLine{00390       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00391     \textcolor{keywordflow}{case} \textcolor{charliteral}{'+'}:  \textcolor{comment}{// >>}}
+\DoxyCodeLine{00392       \mbox{\hyperlink{structcmd}{cmd}} = \mbox{\hyperlink{structredircmd}{redircmd}}(\mbox{\hyperlink{structcmd}{cmd}}, q, eq, \mbox{\hyperlink{fcntl_8h_a11b644a8526139c4cc1850dac1271ced}{O\_WRONLY}}|\mbox{\hyperlink{fcntl_8h_ab40a23079c3b9a7e25ffdc8108c7fb02}{O\_CREATE}}, 1);}
+\DoxyCodeLine{00393       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00394     \}}
+\DoxyCodeLine{00395   \}}
+\DoxyCodeLine{00396   \textcolor{keywordflow}{return} \mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00397 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da3/sh_8c_a234ef6b6053ff23ff31ea66a611f92d6_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da3/sh_8c_a234ef6b6053ff23ff31ea66a611f92d6_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{sh_8c_ae0a03d29adb5d9fa678bd53e749f1546}\label{sh_8c_ae0a03d29adb5d9fa678bd53e749f1546}} 
+\index{sh.c@{sh.c}!peek@{peek}}
+\index{peek@{peek}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{peek()}{peek()}}
+{\footnotesize\ttfamily int peek (\begin{DoxyParamCaption}\item[{char $\ast$$\ast$}]{ps,  }\item[{char $\ast$}]{es,  }\item[{char $\ast$}]{toks }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00311}{311}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00312 \{}
+\DoxyCodeLine{00313   \textcolor{keywordtype}{char} *s;}
+\DoxyCodeLine{00314 }
+\DoxyCodeLine{00315   s = *ps;}
+\DoxyCodeLine{00316   \textcolor{keywordflow}{while}(s < es \&\& \mbox{\hyperlink{ulib_8c_a34704df9bf598dd9b477bafe5642cfe7}{strchr}}(\mbox{\hyperlink{sh_8c_ab8474337bbc7c7d316b75b5c00d79947}{whitespace}}, *s))}
+\DoxyCodeLine{00317     s++;}
+\DoxyCodeLine{00318   *ps = s;}
+\DoxyCodeLine{00319   \textcolor{keywordflow}{return} *s \&\& \mbox{\hyperlink{ulib_8c_a34704df9bf598dd9b477bafe5642cfe7}{strchr}}(toks, *s);}
+\DoxyCodeLine{00320 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=195pt]{dd/da3/sh_8c_ae0a03d29adb5d9fa678bd53e749f1546_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da3/sh_8c_ae0a03d29adb5d9fa678bd53e749f1546_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{sh_8c_a15cd1cb35cba711dc240d28dac0e8d0c}\label{sh_8c_a15cd1cb35cba711dc240d28dac0e8d0c}} 
+\index{sh.c@{sh.c}!pipecmd@{pipecmd}}
+\index{pipecmd@{pipecmd}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{pipecmd()}{pipecmd()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ \mbox{\hyperlink{structpipecmd}{pipecmd}} (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$}]{left,  }\item[{struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$}]{right }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00223}{223}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00224 \{}
+\DoxyCodeLine{00225   \textcolor{keyword}{struct }\mbox{\hyperlink{structpipecmd}{pipecmd}} *\mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00226 }
+\DoxyCodeLine{00227   \mbox{\hyperlink{structcmd}{cmd}} = \mbox{\hyperlink{umalloc_8c_ac131c16d1dcb6bea908d0237c82e981d}{malloc}}(\textcolor{keyword}{sizeof}(*\mbox{\hyperlink{structcmd}{cmd}}));}
+\DoxyCodeLine{00228   \mbox{\hyperlink{defs_8h_a0098886a849eef10803e9f35ceec61b9}{memset}}(\mbox{\hyperlink{structcmd}{cmd}}, 0, \textcolor{keyword}{sizeof}(*\mbox{\hyperlink{structcmd}{cmd}}));}
+\DoxyCodeLine{00229   \mbox{\hyperlink{structcmd}{cmd}}-\/>\mbox{\hyperlink{structcmd_a9b861866e1dec63e694247fb4d976423}{type}} = \mbox{\hyperlink{sh_8c_a67bc87cdcc5724cf8e8e4ae278d0133f}{PIPE}};}
+\DoxyCodeLine{00230   \mbox{\hyperlink{structcmd}{cmd}}-\/>left = \mbox{\hyperlink{structpipecmd_a8922b7eac1f12f729cc7226b8b120f6f}{left}};}
+\DoxyCodeLine{00231   \mbox{\hyperlink{structcmd}{cmd}}-\/>right = \mbox{\hyperlink{structpipecmd_a882e2847aa340ae4e201d2e49921b47e}{right}};}
+\DoxyCodeLine{00232   \textcolor{keywordflow}{return} (\textcolor{keyword}{struct} \mbox{\hyperlink{structcmd}{cmd}}*)\mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00233 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=221pt]{dd/da3/sh_8c_a15cd1cb35cba711dc240d28dac0e8d0c_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{sh_8c_ab60825940b584b5de3adbbebb268b9ac}\label{sh_8c_ab60825940b584b5de3adbbebb268b9ac}} 
+\index{sh.c@{sh.c}!redircmd@{redircmd}}
+\index{redircmd@{redircmd}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{redircmd()}{redircmd()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$ \mbox{\hyperlink{structredircmd}{redircmd}} (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$}]{subcmd,  }\item[{char $\ast$}]{file,  }\item[{char $\ast$}]{efile,  }\item[{int}]{mode,  }\item[{int}]{fd }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00207}{207}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00208 \{}
+\DoxyCodeLine{00209   \textcolor{keyword}{struct }\mbox{\hyperlink{structredircmd}{redircmd}} *\mbox{\hyperlink{structredircmd_ad0e2824b83cc8a1da99b2922025011dc}{cmd}};}
+\DoxyCodeLine{00210 }
+\DoxyCodeLine{00211   \mbox{\hyperlink{structcmd}{cmd}} = \mbox{\hyperlink{umalloc_8c_ac131c16d1dcb6bea908d0237c82e981d}{malloc}}(\textcolor{keyword}{sizeof}(*\mbox{\hyperlink{structcmd}{cmd}}));}
+\DoxyCodeLine{00212   \mbox{\hyperlink{defs_8h_a0098886a849eef10803e9f35ceec61b9}{memset}}(\mbox{\hyperlink{structcmd}{cmd}}, 0, \textcolor{keyword}{sizeof}(*\mbox{\hyperlink{structcmd}{cmd}}));}
+\DoxyCodeLine{00213   \mbox{\hyperlink{structcmd}{cmd}}-\/>\mbox{\hyperlink{structcmd_a9b861866e1dec63e694247fb4d976423}{type}} = \mbox{\hyperlink{sh_8c_ae1749b6682612a761fc83e79c38386b1}{REDIR}};}
+\DoxyCodeLine{00214   \mbox{\hyperlink{structcmd}{cmd}}-\/>cmd = subcmd;}
+\DoxyCodeLine{00215   \mbox{\hyperlink{structcmd}{cmd}}-\/>file = \mbox{\hyperlink{structredircmd_adfbfcf9111724e5b453bab2ed3ee308f}{file}};}
+\DoxyCodeLine{00216   \mbox{\hyperlink{structcmd}{cmd}}-\/>efile = \mbox{\hyperlink{structredircmd_a7bd00698c6fbc539415332f187d78317}{efile}};}
+\DoxyCodeLine{00217   \mbox{\hyperlink{structcmd}{cmd}}-\/>mode = \mbox{\hyperlink{structredircmd_a36b522983b6a0c0efdaea471b08d120b}{mode}};}
+\DoxyCodeLine{00218   \mbox{\hyperlink{structcmd}{cmd}}-\/>fd = \mbox{\hyperlink{structredircmd_a1d4b8ba36b5bb4e9e4af58a6d58934a1}{fd}};}
+\DoxyCodeLine{00219   \textcolor{keywordflow}{return} (\textcolor{keyword}{struct} \mbox{\hyperlink{structcmd}{cmd}}*)\mbox{\hyperlink{structredircmd_ad0e2824b83cc8a1da99b2922025011dc}{cmd}};}
+\DoxyCodeLine{00220 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=222pt]{dd/da3/sh_8c_ab60825940b584b5de3adbbebb268b9ac_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{sh_8c_aedbeff6afe5d4e22330c7e6b5e6df893}\label{sh_8c_aedbeff6afe5d4e22330c7e6b5e6df893}} 
+\index{sh.c@{sh.c}!runcmd@{runcmd}}
+\index{runcmd@{runcmd}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{runcmd()}{runcmd()}}
+{\footnotesize\ttfamily void runcmd (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structcmd}{cmd}} $\ast$}]{cmd }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00058}{58}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00059 \{}
+\DoxyCodeLine{00060   \textcolor{keywordtype}{int} p[2];}
+\DoxyCodeLine{00061   \textcolor{keyword}{struct }\mbox{\hyperlink{structbackcmd}{backcmd}} *bcmd;}
+\DoxyCodeLine{00062   \textcolor{keyword}{struct }\mbox{\hyperlink{structexeccmd}{execcmd}} *ecmd;}
+\DoxyCodeLine{00063   \textcolor{keyword}{struct }\mbox{\hyperlink{structlistcmd}{listcmd}} *lcmd;}
+\DoxyCodeLine{00064   \textcolor{keyword}{struct }\mbox{\hyperlink{structpipecmd}{pipecmd}} *pcmd;}
+\DoxyCodeLine{00065   \textcolor{keyword}{struct }\mbox{\hyperlink{structredircmd}{redircmd}} *rcmd;}
+\DoxyCodeLine{00066 }
+\DoxyCodeLine{00067   \textcolor{keywordflow}{if}(\mbox{\hyperlink{structcmd}{cmd}} == 0)}
+\DoxyCodeLine{00068     \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00069 }
+\DoxyCodeLine{00070   \textcolor{keywordflow}{switch}(\mbox{\hyperlink{structcmd}{cmd}}-\/>\mbox{\hyperlink{structcmd_a9b861866e1dec63e694247fb4d976423}{type}})\{}
+\DoxyCodeLine{00071   \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00072     \mbox{\hyperlink{sh_8c_ada38fdb2913f040f6eeb6189eeb42d32}{panic}}(\textcolor{stringliteral}{"{}runcmd"{}});}
+\DoxyCodeLine{00073 }
+\DoxyCodeLine{00074   \textcolor{keywordflow}{case} \mbox{\hyperlink{sh_8c_a7d636ac897898fcd988797e4ada044b9}{EXEC}}:}
+\DoxyCodeLine{00075     ecmd = (\textcolor{keyword}{struct }\mbox{\hyperlink{structexeccmd}{execcmd}}*)\mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00076     \textcolor{keywordflow}{if}(ecmd-\/>\mbox{\hyperlink{structexeccmd_a00e53af4bc0e28bbd6842bdceaee1ea9}{argv}}[0] == 0)}
+\DoxyCodeLine{00077       \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00078     \mbox{\hyperlink{defs_8h_aa7b4aae4a12acd187e23396214aeca47}{exec}}(ecmd-\/>\mbox{\hyperlink{structexeccmd_a00e53af4bc0e28bbd6842bdceaee1ea9}{argv}}[0], ecmd-\/>\mbox{\hyperlink{structexeccmd_a00e53af4bc0e28bbd6842bdceaee1ea9}{argv}});}
+\DoxyCodeLine{00079     \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(2, \textcolor{stringliteral}{"{}exec \%s failed\(\backslash\)n"{}}, ecmd-\/>\mbox{\hyperlink{structexeccmd_a00e53af4bc0e28bbd6842bdceaee1ea9}{argv}}[0]);}
+\DoxyCodeLine{00080     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00081 }
+\DoxyCodeLine{00082   \textcolor{keywordflow}{case} \mbox{\hyperlink{sh_8c_ae1749b6682612a761fc83e79c38386b1}{REDIR}}:}
+\DoxyCodeLine{00083     rcmd = (\textcolor{keyword}{struct }\mbox{\hyperlink{structredircmd}{redircmd}}*)\mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00084     \mbox{\hyperlink{user_8h_ae152484c890a24e4d9b4980e7b965be0}{close}}(rcmd-\/>\mbox{\hyperlink{structredircmd_a1d4b8ba36b5bb4e9e4af58a6d58934a1}{fd}});}
+\DoxyCodeLine{00085     \textcolor{keywordflow}{if}(\mbox{\hyperlink{user_8h_a2c4414339f388561554c2deab11a1a07}{open}}(rcmd-\/>\mbox{\hyperlink{structredircmd_adfbfcf9111724e5b453bab2ed3ee308f}{file}}, rcmd-\/>\mbox{\hyperlink{structredircmd_a36b522983b6a0c0efdaea471b08d120b}{mode}}) < 0)\{}
+\DoxyCodeLine{00086       \mbox{\hyperlink{forktest_8c_a249680925885256274fa9f02dd51cec4}{printf}}(2, \textcolor{stringliteral}{"{}open \%s failed\(\backslash\)n"{}}, rcmd-\/>\mbox{\hyperlink{structredircmd_adfbfcf9111724e5b453bab2ed3ee308f}{file}});}
+\DoxyCodeLine{00087       \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00088     \}}
+\DoxyCodeLine{00089     \mbox{\hyperlink{sh_8c_aedbeff6afe5d4e22330c7e6b5e6df893}{runcmd}}(rcmd-\/>\mbox{\hyperlink{structredircmd_ad0e2824b83cc8a1da99b2922025011dc}{cmd}});}
+\DoxyCodeLine{00090     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00091 }
+\DoxyCodeLine{00092   \textcolor{keywordflow}{case} \mbox{\hyperlink{sh_8c_aed0a8f83088c41d721066cd5b3b9a00c}{LIST}}:}
+\DoxyCodeLine{00093     lcmd = (\textcolor{keyword}{struct }\mbox{\hyperlink{structlistcmd}{listcmd}}*)\mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00094     \textcolor{keywordflow}{if}(\mbox{\hyperlink{sh_8c_a7ae98824a008ffbc5506060227b6faa0}{fork1}}() == 0)}
+\DoxyCodeLine{00095       \mbox{\hyperlink{sh_8c_aedbeff6afe5d4e22330c7e6b5e6df893}{runcmd}}(lcmd-\/>\mbox{\hyperlink{structlistcmd_a3058dfa06817a015f821d38f1e1edc3b}{left}});}
+\DoxyCodeLine{00096     \mbox{\hyperlink{defs_8h_af6f31822f7e737b4e414bdac1ccb59a4}{wait}}();}
+\DoxyCodeLine{00097     \mbox{\hyperlink{sh_8c_aedbeff6afe5d4e22330c7e6b5e6df893}{runcmd}}(lcmd-\/>\mbox{\hyperlink{structlistcmd_a063a3a59362ddfafb7c0e4c848d4e8c5}{right}});}
+\DoxyCodeLine{00098     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00099 }
+\DoxyCodeLine{00100   \textcolor{keywordflow}{case} \mbox{\hyperlink{sh_8c_a67bc87cdcc5724cf8e8e4ae278d0133f}{PIPE}}:}
+\DoxyCodeLine{00101     pcmd = (\textcolor{keyword}{struct }\mbox{\hyperlink{structpipecmd}{pipecmd}}*)\mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00102     \textcolor{keywordflow}{if}(\mbox{\hyperlink{structpipe}{pipe}}(p) < 0)}
+\DoxyCodeLine{00103       \mbox{\hyperlink{sh_8c_ada38fdb2913f040f6eeb6189eeb42d32}{panic}}(\textcolor{stringliteral}{"{}pipe"{}});}
+\DoxyCodeLine{00104     \textcolor{keywordflow}{if}(\mbox{\hyperlink{sh_8c_a7ae98824a008ffbc5506060227b6faa0}{fork1}}() == 0)\{}
+\DoxyCodeLine{00105       \mbox{\hyperlink{user_8h_ae152484c890a24e4d9b4980e7b965be0}{close}}(1);}
+\DoxyCodeLine{00106       \mbox{\hyperlink{user_8h_a530ea95b243a1bf148adaf399e2a6292}{dup}}(p[1]);}
+\DoxyCodeLine{00107       \mbox{\hyperlink{user_8h_ae152484c890a24e4d9b4980e7b965be0}{close}}(p[0]);}
+\DoxyCodeLine{00108       \mbox{\hyperlink{user_8h_ae152484c890a24e4d9b4980e7b965be0}{close}}(p[1]);}
+\DoxyCodeLine{00109       \mbox{\hyperlink{sh_8c_aedbeff6afe5d4e22330c7e6b5e6df893}{runcmd}}(pcmd-\/>\mbox{\hyperlink{structpipecmd_a8922b7eac1f12f729cc7226b8b120f6f}{left}});}
+\DoxyCodeLine{00110     \}}
+\DoxyCodeLine{00111     \textcolor{keywordflow}{if}(\mbox{\hyperlink{sh_8c_a7ae98824a008ffbc5506060227b6faa0}{fork1}}() == 0)\{}
+\DoxyCodeLine{00112       \mbox{\hyperlink{user_8h_ae152484c890a24e4d9b4980e7b965be0}{close}}(0);}
+\DoxyCodeLine{00113       \mbox{\hyperlink{user_8h_a530ea95b243a1bf148adaf399e2a6292}{dup}}(p[0]);}
+\DoxyCodeLine{00114       \mbox{\hyperlink{user_8h_ae152484c890a24e4d9b4980e7b965be0}{close}}(p[0]);}
+\DoxyCodeLine{00115       \mbox{\hyperlink{user_8h_ae152484c890a24e4d9b4980e7b965be0}{close}}(p[1]);}
+\DoxyCodeLine{00116       \mbox{\hyperlink{sh_8c_aedbeff6afe5d4e22330c7e6b5e6df893}{runcmd}}(pcmd-\/>\mbox{\hyperlink{structpipecmd_a882e2847aa340ae4e201d2e49921b47e}{right}});}
+\DoxyCodeLine{00117     \}}
+\DoxyCodeLine{00118     \mbox{\hyperlink{user_8h_ae152484c890a24e4d9b4980e7b965be0}{close}}(p[0]);}
+\DoxyCodeLine{00119     \mbox{\hyperlink{user_8h_ae152484c890a24e4d9b4980e7b965be0}{close}}(p[1]);}
+\DoxyCodeLine{00120     \mbox{\hyperlink{defs_8h_af6f31822f7e737b4e414bdac1ccb59a4}{wait}}();}
+\DoxyCodeLine{00121     \mbox{\hyperlink{defs_8h_af6f31822f7e737b4e414bdac1ccb59a4}{wait}}();}
+\DoxyCodeLine{00122     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00123 }
+\DoxyCodeLine{00124   \textcolor{keywordflow}{case} \mbox{\hyperlink{sh_8c_ab303ee384877c80cb8855bf0113faf88}{BACK}}:}
+\DoxyCodeLine{00125     bcmd = (\textcolor{keyword}{struct }\mbox{\hyperlink{structbackcmd}{backcmd}}*)\mbox{\hyperlink{structcmd}{cmd}};}
+\DoxyCodeLine{00126     \textcolor{keywordflow}{if}(\mbox{\hyperlink{sh_8c_a7ae98824a008ffbc5506060227b6faa0}{fork1}}() == 0)}
+\DoxyCodeLine{00127       \mbox{\hyperlink{sh_8c_aedbeff6afe5d4e22330c7e6b5e6df893}{runcmd}}(bcmd-\/>\mbox{\hyperlink{structbackcmd_a74a697014e2d3a17710e530fca0e8432}{cmd}});}
+\DoxyCodeLine{00128     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00129   \}}
+\DoxyCodeLine{00130   \mbox{\hyperlink{defs_8h_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}}();}
+\DoxyCodeLine{00131 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da3/sh_8c_aedbeff6afe5d4e22330c7e6b5e6df893_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=203pt]{dd/da3/sh_8c_aedbeff6afe5d4e22330c7e6b5e6df893_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{sh_8c_ab385d981fc73a48a1b732173200f46e5}\label{sh_8c_ab385d981fc73a48a1b732173200f46e5}} 
+\index{sh.c@{sh.c}!symbols@{symbols}}
+\index{symbols@{symbols}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{symbols}{symbols}}
+{\footnotesize\ttfamily char symbols\mbox{[}$\,$\mbox{]} = \char`\"{}$<$$\vert$$>$\&;()\char`\"{}}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00263}{263}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+
+\mbox{\Hypertarget{sh_8c_ab8474337bbc7c7d316b75b5c00d79947}\label{sh_8c_ab8474337bbc7c7d316b75b5c00d79947}} 
+\index{sh.c@{sh.c}!whitespace@{whitespace}}
+\index{whitespace@{whitespace}!sh.c@{sh.c}}
+\doxysubsubsection{\texorpdfstring{whitespace}{whitespace}}
+{\footnotesize\ttfamily char whitespace\mbox{[}$\,$\mbox{]} = \char`\"{} \textbackslash{}t\textbackslash{}r\textbackslash{}n\textbackslash{}v\char`\"{}}
+
+
+
+Definition at line \mbox{\hyperlink{sh_8c_source_l00262}{262}} of file \mbox{\hyperlink{sh_8c_source}{sh.\+c}}.
+

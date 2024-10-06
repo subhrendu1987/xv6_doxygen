@@ -1,0 +1,1055 @@
+\hypertarget{proc_8c}{}\doxysection{proc.\+c File Reference}
+\label{proc_8c}\index{proc.c@{proc.c}}
+{\ttfamily \#include \char`\"{}types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}defs.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}param.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}memlayout.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mmu.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}x86.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}proc.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}spinlock.\+h\char`\"{}}\newline
+Include dependency graph for proc.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d6/d6a/proc_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{proc_8c_a11c5d62d28e8121e75235d361158156e}{forkret}} (void)
+\item 
+void \mbox{\hyperlink{proc_8c_a6c085102b25a17b9a1a78db5a8be16f9}{trapret}} (void)
+\item 
+void \mbox{\hyperlink{proc_8c_a9d293f913985937ee7a266fe5ddbfc77}{pinit}} (void)
+\item 
+int \mbox{\hyperlink{proc_8c_a414dda255ed3c1e43e7922d10f9d2c6d}{cpuid}} ()
+\item 
+struct \mbox{\hyperlink{structcpu}{cpu}} $\ast$ \mbox{\hyperlink{proc_8c_ad427959ad025dabd8cd393b27ec39160}{mycpu}} (void)
+\item 
+struct \mbox{\hyperlink{structproc}{proc}} $\ast$ \mbox{\hyperlink{proc_8c_a41af0935f3989aae450cf8988cd9c3a9}{myproc}} (void)
+\item 
+void \mbox{\hyperlink{proc_8c_a81c8a6a0cae413bc81aa223f7f7b7205}{userinit}} (void)
+\item 
+int \mbox{\hyperlink{proc_8c_a9c16214741f4fcd088e5eea468709328}{growproc}} (int n)
+\item 
+int \mbox{\hyperlink{proc_8c_acd2e1ded4bb6fce4500438bf928330f4}{fork}} (void)
+\item 
+void \mbox{\hyperlink{proc_8c_aaf98ef7cdde3a0dfb2e49919de3298b1}{exit}} (void)
+\item 
+int \mbox{\hyperlink{proc_8c_af6f31822f7e737b4e414bdac1ccb59a4}{wait}} (void)
+\item 
+void \mbox{\hyperlink{proc_8c_a9fa00b0be5d3c4781048861e2506eb63}{scheduler}} (void)
+\item 
+void \mbox{\hyperlink{proc_8c_ad788da91743c333b5bed7c4a0dd12365}{sched}} (void)
+\item 
+void \mbox{\hyperlink{proc_8c_a7cb51f5c2b5cad3766f19eb69c92793b}{yield}} (void)
+\item 
+void \mbox{\hyperlink{proc_8c_ae70cc0370342e46f6db3bec367232457}{sleep}} (void $\ast$chan, struct \mbox{\hyperlink{structspinlock}{spinlock}} $\ast$lk)
+\item 
+void \mbox{\hyperlink{proc_8c_a4a34d9f03e436cfa09b88f735f6ee952}{wakeup}} (void $\ast$chan)
+\item 
+int \mbox{\hyperlink{proc_8c_a650cf0caaaa8b75f653c1c92818d03a4}{kill}} (int pid)
+\item 
+void \mbox{\hyperlink{proc_8c_a7f185044294ebb57521c73f723990164}{procdump}} (void)
+\item 
+int \mbox{\hyperlink{proc_8c_a45a59a61c8799cb754b4326a32c14dc4}{cps}} ()
+\item 
+int \mbox{\hyperlink{proc_8c_a2ca17a3161c80e3e4894ec6a96e0a281}{chpr}} (int pid, int priority)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+struct \{\\
+\>struct \mbox{\hyperlink{structspinlock}{spinlock}} \mbox{\hyperlink{proc_8c_ab28e82cd5dda7d960095706a3ea20572}{lock}}\\
+\>struct \mbox{\hyperlink{structproc}{proc}} \mbox{\hyperlink{proc_8c_a5780b0050ca664736fd1cc9696624ce5}{proc}} \mbox{[}\mbox{\hyperlink{param_8h_a810c5b751df5bb30588613ed91095129}{NPROC}}\mbox{]}\\
+\} \mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}\\
+
+\end{tabbing}\item 
+int \mbox{\hyperlink{proc_8c_aec016216766697de7529c7b9cb5beda9}{nextpid}} = 1
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{proc_8c_a2ca17a3161c80e3e4894ec6a96e0a281}\label{proc_8c_a2ca17a3161c80e3e4894ec6a96e0a281}} 
+\index{proc.c@{proc.c}!chpr@{chpr}}
+\index{chpr@{chpr}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{chpr()}{chpr()}}
+{\footnotesize\ttfamily int chpr (\begin{DoxyParamCaption}\item[{int}]{pid,  }\item[{int}]{priority }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{proc_8c_source_l00559}{559}} of file \mbox{\hyperlink{proc_8c_source}{proc.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00560 \{}
+\DoxyCodeLine{00561   \textcolor{keyword}{struct }\mbox{\hyperlink{structproc}{proc}} *p;}
+\DoxyCodeLine{00562   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);}
+\DoxyCodeLine{00563   \textcolor{keywordflow}{for}(p = \mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.proc; p < \&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.proc[\mbox{\hyperlink{param_8h_a810c5b751df5bb30588613ed91095129}{NPROC}}]; p++)\{}
+\DoxyCodeLine{00564     \textcolor{keywordflow}{if}(p-\/>\mbox{\hyperlink{structproc_acf2bdf54d1f957ccbcdc987007029944}{pid}} == \mbox{\hyperlink{structproc_acf2bdf54d1f957ccbcdc987007029944}{pid}})\{}
+\DoxyCodeLine{00565       p-\/>\mbox{\hyperlink{structproc_adea4145a33ca852b6b634942f29c6534}{priority}} = \mbox{\hyperlink{structproc_adea4145a33ca852b6b634942f29c6534}{priority}};}
+\DoxyCodeLine{00566       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00567     \}}
+\DoxyCodeLine{00568   \}}
+\DoxyCodeLine{00569   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);}
+\DoxyCodeLine{00570   \textcolor{keywordflow}{return} \mbox{\hyperlink{structproc_acf2bdf54d1f957ccbcdc987007029944}{pid}};}
+\DoxyCodeLine{00571 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_a2ca17a3161c80e3e4894ec6a96e0a281_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=207pt]{d3/dda/proc_8c_a2ca17a3161c80e3e4894ec6a96e0a281_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{proc_8c_a45a59a61c8799cb754b4326a32c14dc4}\label{proc_8c_a45a59a61c8799cb754b4326a32c14dc4}} 
+\index{proc.c@{proc.c}!cps@{cps}}
+\index{cps@{cps}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{cps()}{cps()}}
+{\footnotesize\ttfamily int cps (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{proc_8c_source_l00537}{537}} of file \mbox{\hyperlink{proc_8c_source}{proc.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00538 \{}
+\DoxyCodeLine{00539 \textcolor{keyword}{struct }\mbox{\hyperlink{structproc}{proc}} *p;}
+\DoxyCodeLine{00540 \textcolor{comment}{//Enables interrupts on this processor.}}
+\DoxyCodeLine{00541 sti();}
+\DoxyCodeLine{00542 }
+\DoxyCodeLine{00543 \textcolor{comment}{//Loop over process table looking for process with pid.}}
+\DoxyCodeLine{00544 \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);}
+\DoxyCodeLine{00545 \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{}name \(\backslash\)t pid \(\backslash\)t state \(\backslash\)t priority \(\backslash\)n"{}});}
+\DoxyCodeLine{00546 \textcolor{keywordflow}{for}(p = \mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.proc; p < \&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.proc[\mbox{\hyperlink{param_8h_a810c5b751df5bb30588613ed91095129}{NPROC}}]; p++)\{}
+\DoxyCodeLine{00547   \textcolor{keywordflow}{if}(p-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} == \mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7a488282601451a751e0f0e770b15d4235}{SLEEPING}})}
+\DoxyCodeLine{00548     \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{}\%s \(\backslash\)t \%d \(\backslash\)t SLEEPING \(\backslash\)t \%d \(\backslash\)n "{}}, p-\/>\mbox{\hyperlink{structproc_ac04af53e17d24b90c3cbfab56d658d62}{name}},p-\/>\mbox{\hyperlink{structproc_acf2bdf54d1f957ccbcdc987007029944}{pid}},p-\/>\mbox{\hyperlink{structproc_adea4145a33ca852b6b634942f29c6534}{priority}});}
+\DoxyCodeLine{00549   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(p-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} == \mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7a1061be6c3fb88d32829cba6f6b2be304}{RUNNING}})}
+\DoxyCodeLine{00550     \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{}\%s \(\backslash\)t \%d \(\backslash\)t RUNNING \(\backslash\)t \%d \(\backslash\)n "{}}, p-\/>\mbox{\hyperlink{structproc_ac04af53e17d24b90c3cbfab56d658d62}{name}},p-\/>\mbox{\hyperlink{structproc_acf2bdf54d1f957ccbcdc987007029944}{pid}},p-\/>\mbox{\hyperlink{structproc_adea4145a33ca852b6b634942f29c6534}{priority}});}
+\DoxyCodeLine{00551   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(p-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} == \mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7a269b90433e40460a2c0044a0b3e15694}{RUNNABLE}})}
+\DoxyCodeLine{00552     \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{}\%s \(\backslash\)t \%d \(\backslash\)t RUNNABLE \(\backslash\)t \%d \(\backslash\)n "{}}, p-\/>\mbox{\hyperlink{structproc_ac04af53e17d24b90c3cbfab56d658d62}{name}},p-\/>\mbox{\hyperlink{structproc_acf2bdf54d1f957ccbcdc987007029944}{pid}},p-\/>\mbox{\hyperlink{structproc_adea4145a33ca852b6b634942f29c6534}{priority}});}
+\DoxyCodeLine{00553 \}}
+\DoxyCodeLine{00554 \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);}
+\DoxyCodeLine{00555 \textcolor{keywordflow}{return} 23;}
+\DoxyCodeLine{00556 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_a45a59a61c8799cb754b4326a32c14dc4_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=201pt]{d3/dda/proc_8c_a45a59a61c8799cb754b4326a32c14dc4_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{proc_8c_a414dda255ed3c1e43e7922d10f9d2c6d}\label{proc_8c_a414dda255ed3c1e43e7922d10f9d2c6d}} 
+\index{proc.c@{proc.c}!cpuid@{cpuid}}
+\index{cpuid@{cpuid}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{cpuid()}{cpuid()}}
+{\footnotesize\ttfamily int cpuid (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{proc_8c_source_l00031}{31}} of file \mbox{\hyperlink{proc_8c_source}{proc.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00031         \{}
+\DoxyCodeLine{00032   \textcolor{keywordflow}{return} \mbox{\hyperlink{proc_8c_ad427959ad025dabd8cd393b27ec39160}{mycpu}}()-\/\mbox{\hyperlink{mp_8c_a6d2633e73724907b582dfe6938ed7bb9}{cpus}};}
+\DoxyCodeLine{00033 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_a414dda255ed3c1e43e7922d10f9d2c6d_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=201pt]{d3/dda/proc_8c_a414dda255ed3c1e43e7922d10f9d2c6d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{proc_8c_aaf98ef7cdde3a0dfb2e49919de3298b1}\label{proc_8c_aaf98ef7cdde3a0dfb2e49919de3298b1}} 
+\index{proc.c@{proc.c}!exit@{exit}}
+\index{exit@{exit}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{exit()}{exit()}}
+{\footnotesize\ttfamily void exit (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{proc_8c_source_l00228}{228}} of file \mbox{\hyperlink{proc_8c_source}{proc.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00229 \{}
+\DoxyCodeLine{00230   \textcolor{keyword}{struct }\mbox{\hyperlink{structproc}{proc}} *curproc = \mbox{\hyperlink{proc_8c_a41af0935f3989aae450cf8988cd9c3a9}{myproc}}();}
+\DoxyCodeLine{00231   \textcolor{keyword}{struct }\mbox{\hyperlink{structproc}{proc}} *p;}
+\DoxyCodeLine{00232   \textcolor{keywordtype}{int} fd;}
+\DoxyCodeLine{00233 }
+\DoxyCodeLine{00234   \textcolor{keywordflow}{if}(curproc == initproc)}
+\DoxyCodeLine{00235     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}init exiting"{}});}
+\DoxyCodeLine{00236 }
+\DoxyCodeLine{00237   \textcolor{comment}{// Close all open files.}}
+\DoxyCodeLine{00238   \textcolor{keywordflow}{for}(fd = 0; fd < \mbox{\hyperlink{param_8h_a80bacbaea8dd6aecf216d85d981bcb21}{NOFILE}}; fd++)\{}
+\DoxyCodeLine{00239     \textcolor{keywordflow}{if}(curproc-\/>\mbox{\hyperlink{structproc_a4a9eb0352efe3fc097c91fccfaac50bd}{ofile}}[fd])\{}
+\DoxyCodeLine{00240       \mbox{\hyperlink{defs_8h_ac865ee0b2d70f753d61d1fefef9de0f6}{fileclose}}(curproc-\/>\mbox{\hyperlink{structproc_a4a9eb0352efe3fc097c91fccfaac50bd}{ofile}}[fd]);}
+\DoxyCodeLine{00241       curproc-\/>\mbox{\hyperlink{structproc_a4a9eb0352efe3fc097c91fccfaac50bd}{ofile}}[fd] = 0;}
+\DoxyCodeLine{00242     \}}
+\DoxyCodeLine{00243   \}}
+\DoxyCodeLine{00244 }
+\DoxyCodeLine{00245   \mbox{\hyperlink{defs_8h_a603ca98212e00d2ffdba7827ef0f1003}{begin\_op}}();}
+\DoxyCodeLine{00246   \mbox{\hyperlink{defs_8h_a29530a0afdfe924818d8c70b6724528d}{iput}}(curproc-\/>\mbox{\hyperlink{structproc_a493bc338ce008a838eef521972a35257}{cwd}});}
+\DoxyCodeLine{00247   \mbox{\hyperlink{defs_8h_a2504e37a109f9bae5ca11fe89e4e8fa1}{end\_op}}();}
+\DoxyCodeLine{00248   curproc-\/>\mbox{\hyperlink{structproc_a493bc338ce008a838eef521972a35257}{cwd}} = 0;}
+\DoxyCodeLine{00249 }
+\DoxyCodeLine{00250   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);}
+\DoxyCodeLine{00251 }
+\DoxyCodeLine{00252   \textcolor{comment}{// Parent might be sleeping in wait().}}
+\DoxyCodeLine{00253   wakeup1(curproc-\/>\mbox{\hyperlink{structproc_a14ea8849701ffafba4d142725de154d4}{parent}});}
+\DoxyCodeLine{00254 }
+\DoxyCodeLine{00255   \textcolor{comment}{// Pass abandoned children to init.}}
+\DoxyCodeLine{00256   \textcolor{keywordflow}{for}(p = \mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.proc; p < \&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.proc[\mbox{\hyperlink{param_8h_a810c5b751df5bb30588613ed91095129}{NPROC}}]; p++)\{}
+\DoxyCodeLine{00257     \textcolor{keywordflow}{if}(p-\/>\mbox{\hyperlink{structproc_a14ea8849701ffafba4d142725de154d4}{parent}} == curproc)\{}
+\DoxyCodeLine{00258       p-\/>\mbox{\hyperlink{structproc_a14ea8849701ffafba4d142725de154d4}{parent}} = initproc;}
+\DoxyCodeLine{00259       \textcolor{keywordflow}{if}(p-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} == \mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7a5dfb36109b24f39d54d5c3f48f53def8}{ZOMBIE}})}
+\DoxyCodeLine{00260         wakeup1(initproc);}
+\DoxyCodeLine{00261     \}}
+\DoxyCodeLine{00262   \}}
+\DoxyCodeLine{00263 }
+\DoxyCodeLine{00264   \textcolor{comment}{// Jump into the scheduler, never to return.}}
+\DoxyCodeLine{00265   curproc-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} = \mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7a5dfb36109b24f39d54d5c3f48f53def8}{ZOMBIE}};}
+\DoxyCodeLine{00266   \mbox{\hyperlink{proc_8c_ad788da91743c333b5bed7c4a0dd12365}{sched}}();}
+\DoxyCodeLine{00267   \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}zombie exit"{}});}
+\DoxyCodeLine{00268 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_aaf98ef7cdde3a0dfb2e49919de3298b1_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{d3/dda/proc_8c_aaf98ef7cdde3a0dfb2e49919de3298b1_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{proc_8c_acd2e1ded4bb6fce4500438bf928330f4}\label{proc_8c_acd2e1ded4bb6fce4500438bf928330f4}} 
+\index{proc.c@{proc.c}!fork@{fork}}
+\index{fork@{fork}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{fork()}{fork()}}
+{\footnotesize\ttfamily int fork (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{proc_8c_source_l00181}{181}} of file \mbox{\hyperlink{proc_8c_source}{proc.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00182 \{}
+\DoxyCodeLine{00183   \textcolor{keywordtype}{int} i, pid;}
+\DoxyCodeLine{00184   \textcolor{keyword}{struct }\mbox{\hyperlink{structproc}{proc}} *np;}
+\DoxyCodeLine{00185   \textcolor{keyword}{struct }\mbox{\hyperlink{structproc}{proc}} *curproc = \mbox{\hyperlink{proc_8c_a41af0935f3989aae450cf8988cd9c3a9}{myproc}}();}
+\DoxyCodeLine{00186 }
+\DoxyCodeLine{00187   \textcolor{comment}{// Allocate process.}}
+\DoxyCodeLine{00188   \textcolor{keywordflow}{if}((np = allocproc()) == 0)\{}
+\DoxyCodeLine{00189     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00190   \}}
+\DoxyCodeLine{00191 }
+\DoxyCodeLine{00192   \textcolor{comment}{// Copy process state from proc.}}
+\DoxyCodeLine{00193   \textcolor{keywordflow}{if}((np-\/>\mbox{\hyperlink{structproc_ad430afc653e9eb6cee33954d5545b79d}{pgdir}} = \mbox{\hyperlink{defs_8h_a8caec506ffa8f9386b0434e4cd5aa2b8}{copyuvm}}(curproc-\/>\mbox{\hyperlink{structproc_ad430afc653e9eb6cee33954d5545b79d}{pgdir}}, curproc-\/>\mbox{\hyperlink{structproc_a6e67042bb361124ff287af88efc33e00}{sz}})) == 0)\{}
+\DoxyCodeLine{00194     \mbox{\hyperlink{defs_8h_ae79d6a7d0901b7c081cfded3f916d5bd}{kfree}}(np-\/>\mbox{\hyperlink{structproc_a9f556df98482bff6c9216013d7581ae4}{kstack}});}
+\DoxyCodeLine{00195     np-\/>\mbox{\hyperlink{structproc_a9f556df98482bff6c9216013d7581ae4}{kstack}} = 0;}
+\DoxyCodeLine{00196     np-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} = \mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7aa09b651ef326a9d8efcee5cc5b720ab4}{UNUSED}};}
+\DoxyCodeLine{00197     \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00198   \}}
+\DoxyCodeLine{00199   np-\/>\mbox{\hyperlink{structproc_a6e67042bb361124ff287af88efc33e00}{sz}} = curproc-\/>\mbox{\hyperlink{structproc_a6e67042bb361124ff287af88efc33e00}{sz}};}
+\DoxyCodeLine{00200   np-\/>\mbox{\hyperlink{structproc_a14ea8849701ffafba4d142725de154d4}{parent}} = curproc;}
+\DoxyCodeLine{00201   *np-\/>\mbox{\hyperlink{structproc_a56ec07ac1e10ce42adfc8dd2a366071f}{tf}} = *curproc-\/>\mbox{\hyperlink{structproc_a56ec07ac1e10ce42adfc8dd2a366071f}{tf}};}
+\DoxyCodeLine{00202 }
+\DoxyCodeLine{00203   \textcolor{comment}{// Clear \%eax so that fork returns 0 in the child.}}
+\DoxyCodeLine{00204   np-\/>\mbox{\hyperlink{structproc_a56ec07ac1e10ce42adfc8dd2a366071f}{tf}}-\/>\mbox{\hyperlink{structtrapframe_ab1dd3a10936b61129d7395c3a21bc2fe}{eax}} = 0;}
+\DoxyCodeLine{00205 }
+\DoxyCodeLine{00206   \textcolor{keywordflow}{for}(i = 0; i < \mbox{\hyperlink{param_8h_a80bacbaea8dd6aecf216d85d981bcb21}{NOFILE}}; i++)}
+\DoxyCodeLine{00207     \textcolor{keywordflow}{if}(curproc-\/>\mbox{\hyperlink{structproc_a4a9eb0352efe3fc097c91fccfaac50bd}{ofile}}[i])}
+\DoxyCodeLine{00208       np-\/>\mbox{\hyperlink{structproc_a4a9eb0352efe3fc097c91fccfaac50bd}{ofile}}[i] = \mbox{\hyperlink{defs_8h_a67aac4011147fe1ec585211e23580721}{filedup}}(curproc-\/>\mbox{\hyperlink{structproc_a4a9eb0352efe3fc097c91fccfaac50bd}{ofile}}[i]);}
+\DoxyCodeLine{00209   np-\/>\mbox{\hyperlink{structproc_a493bc338ce008a838eef521972a35257}{cwd}} = \mbox{\hyperlink{defs_8h_a02a4eb876d45b936de1adc73bff02ebf}{idup}}(curproc-\/>\mbox{\hyperlink{structproc_a493bc338ce008a838eef521972a35257}{cwd}});}
+\DoxyCodeLine{00210 }
+\DoxyCodeLine{00211   \mbox{\hyperlink{defs_8h_aa406a54805a570dfe266281876dc5d69}{safestrcpy}}(np-\/>\mbox{\hyperlink{structproc_ac04af53e17d24b90c3cbfab56d658d62}{name}}, curproc-\/>\mbox{\hyperlink{structproc_ac04af53e17d24b90c3cbfab56d658d62}{name}}, \textcolor{keyword}{sizeof}(curproc-\/>\mbox{\hyperlink{structproc_ac04af53e17d24b90c3cbfab56d658d62}{name}}));}
+\DoxyCodeLine{00212 }
+\DoxyCodeLine{00213   \mbox{\hyperlink{structproc_acf2bdf54d1f957ccbcdc987007029944}{pid}} = np-\/>\mbox{\hyperlink{structproc_acf2bdf54d1f957ccbcdc987007029944}{pid}};}
+\DoxyCodeLine{00214 }
+\DoxyCodeLine{00215   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);}
+\DoxyCodeLine{00216 }
+\DoxyCodeLine{00217   np-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} = \mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7a269b90433e40460a2c0044a0b3e15694}{RUNNABLE}};}
+\DoxyCodeLine{00218 }
+\DoxyCodeLine{00219   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);}
+\DoxyCodeLine{00220 }
+\DoxyCodeLine{00221   \textcolor{keywordflow}{return} \mbox{\hyperlink{structproc_acf2bdf54d1f957ccbcdc987007029944}{pid}};}
+\DoxyCodeLine{00222 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_acd2e1ded4bb6fce4500438bf928330f4_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_acd2e1ded4bb6fce4500438bf928330f4_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{proc_8c_a11c5d62d28e8121e75235d361158156e}\label{proc_8c_a11c5d62d28e8121e75235d361158156e}} 
+\index{proc.c@{proc.c}!forkret@{forkret}}
+\index{forkret@{forkret}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{forkret()}{forkret()}}
+{\footnotesize\ttfamily void forkret (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{proc_8c_source_l00397}{397}} of file \mbox{\hyperlink{proc_8c_source}{proc.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00398 \{}
+\DoxyCodeLine{00399   \textcolor{keyword}{static} \textcolor{keywordtype}{int} first = 1;}
+\DoxyCodeLine{00400   \textcolor{comment}{// Still holding ptable.lock from scheduler.}}
+\DoxyCodeLine{00401   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);}
+\DoxyCodeLine{00402 }
+\DoxyCodeLine{00403   \textcolor{keywordflow}{if} (first) \{}
+\DoxyCodeLine{00404     \textcolor{comment}{// Some initialization functions must be run in the context}}
+\DoxyCodeLine{00405     \textcolor{comment}{// of a regular process (e.g., they call sleep), and thus cannot}}
+\DoxyCodeLine{00406     \textcolor{comment}{// be run from main().}}
+\DoxyCodeLine{00407     first = 0;}
+\DoxyCodeLine{00408     \mbox{\hyperlink{defs_8h_a301761a27cf266e0bad483272fb31a3c}{iinit}}(\mbox{\hyperlink{param_8h_ae9ce6b24fe2aae59ff60b469c35febbc}{ROOTDEV}});}
+\DoxyCodeLine{00409     \mbox{\hyperlink{defs_8h_ad5e79aaefb91f41b9ef6aeae7ecf4708}{initlog}}(\mbox{\hyperlink{param_8h_ae9ce6b24fe2aae59ff60b469c35febbc}{ROOTDEV}});}
+\DoxyCodeLine{00410   \}}
+\DoxyCodeLine{00411 }
+\DoxyCodeLine{00412   \textcolor{comment}{// Return to "{}caller"{}, actually trapret (see allocproc).}}
+\DoxyCodeLine{00413 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_a11c5d62d28e8121e75235d361158156e_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{proc_8c_a9c16214741f4fcd088e5eea468709328}\label{proc_8c_a9c16214741f4fcd088e5eea468709328}} 
+\index{proc.c@{proc.c}!growproc@{growproc}}
+\index{growproc@{growproc}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{growproc()}{growproc()}}
+{\footnotesize\ttfamily int growproc (\begin{DoxyParamCaption}\item[{int}]{n }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{proc_8c_source_l00159}{159}} of file \mbox{\hyperlink{proc_8c_source}{proc.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00160 \{}
+\DoxyCodeLine{00161   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} sz;}
+\DoxyCodeLine{00162   \textcolor{keyword}{struct }\mbox{\hyperlink{structproc}{proc}} *curproc = \mbox{\hyperlink{proc_8c_a41af0935f3989aae450cf8988cd9c3a9}{myproc}}();}
+\DoxyCodeLine{00163 }
+\DoxyCodeLine{00164   \mbox{\hyperlink{structproc_a6e67042bb361124ff287af88efc33e00}{sz}} = curproc-\/>\mbox{\hyperlink{structproc_a6e67042bb361124ff287af88efc33e00}{sz}};}
+\DoxyCodeLine{00165   \textcolor{keywordflow}{if}(n > 0)\{}
+\DoxyCodeLine{00166     \textcolor{keywordflow}{if}((\mbox{\hyperlink{structproc_a6e67042bb361124ff287af88efc33e00}{sz}} = \mbox{\hyperlink{defs_8h_a67f50b6f85756f02b5acdcb084d51b9f}{allocuvm}}(curproc-\/>\mbox{\hyperlink{structproc_ad430afc653e9eb6cee33954d5545b79d}{pgdir}}, \mbox{\hyperlink{structproc_a6e67042bb361124ff287af88efc33e00}{sz}}, \mbox{\hyperlink{structproc_a6e67042bb361124ff287af88efc33e00}{sz}} + n)) == 0)}
+\DoxyCodeLine{00167       \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00168   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(n < 0)\{}
+\DoxyCodeLine{00169     \textcolor{keywordflow}{if}((\mbox{\hyperlink{structproc_a6e67042bb361124ff287af88efc33e00}{sz}} = \mbox{\hyperlink{defs_8h_ac45969a8875b6dc87245e0a642aa2d8d}{deallocuvm}}(curproc-\/>\mbox{\hyperlink{structproc_ad430afc653e9eb6cee33954d5545b79d}{pgdir}}, \mbox{\hyperlink{structproc_a6e67042bb361124ff287af88efc33e00}{sz}}, \mbox{\hyperlink{structproc_a6e67042bb361124ff287af88efc33e00}{sz}} + n)) == 0)}
+\DoxyCodeLine{00170       \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00171   \}}
+\DoxyCodeLine{00172   curproc-\/>\mbox{\hyperlink{structproc_a6e67042bb361124ff287af88efc33e00}{sz}} = \mbox{\hyperlink{structproc_a6e67042bb361124ff287af88efc33e00}{sz}};}
+\DoxyCodeLine{00173   \mbox{\hyperlink{defs_8h_ad43d81fa3edec39a200abd0853bc84b1}{switchuvm}}(curproc);}
+\DoxyCodeLine{00174   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00175 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_a9c16214741f4fcd088e5eea468709328_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=228pt]{d3/dda/proc_8c_a9c16214741f4fcd088e5eea468709328_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{proc_8c_a650cf0caaaa8b75f653c1c92818d03a4}\label{proc_8c_a650cf0caaaa8b75f653c1c92818d03a4}} 
+\index{proc.c@{proc.c}!kill@{kill}}
+\index{kill@{kill}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{kill()}{kill()}}
+{\footnotesize\ttfamily int kill (\begin{DoxyParamCaption}\item[{int}]{pid }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{proc_8c_source_l00480}{480}} of file \mbox{\hyperlink{proc_8c_source}{proc.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00481 \{}
+\DoxyCodeLine{00482   \textcolor{keyword}{struct }\mbox{\hyperlink{structproc}{proc}} *p;}
+\DoxyCodeLine{00483 }
+\DoxyCodeLine{00484   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);}
+\DoxyCodeLine{00485   \textcolor{keywordflow}{for}(p = \mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.proc; p < \&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.proc[\mbox{\hyperlink{param_8h_a810c5b751df5bb30588613ed91095129}{NPROC}}]; p++)\{}
+\DoxyCodeLine{00486     \textcolor{keywordflow}{if}(p-\/>\mbox{\hyperlink{structproc_acf2bdf54d1f957ccbcdc987007029944}{pid}} == \mbox{\hyperlink{structproc_acf2bdf54d1f957ccbcdc987007029944}{pid}})\{}
+\DoxyCodeLine{00487       p-\/>\mbox{\hyperlink{structproc_afb4f94a3f4df9a835dbb41b0c26660a4}{killed}} = 1;}
+\DoxyCodeLine{00488       \textcolor{comment}{// Wake process from sleep if necessary.}}
+\DoxyCodeLine{00489       \textcolor{keywordflow}{if}(p-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} == \mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7a488282601451a751e0f0e770b15d4235}{SLEEPING}})}
+\DoxyCodeLine{00490         p-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} = \mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7a269b90433e40460a2c0044a0b3e15694}{RUNNABLE}};}
+\DoxyCodeLine{00491       \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);}
+\DoxyCodeLine{00492       \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00493     \}}
+\DoxyCodeLine{00494   \}}
+\DoxyCodeLine{00495   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);}
+\DoxyCodeLine{00496   \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00497 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_a650cf0caaaa8b75f653c1c92818d03a4_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_a650cf0caaaa8b75f653c1c92818d03a4_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{proc_8c_ad427959ad025dabd8cd393b27ec39160}\label{proc_8c_ad427959ad025dabd8cd393b27ec39160}} 
+\index{proc.c@{proc.c}!mycpu@{mycpu}}
+\index{mycpu@{mycpu}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{mycpu()}{mycpu()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structcpu}{cpu}} $\ast$ mycpu (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{proc_8c_source_l00038}{38}} of file \mbox{\hyperlink{proc_8c_source}{proc.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00039 \{}
+\DoxyCodeLine{00040   \textcolor{keywordtype}{int} apicid, i;}
+\DoxyCodeLine{00041   }
+\DoxyCodeLine{00042   \textcolor{keywordflow}{if}(readeflags()\&\mbox{\hyperlink{mmu_8h_ab481068357bb42797aafe91864a2d085}{FL\_IF}})}
+\DoxyCodeLine{00043     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}mycpu called with interrupts enabled\(\backslash\)n"{}});}
+\DoxyCodeLine{00044   }
+\DoxyCodeLine{00045   apicid = \mbox{\hyperlink{defs_8h_a627f7996b64f99d885244a5102c85164}{lapicid}}();}
+\DoxyCodeLine{00046   \textcolor{comment}{// APIC IDs are not guaranteed to be contiguous. Maybe we should have}}
+\DoxyCodeLine{00047   \textcolor{comment}{// a reverse map, or reserve a register to store \&cpus[i].}}
+\DoxyCodeLine{00048   \textcolor{keywordflow}{for} (i = 0; i < \mbox{\hyperlink{mp_8c_a6201a0661c3d5b88df5f63529298eb48}{ncpu}}; ++i) \{}
+\DoxyCodeLine{00049     \textcolor{keywordflow}{if} (\mbox{\hyperlink{mp_8c_a6d2633e73724907b582dfe6938ed7bb9}{cpus}}[i].apicid == apicid)}
+\DoxyCodeLine{00050       \textcolor{keywordflow}{return} \&\mbox{\hyperlink{mp_8c_a6d2633e73724907b582dfe6938ed7bb9}{cpus}}[i];}
+\DoxyCodeLine{00051   \}}
+\DoxyCodeLine{00052   \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}unknown apicid\(\backslash\)n"{}});}
+\DoxyCodeLine{00053 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_ad427959ad025dabd8cd393b27ec39160_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{d3/dda/proc_8c_ad427959ad025dabd8cd393b27ec39160_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{proc_8c_a41af0935f3989aae450cf8988cd9c3a9}\label{proc_8c_a41af0935f3989aae450cf8988cd9c3a9}} 
+\index{proc.c@{proc.c}!myproc@{myproc}}
+\index{myproc@{myproc}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{myproc()}{myproc()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structproc}{proc}} $\ast$ myproc (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{proc_8c_source_l00058}{58}} of file \mbox{\hyperlink{proc_8c_source}{proc.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00058              \{}
+\DoxyCodeLine{00059   \textcolor{keyword}{struct }\mbox{\hyperlink{structcpu}{cpu}} *c;}
+\DoxyCodeLine{00060   \textcolor{keyword}{struct }\mbox{\hyperlink{structproc}{proc}} *p;}
+\DoxyCodeLine{00061   \mbox{\hyperlink{defs_8h_a206b749d1b7768dadce61cbcde7e0f1c}{pushcli}}();}
+\DoxyCodeLine{00062   c = \mbox{\hyperlink{proc_8c_ad427959ad025dabd8cd393b27ec39160}{mycpu}}();}
+\DoxyCodeLine{00063   p = c-\/>\mbox{\hyperlink{structcpu_a9e71a6265904fd644875a9ea5a413c89}{proc}};}
+\DoxyCodeLine{00064   \mbox{\hyperlink{defs_8h_ae3424f669269fef400ce29c3aeb43fdb}{popcli}}();}
+\DoxyCodeLine{00065   \textcolor{keywordflow}{return} p;}
+\DoxyCodeLine{00066 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_a41af0935f3989aae450cf8988cd9c3a9_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{d3/dda/proc_8c_a41af0935f3989aae450cf8988cd9c3a9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{proc_8c_a9d293f913985937ee7a266fe5ddbfc77}\label{proc_8c_a9d293f913985937ee7a266fe5ddbfc77}} 
+\index{proc.c@{proc.c}!pinit@{pinit}}
+\index{pinit@{pinit}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{pinit()}{pinit()}}
+{\footnotesize\ttfamily void pinit (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{proc_8c_source_l00024}{24}} of file \mbox{\hyperlink{proc_8c_source}{proc.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00025 \{}
+\DoxyCodeLine{00026   \mbox{\hyperlink{defs_8h_ab56d728e6966819a0260c358d3ac3419}{initlock}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock, \textcolor{stringliteral}{"{}ptable"{}});}
+\DoxyCodeLine{00027 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=198pt]{d3/dda/proc_8c_a9d293f913985937ee7a266fe5ddbfc77_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{proc_8c_a7f185044294ebb57521c73f723990164}\label{proc_8c_a7f185044294ebb57521c73f723990164}} 
+\index{proc.c@{proc.c}!procdump@{procdump}}
+\index{procdump@{procdump}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{procdump()}{procdump()}}
+{\footnotesize\ttfamily void procdump (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{proc_8c_source_l00504}{504}} of file \mbox{\hyperlink{proc_8c_source}{proc.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00505 \{}
+\DoxyCodeLine{00506   \textcolor{keyword}{static} \textcolor{keywordtype}{char} *states[] = \{}
+\DoxyCodeLine{00507   [\mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7aa09b651ef326a9d8efcee5cc5b720ab4}{UNUSED}}]    \textcolor{stringliteral}{"{}unused"{}},}
+\DoxyCodeLine{00508   [\mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7aaed0f3d976d25b54cb7c895ce591febb}{EMBRYO}}]    \textcolor{stringliteral}{"{}embryo"{}},}
+\DoxyCodeLine{00509   [\mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7a488282601451a751e0f0e770b15d4235}{SLEEPING}}]  \textcolor{stringliteral}{"{}sleep "{}},}
+\DoxyCodeLine{00510   [\mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7a269b90433e40460a2c0044a0b3e15694}{RUNNABLE}}]  \textcolor{stringliteral}{"{}runble"{}},}
+\DoxyCodeLine{00511   [\mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7a1061be6c3fb88d32829cba6f6b2be304}{RUNNING}}]   \textcolor{stringliteral}{"{}run   "{}},}
+\DoxyCodeLine{00512   [\mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7a5dfb36109b24f39d54d5c3f48f53def8}{ZOMBIE}}]    \textcolor{stringliteral}{"{}zombie"{}}}
+\DoxyCodeLine{00513   \};}
+\DoxyCodeLine{00514   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{00515   \textcolor{keyword}{struct }\mbox{\hyperlink{structproc}{proc}} *p;}
+\DoxyCodeLine{00516   \textcolor{keywordtype}{char} *\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}};}
+\DoxyCodeLine{00517   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} pc[10];}
+\DoxyCodeLine{00518 }
+\DoxyCodeLine{00519   \textcolor{keywordflow}{for}(p = \mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.proc; p < \&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.proc[\mbox{\hyperlink{param_8h_a810c5b751df5bb30588613ed91095129}{NPROC}}]; p++)\{}
+\DoxyCodeLine{00520     \textcolor{keywordflow}{if}(p-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} == \mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7aa09b651ef326a9d8efcee5cc5b720ab4}{UNUSED}})}
+\DoxyCodeLine{00521       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00522     \textcolor{keywordflow}{if}(p-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} >= 0 \&\& p-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} < \mbox{\hyperlink{defs_8h_afacd331296c10f360da7640e0d68429f}{NELEM}}(states) \&\& states[p-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}}])}
+\DoxyCodeLine{00523       \mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} = states[p-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}}];}
+\DoxyCodeLine{00524     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00525       \mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} = \textcolor{stringliteral}{"{}???"{}};}
+\DoxyCodeLine{00526     \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{}\%d \%s \%s"{}}, p-\/>\mbox{\hyperlink{structproc_acf2bdf54d1f957ccbcdc987007029944}{pid}}, \mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}}, p-\/>\mbox{\hyperlink{structproc_ac04af53e17d24b90c3cbfab56d658d62}{name}});}
+\DoxyCodeLine{00527     \textcolor{keywordflow}{if}(p-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} == \mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7a488282601451a751e0f0e770b15d4235}{SLEEPING}})\{}
+\DoxyCodeLine{00528       \mbox{\hyperlink{defs_8h_a4105de9e2969515d6c6c795c4386f69f}{getcallerpcs}}((\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}*)p-\/>\mbox{\hyperlink{structproc_ae0d9bffe1ad1c7d60dd2733be0a2333c}{context}}-\/>\mbox{\hyperlink{structcontext_ac9640ddc2e90e4213ba9847bbe1b0e57}{ebp}}+2, pc);}
+\DoxyCodeLine{00529       \textcolor{keywordflow}{for}(i=0; i<10 \&\& pc[i] != 0; i++)}
+\DoxyCodeLine{00530         \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{} \%p"{}}, pc[i]);}
+\DoxyCodeLine{00531     \}}
+\DoxyCodeLine{00532     \mbox{\hyperlink{console_8c_a90f0742d846503e4ed1804f1df421ec6}{cprintf}}(\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{00533   \}}
+\DoxyCodeLine{00534 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_a7f185044294ebb57521c73f723990164_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_a7f185044294ebb57521c73f723990164_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{proc_8c_ad788da91743c333b5bed7c4a0dd12365}\label{proc_8c_ad788da91743c333b5bed7c4a0dd12365}} 
+\index{proc.c@{proc.c}!sched@{sched}}
+\index{sched@{sched}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{sched()}{sched()}}
+{\footnotesize\ttfamily void sched (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{proc_8c_source_l00366}{366}} of file \mbox{\hyperlink{proc_8c_source}{proc.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00367 \{}
+\DoxyCodeLine{00368   \textcolor{keywordtype}{int} intena;}
+\DoxyCodeLine{00369   \textcolor{keyword}{struct }\mbox{\hyperlink{structproc}{proc}} *p = \mbox{\hyperlink{proc_8c_a41af0935f3989aae450cf8988cd9c3a9}{myproc}}();}
+\DoxyCodeLine{00370 }
+\DoxyCodeLine{00371   \textcolor{keywordflow}{if}(!\mbox{\hyperlink{defs_8h_ac44b13cc76bf4040e3baf34df75ff230}{holding}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock))}
+\DoxyCodeLine{00372     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}sched ptable.lock"{}});}
+\DoxyCodeLine{00373   \textcolor{keywordflow}{if}(\mbox{\hyperlink{proc_8c_ad427959ad025dabd8cd393b27ec39160}{mycpu}}()-\/>ncli != 1)}
+\DoxyCodeLine{00374     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}sched locks"{}});}
+\DoxyCodeLine{00375   \textcolor{keywordflow}{if}(p-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} == \mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7a1061be6c3fb88d32829cba6f6b2be304}{RUNNING}})}
+\DoxyCodeLine{00376     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}sched running"{}});}
+\DoxyCodeLine{00377   \textcolor{keywordflow}{if}(readeflags()\&\mbox{\hyperlink{mmu_8h_ab481068357bb42797aafe91864a2d085}{FL\_IF}})}
+\DoxyCodeLine{00378     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}sched interruptible"{}});}
+\DoxyCodeLine{00379   intena = \mbox{\hyperlink{proc_8c_ad427959ad025dabd8cd393b27ec39160}{mycpu}}()-\/>\mbox{\hyperlink{structcpu_a26fc271fea8af30d67fc2ae22ef0a82f}{intena}};}
+\DoxyCodeLine{00380   \mbox{\hyperlink{defs_8h_a1d9e7047d3dfb57809a2541d8387705e}{swtch}}(\&p-\/>\mbox{\hyperlink{structproc_ae0d9bffe1ad1c7d60dd2733be0a2333c}{context}}, \mbox{\hyperlink{proc_8c_ad427959ad025dabd8cd393b27ec39160}{mycpu}}()-\/>\mbox{\hyperlink{proc_8c_a9fa00b0be5d3c4781048861e2506eb63}{scheduler}});}
+\DoxyCodeLine{00381   \mbox{\hyperlink{proc_8c_ad427959ad025dabd8cd393b27ec39160}{mycpu}}()-\/>\mbox{\hyperlink{structcpu_a26fc271fea8af30d67fc2ae22ef0a82f}{intena}} = intena;}
+\DoxyCodeLine{00382 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_ad788da91743c333b5bed7c4a0dd12365_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{d3/dda/proc_8c_ad788da91743c333b5bed7c4a0dd12365_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{proc_8c_a9fa00b0be5d3c4781048861e2506eb63}\label{proc_8c_a9fa00b0be5d3c4781048861e2506eb63}} 
+\index{proc.c@{proc.c}!scheduler@{scheduler}}
+\index{scheduler@{scheduler}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{scheduler()}{scheduler()}}
+{\footnotesize\ttfamily void scheduler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{proc_8c_source_l00323}{323}} of file \mbox{\hyperlink{proc_8c_source}{proc.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00324 \{}
+\DoxyCodeLine{00325   \textcolor{keyword}{struct }\mbox{\hyperlink{structproc}{proc}} *p;}
+\DoxyCodeLine{00326   \textcolor{keyword}{struct }\mbox{\hyperlink{structcpu}{cpu}} *c = \mbox{\hyperlink{proc_8c_ad427959ad025dabd8cd393b27ec39160}{mycpu}}();}
+\DoxyCodeLine{00327   c-\/>\mbox{\hyperlink{structcpu_a9e71a6265904fd644875a9ea5a413c89}{proc}} = 0;}
+\DoxyCodeLine{00328   }
+\DoxyCodeLine{00329   \textcolor{keywordflow}{for}(;;)\{}
+\DoxyCodeLine{00330     \textcolor{comment}{// Enable interrupts on this processor.}}
+\DoxyCodeLine{00331     sti();}
+\DoxyCodeLine{00332 }
+\DoxyCodeLine{00333     \textcolor{comment}{// Loop over process table looking for process to run.}}
+\DoxyCodeLine{00334     \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);}
+\DoxyCodeLine{00335     \textcolor{keywordflow}{for}(p = \mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.proc; p < \&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.proc[\mbox{\hyperlink{param_8h_a810c5b751df5bb30588613ed91095129}{NPROC}}]; p++)\{}
+\DoxyCodeLine{00336       \textcolor{keywordflow}{if}(p-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} != \mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7a269b90433e40460a2c0044a0b3e15694}{RUNNABLE}})}
+\DoxyCodeLine{00337         \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00338 }
+\DoxyCodeLine{00339       \textcolor{comment}{// Switch to chosen process.  It is the process's job}}
+\DoxyCodeLine{00340       \textcolor{comment}{// to release ptable.lock and then reacquire it}}
+\DoxyCodeLine{00341       \textcolor{comment}{// before jumping back to us.}}
+\DoxyCodeLine{00342       c-\/>\mbox{\hyperlink{structcpu_a9e71a6265904fd644875a9ea5a413c89}{proc}} = p;}
+\DoxyCodeLine{00343       \mbox{\hyperlink{defs_8h_ad43d81fa3edec39a200abd0853bc84b1}{switchuvm}}(p);}
+\DoxyCodeLine{00344       p-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} = \mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7a1061be6c3fb88d32829cba6f6b2be304}{RUNNING}};}
+\DoxyCodeLine{00345 }
+\DoxyCodeLine{00346       \mbox{\hyperlink{defs_8h_a1d9e7047d3dfb57809a2541d8387705e}{swtch}}(\&(c-\/>\mbox{\hyperlink{structcpu_aaa1510fdf8a2230c033d04e13e4fdd9e}{scheduler}}), p-\/>\mbox{\hyperlink{structproc_ae0d9bffe1ad1c7d60dd2733be0a2333c}{context}});}
+\DoxyCodeLine{00347       \mbox{\hyperlink{defs_8h_a02ca0670bc1fe12e38453082631ff360}{switchkvm}}();}
+\DoxyCodeLine{00348 }
+\DoxyCodeLine{00349       \textcolor{comment}{// Process is done running for now.}}
+\DoxyCodeLine{00350       \textcolor{comment}{// It should have changed its p-\/>state before coming back.}}
+\DoxyCodeLine{00351       c-\/>\mbox{\hyperlink{structcpu_a9e71a6265904fd644875a9ea5a413c89}{proc}} = 0;}
+\DoxyCodeLine{00352     \}}
+\DoxyCodeLine{00353     \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);}
+\DoxyCodeLine{00354 }
+\DoxyCodeLine{00355   \}}
+\DoxyCodeLine{00356 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_a9fa00b0be5d3c4781048861e2506eb63_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{d3/dda/proc_8c_a9fa00b0be5d3c4781048861e2506eb63_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{proc_8c_ae70cc0370342e46f6db3bec367232457}\label{proc_8c_ae70cc0370342e46f6db3bec367232457}} 
+\index{proc.c@{proc.c}!sleep@{sleep}}
+\index{sleep@{sleep}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{sleep()}{sleep()}}
+{\footnotesize\ttfamily void sleep (\begin{DoxyParamCaption}\item[{void $\ast$}]{chan,  }\item[{struct \mbox{\hyperlink{structspinlock}{spinlock}} $\ast$}]{lk }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{proc_8c_source_l00418}{418}} of file \mbox{\hyperlink{proc_8c_source}{proc.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00419 \{}
+\DoxyCodeLine{00420   \textcolor{keyword}{struct }\mbox{\hyperlink{structproc}{proc}} *p = \mbox{\hyperlink{proc_8c_a41af0935f3989aae450cf8988cd9c3a9}{myproc}}();}
+\DoxyCodeLine{00421   }
+\DoxyCodeLine{00422   \textcolor{keywordflow}{if}(p == 0)}
+\DoxyCodeLine{00423     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}sleep"{}});}
+\DoxyCodeLine{00424 }
+\DoxyCodeLine{00425   \textcolor{keywordflow}{if}(lk == 0)}
+\DoxyCodeLine{00426     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}sleep without lk"{}});}
+\DoxyCodeLine{00427 }
+\DoxyCodeLine{00428   \textcolor{comment}{// Must acquire ptable.lock in order to}}
+\DoxyCodeLine{00429   \textcolor{comment}{// change p-\/>state and then call sched.}}
+\DoxyCodeLine{00430   \textcolor{comment}{// Once we hold ptable.lock, we can be}}
+\DoxyCodeLine{00431   \textcolor{comment}{// guaranteed that we won't miss any wakeup}}
+\DoxyCodeLine{00432   \textcolor{comment}{// (wakeup runs with ptable.lock locked),}}
+\DoxyCodeLine{00433   \textcolor{comment}{// so it's okay to release lk.}}
+\DoxyCodeLine{00434   \textcolor{keywordflow}{if}(lk != \&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock)\{  \textcolor{comment}{//DOC: sleeplock0}}
+\DoxyCodeLine{00435     \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);  \textcolor{comment}{//DOC: sleeplock1}}
+\DoxyCodeLine{00436     \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(lk);}
+\DoxyCodeLine{00437   \}}
+\DoxyCodeLine{00438   \textcolor{comment}{// Go to sleep.}}
+\DoxyCodeLine{00439   p-\/>\mbox{\hyperlink{structproc_a03048a49756c2243576208ba4ec5fbd4}{chan}} = \mbox{\hyperlink{structproc_a03048a49756c2243576208ba4ec5fbd4}{chan}};}
+\DoxyCodeLine{00440   p-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} = \mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7a488282601451a751e0f0e770b15d4235}{SLEEPING}};}
+\DoxyCodeLine{00441 }
+\DoxyCodeLine{00442   \mbox{\hyperlink{proc_8c_ad788da91743c333b5bed7c4a0dd12365}{sched}}();}
+\DoxyCodeLine{00443 }
+\DoxyCodeLine{00444   \textcolor{comment}{// Tidy up.}}
+\DoxyCodeLine{00445   p-\/>\mbox{\hyperlink{structproc_a03048a49756c2243576208ba4ec5fbd4}{chan}} = 0;}
+\DoxyCodeLine{00446 }
+\DoxyCodeLine{00447   \textcolor{comment}{// Reacquire original lock.}}
+\DoxyCodeLine{00448   \textcolor{keywordflow}{if}(lk != \&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock)\{  \textcolor{comment}{//DOC: sleeplock2}}
+\DoxyCodeLine{00449     \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);}
+\DoxyCodeLine{00450     \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(lk);}
+\DoxyCodeLine{00451   \}}
+\DoxyCodeLine{00452 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_ae70cc0370342e46f6db3bec367232457_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_ae70cc0370342e46f6db3bec367232457_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{proc_8c_a6c085102b25a17b9a1a78db5a8be16f9}\label{proc_8c_a6c085102b25a17b9a1a78db5a8be16f9}} 
+\index{proc.c@{proc.c}!trapret@{trapret}}
+\index{trapret@{trapret}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{trapret()}{trapret()}}
+{\footnotesize\ttfamily void trapret (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{proc_8c_a81c8a6a0cae413bc81aa223f7f7b7205}\label{proc_8c_a81c8a6a0cae413bc81aa223f7f7b7205}} 
+\index{proc.c@{proc.c}!userinit@{userinit}}
+\index{userinit@{userinit}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{userinit()}{userinit()}}
+{\footnotesize\ttfamily void userinit (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{proc_8c_source_l00121}{121}} of file \mbox{\hyperlink{proc_8c_source}{proc.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00122 \{}
+\DoxyCodeLine{00123   \textcolor{keyword}{struct }\mbox{\hyperlink{structproc}{proc}} *p;}
+\DoxyCodeLine{00124   \textcolor{keyword}{extern} \textcolor{keywordtype}{char} \_binary\_initcode\_start[], \_binary\_initcode\_size[];}
+\DoxyCodeLine{00125 }
+\DoxyCodeLine{00126   p = allocproc();}
+\DoxyCodeLine{00127   }
+\DoxyCodeLine{00128   initproc = p;}
+\DoxyCodeLine{00129   \textcolor{keywordflow}{if}((p-\/>\mbox{\hyperlink{structproc_ad430afc653e9eb6cee33954d5545b79d}{pgdir}} = \mbox{\hyperlink{defs_8h_a1c8a7a02e9391b5cf0984388216695c0}{setupkvm}}()) == 0)}
+\DoxyCodeLine{00130     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}userinit: out of memory?"{}});}
+\DoxyCodeLine{00131   \mbox{\hyperlink{defs_8h_a7b3410bde4005e848e1748f2b0f0a084}{inituvm}}(p-\/>\mbox{\hyperlink{structproc_ad430afc653e9eb6cee33954d5545b79d}{pgdir}}, \_binary\_initcode\_start, (\textcolor{keywordtype}{int})\_binary\_initcode\_size);}
+\DoxyCodeLine{00132   p-\/>\mbox{\hyperlink{structproc_a6e67042bb361124ff287af88efc33e00}{sz}} = \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}};}
+\DoxyCodeLine{00133   \mbox{\hyperlink{defs_8h_a0098886a849eef10803e9f35ceec61b9}{memset}}(p-\/>\mbox{\hyperlink{structproc_a56ec07ac1e10ce42adfc8dd2a366071f}{tf}}, 0, \textcolor{keyword}{sizeof}(*p-\/>\mbox{\hyperlink{structproc_a56ec07ac1e10ce42adfc8dd2a366071f}{tf}}));}
+\DoxyCodeLine{00134   p-\/>\mbox{\hyperlink{structproc_a56ec07ac1e10ce42adfc8dd2a366071f}{tf}}-\/>\mbox{\hyperlink{structtrapframe_a61261f63223a73e25be79fcc8c625265}{cs}} = (\mbox{\hyperlink{mmu_8h_a85b694d969eb01e547197c21db219f4b}{SEG\_UCODE}} << 3) | \mbox{\hyperlink{mmu_8h_a060d4d4e32af81cab881fe77e58d7b78}{DPL\_USER}};}
+\DoxyCodeLine{00135   p-\/>\mbox{\hyperlink{structproc_a56ec07ac1e10ce42adfc8dd2a366071f}{tf}}-\/>\mbox{\hyperlink{structtrapframe_a421be1ec9ad2a55f1d1adeac9b0b89c3}{ds}} = (\mbox{\hyperlink{mmu_8h_aba0495696b4c656fda31704782648461}{SEG\_UDATA}} << 3) | \mbox{\hyperlink{mmu_8h_a060d4d4e32af81cab881fe77e58d7b78}{DPL\_USER}};}
+\DoxyCodeLine{00136   p-\/>\mbox{\hyperlink{structproc_a56ec07ac1e10ce42adfc8dd2a366071f}{tf}}-\/>\mbox{\hyperlink{structtrapframe_ab974b358098da0aaa5897c32827a038d}{es}} = p-\/>\mbox{\hyperlink{structproc_a56ec07ac1e10ce42adfc8dd2a366071f}{tf}}-\/>\mbox{\hyperlink{structtrapframe_a421be1ec9ad2a55f1d1adeac9b0b89c3}{ds}};}
+\DoxyCodeLine{00137   p-\/>\mbox{\hyperlink{structproc_a56ec07ac1e10ce42adfc8dd2a366071f}{tf}}-\/>\mbox{\hyperlink{structtrapframe_aa9c9b52b242d4f42fe4252e26b655bf6}{ss}} = p-\/>\mbox{\hyperlink{structproc_a56ec07ac1e10ce42adfc8dd2a366071f}{tf}}-\/>\mbox{\hyperlink{structtrapframe_a421be1ec9ad2a55f1d1adeac9b0b89c3}{ds}};}
+\DoxyCodeLine{00138   p-\/>\mbox{\hyperlink{structproc_a56ec07ac1e10ce42adfc8dd2a366071f}{tf}}-\/>\mbox{\hyperlink{structtrapframe_ae6b3005ad34416546603ab18dbb4a644}{eflags}} = \mbox{\hyperlink{mmu_8h_ab481068357bb42797aafe91864a2d085}{FL\_IF}};}
+\DoxyCodeLine{00139   p-\/>\mbox{\hyperlink{structproc_a56ec07ac1e10ce42adfc8dd2a366071f}{tf}}-\/>\mbox{\hyperlink{structtrapframe_acd319e2dbd720d217c10f8fb620d73e2}{esp}} = \mbox{\hyperlink{mmu_8h_a5f96cb6ae6670e023c407cc2f77e1704}{PGSIZE}};}
+\DoxyCodeLine{00140   p-\/>\mbox{\hyperlink{structproc_a56ec07ac1e10ce42adfc8dd2a366071f}{tf}}-\/>\mbox{\hyperlink{structtrapframe_a886a5973a537894e3a95435f38767d5c}{eip}} = 0;  \textcolor{comment}{// beginning of initcode.S}}
+\DoxyCodeLine{00141 }
+\DoxyCodeLine{00142   \mbox{\hyperlink{defs_8h_aa406a54805a570dfe266281876dc5d69}{safestrcpy}}(p-\/>\mbox{\hyperlink{structproc_ac04af53e17d24b90c3cbfab56d658d62}{name}}, \textcolor{stringliteral}{"{}initcode"{}}, \textcolor{keyword}{sizeof}(p-\/>\mbox{\hyperlink{structproc_ac04af53e17d24b90c3cbfab56d658d62}{name}}));}
+\DoxyCodeLine{00143   p-\/>\mbox{\hyperlink{structproc_a493bc338ce008a838eef521972a35257}{cwd}} = \mbox{\hyperlink{defs_8h_acde7d3975db286253e584452ba03a54f}{namei}}(\textcolor{stringliteral}{"{}/"{}});}
+\DoxyCodeLine{00144 }
+\DoxyCodeLine{00145   \textcolor{comment}{// this assignment to p-\/>state lets other cores}}
+\DoxyCodeLine{00146   \textcolor{comment}{// run this process. the acquire forces the above}}
+\DoxyCodeLine{00147   \textcolor{comment}{// writes to be visible, and the lock is also needed}}
+\DoxyCodeLine{00148   \textcolor{comment}{// because the assignment might not be atomic.}}
+\DoxyCodeLine{00149   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);}
+\DoxyCodeLine{00150 }
+\DoxyCodeLine{00151   p-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} = \mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7a269b90433e40460a2c0044a0b3e15694}{RUNNABLE}};}
+\DoxyCodeLine{00152 }
+\DoxyCodeLine{00153   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);}
+\DoxyCodeLine{00154 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_a81c8a6a0cae413bc81aa223f7f7b7205_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{proc_8c_af6f31822f7e737b4e414bdac1ccb59a4}\label{proc_8c_af6f31822f7e737b4e414bdac1ccb59a4}} 
+\index{proc.c@{proc.c}!wait@{wait}}
+\index{wait@{wait}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{wait()}{wait()}}
+{\footnotesize\ttfamily int wait (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{proc_8c_source_l00273}{273}} of file \mbox{\hyperlink{proc_8c_source}{proc.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00274 \{}
+\DoxyCodeLine{00275   \textcolor{keyword}{struct }\mbox{\hyperlink{structproc}{proc}} *p;}
+\DoxyCodeLine{00276   \textcolor{keywordtype}{int} havekids, \mbox{\hyperlink{structproc_acf2bdf54d1f957ccbcdc987007029944}{pid}};}
+\DoxyCodeLine{00277   \textcolor{keyword}{struct }\mbox{\hyperlink{structproc}{proc}} *curproc = \mbox{\hyperlink{proc_8c_a41af0935f3989aae450cf8988cd9c3a9}{myproc}}();}
+\DoxyCodeLine{00278   }
+\DoxyCodeLine{00279   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);}
+\DoxyCodeLine{00280   \textcolor{keywordflow}{for}(;;)\{}
+\DoxyCodeLine{00281     \textcolor{comment}{// Scan through table looking for exited children.}}
+\DoxyCodeLine{00282     havekids = 0;}
+\DoxyCodeLine{00283     \textcolor{keywordflow}{for}(p = \mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.proc; p < \&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.proc[\mbox{\hyperlink{param_8h_a810c5b751df5bb30588613ed91095129}{NPROC}}]; p++)\{}
+\DoxyCodeLine{00284       \textcolor{keywordflow}{if}(p-\/>\mbox{\hyperlink{structproc_a14ea8849701ffafba4d142725de154d4}{parent}} != curproc)}
+\DoxyCodeLine{00285         \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00286       havekids = 1;}
+\DoxyCodeLine{00287       \textcolor{keywordflow}{if}(p-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} == \mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7a5dfb36109b24f39d54d5c3f48f53def8}{ZOMBIE}})\{}
+\DoxyCodeLine{00288         \textcolor{comment}{// Found one.}}
+\DoxyCodeLine{00289         \mbox{\hyperlink{structproc_acf2bdf54d1f957ccbcdc987007029944}{pid}} = p-\/>\mbox{\hyperlink{structproc_acf2bdf54d1f957ccbcdc987007029944}{pid}};}
+\DoxyCodeLine{00290         \mbox{\hyperlink{defs_8h_ae79d6a7d0901b7c081cfded3f916d5bd}{kfree}}(p-\/>\mbox{\hyperlink{structproc_a9f556df98482bff6c9216013d7581ae4}{kstack}});}
+\DoxyCodeLine{00291         p-\/>\mbox{\hyperlink{structproc_a9f556df98482bff6c9216013d7581ae4}{kstack}} = 0;}
+\DoxyCodeLine{00292         \mbox{\hyperlink{defs_8h_af24cf1756e19afd8be8c95d02262cf3a}{freevm}}(p-\/>\mbox{\hyperlink{structproc_ad430afc653e9eb6cee33954d5545b79d}{pgdir}});}
+\DoxyCodeLine{00293         p-\/>\mbox{\hyperlink{structproc_acf2bdf54d1f957ccbcdc987007029944}{pid}} = 0;}
+\DoxyCodeLine{00294         p-\/>\mbox{\hyperlink{structproc_a14ea8849701ffafba4d142725de154d4}{parent}} = 0;}
+\DoxyCodeLine{00295         p-\/>\mbox{\hyperlink{structproc_ac04af53e17d24b90c3cbfab56d658d62}{name}}[0] = 0;}
+\DoxyCodeLine{00296         p-\/>\mbox{\hyperlink{structproc_afb4f94a3f4df9a835dbb41b0c26660a4}{killed}} = 0;}
+\DoxyCodeLine{00297         p-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} = \mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7aa09b651ef326a9d8efcee5cc5b720ab4}{UNUSED}};}
+\DoxyCodeLine{00298         \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);}
+\DoxyCodeLine{00299         \textcolor{keywordflow}{return} \mbox{\hyperlink{structproc_acf2bdf54d1f957ccbcdc987007029944}{pid}};}
+\DoxyCodeLine{00300       \}}
+\DoxyCodeLine{00301     \}}
+\DoxyCodeLine{00302 }
+\DoxyCodeLine{00303     \textcolor{comment}{// No point waiting if we don't have any children.}}
+\DoxyCodeLine{00304     \textcolor{keywordflow}{if}(!havekids || curproc-\/>\mbox{\hyperlink{structproc_afb4f94a3f4df9a835dbb41b0c26660a4}{killed}})\{}
+\DoxyCodeLine{00305       \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);}
+\DoxyCodeLine{00306       \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00307     \}}
+\DoxyCodeLine{00308 }
+\DoxyCodeLine{00309     \textcolor{comment}{// Wait for children to exit.  (See wakeup1 call in proc\_exit.)}}
+\DoxyCodeLine{00310     \mbox{\hyperlink{proc_8c_ae70cc0370342e46f6db3bec367232457}{sleep}}(curproc, \&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);  \textcolor{comment}{//DOC: wait-\/sleep}}
+\DoxyCodeLine{00311   \}}
+\DoxyCodeLine{00312 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_af6f31822f7e737b4e414bdac1ccb59a4_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_af6f31822f7e737b4e414bdac1ccb59a4_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{proc_8c_a4a34d9f03e436cfa09b88f735f6ee952}\label{proc_8c_a4a34d9f03e436cfa09b88f735f6ee952}} 
+\index{proc.c@{proc.c}!wakeup@{wakeup}}
+\index{wakeup@{wakeup}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{wakeup()}{wakeup()}}
+{\footnotesize\ttfamily void wakeup (\begin{DoxyParamCaption}\item[{void $\ast$}]{chan }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{proc_8c_source_l00469}{469}} of file \mbox{\hyperlink{proc_8c_source}{proc.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00470 \{}
+\DoxyCodeLine{00471   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);}
+\DoxyCodeLine{00472   wakeup1(chan);}
+\DoxyCodeLine{00473   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);}
+\DoxyCodeLine{00474 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_a4a34d9f03e436cfa09b88f735f6ee952_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_a4a34d9f03e436cfa09b88f735f6ee952_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{proc_8c_a7cb51f5c2b5cad3766f19eb69c92793b}\label{proc_8c_a7cb51f5c2b5cad3766f19eb69c92793b}} 
+\index{proc.c@{proc.c}!yield@{yield}}
+\index{yield@{yield}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{yield()}{yield()}}
+{\footnotesize\ttfamily void yield (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{proc_8c_source_l00386}{386}} of file \mbox{\hyperlink{proc_8c_source}{proc.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00387 \{}
+\DoxyCodeLine{00388   \mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{acquire}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);  \textcolor{comment}{//DOC: yieldlock}}
+\DoxyCodeLine{00389   \mbox{\hyperlink{proc_8c_a41af0935f3989aae450cf8988cd9c3a9}{myproc}}()-\/>\mbox{\hyperlink{structproc_a0f2fe91548a1382672ae26e29ca9e736}{state}} = \mbox{\hyperlink{proc_8h_aa1ced7d2b60040fded3fa873d0c03ba7a269b90433e40460a2c0044a0b3e15694}{RUNNABLE}};}
+\DoxyCodeLine{00390   \mbox{\hyperlink{proc_8c_ad788da91743c333b5bed7c4a0dd12365}{sched}}();}
+\DoxyCodeLine{00391   \mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{release}}(\&\mbox{\hyperlink{proc_8c_addf39d613ca9a58e7e6080a2e454421a}{ptable}}.lock);}
+\DoxyCodeLine{00392 \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dda/proc_8c_a7cb51f5c2b5cad3766f19eb69c92793b_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=186pt]{d3/dda/proc_8c_a7cb51f5c2b5cad3766f19eb69c92793b_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{proc_8c_ab28e82cd5dda7d960095706a3ea20572}\label{proc_8c_ab28e82cd5dda7d960095706a3ea20572}} 
+\index{proc.c@{proc.c}!lock@{lock}}
+\index{lock@{lock}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{lock}{lock}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structspinlock}{spinlock}} lock}
+
+
+
+Definition at line \mbox{\hyperlink{proc_8c_source_l00011}{11}} of file \mbox{\hyperlink{proc_8c_source}{proc.\+c}}.
+
+\mbox{\Hypertarget{proc_8c_aec016216766697de7529c7b9cb5beda9}\label{proc_8c_aec016216766697de7529c7b9cb5beda9}} 
+\index{proc.c@{proc.c}!nextpid@{nextpid}}
+\index{nextpid@{nextpid}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{nextpid}{nextpid}}
+{\footnotesize\ttfamily int nextpid = 1}
+
+
+
+Definition at line \mbox{\hyperlink{proc_8c_source_l00017}{17}} of file \mbox{\hyperlink{proc_8c_source}{proc.\+c}}.
+
+\mbox{\Hypertarget{proc_8c_a5780b0050ca664736fd1cc9696624ce5}\label{proc_8c_a5780b0050ca664736fd1cc9696624ce5}} 
+\index{proc.c@{proc.c}!proc@{proc}}
+\index{proc@{proc}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{proc}{proc}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structproc}{proc}} \mbox{\hyperlink{structproc}{proc}}\mbox{[}\mbox{\hyperlink{param_8h_a810c5b751df5bb30588613ed91095129}{NPROC}}\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{proc_8c_source_l00012}{12}} of file \mbox{\hyperlink{proc_8c_source}{proc.\+c}}.
+
+\mbox{\Hypertarget{proc_8c_addf39d613ca9a58e7e6080a2e454421a}\label{proc_8c_addf39d613ca9a58e7e6080a2e454421a}} 
+\index{proc.c@{proc.c}!ptable@{ptable}}
+\index{ptable@{ptable}!proc.c@{proc.c}}
+\doxysubsubsection{\texorpdfstring{}{}}
+{\footnotesize\ttfamily struct  \{ ... \}  ptable}
+

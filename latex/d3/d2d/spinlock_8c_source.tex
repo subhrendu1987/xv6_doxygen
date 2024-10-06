@@ -1,0 +1,131 @@
+\hypertarget{spinlock_8c_source}{}\doxysection{spinlock.\+c}
+\mbox{\hyperlink{spinlock_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00001}00001 \textcolor{comment}{// Mutual exclusion spin locks.}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00003}00003 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00004}00004 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{defs_8h}{defs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00005}00005 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{param_8h}{param.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00006}00006 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{x86_8h}{x86.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00007}00007 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{memlayout_8h}{memlayout.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00008}00008 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{mmu_8h}{mmu.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00009}00009 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{proc_8h}{proc.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00010}00010 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{spinlock_8h}{spinlock.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00012}00012 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00013}\mbox{\hyperlink{defs_8h_ab56d728e6966819a0260c358d3ac3419}{00013}} \mbox{\hyperlink{spinlock_8c_abda07b4a007b2e888d9d783920460b89}{initlock}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structspinlock}{spinlock}} *lk, \textcolor{keywordtype}{char} *\mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}})}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00014}00014 \{}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00015}00015   lk-\/>\mbox{\hyperlink{structspinlock_afbec3274bf8ad9c421695a22f8d9d584}{name}} = \mbox{\hyperlink{usertests_8c_aee754febd402311e2a552cb0d6ab6629}{name}};}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00016}00016   lk-\/>\mbox{\hyperlink{structspinlock_a48f3007579f644934d9aba91e5378c03}{locked}} = 0;}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00017}00017   lk-\/>\mbox{\hyperlink{structspinlock_a290ae772c8ccb9e8c1580204c31a7f88}{cpu}} = 0;}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00018}00018 \}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00020}00020 \textcolor{comment}{// Acquire the lock.}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00021}00021 \textcolor{comment}{// Loops (spins) until the lock is acquired.}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00022}00022 \textcolor{comment}{// Holding a lock for a long time may cause}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00023}00023 \textcolor{comment}{// other CPUs to waste time spinning to acquire it.}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00024}00024 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00025}\mbox{\hyperlink{defs_8h_afe4ef8638f1ecb962a6e67fb086ee3b8}{00025}} \mbox{\hyperlink{spinlock_8c_aed377f16a085b00de3a4b32392adbdfb}{acquire}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structspinlock}{spinlock}} *lk)}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00026}00026 \{}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00027}00027   \mbox{\hyperlink{spinlock_8c_a206b749d1b7768dadce61cbcde7e0f1c}{pushcli}}(); \textcolor{comment}{// disable interrupts to avoid deadlock.}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00028}00028   \textcolor{keywordflow}{if}(\mbox{\hyperlink{spinlock_8c_aea48df3e5cfb903179ad3dc78ab502d9}{holding}}(lk))}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00029}00029     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}acquire"{}});}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00031}00031   \textcolor{comment}{// The xchg is atomic.}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00032}00032   \textcolor{keywordflow}{while}(xchg(\&lk-\/>\mbox{\hyperlink{structspinlock_a48f3007579f644934d9aba91e5378c03}{locked}}, 1) != 0)}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00033}00033     ;}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00035}00035   \textcolor{comment}{// Tell the C compiler and the processor to not move loads or stores}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00036}00036   \textcolor{comment}{// past this point, to ensure that the critical section's memory}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00037}00037   \textcolor{comment}{// references happen after the lock is acquired.}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00038}00038   \_\_sync\_synchronize();}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00040}00040   \textcolor{comment}{// Record info about lock acquisition for debugging.}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00041}00041   lk-\/>\mbox{\hyperlink{structspinlock_a290ae772c8ccb9e8c1580204c31a7f88}{cpu}} = \mbox{\hyperlink{defs_8h_ad427959ad025dabd8cd393b27ec39160}{mycpu}}();}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00042}00042   \mbox{\hyperlink{spinlock_8c_a6ac35304ea80f01086b47edcc2328010}{getcallerpcs}}(\&lk, lk-\/>\mbox{\hyperlink{structspinlock_ac9ef3f16f664094198af0b9063e23fe0}{pcs}});}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00043}00043 \}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00045}00045 \textcolor{comment}{// Release the lock.}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00046}00046 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00047}\mbox{\hyperlink{defs_8h_a4f8616948f3dbce65671f666eed1d669}{00047}} \mbox{\hyperlink{spinlock_8c_a1cee376aa9a00e754bf5481cd5f3d97b}{release}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structspinlock}{spinlock}} *lk)}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00048}00048 \{}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00049}00049   \textcolor{keywordflow}{if}(!\mbox{\hyperlink{spinlock_8c_aea48df3e5cfb903179ad3dc78ab502d9}{holding}}(lk))}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00050}00050     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}release"{}});}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00052}00052   lk-\/>\mbox{\hyperlink{structspinlock_ac9ef3f16f664094198af0b9063e23fe0}{pcs}}[0] = 0;}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00053}00053   lk-\/>\mbox{\hyperlink{structspinlock_a290ae772c8ccb9e8c1580204c31a7f88}{cpu}} = 0;}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00055}00055   \textcolor{comment}{// Tell the C compiler and the processor to not move loads or stores}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00056}00056   \textcolor{comment}{// past this point, to ensure that all the stores in the critical}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00057}00057   \textcolor{comment}{// section are visible to other cores before the lock is released.}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00058}00058   \textcolor{comment}{// Both the C compiler and the hardware may re-\/order loads and}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00059}00059   \textcolor{comment}{// stores; \_\_sync\_synchronize() tells them both not to.}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00060}00060   \_\_sync\_synchronize();}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00062}00062   \textcolor{comment}{// Release the lock, equivalent to lk-\/>locked = 0.}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00063}00063   \textcolor{comment}{// This code can't use a C assignment, since it might}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00064}00064   \textcolor{comment}{// not be atomic. A real OS would use C atomics here.}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00065}00065   \textcolor{keyword}{asm} \textcolor{keyword}{volatile}(\textcolor{stringliteral}{"{}movl \$0, \%0"{}} : \textcolor{stringliteral}{"{}+m"{}} (lk-\/>\mbox{\hyperlink{structspinlock_a48f3007579f644934d9aba91e5378c03}{locked}}) : );}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00067}00067   \mbox{\hyperlink{spinlock_8c_ae3424f669269fef400ce29c3aeb43fdb}{popcli}}();}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00068}00068 \}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00069}00069 }
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00070}00070 \textcolor{comment}{// Record the current call stack in pcs[] by following the \%ebp chain.}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00071}00071 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00072}\mbox{\hyperlink{spinlock_8c_a6ac35304ea80f01086b47edcc2328010}{00072}} \mbox{\hyperlink{spinlock_8c_a6ac35304ea80f01086b47edcc2328010}{getcallerpcs}}(\textcolor{keywordtype}{void} *v, \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} pcs[])}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00073}00073 \{}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00074}00074   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} *ebp;}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00075}00075   \textcolor{keywordtype}{int} i;}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00076}00076 }
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00077}00077   ebp = (\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}*)v -\/ 2;}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00078}00078   \textcolor{keywordflow}{for}(i = 0; i < 10; i++)\{}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00079}00079     \textcolor{keywordflow}{if}(ebp == 0 || ebp < (\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}*)\mbox{\hyperlink{memlayout_8h_a20cbfc19992a40ab9ccf4aa8ab8283d0}{KERNBASE}} || ebp == (\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}*)0xffffffff)}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00080}00080       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00081}00081     pcs[i] = ebp[1];     \textcolor{comment}{// saved \%eip}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00082}00082     ebp = (\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}*)ebp[0]; \textcolor{comment}{// saved \%ebp}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00083}00083   \}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00084}00084   \textcolor{keywordflow}{for}(; i < 10; i++)}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00085}00085     pcs[i] = 0;}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00086}00086 \}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00087}00087 }
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00088}00088 \textcolor{comment}{// Check whether this cpu is holding the lock.}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00089}00089 \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00090}\mbox{\hyperlink{defs_8h_ac44b13cc76bf4040e3baf34df75ff230}{00090}} \mbox{\hyperlink{spinlock_8c_aea48df3e5cfb903179ad3dc78ab502d9}{holding}}(\textcolor{keyword}{struct} \mbox{\hyperlink{structspinlock}{spinlock}} *\mbox{\hyperlink{bio_8c_ab28e82cd5dda7d960095706a3ea20572}{lock}})}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00091}00091 \{}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00092}00092   \textcolor{keywordtype}{int} \mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}};}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00093}00093   \mbox{\hyperlink{spinlock_8c_a206b749d1b7768dadce61cbcde7e0f1c}{pushcli}}();}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00094}00094   \mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}} = \mbox{\hyperlink{bio_8c_ab28e82cd5dda7d960095706a3ea20572}{lock}}-\/>\mbox{\hyperlink{structspinlock_a48f3007579f644934d9aba91e5378c03}{locked}} \&\& \mbox{\hyperlink{bio_8c_ab28e82cd5dda7d960095706a3ea20572}{lock}}-\/>\mbox{\hyperlink{structspinlock_a290ae772c8ccb9e8c1580204c31a7f88}{cpu}} == \mbox{\hyperlink{defs_8h_ad427959ad025dabd8cd393b27ec39160}{mycpu}}();}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00095}00095   \mbox{\hyperlink{spinlock_8c_ae3424f669269fef400ce29c3aeb43fdb}{popcli}}();}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00096}00096   \textcolor{keywordflow}{return} \mbox{\hyperlink{console_8c_af10fa12dd785c91e29528fbdc50cf9af}{r}};}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00097}00097 \}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00098}00098 }
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00099}00099 }
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00100}00100 \textcolor{comment}{// Pushcli/popcli are like cli/sti except that they are matched:}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00101}00101 \textcolor{comment}{// it takes two popcli to undo two pushcli.  Also, if interrupts}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00102}00102 \textcolor{comment}{// are off, then pushcli, popcli leaves them off.}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00103}00103 }
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00104}00104 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00105}\mbox{\hyperlink{defs_8h_a206b749d1b7768dadce61cbcde7e0f1c}{00105}} \mbox{\hyperlink{spinlock_8c_a206b749d1b7768dadce61cbcde7e0f1c}{pushcli}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00106}00106 \{}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00107}00107   \textcolor{keywordtype}{int} eflags;}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00108}00108 }
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00109}00109   eflags = readeflags();}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00110}00110   cli();}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00111}00111   \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_ad427959ad025dabd8cd393b27ec39160}{mycpu}}()-\/>ncli == 0)}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00112}00112     \mbox{\hyperlink{defs_8h_ad427959ad025dabd8cd393b27ec39160}{mycpu}}()-\/>\mbox{\hyperlink{structcpu_a26fc271fea8af30d67fc2ae22ef0a82f}{intena}} = eflags \& \mbox{\hyperlink{mmu_8h_ab481068357bb42797aafe91864a2d085}{FL\_IF}};}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00113}00113   \mbox{\hyperlink{defs_8h_ad427959ad025dabd8cd393b27ec39160}{mycpu}}()-\/>\mbox{\hyperlink{structcpu_a9ccad8ae031c295f86e96de26df24805}{ncli}} += 1;}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00114}00114 \}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00115}00115 }
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00116}00116 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00117}\mbox{\hyperlink{defs_8h_ae3424f669269fef400ce29c3aeb43fdb}{00117}} \mbox{\hyperlink{spinlock_8c_ae3424f669269fef400ce29c3aeb43fdb}{popcli}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00118}00118 \{}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00119}00119   \textcolor{keywordflow}{if}(readeflags()\&\mbox{\hyperlink{mmu_8h_ab481068357bb42797aafe91864a2d085}{FL\_IF}})}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00120}00120     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}popcli -\/ interruptible"{}});}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00121}00121   \textcolor{keywordflow}{if}(-\/-\/\mbox{\hyperlink{defs_8h_ad427959ad025dabd8cd393b27ec39160}{mycpu}}()-\/>ncli < 0)}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00122}00122     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}popcli"{}});}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00123}00123   \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_ad427959ad025dabd8cd393b27ec39160}{mycpu}}()-\/>ncli == 0 \&\& \mbox{\hyperlink{defs_8h_ad427959ad025dabd8cd393b27ec39160}{mycpu}}()-\/>intena)}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00124}00124     sti();}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00125}00125 \}}
+\DoxyCodeLine{\Hypertarget{spinlock_8c_source_l00126}00126 }
+
+\end{DoxyCode}

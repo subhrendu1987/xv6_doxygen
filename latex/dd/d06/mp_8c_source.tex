@@ -1,0 +1,144 @@
+\hypertarget{mp_8c_source}{}\doxysection{mp.\+c}
+\mbox{\hyperlink{mp_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00001}00001 \textcolor{comment}{// Multiprocessor support}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00002}00002 \textcolor{comment}{// Search memory for MP description structures.}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00003}00003 \textcolor{comment}{// http://developer.intel.com/design/pentium/datashts/24201606.pdf}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00005}00005 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{types_8h}{types.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00006}00006 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{defs_8h}{defs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00007}00007 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{param_8h}{param.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00008}00008 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{memlayout_8h}{memlayout.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00009}00009 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{mp_8h}{mp.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00010}00010 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{x86_8h}{x86.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00011}00011 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{mmu_8h}{mmu.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00012}00012 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{proc_8h}{proc.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00014}\mbox{\hyperlink{mp_8c_a6d2633e73724907b582dfe6938ed7bb9}{00014}} \textcolor{keyword}{struct }\mbox{\hyperlink{structcpu}{cpu}} \mbox{\hyperlink{mp_8c_a6d2633e73724907b582dfe6938ed7bb9}{cpus}}[\mbox{\hyperlink{param_8h_a2c4561c4c17cde39101c4e7a40d4492a}{NCPU}}];}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00015}\mbox{\hyperlink{mp_8c_a6201a0661c3d5b88df5f63529298eb48}{00015}} \textcolor{keywordtype}{int} \mbox{\hyperlink{mp_8c_a6201a0661c3d5b88df5f63529298eb48}{ncpu}};}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00016}\mbox{\hyperlink{defs_8h_a619ae379337e3cb2397ee0b6b4fd8d6b}{00016}} \mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} \mbox{\hyperlink{mp_8c_a619ae379337e3cb2397ee0b6b4fd8d6b}{ioapicid}};}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00017}00017 }
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00018}00018 \textcolor{keyword}{static} \mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00019}00019 sum(\mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} *addr, \textcolor{keywordtype}{int} len)}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00020}00020 \{}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00021}00021   \textcolor{keywordtype}{int} i, sum;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00023}00023   sum = 0;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00024}00024   \textcolor{keywordflow}{for}(i=0; i<len; i++)}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00025}00025     sum += addr[i];}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00026}00026   \textcolor{keywordflow}{return} sum;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00027}00027 \}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00029}00029 \textcolor{comment}{// Look for an MP structure in the len bytes at addr.}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00030}00030 \textcolor{keyword}{static} \textcolor{keyword}{struct }\mbox{\hyperlink{structmp}{mp}}*}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00031}00031 mpsearch1(\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} a, \textcolor{keywordtype}{int} len)}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00032}00032 \{}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00033}00033   \mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} *\mbox{\hyperlink{console_8c_ab56fa7c992b725d84916b987c3d532ea}{e}}, *p, *addr;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00035}00035   addr = \mbox{\hyperlink{memlayout_8h_aefd5e8b62c49bba2cf20309c7dd174e2}{P2V}}(a);}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00036}00036   \mbox{\hyperlink{console_8c_ab56fa7c992b725d84916b987c3d532ea}{e}} = addr+len;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00037}00037   \textcolor{keywordflow}{for}(p = addr; p < \mbox{\hyperlink{console_8c_ab56fa7c992b725d84916b987c3d532ea}{e}}; p += \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct }\mbox{\hyperlink{structmp}{mp}}))}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00038}00038     if(\mbox{\hyperlink{defs_8h_acdb4d3f48d2fb0a834722b1107d2b284}{memcmp}}(p, \textcolor{stringliteral}{"{}\_MP\_"{}}, 4) == 0 \&\& sum(p, \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \mbox{\hyperlink{structmp}{mp}})) == 0)}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00039}00039       \textcolor{keywordflow}{return} (\textcolor{keyword}{struct} \mbox{\hyperlink{structmp}{mp}}*)p;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00040}00040   \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00041}00041 \}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00043}00043 \textcolor{comment}{// Search for the MP Floating Pointer Structure, which according to the}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00044}00044 \textcolor{comment}{// spec is in one of the following three locations:}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00045}00045 \textcolor{comment}{// 1) in the first KB of the EBDA;}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00046}00046 \textcolor{comment}{// 2) in the last KB of system base memory;}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00047}00047 \textcolor{comment}{// 3) in the BIOS ROM between 0xE0000 and 0xFFFFF.}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00048}00048 \textcolor{keyword}{static} \textcolor{keyword}{struct }\mbox{\hyperlink{structmp}{mp}}*}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00049}00049 mpsearch(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00050}00050 \{}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00051}00051   \mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} *bda;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00052}00052   \mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}} p;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00053}00053   \textcolor{keyword}{struct }\mbox{\hyperlink{structmp}{mp}} *\mbox{\hyperlink{structmp}{mp}};}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00055}00055   bda = (\mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} *) \mbox{\hyperlink{memlayout_8h_aefd5e8b62c49bba2cf20309c7dd174e2}{P2V}}(0x400);}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00056}00056   \textcolor{keywordflow}{if}((p = ((bda[0x0F]<<8)| bda[0x0E]) << 4))\{}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00057}00057     \textcolor{keywordflow}{if}((\mbox{\hyperlink{structmp}{mp}} = mpsearch1(p, 1024)))}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00058}00058       \textcolor{keywordflow}{return} \mbox{\hyperlink{structmp}{mp}};}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00059}00059   \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00060}00060     p = ((bda[0x14]<<8)|bda[0x13])*1024;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00061}00061     \textcolor{keywordflow}{if}((\mbox{\hyperlink{structmp}{mp}} = mpsearch1(p-\/1024, 1024)))}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00062}00062       \textcolor{keywordflow}{return} \mbox{\hyperlink{structmp}{mp}};}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00063}00063   \}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00064}00064   \textcolor{keywordflow}{return} mpsearch1(0xF0000, 0x10000);}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00065}00065 \}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00067}00067 \textcolor{comment}{// Search for an MP configuration table.  For now,}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00068}00068 \textcolor{comment}{// don't accept the default configurations (physaddr == 0).}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00069}00069 \textcolor{comment}{// Check for correct signature, calculate the checksum and,}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00070}00070 \textcolor{comment}{// if correct, check the version.}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00071}00071 \textcolor{comment}{// To do: check extended table checksum.}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00072}00072 \textcolor{keyword}{static} \textcolor{keyword}{struct }\mbox{\hyperlink{structmpconf}{mpconf}}*}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00073}00073 mpconfig(\textcolor{keyword}{struct} \mbox{\hyperlink{structmp}{mp}} **pmp)}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00074}00074 \{}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00075}00075   \textcolor{keyword}{struct }\mbox{\hyperlink{structmpconf}{mpconf}} *conf;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00076}00076   \textcolor{keyword}{struct }\mbox{\hyperlink{structmp}{mp}} *\mbox{\hyperlink{structmp}{mp}};}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00077}00077 }
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00078}00078   \textcolor{keywordflow}{if}((\mbox{\hyperlink{structmp}{mp}} = mpsearch()) == 0 || \mbox{\hyperlink{structmp}{mp}}-\/>\mbox{\hyperlink{structmp_a3333bff25a42470efb69b3b01f08d6ce}{physaddr}} == 0)}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00079}00079     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00080}00080   conf = (\textcolor{keyword}{struct }\mbox{\hyperlink{structmpconf}{mpconf}}*) \mbox{\hyperlink{memlayout_8h_aefd5e8b62c49bba2cf20309c7dd174e2}{P2V}}((\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}) \mbox{\hyperlink{structmp}{mp}}-\/>\mbox{\hyperlink{structmp_a3333bff25a42470efb69b3b01f08d6ce}{physaddr}});}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00081}00081   \textcolor{keywordflow}{if}(\mbox{\hyperlink{defs_8h_acdb4d3f48d2fb0a834722b1107d2b284}{memcmp}}(conf, \textcolor{stringliteral}{"{}PCMP"{}}, 4) != 0)}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00082}00082     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00083}00083   \textcolor{keywordflow}{if}(conf-\/>\mbox{\hyperlink{structmpconf_ade1055584605c76f4e1134d6631e0afa}{version}} != 1 \&\& conf-\/>\mbox{\hyperlink{structmpconf_ade1055584605c76f4e1134d6631e0afa}{version}} != 4)}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00084}00084     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00085}00085   \textcolor{keywordflow}{if}(sum((\mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}}*)conf, conf-\/>length) != 0)}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00086}00086     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00087}00087   *pmp = \mbox{\hyperlink{structmp}{mp}};}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00088}00088   \textcolor{keywordflow}{return} conf;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00089}00089 \}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00090}00090 }
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00091}00091 \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00092}\mbox{\hyperlink{defs_8h_a2fd0b66a17c5347541448ef906b7b2a2}{00092}} \mbox{\hyperlink{mp_8c_a2fd0b66a17c5347541448ef906b7b2a2}{mpinit}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00093}00093 \{}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00094}00094   \mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}} *p, *\mbox{\hyperlink{console_8c_ab56fa7c992b725d84916b987c3d532ea}{e}};}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00095}00095   \textcolor{keywordtype}{int} \mbox{\hyperlink{defs_8h_a46b52bd30030451d1b65291b77ba05d5}{ismp}};}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00096}00096   \textcolor{keyword}{struct }\mbox{\hyperlink{structmp}{mp}} *\mbox{\hyperlink{structmp}{mp}};}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00097}00097   \textcolor{keyword}{struct }\mbox{\hyperlink{structmpconf}{mpconf}} *conf;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00098}00098   \textcolor{keyword}{struct }\mbox{\hyperlink{structmpproc}{mpproc}} *\mbox{\hyperlink{structproc}{proc}};}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00099}00099   \textcolor{keyword}{struct }\mbox{\hyperlink{structmpioapic}{mpioapic}} *\mbox{\hyperlink{structioapic}{ioapic}};}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00100}00100 }
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00101}00101   \textcolor{keywordflow}{if}((conf = mpconfig(\&\mbox{\hyperlink{structmp}{mp}})) == 0)}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00102}00102     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}Expect to run on an SMP"{}});}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00103}00103   \mbox{\hyperlink{defs_8h_a46b52bd30030451d1b65291b77ba05d5}{ismp}} = 1;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00104}00104   \mbox{\hyperlink{defs_8h_a4029f3e2439d5912f93543b8addd10ec}{lapic}} = (\mbox{\hyperlink{types_8h_a91ad9478d81a7aaf2593e8d9c3d06a14}{uint}}*)conf-\/>\mbox{\hyperlink{structmpconf_a087fac7e9dc4ca1fdfe142b3adf96c99}{lapicaddr}};}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00105}00105   \textcolor{keywordflow}{for}(p=(\mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}}*)(conf+1), \mbox{\hyperlink{console_8c_ab56fa7c992b725d84916b987c3d532ea}{e}}=(\mbox{\hyperlink{types_8h_a65f85814a8290f9797005d3b28e7e5fc}{uchar}}*)conf+conf-\/>\mbox{\hyperlink{structmpconf_a6b7583180c78b6a2e490d6c72779d8dd}{length}}; p<\mbox{\hyperlink{console_8c_ab56fa7c992b725d84916b987c3d532ea}{e}}; )\{}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00106}00106     \textcolor{keywordflow}{switch}(*p)\{}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00107}00107     \textcolor{keywordflow}{case} \mbox{\hyperlink{mp_8h_a0dd89a9c5a25d2d9f9a7fe57beb69597}{MPPROC}}:}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00108}00108       \mbox{\hyperlink{structproc}{proc}} = (\textcolor{keyword}{struct }\mbox{\hyperlink{structmpproc}{mpproc}}*)p;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00109}00109       \textcolor{keywordflow}{if}(\mbox{\hyperlink{mp_8c_a6201a0661c3d5b88df5f63529298eb48}{ncpu}} < \mbox{\hyperlink{param_8h_a2c4561c4c17cde39101c4e7a40d4492a}{NCPU}}) \{}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00110}00110         \mbox{\hyperlink{mp_8c_a6d2633e73724907b582dfe6938ed7bb9}{cpus}}[\mbox{\hyperlink{mp_8c_a6201a0661c3d5b88df5f63529298eb48}{ncpu}}].\mbox{\hyperlink{structcpu_ad08a3478ec15fc8bec1d9b6b5a0431db}{apicid}} = \mbox{\hyperlink{structproc}{proc}}-\/>apicid;  \textcolor{comment}{// apicid may differ from ncpu}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00111}00111         \mbox{\hyperlink{mp_8c_a6201a0661c3d5b88df5f63529298eb48}{ncpu}}++;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00112}00112       \}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00113}00113       p += \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct }\mbox{\hyperlink{structmpproc}{mpproc}});}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00114}00114       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00115}00115     \textcolor{keywordflow}{case} \mbox{\hyperlink{mp_8h_a6d6b1d8666df6dc57974e608dda01edc}{MPIOAPIC}}:}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00116}00116       \mbox{\hyperlink{structioapic}{ioapic}} = (\textcolor{keyword}{struct }\mbox{\hyperlink{structmpioapic}{mpioapic}}*)p;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00117}00117       \mbox{\hyperlink{mp_8c_a619ae379337e3cb2397ee0b6b4fd8d6b}{ioapicid}} = \mbox{\hyperlink{structioapic}{ioapic}}-\/>apicno;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00118}00118       p += \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct }\mbox{\hyperlink{structmpioapic}{mpioapic}});}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00119}00119       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00120}00120     \textcolor{keywordflow}{case} \mbox{\hyperlink{mp_8h_a10d8190eb1ea465310862131da282a09}{MPBUS}}:}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00121}00121     \textcolor{keywordflow}{case} \mbox{\hyperlink{mp_8h_a613c0cd2bca1e5a30eb1ffc7857d4d61}{MPIOINTR}}:}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00122}00122     \textcolor{keywordflow}{case} \mbox{\hyperlink{mp_8h_a993af198877b836f019baaa9f12c7c30}{MPLINTR}}:}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00123}00123       p += 8;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00124}00124       \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00125}00125     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00126}00126       \mbox{\hyperlink{defs_8h_a46b52bd30030451d1b65291b77ba05d5}{ismp}} = 0;}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00127}00127       \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00128}00128     \}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00129}00129   \}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00130}00130   \textcolor{keywordflow}{if}(!\mbox{\hyperlink{defs_8h_a46b52bd30030451d1b65291b77ba05d5}{ismp}})}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00131}00131     \mbox{\hyperlink{console_8c_a95c0aca5d6d7487933984f08b189917a}{panic}}(\textcolor{stringliteral}{"{}Didn't find a suitable machine"{}});}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00132}00132 }
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00133}00133   \textcolor{keywordflow}{if}(\mbox{\hyperlink{structmp}{mp}}-\/>\mbox{\hyperlink{structmp_ae2157bc407a7423c57bdb078b70cd6e5}{imcrp}})\{}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00134}00134     \textcolor{comment}{// Bochs doesn't support IMCR, so this doesn't run on Bochs.}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00135}00135     \textcolor{comment}{// But it would on real hardware.}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00136}00136     outb(0x22, 0x70);   \textcolor{comment}{// Select IMCR}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00137}00137     outb(0x23, inb(0x23) | 1);  \textcolor{comment}{// Mask external interrupts.}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00138}00138   \}}
+\DoxyCodeLine{\Hypertarget{mp_8c_source_l00139}00139 \}}
+
+\end{DoxyCode}
